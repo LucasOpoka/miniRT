@@ -6,13 +6,14 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:06:19 by lopoka            #+#    #+#             */
-/*   Updated: 2024/08/04 16:27:15 by lucas            ###   ########.fr       */
+/*   Updated: 2024/08/05 12:40:12 by lucas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINIRT_H
 # define MINIRT_H
 # include <stdlib.h>
 # include <math.h>
+# include <float.h>
 # include <stdio.h>
 # include "../sources/MLX42/include/MLX42/MLX42.h"
 # define CANV_WDTH	1200
