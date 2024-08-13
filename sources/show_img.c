@@ -6,7 +6,7 @@
 /*   By: lucas <lopoka@student.hive.fi>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 16:55:43 by lucas             #+#    #+#             */
-/*   Updated: 2024/08/13 14:49:13 by lucas            ###   ########.fr       */
+/*   Updated: 2024/08/13 16:08:42 by lucas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -174,28 +174,23 @@ void	ft_closest_intersection(t_vct O, t_vct D, t_sphere *sphr, float t_min, floa
 	}
 }
 
-t_clr	ft_intersect_ray_sphere(t_vct O, t_vct D, t_sphere *sphr, t_light *light_arr, float t_min, float t_max, float *t_closest, t_sphere **sphr_closest)
+t_clr	ft_trace_ray(t_vct O, t_vct D, t_sphere *sphr, t_light *light_arr, float t_min, float t_max)
 {
-	ft_closest_intersection(O, D, sphr, t_min, t_max, t_closest, sphr_closest);
+	float		t_closest = FLT_MAX;
+	t_sphere	*sphr_closest = NULL;
 
-	if (!*sphr_closest)
+
+	ft_closest_intersection(O, D, sphr, t_min, t_max, &t_closest, &sphr_closest);
+
+	if (!sphr_closest)
     	return (ft_create_clr(0, 0, 0));
 	
 	// Light
-	t_vct P = ft_vct_add(O, ft_vct_sclr_mult(D, *t_closest));
-	t_vct N = ft_vct_subtraction(P, sphr_closest[0]->position);
+	t_vct P = ft_vct_add(O, ft_vct_sclr_mult(D, t_closest));
+	t_vct N = ft_vct_subtraction(P, sphr_closest->position);
 	N = ft_vct_sclr_div(N, ft_vct_len(N));
 
-	return ft_light(sphr_closest[0]->color, sphr, light_arr, P, N, ft_vct_neg(D), sphr_closest[0]->specular);
-}
-
-t_clr	ft_trace_ray(t_vct O, t_vct D, t_sphere *sphr_arr, t_light *light_arr, float t_min, float t_max, t_sphere **sphr_closest)
-{
-	float		t_closest;
-
-	*sphr_closest = NULL;
-	t_closest = FLT_MAX;
-	return (ft_intersect_ray_sphere(O, D, sphr_arr, light_arr, t_min, t_max, &t_closest, sphr_closest));
+	return ft_light(sphr_closest->color, sphr, light_arr, P, N, ft_vct_neg(D), sphr_closest->specular);
 }
 
 void	ft_show_img(t_mrt *mrt)
@@ -209,6 +204,7 @@ void	ft_show_img(t_mrt *mrt)
 	t_light		*light_arr;
 	t_sphere	**sphr_closest;
 
+	// Spheres
 	sphr_closest = malloc(sizeof(t_sphere *));
 	
 	sphr_arr = malloc(4 * sizeof(t_sphere));
@@ -232,8 +228,7 @@ void	ft_show_img(t_mrt *mrt)
 	sphr_arr[3].color = ft_create_clr(255, 255, 0);
 	sphr_arr[3].specular = 1000;
 
-
-
+	// Lights
 	light_arr = calloc(3, sizeof(t_light));
 
 	light_arr[0].type = t_ambient;
@@ -257,7 +252,7 @@ void	ft_show_img(t_mrt *mrt)
 		while (col < CANV_WDTH)
 		{
 			D = ft_canv_to_view(col, CANV_HGHT - 1 - row);
-			color = ft_trace_ray(O, D, sphr_arr, light_arr, 1, 100000, sphr_closest); 
+			color = ft_trace_ray(O, D, sphr_arr, light_arr, 1, 100000);
 			mlx_put_pixel(mrt->img, col++, row, ft_clr_to_int(color));
 		}
 		row++;
