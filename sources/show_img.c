@@ -6,10 +6,12 @@
 /*   By: lucas <lopoka@student.hive.fi>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 16:55:43 by lucas             #+#    #+#             */
-/*   Updated: 2024/08/13 14:09:20 by lucas            ###   ########.fr       */
+/*   Updated: 2024/08/13 14:49:13 by lucas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
+
+void	ft_closest_intersection(t_vct O, t_vct D, t_sphere *sphr, float t_min, float t_max, float *t_closest, t_sphere **sphr_closest);
 
 int ft_pixel(int r, int g, int b, int a)
 {
@@ -92,7 +94,7 @@ float	ft_modify_channel(float ch, float i)
 	return (ch);
 }
 
-t_clr	ft_light(t_clr color, t_light *light_arr, t_vct P, t_vct N, t_vct V, float s)
+t_clr	ft_light(t_clr color, t_sphere *sphr, t_light *light_arr, t_vct P, t_vct N, t_vct V, float s)
 {
 	float	i;
 	t_vct	L;
@@ -112,9 +114,21 @@ t_clr	ft_light(t_clr color, t_light *light_arr, t_vct P, t_vct N, t_vct V, float
 			L = ft_vct_subtraction(light_arr[j].position, P);
 		else
 			L = light_arr[j].direction;
+		
+		// Shadow
+		float		t_shdw_closest = FLT_MAX;
+		t_sphere	*shdw_closest[1] = {NULL};
+
+		ft_closest_intersection(P, L, sphr, 0.001, 10000, &t_shdw_closest, shdw_closest);
+		if (*shdw_closest)
+			continue ;
+
+		// Diffuse
 		n_dot_l = ft_dot_prod(N, L);
 		if (n_dot_l > 0)
 			i += light_arr[j].intensity * n_dot_l / (ft_vct_len(N) * ft_vct_len(L));
+		
+		// Specular
 		if (s != -1)
 		{
 			R = ft_vct_subtraction(ft_vct_sclr_mult(N, 2 * n_dot_l), L);
@@ -143,7 +157,7 @@ void	ft_check_closest_sphere(t_sphere *sphr, float t, float t_min, float t_max, 
 	}
 }
 
-t_clr	ft_intersect_ray_sphere(t_vct O, t_vct D, t_sphere *sphr, t_light *light_arr, float t_min, float t_max, float *t_closest, t_sphere **sphr_closest)
+void	ft_closest_intersection(t_vct O, t_vct D, t_sphere *sphr, float t_min, float t_max, float *t_closest, t_sphere **sphr_closest)
 {
 	for (int i = 0; i < 4; i++)
 	{
@@ -158,6 +172,12 @@ t_clr	ft_intersect_ray_sphere(t_vct O, t_vct D, t_sphere *sphr, t_light *light_a
 		ft_check_closest_sphere(&(sphr[i]), (-b + sqrt(discr)) / (2 * a), t_min, t_max, t_closest, sphr_closest);
 		ft_check_closest_sphere(&(sphr[i]), (-b - sqrt(discr)) / (2 * a), t_min, t_max, t_closest, sphr_closest);
 	}
+}
+
+t_clr	ft_intersect_ray_sphere(t_vct O, t_vct D, t_sphere *sphr, t_light *light_arr, float t_min, float t_max, float *t_closest, t_sphere **sphr_closest)
+{
+	ft_closest_intersection(O, D, sphr, t_min, t_max, t_closest, sphr_closest);
+
 	if (!*sphr_closest)
     	return (ft_create_clr(0, 0, 0));
 	
@@ -165,7 +185,8 @@ t_clr	ft_intersect_ray_sphere(t_vct O, t_vct D, t_sphere *sphr, t_light *light_a
 	t_vct P = ft_vct_add(O, ft_vct_sclr_mult(D, *t_closest));
 	t_vct N = ft_vct_subtraction(P, sphr_closest[0]->position);
 	N = ft_vct_sclr_div(N, ft_vct_len(N));
-	return ft_light(sphr_closest[0]->color, light_arr, P, N, ft_vct_neg(D), sphr_closest[0]->specular);
+
+	return ft_light(sphr_closest[0]->color, sphr, light_arr, P, N, ft_vct_neg(D), sphr_closest[0]->specular);
 }
 
 t_clr	ft_trace_ray(t_vct O, t_vct D, t_sphere *sphr_arr, t_light *light_arr, float t_min, float t_max, t_sphere **sphr_closest)
@@ -216,11 +237,11 @@ void	ft_show_img(t_mrt *mrt)
 	light_arr = calloc(3, sizeof(t_light));
 
 	light_arr[0].type = t_ambient;
-	light_arr[0].intensity = 0.5;
+	light_arr[0].intensity = 0.2;
 	
 	light_arr[1].type = t_point;
-	light_arr[1].intensity = 0.2;
-	light_arr[1].position = ft_create_vct(2, 2, 0);
+	light_arr[1].intensity = 0.6;
+	light_arr[1].position = ft_create_vct(2, 1, 0);
 	
 
 	light_arr[2].type = t_directional;
