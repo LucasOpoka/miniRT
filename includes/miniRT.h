@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:06:19 by lopoka            #+#    #+#             */
-/*   Updated: 2024/08/13 11:40:07 by lucas            ###   ########.fr       */
+/*   Updated: 2024/08/13 16:36:08 by lucas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINIRT_H
@@ -16,8 +16,8 @@
 # include <float.h>
 # include <stdio.h>
 # include "../sources/MLX42/include/MLX42/MLX42.h"
-# define CANV_WDTH	1200
-# define CANV_HGHT	1200
+# define CANV_WDTH	1100
+# define CANV_HGHT	1100
 # define VIEW_WDTH	1
 # define VIEW_HGHT	1
 # define DISTANCE	1
@@ -48,6 +48,7 @@ typedef struct s_sphere
 	float	radius;
 	t_clr	color;
 	int		specular;
+	float	reflective;
 }	t_sphere;
 
 typedef struct s_light

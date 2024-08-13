@@ -6,7 +6,7 @@
 /*   By: lucas <lopoka@student.hive.fi>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 16:55:43 by lucas             #+#    #+#             */
-/*   Updated: 2024/08/13 16:08:42 by lucas            ###   ########.fr       */
+/*   Updated: 2024/08/13 16:44:58 by lucas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -117,10 +117,10 @@ t_clr	ft_light(t_clr color, t_sphere *sphr, t_light *light_arr, t_vct P, t_vct N
 		
 		// Shadow
 		float		t_shdw_closest = FLT_MAX;
-		t_sphere	*shdw_closest[1] = {NULL};
+		t_sphere	*shdw_closest = NULL;
 
-		ft_closest_intersection(P, L, sphr, 0.001, 10000, &t_shdw_closest, shdw_closest);
-		if (*shdw_closest)
+		ft_closest_intersection(P, L, sphr, 0.001, 10000, &t_shdw_closest, &shdw_closest);
+		if (shdw_closest)
 			continue ;
 
 		// Diffuse
@@ -174,10 +174,18 @@ void	ft_closest_intersection(t_vct O, t_vct D, t_sphere *sphr, float t_min, floa
 	}
 }
 
-t_clr	ft_trace_ray(t_vct O, t_vct D, t_sphere *sphr, t_light *light_arr, float t_min, float t_max)
+t_vct ft_reflect_ray(t_vct R, t_vct N)
+{
+	return (ft_vct_subtraction(ft_vct_sclr_mult(N, 2 * ft_dot_prod(N, R)), R));
+}
+
+t_clr	ft_trace_ray(t_vct O, t_vct D, t_sphere *sphr, t_light *light_arr, float t_min, float t_max, int recursion_depth)
 {
 	float		t_closest = FLT_MAX;
 	t_sphere	*sphr_closest = NULL;
+	t_clr		local_color;
+	t_clr		reflected_color;
+	float		rfl;
 
 
 	ft_closest_intersection(O, D, sphr, t_min, t_max, &t_closest, &sphr_closest);
@@ -190,7 +198,20 @@ t_clr	ft_trace_ray(t_vct O, t_vct D, t_sphere *sphr, t_light *light_arr, float t
 	t_vct N = ft_vct_subtraction(P, sphr_closest->position);
 	N = ft_vct_sclr_div(N, ft_vct_len(N));
 
-	return ft_light(sphr_closest->color, sphr, light_arr, P, N, ft_vct_neg(D), sphr_closest->specular);
+	local_color = ft_light(sphr_closest->color, sphr, light_arr, P, N, ft_vct_neg(D), sphr_closest->specular);
+
+	// Reflected color
+	rfl = sphr_closest->reflective;
+	if (!recursion_depth || rfl <= 0)
+		return (local_color);
+	reflected_color = ft_trace_ray(P, ft_reflect_ray(ft_vct_neg(D) , N), sphr, light_arr , t_min, t_max, recursion_depth - 1);
+
+	local_color.r = local_color.r  * (1 - rfl) + reflected_color.r * rfl;
+	local_color.g = local_color.g  * (1 - rfl) + reflected_color.g * rfl;
+	local_color.b = local_color.b  * (1 - rfl) + reflected_color.b * rfl;
+
+	
+	return (local_color);
 }
 
 void	ft_show_img(t_mrt *mrt)
@@ -212,21 +233,25 @@ void	ft_show_img(t_mrt *mrt)
 	sphr_arr[0].radius = 1;
 	sphr_arr[0].color = ft_create_clr(255, 0, 0);
 	sphr_arr[0].specular = 500;
+	sphr_arr[0].reflective = 0.2;
 
 	sphr_arr[1].position = ft_create_vct(2, 0, 4);
 	sphr_arr[1].radius = 1;
 	sphr_arr[1].color = ft_create_clr(0, 0, 255);
 	sphr_arr[1].specular = 500;
+	sphr_arr[1].reflective = 0.3;
 
 	sphr_arr[2].position = ft_create_vct(-2, 0, 4);
 	sphr_arr[2].radius = 1;
 	sphr_arr[2].color = ft_create_clr(0, 255, 0);
 	sphr_arr[2].specular = 500;
+	sphr_arr[2].reflective = 0.4;
 	
 	sphr_arr[3].position = ft_create_vct(0, -5001, 0);
 	sphr_arr[3].radius = 5000;
 	sphr_arr[3].color = ft_create_clr(255, 255, 0);
 	sphr_arr[3].specular = 1000;
+	sphr_arr[3].reflective = 0.5;
 
 	// Lights
 	light_arr = calloc(3, sizeof(t_light));
@@ -252,7 +277,7 @@ void	ft_show_img(t_mrt *mrt)
 		while (col < CANV_WDTH)
 		{
 			D = ft_canv_to_view(col, CANV_HGHT - 1 - row);
-			color = ft_trace_ray(O, D, sphr_arr, light_arr, 1, 100000);
+			color = ft_trace_ray(O, D, sphr_arr, light_arr, 1, 100000, 3);
 			mlx_put_pixel(mrt->img, col++, row, ft_clr_to_int(color));
 		}
 		row++;
