@@ -6,7 +6,7 @@
 #    By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/29 14:59:04 by lopoka            #+#    #+#              #
-#    Updated: 2024/08/05 14:07:12 by lucas            ###   ########.fr        #
+#    Updated: 2024/08/14 14:40:57 by lucas            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ SRCS	=	sources/main.c \
 			sources/init.c \
 			sources/show_img.c \
 			sources/close.c \
+			sources/void_arr.c \
 
 OFILES = ${SRCS:.c=.o}
 

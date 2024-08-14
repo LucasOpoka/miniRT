@@ -6,7 +6,7 @@
 /*   By: lucas <lopoka@student.hive.fi>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 16:55:43 by lucas             #+#    #+#             */
-/*   Updated: 2024/08/14 12:45:59 by lucas            ###   ########.fr       */
+/*   Updated: 2024/08/14 16:15:11 by lucas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -214,6 +214,7 @@ t_clr	ft_trace_ray(t_vct O, t_vct D, t_shape *shape_arr, t_light *light_arr, flo
 	return (local_color);
 }
 
+
 void	ft_show_img(t_mrt *mrt)
 {
 	t_vct		O;
@@ -223,7 +224,47 @@ void	ft_show_img(t_mrt *mrt)
 	int			col;
 	t_shape		*shape_arr;
 	t_light		*light_arr;
+	t_void_arr	shape_array;
 
+	ft_init_void_arr(&shape_array);
+
+
+	t_shape *sphere1 = malloc(sizeof(t_shape));
+	sphere1->position = ft_create_vct(0, -1, 3);
+	sphere1->radius = 1;
+	sphere1->color = ft_create_clr(255, 0, 0);
+	sphere1->specular = 500;
+	sphere1->reflective = 0.2;
+
+
+	t_shape *sphere2 = malloc(sizeof(t_shape));
+	sphere2->position = ft_create_vct(2, 0, 4);
+	sphere2->radius = 1;
+	sphere2->color = ft_create_clr(0, 0, 255);
+	sphere2->specular = 500;
+	sphere2->reflective = 0.3;
+
+	t_shape *sphere3 = malloc(sizeof(t_shape));
+	sphere3->position = ft_create_vct(-2, 0, 4);
+	sphere3->radius = 1;
+	sphere3->color = ft_create_clr(0, 255, 0);
+	sphere3->specular = 500;
+	sphere3->reflective = 0.4;
+
+	t_shape *sphere4 = malloc(sizeof(t_shape));
+	sphere4->position = ft_create_vct(0, -5001, 0);
+	sphere4->radius = 1;
+	sphere4->color = ft_create_clr(255, 255, 0);
+	sphere4->specular = 1000;
+	sphere4->reflective = 0.2;
+
+
+	ft_void_arr_add(&shape_array, sphere1);
+	ft_void_arr_add(&shape_array, sphere2);
+	ft_void_arr_add(&shape_array, sphere3);
+	ft_void_arr_add(&shape_array, sphere4);
+
+	// ---------------------------------------------------------------------------------------------------------
 	
 	shape_arr = malloc(4 * sizeof(t_shape));
 	shape_arr[0].position = ft_create_vct(0, -1, 3);
