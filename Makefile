@@ -28,6 +28,11 @@ SRCS	=	sources/main.c \
 
 OFILES = ${SRCS:.c=.o}
 
+target debug: CFLAGS = -Wall -Wextra -Werror -fsanitize=address,undefined -O1 -g
+target debug: CDEBUG = -DDEBUG=1
+
+export CFLAGS
+
 all : mandatory
 
 mandatory : .mandatory
@@ -38,13 +43,13 @@ bonus : .bonus
 	${CC} ${CFLAGS} -c -o $@ $<
 
 .mandatory : ${OFILES}
-	cmake ${MLX42} -B ${MLX42}/build && make -C ${MLX42}/build -j4
+	cmake ${MLX42} -B ${MLX42}/build $(CDEBUG) && make -C ${MLX42}/build -j4
 	${CC} -o ${NAME} ${CFLAGS} ${OFILES} ${LIBS} -flto
 	@touch .mandatory
 	@rm -f .bonus
 
 .bonus : ${B_OFILES}
-	cmake ${MLX42} -B ${MLX42}/build && make -C ${MLX42}/build -j4
+	cmake ${MLX42} -B ${MLX42}/build $(CDEBUG) && make -C ${MLX42}/build -j4
 	${CC} -o ${NAME} ${CFLAGS} ${B_OFILES} ${LIBS} -flto
 	@touch .bonus
 	@rm -f .mandatory
@@ -58,5 +63,6 @@ fclean: clean
 	@rm -f .bonus .mandatory
 
 re: fclean all
+debug: re
 
-.PHONY: all, clean, fclean, re, mlx42
+.PHONY: debug, all, clean, fclean, re, mlx42
