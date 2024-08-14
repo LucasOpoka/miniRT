@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:06:19 by lopoka            #+#    #+#             */
-/*   Updated: 2024/08/13 16:36:08 by lucas            ###   ########.fr       */
+/*   Updated: 2024/08/14 12:32:52 by lucas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINIRT_H
@@ -42,14 +42,15 @@ typedef struct s_clr
 	float	b;
 }	t_clr;
 
-typedef struct s_sphere
+typedef struct s_shape
 {
+	int		type;
 	t_vct	position;
 	float	radius;
 	t_clr	color;
 	int		specular;
 	float	reflective;
-}	t_sphere;
+}	t_shape;
 
 typedef struct s_light
 {
@@ -65,6 +66,12 @@ typedef enum e_light_type
 	t_point,
 	t_directional
 }	t_light_type;
+
+typedef enum e_shape_type
+{
+	t_sphere,
+	t_plane
+}	t_shape_type;
 
 void		ft_show_img(t_mrt *mrt);
 
