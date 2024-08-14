@@ -6,7 +6,7 @@
 /*   By: lucas <lopoka@student.hive.fi>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 16:55:43 by lucas             #+#    #+#             */
-/*   Updated: 2024/08/14 16:45:08 by lucas            ###   ########.fr       */
+/*   Updated: 2024/08/14 17:39:45 by lucas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -94,26 +94,31 @@ float	ft_modify_channel(float ch, float i)
 	return (ch);
 }
 
-t_clr	ft_light(t_clr color, t_void_arr *shape_arr, t_light *light_arr, t_vct P, t_vct N, t_vct V, float s)
+t_clr	ft_light(t_clr color, t_void_arr *shape_arr, t_void_arr *light_arr, t_vct P, t_vct N, t_vct V, float s)
 {
-	float	i;
+	float	light_intensity;
 	t_vct	L;
 	t_vct	R;
 	float	n_dot_l;
 	float	r_dot_v;
+	t_light	*light;
+	size_t	i;
 
+	light_intensity = 0;
 	i = 0;
-	for (int j = 0; j < 3; j++)
+	while (i < light_arr->i)
 	{
-		if (light_arr[j].type == t_ambient)
+		light = light_arr->arr[i++];
+
+		if (light->type == t_ambient)
 		{
-			i += light_arr[j].intensity;
+			light_intensity += light->intensity;
 			continue ;
 		}
-		if (light_arr[j].type == t_point)
-			L = ft_vct_subtraction(light_arr[j].position, P);
+		if (light->type == t_point)
+			L = ft_vct_subtraction(light->position, P);
 		else
-			L = light_arr[j].direction;
+			L = light->direction;
 		
 		// Shadow
 		float		t_shdw_closest = FLT_MAX;
@@ -126,7 +131,7 @@ t_clr	ft_light(t_clr color, t_void_arr *shape_arr, t_light *light_arr, t_vct P, 
 		// Diffuse
 		n_dot_l = ft_dot_prod(N, L);
 		if (n_dot_l > 0)
-			i += light_arr[j].intensity * n_dot_l / (ft_vct_len(N) * ft_vct_len(L));
+			light_intensity += light->intensity * n_dot_l / (ft_vct_len(N) * ft_vct_len(L));
 		
 		// Specular
 		if (s != -1)
@@ -134,12 +139,12 @@ t_clr	ft_light(t_clr color, t_void_arr *shape_arr, t_light *light_arr, t_vct P, 
 			R = ft_vct_subtraction(ft_vct_sclr_mult(N, 2 * n_dot_l), L);
 			r_dot_v = ft_dot_prod(R, V);
 			if (r_dot_v > 0)
-				i += light_arr[j].intensity * pow(r_dot_v / (ft_vct_len(R) * ft_vct_len(V)), s);
+				light_intensity += light->intensity * pow(r_dot_v / (ft_vct_len(R) * ft_vct_len(V)), s);
 		}
 	}
-	color.r = ft_modify_channel(color.r, i);
-	color.g = ft_modify_channel(color.g, i);
-	color.b = ft_modify_channel(color.b, i);
+	color.r = ft_modify_channel(color.r, light_intensity);
+	color.g = ft_modify_channel(color.g, light_intensity);
+	color.b = ft_modify_channel(color.b, light_intensity);
 	return (color);
 }
 
@@ -160,10 +165,14 @@ void	ft_check_closest_sphere(t_shape *shape, float t, float t_min, float t_max, 
 void	ft_closest_intersection(t_vct O, t_vct D, t_void_arr *shape_arr, float t_min, float t_max, float *t_closest, t_shape **shape_closest)
 {
 	t_shape	*sphere;
-		
-	for (int i = 0; i < 4; i++)
+	size_t	i;
+	
+	i = 0;
+	while (i < shape_arr->i)
 	{
-		sphere = (t_shape *) shape_arr->arr[i];
+		sphere = (t_shape *) shape_arr->arr[i++];
+		if (sphere->type != t_sphere)
+			continue ;
     	t_vct	CO = ft_vct_subtraction(O, sphere->position);
     	float	a = ft_dot_prod(D, D);
     	float	b = 2 * ft_dot_prod(CO, D);
@@ -182,7 +191,7 @@ t_vct ft_reflect_ray(t_vct R, t_vct N)
 	return (ft_vct_subtraction(ft_vct_sclr_mult(N, 2 * ft_dot_prod(N, R)), R));
 }
 
-t_clr	ft_trace_ray(t_vct O, t_vct D, t_void_arr *shape_arr, t_light *light_arr, float t_min, float t_max, int recursion_depth)
+t_clr	ft_trace_ray(t_vct O, t_vct D, t_void_arr *shape_arr, t_void_arr *light_arr, float t_min, float t_max, int recursion_depth)
 {
 	float		t_closest = FLT_MAX;
 	t_shape		*shape_closest = NULL;
@@ -225,60 +234,69 @@ void	ft_show_img(t_mrt *mrt)
 	t_clr		color;
 	int			row;
 	int			col;
-	t_light		*light_arr;
-	t_void_arr	shape_array;
+	t_void_arr	light_arr;
+	t_void_arr	shape_arr;
 
-	ft_init_void_arr(&shape_array);
+	// Shapes
+	ft_init_void_arr(&shape_arr);
 
-	t_shape *sphere1 = malloc(sizeof(t_shape));
-	sphere1->position = ft_create_vct(0, -1, 3);
-	sphere1->radius = 1;
-	sphere1->color = ft_create_clr(255, 0, 0);
-	sphere1->specular = 500;
-	sphere1->reflective = 0.2;
+	t_shape *shape1 = malloc(sizeof(t_shape));
+	shape1->type = t_sphere;
+	shape1->position = ft_create_vct(0, -1, 3);
+	shape1->radius = 1;
+	shape1->color = ft_create_clr(255, 0, 0);
+	shape1->specular = 500;
+	shape1->reflective = 0.2;
 
+	t_shape *shape2 = malloc(sizeof(t_shape));
+	shape2->type = t_sphere;
+	shape2->position = ft_create_vct(2, 0, 4);
+	shape2->radius = 1;
+	shape2->color = ft_create_clr(0, 0, 255);
+	shape2->specular = 500;
+	shape2->reflective = 0.3;
 
-	t_shape *sphere2 = malloc(sizeof(t_shape));
-	sphere2->position = ft_create_vct(2, 0, 4);
-	sphere2->radius = 1;
-	sphere2->color = ft_create_clr(0, 0, 255);
-	sphere2->specular = 500;
-	sphere2->reflective = 0.3;
+	t_shape *shape3 = malloc(sizeof(t_shape));
+	shape3->type = t_sphere;
+	shape3->position = ft_create_vct(-2, 0, 4);
+	shape3->radius = 1;
+	shape3->color = ft_create_clr(0, 255, 0);
+	shape3->specular = 500;
+	shape3->reflective = 0.4;
 
-	t_shape *sphere3 = malloc(sizeof(t_shape));
-	sphere3->position = ft_create_vct(-2, 0, 4);
-	sphere3->radius = 1;
-	sphere3->color = ft_create_clr(0, 255, 0);
-	sphere3->specular = 500;
-	sphere3->reflective = 0.4;
+	t_shape *shape4 = malloc(sizeof(t_shape));
+	shape4->type = t_sphere;
+	shape4->position = ft_create_vct(0, -5001, 0);
+	shape4->radius = 5000;
+	shape4->color = ft_create_clr(255, 255, 0);
+	shape4->specular = 1000;
+	shape4->reflective = 0.2;
 
-	t_shape *sphere4 = malloc(sizeof(t_shape));
-	sphere4->position = ft_create_vct(0, -5001, 0);
-	sphere4->radius = 5000;
-	sphere4->color = ft_create_clr(255, 255, 0);
-	sphere4->specular = 1000;
-	sphere4->reflective = 0.2;
-
-
-	ft_void_arr_add(&shape_array, sphere1);
-	ft_void_arr_add(&shape_array, sphere2);
-	ft_void_arr_add(&shape_array, sphere3);
-	ft_void_arr_add(&shape_array, sphere4);
+	ft_void_arr_add(&shape_arr, shape1);
+	ft_void_arr_add(&shape_arr, shape2);
+	ft_void_arr_add(&shape_arr, shape3);
+	ft_void_arr_add(&shape_arr, shape4);
 
 	// Lights
-	light_arr = calloc(3, sizeof(t_light));
+	ft_init_void_arr(&light_arr);
 
-	light_arr[0].type = t_ambient;
-	light_arr[0].intensity = 0.2;
-	
-	light_arr[1].type = t_point;
-	light_arr[1].intensity = 0.6;
-	light_arr[1].position = ft_create_vct(2, 1, 0);
-	
+	t_light *light1 = malloc(sizeof(t_light));
+	light1->type = t_ambient;
+	light1->intensity = 0.2;
 
-	light_arr[2].type = t_directional;
-	light_arr[2].intensity = 0.2;
-	light_arr[2].direction = ft_create_vct(1, 4, 4);
+	t_light *light2 = malloc(sizeof(t_light));
+	light2->type = t_point;
+	light2->intensity = 0.6;
+	light2->position = ft_create_vct(2, 1, 0);
+	
+	t_light *light3 = malloc(sizeof(t_light));
+	light3->type = t_directional;
+	light3->intensity = 0.2;
+	light3->direction = ft_create_vct(1, 4, 4);
+	
+	ft_void_arr_add(&light_arr, light1);
+	ft_void_arr_add(&light_arr, light2);
+	ft_void_arr_add(&light_arr, light3);
 
 
 	O = ft_create_vct(0, 0, 0);
@@ -289,14 +307,14 @@ void	ft_show_img(t_mrt *mrt)
 		while (col < CANV_WDTH)
 		{
 			D = ft_canv_to_view(col, CANV_HGHT - 1 - row);
-			color = ft_trace_ray(O, D, &shape_array, light_arr, 1, 100000, 3);
+			color = ft_trace_ray(O, D, &shape_arr, &light_arr, 1, 100000, 3);
 			mlx_put_pixel(mrt->img, col++, row, ft_clr_to_int(color));
 		}
 		row++;
 	}
 
-	//free(shape_arr);
-	free(light_arr);
+	ft_free_void_arr(&shape_arr);
+	ft_free_void_arr(&light_arr);
 
 	mlx_image_to_window(mrt->mlx, mrt->img, 0, 0);
 }
