@@ -6,12 +6,12 @@
 /*   By: lucas <lopoka@student.hive.fi>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 16:55:43 by lucas             #+#    #+#             */
-/*   Updated: 2024/08/14 16:15:11 by lucas            ###   ########.fr       */
+/*   Updated: 2024/08/14 16:45:08 by lucas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
 
-void	ft_closest_intersection(t_vct O, t_vct D, t_shape *shape_arr, float t_min, float t_max, float *t_closest, t_shape **shape_closest);
+void	ft_closest_intersection(t_vct O, t_vct D, t_void_arr *shape_arr, float t_min, float t_max, float *t_closest, t_shape **shape_closest);
 
 int ft_pixel(int r, int g, int b, int a)
 {
@@ -94,7 +94,7 @@ float	ft_modify_channel(float ch, float i)
 	return (ch);
 }
 
-t_clr	ft_light(t_clr color, t_shape *shape_arr, t_light *light_arr, t_vct P, t_vct N, t_vct V, float s)
+t_clr	ft_light(t_clr color, t_void_arr *shape_arr, t_light *light_arr, t_vct P, t_vct N, t_vct V, float s)
 {
 	float	i;
 	t_vct	L;
@@ -157,20 +157,23 @@ void	ft_check_closest_sphere(t_shape *shape, float t, float t_min, float t_max, 
 	}
 }
 
-void	ft_closest_intersection(t_vct O, t_vct D, t_shape *shape_arr, float t_min, float t_max, float *t_closest, t_shape **shape_closest)
+void	ft_closest_intersection(t_vct O, t_vct D, t_void_arr *shape_arr, float t_min, float t_max, float *t_closest, t_shape **shape_closest)
 {
+	t_shape	*sphere;
+		
 	for (int i = 0; i < 4; i++)
 	{
-    	t_vct	CO = ft_vct_subtraction(O, shape_arr[i].position);
+		sphere = (t_shape *) shape_arr->arr[i];
+    	t_vct	CO = ft_vct_subtraction(O, sphere->position);
     	float	a = ft_dot_prod(D, D);
     	float	b = 2 * ft_dot_prod(CO, D);
-    	float	c = ft_dot_prod(CO, CO) - (shape_arr[i].radius * shape_arr[i].radius);
+    	float	c = ft_dot_prod(CO, CO) - (sphere->radius * sphere->radius);
 
     	float discr = b * b - 4 * a * c;
     	if (discr < 0)
 			continue ;
-		ft_check_closest_sphere(&(shape_arr[i]), (-b + sqrt(discr)) / (2 * a), t_min, t_max, t_closest, shape_closest);
-		ft_check_closest_sphere(&(shape_arr[i]), (-b - sqrt(discr)) / (2 * a), t_min, t_max, t_closest, shape_closest);
+		ft_check_closest_sphere(sphere, (-b + sqrt(discr)) / (2 * a), t_min, t_max, t_closest, shape_closest);
+		ft_check_closest_sphere(sphere, (-b - sqrt(discr)) / (2 * a), t_min, t_max, t_closest, shape_closest);
 	}
 }
 
@@ -179,7 +182,7 @@ t_vct ft_reflect_ray(t_vct R, t_vct N)
 	return (ft_vct_subtraction(ft_vct_sclr_mult(N, 2 * ft_dot_prod(N, R)), R));
 }
 
-t_clr	ft_trace_ray(t_vct O, t_vct D, t_shape *shape_arr, t_light *light_arr, float t_min, float t_max, int recursion_depth)
+t_clr	ft_trace_ray(t_vct O, t_vct D, t_void_arr *shape_arr, t_light *light_arr, float t_min, float t_max, int recursion_depth)
 {
 	float		t_closest = FLT_MAX;
 	t_shape		*shape_closest = NULL;
@@ -222,12 +225,10 @@ void	ft_show_img(t_mrt *mrt)
 	t_clr		color;
 	int			row;
 	int			col;
-	t_shape		*shape_arr;
 	t_light		*light_arr;
 	t_void_arr	shape_array;
 
 	ft_init_void_arr(&shape_array);
-
 
 	t_shape *sphere1 = malloc(sizeof(t_shape));
 	sphere1->position = ft_create_vct(0, -1, 3);
@@ -253,7 +254,7 @@ void	ft_show_img(t_mrt *mrt)
 
 	t_shape *sphere4 = malloc(sizeof(t_shape));
 	sphere4->position = ft_create_vct(0, -5001, 0);
-	sphere4->radius = 1;
+	sphere4->radius = 5000;
 	sphere4->color = ft_create_clr(255, 255, 0);
 	sphere4->specular = 1000;
 	sphere4->reflective = 0.2;
@@ -263,33 +264,6 @@ void	ft_show_img(t_mrt *mrt)
 	ft_void_arr_add(&shape_array, sphere2);
 	ft_void_arr_add(&shape_array, sphere3);
 	ft_void_arr_add(&shape_array, sphere4);
-
-	// ---------------------------------------------------------------------------------------------------------
-	
-	shape_arr = malloc(4 * sizeof(t_shape));
-	shape_arr[0].position = ft_create_vct(0, -1, 3);
-	shape_arr[0].radius = 1;
-	shape_arr[0].color = ft_create_clr(255, 0, 0);
-	shape_arr[0].specular = 500;
-	shape_arr[0].reflective = 0.2;
-
-	shape_arr[1].position = ft_create_vct(2, 0, 4);
-	shape_arr[1].radius = 1;
-	shape_arr[1].color = ft_create_clr(0, 0, 255);
-	shape_arr[1].specular = 500;
-	shape_arr[1].reflective = 0.3;
-
-	shape_arr[2].position = ft_create_vct(-2, 0, 4);
-	shape_arr[2].radius = 1;
-	shape_arr[2].color = ft_create_clr(0, 255, 0);
-	shape_arr[2].specular = 500;
-	shape_arr[2].reflective = 0.4;
-	
-	shape_arr[3].position = ft_create_vct(0, -5001, 0);
-	shape_arr[3].radius = 5000;
-	shape_arr[3].color = ft_create_clr(255, 255, 0);
-	shape_arr[3].specular = 1000;
-	shape_arr[3].reflective = 0.5;
 
 	// Lights
 	light_arr = calloc(3, sizeof(t_light));
@@ -315,13 +289,13 @@ void	ft_show_img(t_mrt *mrt)
 		while (col < CANV_WDTH)
 		{
 			D = ft_canv_to_view(col, CANV_HGHT - 1 - row);
-			color = ft_trace_ray(O, D, shape_arr, light_arr, 1, 100000, 3);
+			color = ft_trace_ray(O, D, &shape_array, light_arr, 1, 100000, 3);
 			mlx_put_pixel(mrt->img, col++, row, ft_clr_to_int(color));
 		}
 		row++;
 	}
 
-	free(shape_arr);
+	//free(shape_arr);
 	free(light_arr);
 
 	mlx_image_to_window(mrt->mlx, mrt->img, 0, 0);
