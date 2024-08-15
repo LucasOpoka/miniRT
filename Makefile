@@ -6,7 +6,7 @@
 #    By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/29 14:59:04 by lopoka            #+#    #+#              #
-#    Updated: 2024/08/15 13:49:58 by atorma           ###   ########.fr        #
+#    Updated: 2024/08/15 14:15:20 by atorma           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,8 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror -Ofast -I ./includes
 MLX42 = sources/MLX42
 
-LIBS = ${MLX42}/build/libmlx42.a -ldl -lglfw -pthread -lm
+LIBFTDIR = ./libft
+LIBS = $(LIBFTDIR)/libft.a ${MLX42}/build/libmlx42.a -ldl -lglfw -pthread -lm
 
 SRCS	=	sources/main.c \
 			sources/hooks.c \
@@ -48,6 +49,7 @@ bonus : .bonus
 
 .mandatory : ${OFILES}
 	cmake ${MLX42} -B ${MLX42}/build $(CDEBUG) && make -C ${MLX42}/build -j4
+	$(MAKE) -C $(LIBFTDIR)
 	${CC} -o ${NAME} ${CFLAGS} ${OFILES} ${LIBS}
 	@touch .mandatory
 	@rm -f .bonus
@@ -60,6 +62,7 @@ bonus : .bonus
 
 clean:
 	rm -rf ${OFILES} ${B_OFILES} ${MLX42}/build
+	$(MAKE) -C $(LIBFTDIR) $@
 	@rm -f .bonus .mandatory
 
 fclean: clean
