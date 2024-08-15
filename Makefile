@@ -6,7 +6,7 @@
 #    By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/29 14:59:04 by lopoka            #+#    #+#              #
-#    Updated: 2024/08/15 14:15:20 by atorma           ###   ########.fr        #
+#    Updated: 2024/08/15 14:16:59 by atorma           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,6 +56,7 @@ bonus : .bonus
 
 .bonus : ${B_OFILES}
 	cmake ${MLX42} -B ${MLX42}/build $(CDEBUG) && make -C ${MLX42}/build -j4
+	$(MAKE) -C $(LIBFTDIR)
 	${CC} -o ${NAME} ${CFLAGS} ${B_OFILES} ${LIBS} -flto
 	@touch .bonus
 	@rm -f .mandatory
