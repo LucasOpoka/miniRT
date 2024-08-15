@@ -26,6 +26,9 @@ SRCS	=	sources/main.c \
 			sources/show_img.c \
 			sources/close.c \
 			sources/void_arr.c \
+			sources/parser/parser.c \
+			sources/parser/file.c \
+			sources/parser/array.c \
 
 OFILES = ${SRCS:.c=.o}
 
