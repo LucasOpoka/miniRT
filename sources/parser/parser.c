@@ -37,7 +37,7 @@ int	parse_line(char *line)
 
 	i = 0;
 	elements = ft_split(line, ' ');
-	if (array_size(elements) < 3)
+	if (array_size(elements) <= 2 || array_size(elements) >= 7)
 	{
 		array_free(elements);
 		return (0);
