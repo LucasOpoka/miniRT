@@ -6,7 +6,7 @@
 /*   By: lucas <lopoka@student.hive.fi>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 16:55:43 by lucas             #+#    #+#             */
-/*   Updated: 2024/08/14 17:39:45 by lucas            ###   ########.fr       */
+/*   Updated: 2024/08/15 11:30:22 by lucas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -142,6 +142,7 @@ t_clr	ft_light(t_clr color, t_void_arr *shape_arr, t_void_arr *light_arr, t_vct 
 				light_intensity += light->intensity * pow(r_dot_v / (ft_vct_len(R) * ft_vct_len(V)), s);
 		}
 	}
+	
 	color.r = ft_modify_channel(color.r, light_intensity);
 	color.g = ft_modify_channel(color.g, light_intensity);
 	color.b = ft_modify_channel(color.b, light_intensity);
@@ -153,7 +154,7 @@ int	ft_clr_to_int(t_clr clr)
     return (ft_pixel(clr.r, clr.g, clr.b, 255));
 }
 
-void	ft_check_closest_sphere(t_shape *shape, float t, float t_min, float t_max, float *t_closest, t_shape **shape_closest)
+void	ft_check_closest_shape(t_shape *shape, float t, float t_min, float t_max, float *t_closest, t_shape **shape_closest)
 {
 	if ((t >= t_min && t <= t_max) && t < *t_closest)
 	{
@@ -164,25 +165,33 @@ void	ft_check_closest_sphere(t_shape *shape, float t, float t_min, float t_max, 
 
 void	ft_closest_intersection(t_vct O, t_vct D, t_void_arr *shape_arr, float t_min, float t_max, float *t_closest, t_shape **shape_closest)
 {
-	t_shape	*sphere;
+	t_shape	*shape;
 	size_t	i;
 	
 	i = 0;
 	while (i < shape_arr->i)
 	{
-		sphere = (t_shape *) shape_arr->arr[i++];
-		if (sphere->type != t_sphere)
-			continue ;
-    	t_vct	CO = ft_vct_subtraction(O, sphere->position);
-    	float	a = ft_dot_prod(D, D);
-    	float	b = 2 * ft_dot_prod(CO, D);
-    	float	c = ft_dot_prod(CO, CO) - (sphere->radius * sphere->radius);
+		shape = (t_shape *) shape_arr->arr[i++];
+		if (shape->type == t_sphere)
+		{
+			t_vct	CO = ft_vct_subtraction(O, shape->position);
+			float	a = ft_dot_prod(D, D);
+			float	b = 2 * ft_dot_prod(CO, D);
+			float	c = ft_dot_prod(CO, CO) - (shape->radius * shape->radius);
 
-    	float discr = b * b - 4 * a * c;
-    	if (discr < 0)
-			continue ;
-		ft_check_closest_sphere(sphere, (-b + sqrt(discr)) / (2 * a), t_min, t_max, t_closest, shape_closest);
-		ft_check_closest_sphere(sphere, (-b - sqrt(discr)) / (2 * a), t_min, t_max, t_closest, shape_closest);
+			float discr = b * b - 4 * a * c;
+			if (discr < 0)
+				continue ;
+			ft_check_closest_shape(shape, (-b + sqrt(discr)) / (2 * a), t_min, t_max, t_closest, shape_closest);
+			ft_check_closest_shape(shape, (-b - sqrt(discr)) / (2 * a), t_min, t_max, t_closest, shape_closest);
+		}
+		if (shape->type == t_plane)
+		{
+			float	denom = ft_dot_prod(D, shape->orientation);
+			if (fabs(denom) < 0.0001)
+				continue ;
+			ft_check_closest_shape(shape, ft_dot_prod(ft_vct_subtraction(shape->position, O), shape->orientation) / denom, t_min, t_max, t_closest, shape_closest);
+		}
 	}
 }
 
@@ -209,6 +218,11 @@ t_clr	ft_trace_ray(t_vct O, t_vct D, t_void_arr *shape_arr, t_void_arr *light_ar
 	t_vct P = ft_vct_add(O, ft_vct_sclr_mult(D, t_closest));
 	t_vct N = ft_vct_subtraction(P, shape_closest->position);
 	N = ft_vct_sclr_div(N, ft_vct_len(N));
+	if (shape_closest->type == t_plane)
+	{
+		N = shape_closest->orientation;
+		N = ft_vct_sclr_div(N, ft_vct_len(N));
+	}
 
 	local_color = ft_light(shape_closest->color, shape_arr, light_arr, P, N, ft_vct_neg(D), shape_closest->specular);
 
@@ -220,8 +234,7 @@ t_clr	ft_trace_ray(t_vct O, t_vct D, t_void_arr *shape_arr, t_void_arr *light_ar
 
 	local_color.r = local_color.r  * (1 - rfl) + reflected_color.r * rfl;
 	local_color.g = local_color.g  * (1 - rfl) + reflected_color.g * rfl;
-	local_color.b = local_color.b  * (1 - rfl) + reflected_color.b * rfl;
-
+	local_color.b = local_color.b  * (1 - rfl) + reflected_color.b * rfl;	
 	
 	return (local_color);
 }
@@ -272,10 +285,19 @@ void	ft_show_img(t_mrt *mrt)
 	shape4->specular = 1000;
 	shape4->reflective = 0.2;
 
+	t_shape *shape5 = malloc(sizeof(t_shape));
+	shape5->type = t_plane;
+	shape5->position = ft_create_vct(0, 0, 5);
+	shape5->color = ft_create_clr(90, 34, 139);
+	shape5->orientation = ft_create_vct(0, 1, -1);
+	shape5->specular = 1000;
+	shape5->reflective = 0.4;
+	
 	ft_void_arr_add(&shape_arr, shape1);
 	ft_void_arr_add(&shape_arr, shape2);
 	ft_void_arr_add(&shape_arr, shape3);
-	ft_void_arr_add(&shape_arr, shape4);
+	//ft_void_arr_add(&shape_arr, shape4);
+	ft_void_arr_add(&shape_arr, shape5);
 
 	// Lights
 	ft_init_void_arr(&light_arr);

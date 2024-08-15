@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 14:16:04 by lopoka            #+#    #+#             */
-/*   Updated: 2024/08/14 14:41:43 by lucas            ###   ########.fr       */
+/*   Updated: 2024/08/14 19:05:59 by lucas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef STRUCTS_H
@@ -40,6 +40,7 @@ typedef struct s_shape
 	t_clr	color;
 	int		specular;
 	float	reflective;
+	t_vct	orientation;
 }	t_shape;
 
 typedef struct s_light
