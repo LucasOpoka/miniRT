@@ -6,7 +6,7 @@
 #    By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/29 14:59:04 by lopoka            #+#    #+#              #
-#    Updated: 2024/08/15 14:16:59 by atorma           ###   ########.fr        #
+#    Updated: 2024/08/15 14:27:37 by atorma           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = miniRT
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -Ofast -I ./includes
+CFLAGS = -Wall -Wextra -Werror -Ofast
 MLX42 = sources/MLX42
 
 LIBFTDIR = ./libft
@@ -45,7 +45,7 @@ mandatory : .mandatory
 bonus : .bonus
 
 %.o: %.c
-	${CC} ${CFLAGS} -c -o $@ $<
+	${CC} ${CFLAGS} -I./includes -c -o $@ $<
 
 .mandatory : ${OFILES}
 	cmake ${MLX42} -B ${MLX42}/build $(CDEBUG) && make -C ${MLX42}/build -j4
@@ -57,7 +57,7 @@ bonus : .bonus
 .bonus : ${B_OFILES}
 	cmake ${MLX42} -B ${MLX42}/build $(CDEBUG) && make -C ${MLX42}/build -j4
 	$(MAKE) -C $(LIBFTDIR)
-	${CC} -o ${NAME} ${CFLAGS} ${B_OFILES} ${LIBS} -flto
+	${CC} -o ${NAME} ${CFLAGS} ${B_OFILES} ${LIBS}
 	@touch .bonus
 	@rm -f .mandatory
 
