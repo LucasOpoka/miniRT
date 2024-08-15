@@ -6,7 +6,7 @@
 #    By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/29 14:59:04 by lopoka            #+#    #+#              #
-#    Updated: 2024/08/14 14:40:57 by lucas            ###   ########.fr        #
+#    Updated: 2024/08/15 13:49:58 by atorma           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = miniRT
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -Ofast -flto -I ./includes
+CFLAGS = -Wall -Wextra -Werror -Ofast -I ./includes
 MLX42 = sources/MLX42
 
 LIBS = ${MLX42}/build/libmlx42.a -ldl -lglfw -pthread -lm
@@ -31,6 +31,10 @@ OFILES = ${SRCS:.c=.o}
 target debug: CFLAGS = -Wall -Wextra -Werror -fsanitize=address,undefined -O1 -g
 target debug: CDEBUG = -DDEBUG=1
 
+target symbols: CFLAGS = -Wall -Wextra -Werror -g
+target symbols: CDEBUG = -DDEBUG=1
+
+
 export CFLAGS
 
 all : mandatory
@@ -44,7 +48,7 @@ bonus : .bonus
 
 .mandatory : ${OFILES}
 	cmake ${MLX42} -B ${MLX42}/build $(CDEBUG) && make -C ${MLX42}/build -j4
-	${CC} -o ${NAME} ${CFLAGS} ${OFILES} ${LIBS} -flto
+	${CC} -o ${NAME} ${CFLAGS} ${OFILES} ${LIBS}
 	@touch .mandatory
 	@rm -f .bonus
 
@@ -64,5 +68,6 @@ fclean: clean
 
 re: fclean all
 debug: re
+symbols: re
 
-.PHONY: debug, all, clean, fclean, re, mlx42
+.PHONY: debug, symbols, all, clean, fclean, re, mlx42
