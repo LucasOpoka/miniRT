@@ -6,7 +6,7 @@
 /*   By: lucas <lopoka@student.hive.fi>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 16:55:43 by lucas             #+#    #+#             */
-/*   Updated: 2024/08/15 11:30:22 by lucas            ###   ########.fr       */
+/*   Updated: 2024/08/15 14:28:46 by lucas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -255,7 +255,7 @@ void	ft_show_img(t_mrt *mrt)
 
 	t_shape *shape1 = malloc(sizeof(t_shape));
 	shape1->type = t_sphere;
-	shape1->position = ft_create_vct(0, -1, 3);
+	shape1->position = ft_create_vct(0, -1, 4);
 	shape1->radius = 1;
 	shape1->color = ft_create_clr(255, 0, 0);
 	shape1->specular = 500;
@@ -263,7 +263,7 @@ void	ft_show_img(t_mrt *mrt)
 
 	t_shape *shape2 = malloc(sizeof(t_shape));
 	shape2->type = t_sphere;
-	shape2->position = ft_create_vct(2, 0, 4);
+	shape2->position = ft_create_vct(2, 0, 5);
 	shape2->radius = 1;
 	shape2->color = ft_create_clr(0, 0, 255);
 	shape2->specular = 500;
@@ -271,50 +271,88 @@ void	ft_show_img(t_mrt *mrt)
 
 	t_shape *shape3 = malloc(sizeof(t_shape));
 	shape3->type = t_sphere;
-	shape3->position = ft_create_vct(-2, 0, 4);
+	shape3->position = ft_create_vct(-2, 0, 5);
 	shape3->radius = 1;
 	shape3->color = ft_create_clr(0, 255, 0);
 	shape3->specular = 500;
 	shape3->reflective = 0.4;
 
+	// Planes		
+
 	t_shape *shape4 = malloc(sizeof(t_shape));
-	shape4->type = t_sphere;
-	shape4->position = ft_create_vct(0, -5001, 0);
-	shape4->radius = 5000;
+	shape4->type = t_plane;
+	shape4->position = ft_create_vct(0, -2, 0);
 	shape4->color = ft_create_clr(255, 255, 0);
-	shape4->specular = 1000;
-	shape4->reflective = 0.2;
+	shape4->orientation = ft_create_vct(0, 1, 0);
+	shape4->specular = 10;
+	shape4->reflective = 0.01;
 
 	t_shape *shape5 = malloc(sizeof(t_shape));
 	shape5->type = t_plane;
-	shape5->position = ft_create_vct(0, 0, 5);
-	shape5->color = ft_create_clr(90, 34, 139);
-	shape5->orientation = ft_create_vct(0, 1, -1);
-	shape5->specular = 1000;
-	shape5->reflective = 0.4;
+	shape5->position = ft_create_vct(-2, 0, 0);
+	shape5->color = ft_create_clr(59, 255, 255); // azure
+	shape5->orientation = ft_create_vct(1, 0, 0);
+	shape5->specular = 10;
+	shape5->reflective = 0.01;
+
+	t_shape *shape6 = malloc(sizeof(t_shape));
+	shape6->type = t_plane;
+	shape6->position = ft_create_vct(2, 0, 0);
+	shape6->color = ft_create_clr(204, 206, 155); //beige
+	shape6->orientation = ft_create_vct(-1, 0, 0);
+	shape6->specular = 10;
+	shape6->reflective = 0.01;
+	
+	t_shape *shape7 = malloc(sizeof(t_shape));
+	shape7->type = t_plane;
+	shape7->position = ft_create_vct(0, 2, 0);
+	shape7->color = ft_create_clr(90, 34, 139);
+	shape7->orientation = ft_create_vct(0, -1, 0);
+	shape7->specular = 10;
+	shape7->reflective = 0.01;
+	
+	t_shape *shape8 = malloc(sizeof(t_shape));
+	shape8->type = t_plane;
+	shape8->position = ft_create_vct(0, 0, 6);
+	shape8->color = ft_create_clr(180, 180, 180); //grey
+	shape8->orientation = ft_create_vct(0, 0, -1);
+	shape8->specular = 10;
+	shape8->reflective = 0.01;
+	
+	t_shape *shape9 = malloc(sizeof(t_shape));
+	shape9->type = t_plane;
+	shape9->position = ft_create_vct(0, 0, -6);
+	shape9->color = ft_create_clr(90, 0, 139);
+	shape9->orientation = ft_create_vct(0, 0, 1);
+	shape9->specular = 10;
+	shape9->reflective = 0.01;
 	
 	ft_void_arr_add(&shape_arr, shape1);
 	ft_void_arr_add(&shape_arr, shape2);
 	ft_void_arr_add(&shape_arr, shape3);
-	//ft_void_arr_add(&shape_arr, shape4);
+	ft_void_arr_add(&shape_arr, shape4);
 	ft_void_arr_add(&shape_arr, shape5);
+	ft_void_arr_add(&shape_arr, shape6);
+	ft_void_arr_add(&shape_arr, shape7);
+	ft_void_arr_add(&shape_arr, shape8);
+	ft_void_arr_add(&shape_arr, shape9);
 
 	// Lights
 	ft_init_void_arr(&light_arr);
 
 	t_light *light1 = malloc(sizeof(t_light));
 	light1->type = t_ambient;
-	light1->intensity = 0.2;
+	light1->intensity = 0.6;
 
 	t_light *light2 = malloc(sizeof(t_light));
 	light2->type = t_point;
-	light2->intensity = 0.6;
-	light2->position = ft_create_vct(2, 1, 0);
+	light2->intensity = 0.2;
+	light2->position = ft_create_vct(0, 0, 0);
 	
 	t_light *light3 = malloc(sizeof(t_light));
 	light3->type = t_directional;
 	light3->intensity = 0.2;
-	light3->direction = ft_create_vct(1, 4, 4);
+	light3->direction = ft_create_vct(0, 0, 0);
 	
 	ft_void_arr_add(&light_arr, light1);
 	ft_void_arr_add(&light_arr, light2);
