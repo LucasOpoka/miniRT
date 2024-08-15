@@ -1,6 +1,7 @@
 
 #include "../../libft/libft.h"
 #include "../../includes/miniRT.h"
+#include "../../includes/parser.h"
 
 size_t	array_size(char **arr);
 void	array_free(char **arr);

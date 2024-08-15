@@ -11,8 +11,7 @@
 /* ************************************************************************** */
 #include "../../libft/libft.h"
 #include "../includes/miniRT.h"
-
-int	parse_file(char *file);
+#include "../includes/parser.h"
 
 int	main(int ac, char **av)
 {
