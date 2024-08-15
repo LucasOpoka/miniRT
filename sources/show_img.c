@@ -6,14 +6,14 @@
 /*   By: lucas <lopoka@student.hive.fi>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 16:55:43 by lucas             #+#    #+#             */
-/*   Updated: 2024/08/15 11:30:22 by lucas            ###   ########.fr       */
+/*   Updated: 2024/08/15 16:22:16 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
 
 void	ft_closest_intersection(t_vct O, t_vct D, t_void_arr *shape_arr, float t_min, float t_max, float *t_closest, t_shape **shape_closest);
 
-int ft_pixel(int r, int g, int b, int a)
+uint32_t ft_pixel(uint32_t r, uint32_t g, uint32_t b, uint32_t a)
 {
     return (r << 24 | g << 16 | b << 8 | a);
 }
@@ -149,7 +149,7 @@ t_clr	ft_light(t_clr color, t_void_arr *shape_arr, t_void_arr *light_arr, t_vct 
 	return (color);
 }
 
-int	ft_clr_to_int(t_clr clr)
+uint32_t	ft_clr_to_int(t_clr clr)
 {
     return (ft_pixel(clr.r, clr.g, clr.b, 255));
 }
