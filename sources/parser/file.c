@@ -10,7 +10,7 @@ static int	file_validate_name(char	*str)
 	dot = ft_strrchr(str, '.');
 	if (!dot)
 		return (0);
-	if (ft_strcmp(dot, ".rt") != 0)
+	if (dot == str || ft_strcmp(dot, ".rt") != 0)
 		return (0);
 	return (1);
 }

@@ -5,86 +5,82 @@
 
 size_t	array_size(char **arr);
 void	array_free(char **arr);
+char	***array_matrix(char *data);
+void	print_matrix(char ***m);
+void	array_matrix_free(char ***arr);
 char	*file_load(char *file);
+int		validate_identifiers(char ***elements);
 
-int	validate_identifier(char *id)
+int	parse_object(char **object, int id)
 {
-	size_t	len;
-
-	len = ft_strlen(id);
-	if (len != 1 && len != 2)
-		return (0);
-	while (*id)
-	{
-		if (!ft_isalpha(*id))
-			return (0);
-		id++;
-	}
-	return (1);
-}
-
-int	validate_element(int i, char *e)
-{
-	if (i == 0 && !validate_identifier(e))
-		return (0);
-	return (1);
-}
-
-int	parse_line(char *line)
-{
-	char	**elements;
 	size_t	i;
 
 	i = 0;
-	elements = ft_split(line, ' ');
-	if (array_size(elements) <= 2 || array_size(elements) >= 7)
+	printf("OBJ:\t%d", id);
+	while (object[i])
 	{
-		array_free(elements);
-		return (0);
-	}
-	while (elements[i])
-	{
-		if (!validate_element(i, elements[i]))
-		{
-			array_free(elements);
-			return (0);
-		}
-		printf("%s ", elements[i]);
+		printf("\t%s", object[i]);
 		i++;
 	}
 	printf("\n");
-	array_free(elements);
 	return (1);
 }
 
-int	parse_data(char *data)
+int	parse_shape(char **shape, int id)
 {
-	char	**lines;
 	size_t	i;
 
 	i = 0;
-	lines = ft_split(data, '\n');
-	if (array_size(lines) < 6)
+	printf("SHAPE: \t%d", id);
+	while (shape[i])
 	{
-		array_free(lines);
-		return (0);
-	}
-	while (lines[i])
-	{
-		if (!parse_line(lines[i]))
-		{
-			array_free(lines);
-			return (0);
-		}
+		//void arr
+		printf("\t%s", shape[i]);
+		/*
+		 if (!valid_color() return 0
+		 */
 		i++;
 	}
-	printf("line_count: %zu\n", i);
-	array_free(lines);
+	printf("\n");
 	return (1);
 }
 
+int	parse_line(char **line)
+{
+	int		ret;
+	int		id;
+
+	id = identifier_type(line[0]);
+
+	ret = 1;
+	if (id >= ID_SPHERE)
+		ret = parse_shape(line, id);
+	else if (id >= ID_AMBIENT)
+		ret = parse_object(line, id);
+	return (ret);
+}
+
+int	parse_scene(char ***matrix)
+{
+	size_t	i;
+
+	i = 0;
+	if (!validate_identifiers(matrix))
+		return (0);
+	while (matrix[i])
+	{
+		if (!parse_line(matrix[i]))
+			return (0);
+		i++;
+	}
+	printf("line_count: %zu\n", i);
+	return (1);
+}
+
+
 int	parse_file(char *file)
 {
+	char	***matrix;
 	char	*data;
 	int		ret;
 
@@ -93,7 +89,11 @@ int	parse_file(char *file)
 	if (!data)
 		return (0);
 	printf("scene %s raw data:\n %s\n-------------\n", file, data);
-	ret = parse_data(data);
+
+	matrix = array_matrix(data);
+	ret = parse_scene(matrix);
+	array_matrix_free(matrix);
+
 	free(data);
 	return (ret);
 }
