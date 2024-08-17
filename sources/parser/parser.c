@@ -68,7 +68,10 @@ int	parse_scene(char ***matrix)
 	if (!matrix)
 		return (0);
 	if (!validate_identifiers(matrix))
+	{
+		printf("Error: validate_identifiers\n");
 		return (0);
+	}
 	while (matrix[i])
 	{
 		if (!parse_line(matrix[i]))
