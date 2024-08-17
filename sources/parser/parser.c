@@ -13,6 +13,8 @@ int		validate_identifiers(char ***elements);
 double	ft_atof(const char *s);
 t_vct	ft_create_vct(float x, float y, float z);
 t_clr	ft_create_clr(float r, float g, float b);
+void	fill_vector(t_vct *vector, char	*s);
+void	fill_color(t_clr *vector, char	*s);
 
 int	parse_object(char **object, int id)
 {
@@ -37,50 +39,6 @@ void	print_vector(t_vct v)
 void	print_color(t_clr v)
 {
 	printf("COLOR: r: %f, g: %f, b: %f\n", v.r, v.g, v.b);
-}
-
-void	fill_vector(t_vct *vector, char	*s)
-{
-	size_t	i = 0;
-	double	val = 0.0;
-	char	*colon;
-
-	while(i < 3 && *s)
-	{
-		colon = ft_strchr(s, ',');
-		val = ft_atof(s);
-		if (i == 0)
-			vector->x = val;
-		if (i == 1)
-			vector->y = val;
-		if (i == 2)
-			vector->z = val;
-		if (colon)
-			s = colon + 1;
-		i++;
-	}
-}
-
-void	fill_color(t_clr *vector, char	*s)
-{
-	size_t	i = 0;
-	double	val = 0.0;
-	char	*colon;
-
-	while(i < 3 && *s)
-	{
-		colon = ft_strchr(s, ',');
-		val = ft_atof(s);
-		if (i == 0)
-			vector->r = val;
-		if (i == 1)
-			vector->g = val;
-		if (i == 2)
-			vector->b = val;
-		if (colon)
-			s = colon + 1;
-		i++;
-	}
 }
 
 int	shape_add(t_scene *scene, char **elem, size_t elem_size, int id)

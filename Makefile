@@ -31,6 +31,7 @@ SRCS	=	sources/main.c \
 			sources/parser/validate.c \
 			sources/parser/file.c \
 			sources/parser/array.c \
+			sources/parser/fill.c \
 			sources/parser/ft_atof.c \
 
 OFILES = ${SRCS:.c=.o}
