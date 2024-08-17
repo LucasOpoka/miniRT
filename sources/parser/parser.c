@@ -65,6 +65,8 @@ int	parse_scene(char ***matrix)
 	size_t	i;
 
 	i = 0;
+	if (!matrix)
+		return (0);
 	if (!validate_identifiers(matrix))
 		return (0);
 	while (matrix[i])

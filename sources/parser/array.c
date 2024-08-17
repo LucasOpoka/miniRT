@@ -49,14 +49,16 @@ char	***array_matrix(char *data)
 	if (array_size(lines) < 6)
 	{
 		free_array(lines);
+		printf("array_size(lines) < 6\n");
 		return (NULL);
 	}
 	ret = ft_calloc(1, sizeof(char **) * (array_size(lines) + 1));
 	while(ret && lines[i])
 	{
 		ret[i] = ft_split(lines[i], ' ');
-		if (!ret[i] || array_size(ret[i]) <= 2 || array_size(ret[i]) >= 7)
+		if (!ret[i] || array_size(ret[i]) <= 2 || array_size(ret[i]) > 8)
 		{
+			printf("array_size: %zu\n", array_size(ret[i]));
 			array_matrix_free(ret);
 			ret = NULL;
 			break ;

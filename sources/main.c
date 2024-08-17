@@ -6,10 +6,10 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 17:47:44 by lopoka            #+#    #+#             */
-/*   Updated: 2024/08/04 14:15:55 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/08/17 09:30:52 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../../libft/libft.h"
+#include "../libft/libft.h"
 #include "../includes/miniRT.h"
 #include "../includes/parser.h"
 
