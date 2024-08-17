@@ -10,6 +10,7 @@ void	print_matrix(char ***m);
 void	array_matrix_free(char ***arr);
 char	*file_load(char *file);
 int		validate_identifiers(char ***elements);
+double	ft_atof(const char *s);
 
 int	parse_object(char **object, int id)
 {
@@ -26,6 +27,13 @@ int	parse_object(char **object, int id)
 	return (1);
 }
 
+void	print_coords(char **shape)
+{
+	char	*semicolon = ft_strchr(shape[1], ',');
+	*semicolon = '\0';
+	double x = ft_atof(shape[1]);
+	printf("x: %f\n", x);
+}
 int	parse_shape(char **shape, int id)
 {
 	size_t	i;
@@ -41,6 +49,7 @@ int	parse_shape(char **shape, int id)
 		 */
 		i++;
 	}
+	print_coords(shape);
 	printf("\n");
 	return (1);
 }
