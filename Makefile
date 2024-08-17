@@ -75,8 +75,12 @@ fclean: clean
 	rm -rf ${NAME} ${OFILES} ${B_OFILES} ${MLX42}/build
 	@rm -f .bonus .mandatory
 
+debug_clean:
+	rm -rf ${NAME} ${OFILES} ${B_OFILES}
+	$(MAKE) -C $(LIBFTDIR) fclean
+
 re: fclean all
-debug: clean all
+debug: debug_clean all
 symbols: re
 
-.PHONY: debug, symbols, all, clean, fclean, re, mlx42
+.PHONY: debug, debug_clean, symbols, all, clean, fclean, re, mlx42
