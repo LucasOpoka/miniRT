@@ -40,13 +40,21 @@ int	parse_shape(char **shape, int id)
 
 	i = 0;
 	printf("SHAPE: \t%d", id);
+
+
+	/*
+	t_shape *shape1 = malloc(sizeof(t_shape));
+	shape1->type = t_sphere;
+	shape1->position = ft_create_vct(0, -1, 3);
+	shape1->radius = 1;
+	shape1->color = ft_create_clr(255, 0, 0);
+	shape1->specular = 500;
+	shape1->reflective = 0.2;
+	*/
 	while (shape[i])
 	{
-		//void arr
+		//shape_validate()
 		printf("\t%s", shape[i]);
-		/*
-		 if (!valid_color() return 0
-		 */
 		i++;
 	}
 	print_coords(shape);
@@ -92,7 +100,13 @@ int	parse_scene(char ***matrix)
 }
 
 
-int	parse_file(char *file)
+int	init_scene(t_scene *scene)
+{
+	ft_init_void_arr(&scene->shapes);
+	return (1);
+}
+
+int	parse_file(char *file, t_scene *scene)
 {
 	char	***matrix;
 	char	*data;
@@ -104,6 +118,7 @@ int	parse_file(char *file)
 		return (0);
 	printf("scene %s raw data:\n %s\n-------------\n", file, data);
 
+	init_scene(scene);
 	matrix = array_matrix(data);
 	ret = parse_scene(matrix);
 	array_matrix_free(matrix);

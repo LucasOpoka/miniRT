@@ -14,6 +14,6 @@ enum
 };
 
 int	identifier_type(char *id);
-int	parse_file(char *file);
+int	parse_file(char *file, t_scene *scene);
 
 #endif

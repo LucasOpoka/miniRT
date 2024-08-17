@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 17:47:44 by lopoka            #+#    #+#             */
-/*   Updated: 2024/08/17 09:30:52 by atorma           ###   ########.fr       */
+/*   Updated: 2024/08/17 11:53:10 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../libft/libft.h"
@@ -16,10 +16,11 @@
 int	main(int ac, char **av)
 {
 	t_mrt	mrt;
+	t_scene	scene;
 
 	if (ac == 2)
 	{
-		if (!parse_file(av[1]))
+		if (!parse_file(av[1], &scene))
 			ft_putstr_fd("Error\n", 2);
 		return (0);
 	}
