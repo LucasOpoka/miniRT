@@ -26,6 +26,10 @@ SRCS	=	sources/main.c \
 			sources/show_img.c \
 			sources/close.c \
 			sources/void_arr.c \
+			sources/parser/parser.c \
+			sources/parser/validate.c \
+			sources/parser/file.c \
+			sources/parser/array.c \
 
 OFILES = ${SRCS:.c=.o}
 
@@ -71,7 +75,7 @@ fclean: clean
 	@rm -f .bonus .mandatory
 
 re: fclean all
-debug: re
+debug: clean all
 symbols: re
 
 .PHONY: debug, symbols, all, clean, fclean, re, mlx42

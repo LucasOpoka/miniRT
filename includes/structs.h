@@ -73,4 +73,18 @@ typedef struct s_void_arr
 	size_t	to_add;
 }	t_void_arr;
 
+typedef struct t_camera
+{
+	t_vct	position;
+	t_vct	direction;
+	float	fov;
+}	t_camera;
+
+typedef	struct t_scene
+{
+	t_camera	camera;
+	t_void_arr	lights;
+	t_void_arr	shapes;
+}	t_scene;
+
 #endif

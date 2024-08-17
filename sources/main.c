@@ -6,15 +6,23 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 17:47:44 by lopoka            #+#    #+#             */
-/*   Updated: 2024/08/04 14:15:55 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/08/17 09:30:52 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include "../libft/libft.h"
 #include "../includes/miniRT.h"
+#include "../includes/parser.h"
 
 int	main(int ac, char **av)
 {
 	t_mrt	mrt;
 
+	if (ac == 2)
+	{
+		if (!parse_file(av[1]))
+			ft_putstr_fd("Error\n", 2);
+		return (0);
+	}
 	ft_init_stc(&mrt, ac, av);
 	mlx_close_hook(mrt.mlx, &ft_close_hook, &mrt);
 	mlx_key_hook(mrt.mlx, &ft_keyboard_hooks, &mrt);

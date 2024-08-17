@@ -28,10 +28,11 @@ static char	*re_alloc(void *ptr, int len, int new_len)
 	return (new);
 }
 
-static char	*read_buffered(int fd, int buf_size, int *out_size, int *error)
+static char	*read_buffered(int fd, int buf_size,
+		size_t *out_size, int *error)
 {
 	int		size_read;
-	int		total_read;
+	size_t	total_read;
 	char	*buf;
 	char	temp_buf[1024];
 
@@ -57,7 +58,7 @@ static char	*read_buffered(int fd, int buf_size, int *out_size, int *error)
 	return (buf);
 }
 
-char	*read_file(int fd, int buf_size, int *out_size)
+char	*read_file(int fd, int buf_size, size_t *out_size)
 {
 	int		error;
 	char	*data;
