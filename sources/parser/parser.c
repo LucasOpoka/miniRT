@@ -83,20 +83,27 @@ void	fill_color(t_clr *vector, char	*s)
 	}
 }
 
-int	shape_add(t_scene *scene, char **elem, size_t elem_size)
+int	shape_add(t_scene *scene, char **elem, size_t elem_size, int id)
 {
 	t_shape *shape = malloc(sizeof(t_shape));
 
 	if (!shape)
 		return (0);
-	shape->type = t_sphere;
+	shape->type = id;
 	shape->radius = 1;
+	if (id == ID_SPHERE || id == ID_CYLINDER)
+		shape->radius = ft_atof(elem[2]);
+	else if (id == ID_PLANE)
+		fill_vector(&shape->orientation, elem[2]);
 	shape->specular = 500;
 	shape->reflective = 0.2;
 	fill_vector(&shape->position, elem[1]);
 	fill_color(&shape->color, elem[elem_size - 1]);
+
+
 	print_vector(shape->position);
 	print_color(shape->color);
+
 
 	ft_void_arr_add(&scene->shapes, shape);
 	(void)elem;
@@ -118,7 +125,7 @@ int	parse_shape(t_scene *scene, char **shape, int id)
 		printf("\t%s", shape[i]);
 		i++;
 	}
-	shape_add(scene, shape, elem_size);
+	shape_add(scene, shape, elem_size, id);
 	printf("\n");
 	return (1);
 }
