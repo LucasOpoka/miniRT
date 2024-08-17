@@ -6,13 +6,13 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:16:08 by atorma            #+#    #+#             */
-/*   Updated: 2024/04/16 17:28:49 by atorma           ###   ########.fr       */
+/*   Updated: 2024/08/17 11:15:10 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putchar_fd(char c, int fd)
+ssize_t	ft_putchar_fd(char c, int fd)
 {
-	write(fd, &c, sizeof(char));
+	return (write(fd, &c, sizeof(char)));
 }
