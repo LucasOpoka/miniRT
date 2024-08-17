@@ -91,12 +91,12 @@ int	shape_add(t_scene *scene, char **elem, size_t elem_size, int id)
 		return (0);
 	shape->type = id;
 	shape->radius = 1;
+	shape->specular = 500;
+	shape->reflective = 0.2;
 	if (id == ID_SPHERE || id == ID_CYLINDER)
 		shape->radius = ft_atof(elem[2]);
 	else if (id == ID_PLANE)
 		fill_vector(&shape->orientation, elem[2]);
-	shape->specular = 500;
-	shape->reflective = 0.2;
 	fill_vector(&shape->position, elem[1]);
 	fill_color(&shape->color, elem[elem_size - 1]);
 
@@ -106,7 +106,6 @@ int	shape_add(t_scene *scene, char **elem, size_t elem_size, int id)
 
 
 	ft_void_arr_add(&scene->shapes, shape);
-	(void)elem;
 	return (1);
 }
 
