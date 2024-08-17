@@ -11,6 +11,8 @@ void	array_matrix_free(char ***arr);
 char	*file_load(char *file);
 int		validate_identifiers(char ***elements);
 double	ft_atof(const char *s);
+t_vct	ft_create_vct(float x, float y, float z);
+t_clr	ft_create_clr(float r, float g, float b);
 
 int	parse_object(char **object, int id)
 {
@@ -27,42 +29,108 @@ int	parse_object(char **object, int id)
 	return (1);
 }
 
-void	print_coords(char **shape)
+void	print_vector(t_vct v)
 {
-	char	*semicolon = ft_strchr(shape[1], ',');
-	*semicolon = '\0';
-	double x = ft_atof(shape[1]);
-	printf("x: %f\n", x);
+	printf("VECTOR: x: %f, y: %f, z: %f\n", v.x, v.y, v.z);
 }
-int	parse_shape(char **shape, int id)
+
+void	print_color(t_clr v)
+{
+	printf("COLOR: r: %f, g: %f, b: %f\n", v.r, v.g, v.b);
+}
+
+void	fill_vector(t_vct *vector, char	*s)
+{
+	size_t	i = 0;
+	double	val = 0.0;
+	char	*colon;
+
+	while(i < 3 && *s)
+	{
+		colon = ft_strchr(s, ',');
+		val = ft_atof(s);
+		if (i == 0)
+			vector->x = val;
+		if (i == 1)
+			vector->y = val;
+		if (i == 2)
+			vector->z = val;
+		if (colon)
+			s = colon + 1;
+		i++;
+	}
+}
+
+void	fill_color(t_clr *vector, char	*s)
+{
+	size_t	i = 0;
+	double	val = 0.0;
+	char	*colon;
+
+	while(i < 3 && *s)
+	{
+		colon = ft_strchr(s, ',');
+		val = ft_atof(s);
+		if (i == 0)
+			vector->r = val;
+		if (i == 1)
+			vector->g = val;
+		if (i == 2)
+			vector->b = val;
+		if (colon)
+			s = colon + 1;
+		i++;
+	}
+}
+
+int	shape_add(t_scene *scene, char **elem, size_t elem_size, int id)
+{
+	t_shape *shape = malloc(sizeof(t_shape));
+
+	if (!shape)
+		return (0);
+	shape->type = id;
+	shape->radius = 1;
+	if (id == ID_SPHERE || id == ID_CYLINDER)
+		shape->radius = ft_atof(elem[2]);
+	else if (id == ID_PLANE)
+		fill_vector(&shape->orientation, elem[2]);
+	shape->specular = 500;
+	shape->reflective = 0.2;
+	fill_vector(&shape->position, elem[1]);
+	fill_color(&shape->color, elem[elem_size - 1]);
+
+
+	print_vector(shape->position);
+	print_color(shape->color);
+
+
+	ft_void_arr_add(&scene->shapes, shape);
+	(void)elem;
+	return (1);
+}
+
+int	parse_shape(t_scene *scene, char **shape, int id)
 {
 	size_t	i;
+	size_t	elem_size;
 
 	i = 0;
 	printf("SHAPE: \t%d", id);
 
-
-	/*
-	t_shape *shape1 = malloc(sizeof(t_shape));
-	shape1->type = t_sphere;
-	shape1->position = ft_create_vct(0, -1, 3);
-	shape1->radius = 1;
-	shape1->color = ft_create_clr(255, 0, 0);
-	shape1->specular = 500;
-	shape1->reflective = 0.2;
-	*/
+	elem_size = array_size(shape);
+	//shape_validate()
 	while (shape[i])
 	{
-		//shape_validate()
 		printf("\t%s", shape[i]);
 		i++;
 	}
-	print_coords(shape);
+	shape_add(scene, shape, elem_size, id);
 	printf("\n");
 	return (1);
 }
 
-int	parse_line(char **line)
+int	parse_line(t_scene *scene, char **line)
 {
 	int		ret;
 	int		id;
@@ -71,13 +139,13 @@ int	parse_line(char **line)
 
 	ret = 1;
 	if (id >= ID_SPHERE)
-		ret = parse_shape(line, id);
+		ret = parse_shape(scene, line, id);
 	else if (id >= ID_AMBIENT)
 		ret = parse_object(line, id);
 	return (ret);
 }
 
-int	parse_scene(char ***matrix)
+int	parse_scene(t_scene *scene, char ***matrix)
 {
 	size_t	i;
 
@@ -91,7 +159,7 @@ int	parse_scene(char ***matrix)
 	}
 	while (matrix[i])
 	{
-		if (!parse_line(matrix[i]))
+		if (!parse_line(scene, matrix[i]))
 			return (0);
 		i++;
 	}
@@ -120,7 +188,7 @@ int	parse_file(char *file, t_scene *scene)
 
 	init_scene(scene);
 	matrix = array_matrix(data);
-	ret = parse_scene(matrix);
+	ret = parse_scene(scene, matrix);
 	array_matrix_free(matrix);
 
 	free(data);

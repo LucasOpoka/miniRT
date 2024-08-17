@@ -61,7 +61,8 @@ typedef enum e_light_type
 typedef enum e_shape_type
 {
 	t_sphere,
-	t_plane
+	t_plane,
+	t_cylinder
 }	t_shape_type;
 
 typedef struct s_void_arr
