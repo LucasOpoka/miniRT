@@ -6,7 +6,7 @@
 #    By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/29 14:59:04 by lopoka            #+#    #+#              #
-#    Updated: 2024/08/15 14:27:37 by atorma           ###   ########.fr        #
+#    Updated: 2024/08/17 11:22:36 by atorma           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,7 @@ SRCS	=	sources/main.c \
 			sources/parser/validate.c \
 			sources/parser/file.c \
 			sources/parser/array.c \
+			sources/parser/ft_atof.c \
 
 OFILES = ${SRCS:.c=.o}
 
