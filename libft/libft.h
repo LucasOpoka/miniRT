@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:37:08 by atorma            #+#    #+#             */
-/*   Updated: 2024/07/26 17:18:56 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/08/17 11:16:43 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ typedef struct t_write_state
 }	t_write_state;
 
 void		free_array(char	**arr);
-int			ft_strcmp(char *s1, char *s2);
+int			ft_strcmp(const char *s1, const char *s2);
 int			ft_atoi_base(char *str, char *base);
-char		*read_file(int fd, int buf_size, int *out_size);
+char		*read_file(int fd, int buf_size, size_t *out_size);
 char		*ft_strpbrk(char *s1, const char *s2);
 char		*ft_strtok(char *s, const char *delim);
 char		*ft_strtok_r(char *s, const char *delim, char **saveptr);
@@ -85,8 +85,8 @@ char		**ft_split(char const *s, char c);
 char		*ft_itoa(int n);
 char		*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 void		ft_striteri(char *s, void (*f)(unsigned int, char*));
-void		ft_putchar_fd(char c, int fd);
-void		ft_putstr_fd(char *s, int fd);
+ssize_t		ft_putchar_fd(char c, int fd);
+ssize_t		ft_putstr_fd(char *s, int fd);
 void		ft_putendl_fd(char *s, int fd);
 void		ft_putnbr_fd(int n, int fd);
 char		*get_next_line(int fd);

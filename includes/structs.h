@@ -69,7 +69,8 @@ typedef enum e_light_type
 typedef enum e_shape_type
 {
 	t_sphere,
-	t_plane
+	t_plane,
+	t_cylinder
 }	t_shape_type;
 
 typedef struct s_void_arr
@@ -80,5 +81,19 @@ typedef struct s_void_arr
 	size_t	i;
 	size_t	to_add;
 }	t_void_arr;
+
+typedef struct t_camera
+{
+	t_vct	position;
+	t_vct	direction;
+	float	fov;
+}	t_camera;
+
+typedef	struct t_scene
+{
+	t_camera	camera;
+	t_void_arr	lights;
+	t_void_arr	shapes;
+}	t_scene;
 
 #endif

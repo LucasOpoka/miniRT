@@ -6,10 +6,11 @@
 #    By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/29 14:59:04 by lopoka            #+#    #+#              #
-#    Updated: 2024/08/17 17:48:22 by lucas            ###   ########.fr        #
+#    Updated: 2024/08/18 12:16:15 by lucas            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+#MAKEFLAGS += -j4
 NAME = miniRT
 
 CC = cc
@@ -26,10 +27,18 @@ SRCS	=	sources/main.c \
 			sources/show_img.c \
 			sources/close.c \
 			sources/void_arr.c \
+<<<<<<< HEAD
 			sources/vct_math.c \
 			sources/mtrx_math.c \
 			sources/mtrx_transform.c \
 			sources/camera.c \
+=======
+			sources/parser/parser.c \
+			sources/parser/validate.c \
+			sources/parser/file.c \
+			sources/parser/array.c \
+			sources/parser/ft_atof.c \
+>>>>>>> 9013436531d6bf092510b96ea23a3660ae643c54
 
 OFILES = ${SRCS:.c=.o}
 
@@ -74,8 +83,12 @@ fclean: clean
 	rm -rf ${NAME} ${OFILES} ${B_OFILES} ${MLX42}/build
 	@rm -f .bonus .mandatory
 
+debug_clean:
+	rm -rf ${NAME} ${OFILES} ${B_OFILES}
+	$(MAKE) -C $(LIBFTDIR) fclean
+
 re: fclean all
-debug: re
+debug: debug_clean all
 symbols: re
 
-.PHONY: debug, symbols, all, clean, fclean, re, mlx42
+.PHONY: debug, debug_clean, symbols, all, clean, fclean, re, mlx42
