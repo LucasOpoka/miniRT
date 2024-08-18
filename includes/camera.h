@@ -1,25 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
+/*   camera.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: lucas <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/16 17:19:27 by atorma            #+#    #+#             */
-/*   Updated: 2024/08/18 12:42:22 by lucas            ###   ########.fr       */
+/*   Created: 2024/08/17 17:16:20 by lucas             #+#    #+#             */
+/*   Updated: 2024/08/18 13:48:02 by lucas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#ifndef CAMERA_H
+# define CAMERA_H
 
-#include "libft.h"
+void	ft_init_camera(t_camera *camera);
+void	ft_set_camera_matrices(t_camera *camera);
+void	ft_set_world_to_camera(t_mtrx4 *world_to_camera, t_vct cam_position, t_vct cam_y_axis, t_vct cam_z_axis);
 
-ssize_t	ft_putstr_fd(char *s, int fd)
-{
-	unsigned int	len;
-	size_t			bytes_written;
-
-	bytes_written = 0;
-	len = ft_strlen(s);
-	if (len > 0)
-		bytes_written = write(fd, s, len);
-	return (bytes_written);
-}
+#endif

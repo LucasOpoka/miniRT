@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 09:57:29 by lopoka            #+#    #+#             */
-/*   Updated: 2024/08/16 15:12:44 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/08/17 19:57:03 by lucas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -61,16 +61,6 @@ void	ft_mtrx4_sub(t_mtrx3 *mtrx3, t_mtrx4 *mtrx4, int row, int col)
 	}
 }
 
-//-----------------------------------------------------------------------
-
-float	ft_mtrx2_det(t_mtrx2 *mtrx2);
-
-float	ft_mtrx4_cfc(t_mtrx4 *mtrx4, int row, int col);
-float	ft_mtrx4_det(t_mtrx4 *mtrx4);
-
-float	ft_mtrx3_cfc(t_mtrx3 *mtrx3, int row, int col);
-float	ft_mtrx3_det(t_mtrx3 *mtrx3);
-
 float	ft_mtrx2_det(t_mtrx2 *mtrx2)
 {
 	return (mtrx2[0][0][0] * mtrx2[0][1][1] - mtrx2[0][0][1] * mtrx2[0][1][0]);
@@ -98,7 +88,10 @@ float	ft_mtrx4_det(t_mtrx4 *mtrx4)
 	col = 0;
 	res = 0;
 	while (col < 4)
-		res += ft_mtrx4_cfc(mtrx4, 0, col) * mtrx4[0][0][col++];
+	{
+		res += ft_mtrx4_cfc(mtrx4, 0, col) * mtrx4[0][0][col];
+		col++;
+	}
 	return (res);
 }
 
@@ -125,7 +118,10 @@ float	ft_mtrx3_det(t_mtrx3 *mtrx3)
 	col = 0;
 	res = 0;
 	while (col < 3)
-		res += ft_mtrx3_cfc(mtrx3, 0, col) * mtrx3[0][0][col++];
+	{
+		res += ft_mtrx3_cfc(mtrx3, 0, col) * mtrx3[0][0][col];
+		col++;
+	}
 	return (res);
 }
 
@@ -150,6 +146,42 @@ void	ft_mtrx4_inv(t_mtrx4 *res, t_mtrx4 *mtrx4)
 			c++;
 		}
 		r++;
+	}
+}
+
+void	ft_vct_mtrx_mult(t_vct *res, t_mtrx4 m, t_vct v)
+{
+	res->x = v.x * m[0][0] + v.y * m[0][1] + v.z * m[0][2] + v.w * m[0][3];
+	res->y = v.x * m[1][0] + v.y * m[1][1] + v.z * m[1][2] + v.w * m[1][3];
+	res->z = v.x * m[2][0] + v.y * m[2][1] + v.z * m[2][2] + v.w * m[2][3];
+	res->w = v.x * m[3][0] + v.y * m[3][1] + v.z * m[3][2] + v.w * m[3][3];
+}
+
+
+// Multiply two matrices
+// https://www.mathsisfun.com/algebra/matrix-multiplying.html
+void	ft_mtrx_mtrx_mult(t_mtrx4 *res, t_mtrx4 a, t_mtrx4 b)
+{
+	int	row;
+	int	col;
+	int	common;
+
+	ft_bzero(res, sizeof(t_mtrx4));
+	row = 0;
+	while (row < 4)
+	{
+		col = 0;
+		while (col < 4)
+		{
+			common = 0;
+			while (common < 4)
+			{
+				res[0][row][col] += a[row][common] * b[common][col];
+				common++;
+			}
+			col++;
+		}
+		row++;
 	}
 }
 
@@ -209,4 +241,16 @@ int main(void)
 			printf("%f\t", biginv[i][j]);
 		printf("\n");
 	}
+
+	t_mtrx4 big_res;
+
+	printf("\n");
+	ft_mtrx_mtrx_mult(&big_res, big, big);
+	for (int i=0; i<4; i++)
+	{
+		for (int j=0; j<4; j++)
+			printf("%f\t", big_res[i][j]);
+		printf("\n");
+	}
+
 }*/
