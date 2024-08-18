@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 14:16:04 by lopoka            #+#    #+#             */
-/*   Updated: 2024/08/14 19:05:59 by lucas            ###   ########.fr       */
+/*   Updated: 2024/08/17 12:16:39 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef STRUCTS_H
@@ -23,6 +23,7 @@ typedef struct s_vct
 	float	x;
 	float	y;
 	float	z;
+	float	w;
 }	t_vct;
 
 typedef struct s_clr
@@ -50,6 +51,13 @@ typedef struct s_light
 	t_vct	position;
 	t_vct	direction;
 }	t_light;
+
+typedef struct s_camera
+{
+	t_vct	position;
+	t_vct	direction;
+	float	fov;
+}	t_camera;
 
 typedef enum e_light_type
 {
