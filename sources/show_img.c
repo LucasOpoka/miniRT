@@ -6,97 +6,10 @@
 /*   By: lucas <lopoka@student.hive.fi>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 16:55:43 by lopoka            #+#    #+#             */
-/*   Updated: 2024/08/19 16:41:50 by lucas            ###   ########.fr       */
+/*   Updated: 2024/08/19 17:22:34 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
-
-void	ft_closest_intersection(t_vct O, t_vct D, t_scene *scene, float t_min, float t_max, float *t_closest, t_shape **shape_closest);
-
-uint32_t ft_pixel(uint32_t r, uint32_t g, uint32_t b, uint32_t a)
-{
-    return (r << 24 | g << 16 | b << 8 | a);
-}
-
-t_clr	ft_create_clr(float r, float g, float b)
-{
-	t_clr	c;
-
-	c.r = r;
-	c.g = g;
-	c.b = b;
-	return (c);
-}
-
-float	ft_modify_channel(float ch, float i)
-{
-	ch = ch * i;
-	if (ch < 0)
-		return (0);
-	if (ch > 255)
-		return (255);
-	return (ch);
-}
-
-t_clr	ft_light(t_clr color, t_scene *scene, t_vct P, t_vct N, t_vct V, float s)
-{
-	float	light_intensity;
-	t_vct	L;
-	t_vct	R;
-	float	n_dot_l;
-	float	r_dot_v;
-	t_light	*light;
-	size_t	i;
-
-	light_intensity = 0;
-	i = 0;
-	while (i < scene->lights.i)
-	{
-		light = scene->lights.arr[i++];
-
-		if (light->type == t_ambient)
-		{
-			light_intensity += light->intensity;
-			continue ;
-		}
-		if (light->type == t_point)
-			L = ft_vct_sub(light->position, P);
-		else
-			L = light->direction;
-		
-		// Shadow
-		float		t_shdw_closest = FLT_MAX;
-		t_shape		*shdw_closest = NULL;
-
-		ft_closest_intersection(P, L, scene, 0.001, 10000, &t_shdw_closest, &shdw_closest);
-		if (shdw_closest)
-			continue ;
-
-		// Diffuse
-		n_dot_l = ft_vct_dot(N, L);
-		if (n_dot_l > 0)
-			light_intensity += light->intensity * n_dot_l / (ft_vct_len(N) * ft_vct_len(L));
-		
-		// Specular
-		if (s != -1)
-		{
-			R = ft_vct_sub(ft_vct_sclr_mult(N, 2 * n_dot_l), L);
-			r_dot_v = ft_vct_dot(R, V);
-			if (r_dot_v > 0)
-				light_intensity += light->intensity * pow(r_dot_v / (ft_vct_len(R) * ft_vct_len(V)), s);
-		}
-	}
-	
-	color.r = ft_modify_channel(color.r, light_intensity);
-	color.g = ft_modify_channel(color.g, light_intensity);
-	color.b = ft_modify_channel(color.b, light_intensity);
-	return (color);
-}
-
-uint32_t	ft_clr_to_int(t_clr clr)
-{
-    return (ft_pixel(clr.r, clr.g, clr.b, 255));
-}
 
 void	ft_check_closest_shape(t_shape *shape, float t, float t_min, float t_max, float *t_closest, t_shape **shape_closest)
 {
@@ -107,8 +20,13 @@ void	ft_check_closest_shape(t_shape *shape, float t, float t_min, float t_max, f
 	}
 }
 
+// P - C = D*t + X
+// Where C is a center point of a shape that we hit and X equals O-C. 
+
 void	ft_closest_intersection(t_vct O, t_vct D, t_scene *scene, float t_min, float t_max, float *t_closest, t_shape **shape_closest)
 {
+	//X = CO
+
 	t_shape	*shape;
 	size_t	i;
 	
@@ -118,10 +36,10 @@ void	ft_closest_intersection(t_vct O, t_vct D, t_scene *scene, float t_min, floa
 		shape = (t_shape *) scene->shapes.arr[i++];
 		if (shape->type == t_sphere)
 		{
-			t_vct	CO = ft_vct_sub(O, shape->position);
+			t_vct	X = ft_vct_sub(O, shape->position);
 			float	a = ft_vct_dot(D, D);
-			float	b = 2 * ft_vct_dot(CO, D);
-			float	c = ft_vct_dot(CO, CO) - (shape->radius * shape->radius);
+			float	b = 2 * ft_vct_dot(X, D);
+			float	c = ft_vct_dot(X, X) - (shape->radius * shape->radius);
 
 			float discr = b * b - 4 * a * c;
 			if (discr < 0)
@@ -138,51 +56,6 @@ void	ft_closest_intersection(t_vct O, t_vct D, t_scene *scene, float t_min, floa
 		}
 	}
 }
-
-t_vct ft_reflect_ray(t_vct R, t_vct N)
-{
-	return (ft_vct_sub(ft_vct_sclr_mult(N, 2 * ft_vct_dot(N, R)), R));
-}
-
-t_clr	ft_trace_ray(t_vct O, t_vct D, t_scene *scene, float t_min, float t_max, int recursion_depth, float t_closest, t_shape *shape_closest)
-{
-	t_clr		local_color;
-	t_clr		reflected_color;
-	float		rfl;
-
-	if (!shape_closest)
-    	return (ft_create_clr(0, 0, 0));
-	
-	// Light
-	t_vct P = ft_vct_add(O, ft_vct_sclr_mult(D, t_closest));
-	t_vct N = ft_vct_sub(P, shape_closest->position);
-	N = ft_vct_sclr_div(N, ft_vct_len(N));
-	if (shape_closest->type == t_plane)
-	{
-		N = shape_closest->orientation;
-		N = ft_vct_sclr_div(N, ft_vct_len(N));
-	}
-
-	local_color = ft_light(shape_closest->color, scene, P, N, ft_vct_neg(D), shape_closest->specular);
-
-	// Reflected color
-	rfl = shape_closest->reflective;
-	if (!recursion_depth || rfl <= 0)
-		return (local_color);
-
-	float		t_closest_refl = FLT_MAX;
-	t_shape		*shape_closest_refl = NULL;
-
-	ft_closest_intersection(P, ft_reflect_ray(ft_vct_neg(D), N), scene, t_min, t_max, &t_closest_refl, &shape_closest_refl);
-	reflected_color = ft_trace_ray(P, ft_reflect_ray(ft_vct_neg(D) , N), scene , t_min, t_max, recursion_depth - 1, t_closest_refl, shape_closest_refl);
-
-	local_color.r = local_color.r  * (1 - rfl) + reflected_color.r * rfl;
-	local_color.g = local_color.g  * (1 - rfl) + reflected_color.g * rfl;
-	local_color.b = local_color.b  * (1 - rfl) + reflected_color.b * rfl;	
-	
-	return (local_color);
-}
-
 
 void	ft_show_img(t_mrt *mrt)
 {
@@ -215,7 +88,7 @@ void	ft_show_img(t_mrt *mrt)
 			
 			D = ft_pixel_to_ray(pixel_x, pixel_y, scene.camera, &O);
 			ft_closest_intersection(O, D, &scene, 1, 100000, &t_closest, &shape_closest);
-			color = ft_trace_ray(O, D, &scene, 1, 100000, 3, t_closest, shape_closest);
+			color = ft_get_color(O, D, &scene, 1, 100000, 3, t_closest, shape_closest);
 			mlx_put_pixel(mrt->img, pixel_x++, pixel_y, ft_clr_to_int(color));
 		}
 		pixel_y++;

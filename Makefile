@@ -6,7 +6,7 @@
 #    By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/29 14:59:04 by lopoka            #+#    #+#              #
-#    Updated: 2024/08/18 12:52:47 by lopoka           ###   ########.fr        #
+#    Updated: 2024/08/19 16:57:15 by lopoka           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,6 +37,7 @@ SRCS	=	sources/main.c \
 			sources/parser/array.c \
 			sources/parser/ft_atof.c \
 			sources/get_test_scene.c \
+			sources/colour.c \
 
 OFILES = ${SRCS:.c=.o}
 
