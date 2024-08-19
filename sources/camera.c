@@ -6,7 +6,7 @@
 /*   By: lucas <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 13:41:19 by lopoka            #+#    #+#             */
-/*   Updated: 2024/08/18 14:29:01 by lucas            ###   ########.fr       */
+/*   Updated: 2024/08/19 16:06:44 by lucas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -69,3 +69,22 @@ void	ft_set_world_to_camera(t_mtrx4 *world_to_camera, t_vct cam_position, t_vct 
 	ft_mtrx_mtrx_mult(world_to_camera, rotation_matrix, translation_matrix);
 }
 
+t_vct	ft_pixel_to_ray(float pixel_x, float pixel_y, t_camera camera, t_vct *ray_origin_world)
+{	
+	t_vct	ray_pixel_camera;
+	t_vct	ray_pixel_world;
+	t_vct	ray_origin_camera;
+
+	ray_pixel_camera.x = camera.half_wdth - (pixel_x + 0.5) * camera.pixel_size;
+	ray_pixel_camera.y = camera.half_hght - (pixel_y + 0.5) * camera.pixel_size;
+	ray_pixel_camera.z = -1;
+	ray_pixel_camera.w = 1;
+	ft_bzero(&ray_origin_camera, sizeof(t_vct));
+	ray_origin_camera.w = 1;
+	ft_vct_mtrx_mult(ray_origin_world, camera.camera_to_world, ray_origin_camera);
+	ft_vct_mtrx_mult(&ray_pixel_world, camera.camera_to_world, ray_pixel_camera);
+	t_vct Dir = ft_vct_sub(ray_pixel_world, *ray_origin_world);
+	Dir.w = 0;
+	ft_vct_norm(&Dir);
+	return (Dir);
+}
