@@ -6,11 +6,15 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 14:16:04 by lopoka            #+#    #+#             */
-/*   Updated: 2024/08/14 19:05:59 by lucas            ###   ########.fr       */
+/*   Updated: 2024/08/18 13:38:14 by lucas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef STRUCTS_H
 # define STRUCTS_H
+
+typedef float	t_mtrx2[2][2];
+typedef float	t_mtrx3[3][3];
+typedef float	t_mtrx4[4][4];
 
 typedef struct s_mrt
 {
@@ -23,6 +27,7 @@ typedef struct s_vct
 	float	x;
 	float	y;
 	float	z;
+	float	w;
 }	t_vct;
 
 typedef struct s_clr
@@ -79,6 +84,11 @@ typedef struct t_camera
 	t_vct	position;
 	t_vct	direction;
 	float	fov;
+	float	pixel_size;
+	float	half_wdth;
+	float	half_hght;
+	t_mtrx4	world_to_camera;
+	t_mtrx4	camera_to_world;
 }	t_camera;
 
 typedef	struct t_scene

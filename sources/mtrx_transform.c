@@ -1,33 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   mtrx_transform.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/30 17:47:44 by lopoka            #+#    #+#             */
-/*   Updated: 2024/08/18 14:25:33 by lucas            ###   ########.fr       */
+/*   Created: 2024/08/17 12:32:43 by lopoka            #+#    #+#             */
+/*   Updated: 2024/08/18 14:30:07 by lucas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
 
-int	main(int ac, char **av)
+// Create a translation matrix
+// https://www.brainvoyager.com/bv/doc/UsersGuide/CoordsAndTransforms/SpatialTransformationMatrices.html
+void	ft_translation_mtrx(t_mtrx4 *mtrx4, float x, float y, float z)
 {
-	t_mrt	mrt;
-	t_scene	scene;
-
-	if (ac == 2)
-	{
-		if (!parse_file(av[1], &scene))
-			ft_putstr_fd("Error\n", 2);
-		return (0);
-	}
-	ft_init_stc(&mrt, ac, av);
-	mlx_close_hook(mrt.mlx, &ft_close_hook, &mrt);
-	mlx_key_hook(mrt.mlx, &ft_keyboard_hooks, &mrt);
-	ft_show_img(&mrt);
-	//mlx_loop_hook(mrt.mlx, ft_loop_hook, &mrt);
-	mlx_loop(mrt.mlx);
-	mlx_terminate(mrt.mlx);
-	return (0);
+	ft_bzero(mtrx4, sizeof(t_mtrx4));
+	mtrx4[0][0][0] = 1;
+	mtrx4[0][1][1] = 1;
+	mtrx4[0][2][2] = 1;
+	mtrx4[0][3][3] = 1;
+	mtrx4[0][0][3] = x;
+	mtrx4[0][1][3] = y;
+	mtrx4[0][2][3] = z;
 }

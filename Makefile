@@ -6,7 +6,7 @@
 #    By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/29 14:59:04 by lopoka            #+#    #+#              #
-#    Updated: 2024/08/17 11:22:36 by atorma           ###   ########.fr        #
+#    Updated: 2024/08/18 12:52:47 by lopoka           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,12 +27,17 @@ SRCS	=	sources/main.c \
 			sources/show_img.c \
 			sources/close.c \
 			sources/void_arr.c \
+			sources/vct_math.c \
+			sources/mtrx_math.c \
+			sources/mtrx_transform.c \
+			sources/camera.c \
 			sources/parser/parser.c \
 			sources/parser/validate.c \
 			sources/parser/file.c \
 			sources/parser/array.c \
 			sources/parser/fill.c \
 			sources/parser/ft_atof.c \
+			sources/get_test_scene.c \
 
 OFILES = ${SRCS:.c=.o}
 
