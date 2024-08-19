@@ -16,7 +16,15 @@ t_clr	ft_create_clr(float r, float g, float b);
 void	fill_vector(t_vct *vector, char	*s);
 void	fill_color(t_clr *vector, char	*s);
 
-int	parse_object(char **object, int id)
+int	camera_add(t_scene *scene, char **elem)
+{
+	fill_vector(&scene->camera.position, elem[1]);
+	fill_vector(&scene->camera.direction, elem[2]);
+	scene->camera.fov = ft_atof(elem[2]);
+	return (1);
+}
+
+int	parse_object(t_scene *scene, char **object, int id)
 {
 	size_t	i;
 
@@ -28,6 +36,8 @@ int	parse_object(char **object, int id)
 		i++;
 	}
 	printf("\n");
+	if (id == ID_CAMERA)
+		camera_add(scene, object);
 	return (1);
 }
 
@@ -98,7 +108,7 @@ int	parse_line(t_scene *scene, char **line)
 	if (id >= ID_SPHERE)
 		ret = parse_shape(scene, line, id);
 	else if (id >= ID_AMBIENT)
-		ret = parse_object(line, id);
+		ret = parse_object(scene, line, id);
 	return (ret);
 }
 
