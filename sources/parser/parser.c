@@ -128,6 +128,20 @@ int	parse_scene(t_scene *scene, char ***matrix)
 int	init_scene(t_scene *scene)
 {
 	ft_init_void_arr(&scene->shapes);
+	ft_init_void_arr(&scene->lights);
+
+	scene->camera.fov = FOV;
+
+	scene->camera.position.x = 0;
+	scene->camera.position.y = 0;
+	scene->camera.position.z = 0;
+	scene->camera.position.w = 1;
+
+	scene->camera.direction.x = 0;
+	scene->camera.direction.y = 0;
+	scene->camera.direction.z = 1;
+	scene->camera.direction.w = 0;
+
 	return (1);
 }
 
