@@ -28,20 +28,24 @@ void	print_color(t_clr v)
 
 int	light_add(t_scene *scene, char **elem, int id)
 {
-	t_light *light = malloc(sizeof(t_light));
+	t_light	*light;
+
+	light = malloc(sizeof(t_light));
 	if (id == ID_AMBIENT)
 	{
 		light->type = t_ambient;
 		light->intensity = ft_atof(elem[1]);
+		fill_color(&light->color, elem[2]);
 		printf("ambient intensity: %f\n", light->intensity);
-		//light->color here
 	}
-	/*
 	if (id == ID_LIGHT)
 	{
-		light->type = t_light;
+		light->type = t_point;
+		fill_vector(&light->position, elem[1]);
+		light->intensity = ft_atof(elem[2]);
+		fill_color(&light->color, elem[3]);
+		printf("L intensity: %f\n", light->intensity);
 	}
-	*/
 	ft_void_arr_add(&scene->lights, light);
 	return (1);
 }
@@ -73,7 +77,7 @@ int	parse_object(t_scene *scene, char **object, int id)
 	printf("\n");
 	if (id == ID_CAMERA)
 		camera_add(scene, object);
-	else if (id == ID_AMBIENT)
+	else if (id == ID_AMBIENT || id == ID_LIGHT)
 		light_add(scene, object, id);
 	return (1);
 }

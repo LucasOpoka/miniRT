@@ -55,6 +55,7 @@ typedef struct s_light
 	float	intensity;
 	t_vct	position;
 	t_vct	direction;
+	t_clr	color;
 }	t_light;
 
 typedef enum e_light_type
