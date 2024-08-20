@@ -21,28 +21,19 @@ MLX42 = sources/MLX42
 LIBFTDIR = ./libft
 LIBS = $(LIBFTDIR)/libft.a ${MLX42}/build/libmlx42.a -ldl -lglfw -pthread -lm
 
-SRCS	=	sources/main.c \
-			sources/hooks.c \
-			sources/init.c \
-			sources/show_img.c \
-			sources/close.c \
-			sources/void_arr.c \
-			sources/vct_math.c \
-			sources/mtrx_math.c \
-			sources/mtrx_transform.c \
-			sources/camera.c \
-			sources/scene.c \
-			sources/parser/parser.c \
-			sources/parser/validate.c \
-			sources/parser/file.c \
-			sources/parser/array.c \
-			sources/parser/fill.c \
-			sources/parser/ft_atof.c \
-			sources/parser/shape.c \
-			sources/get_test_scene.c \
-			sources/colour.c \
+SOURCE_DIR = sources
+SOURCES = main.c hooks.c init.c show_img.c close.c \
+		  void_arr.c vct_math.c mtrx_math.c \
+		  mtrx_transform.c camera.c scene.c colour.c \
+		  get_test_scene.c
 
-OFILES = ${SRCS:.c=.o}
+PARSER_DIR = sources/parser
+PARSER_SRC= parser.c validate.c file.c array.c \
+			fill.c ft_atof.c shape.c
+PARSER_OBJ = $(addprefix $(PARSER_DIR)/,$(PARSER_SRC:.c=.o))
+
+OFILES = $(addprefix $(SOURCE_DIR)/,$(SOURCES:.c=.o))
+OFILES += $(PARSER_OBJ)
 
 target debug: CFLAGS = -Wall -Wextra -Werror -fsanitize=address,undefined -O1 -g
 target debug: CDEBUG = -DDEBUG=1
