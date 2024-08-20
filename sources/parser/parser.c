@@ -13,21 +13,8 @@ int		validate_identifiers(char ***elements);
 double	ft_atof(const char *s);
 t_vct	ft_create_vct(float x, float y, float z);
 t_clr	ft_create_clr(float r, float g, float b);
-
-int	parse_object(char **object, int id)
-{
-	size_t	i;
-
-	i = 0;
-	printf("OBJ:\t%d", id);
-	while (object[i])
-	{
-		printf("\t%s", object[i]);
-		i++;
-	}
-	printf("\n");
-	return (1);
-}
+void	fill_vector(t_vct *vector, char	*s);
+void	fill_color(t_clr *vector, char	*s);
 
 void	print_vector(t_vct v)
 {
@@ -39,49 +26,58 @@ void	print_color(t_clr v)
 	printf("COLOR: r: %f, g: %f, b: %f\n", v.r, v.g, v.b);
 }
 
-void	fill_vector(t_vct *vector, char	*s)
+int	camera_add(t_scene *scene, char **elem)
 {
-	size_t	i = 0;
-	double	val = 0.0;
-	char	*colon;
-
-	while(i < 3 && *s)
-	{
-		colon = ft_strchr(s, ',');
-		val = ft_atof(s);
-		if (i == 0)
-			vector->x = val;
-		if (i == 1)
-			vector->y = val;
-		if (i == 2)
-			vector->z = val;
-		if (colon)
-			s = colon + 1;
-		i++;
-	}
+	fill_vector(&scene->camera.position, elem[1]);
+	fill_vector(&scene->camera.direction, elem[2]);
+	scene->camera.position.w = 1;
+	scene->camera.direction.w = 0;
+	scene->camera.fov = ft_atof(elem[3]);
+	print_vector(scene->camera.position);
+	print_vector(scene->camera.direction);
+	printf("scene->camera.fov: %f\n", scene->camera.fov);
+	return (1);
 }
 
-void	fill_color(t_clr *vector, char	*s)
+int	light_add(t_scene *scene, char **elem, int id)
 {
-	size_t	i = 0;
-	double	val = 0.0;
-	char	*colon;
-
-	while(i < 3 && *s)
+	t_light *light = malloc(sizeof(t_light));
+	if (id == ID_AMBIENT)
 	{
-		colon = ft_strchr(s, ',');
-		val = ft_atof(s);
-		if (i == 0)
-			vector->r = val;
-		if (i == 1)
-			vector->g = val;
-		if (i == 2)
-			vector->b = val;
-		if (colon)
-			s = colon + 1;
+		light->type = t_ambient;
+		light->intensity = ft_atof(elem[1]);
+		printf("ambient intensity: %f\n", light->intensity);
+		//light->color here
+	}
+	/*
+	if (id == ID_LIGHT)
+	{
+		light->type = t_light;
+	}
+	*/
+	ft_void_arr_add(&scene->lights, light);
+	return (1);
+}
+
+int	parse_object(t_scene *scene, char **object, int id)
+{
+	size_t	i;
+
+	i = 0;
+	printf("OBJ:\t%d", id);
+	while (object[i])
+	{
+		printf("\t%s", object[i]);
 		i++;
 	}
+	printf("\n");
+	if (id == ID_CAMERA)
+		camera_add(scene, object);
+	else if (id == ID_AMBIENT)
+		light_add(scene, object, id);
+	return (1);
 }
+
 
 int	shape_add(t_scene *scene, char **elem, size_t elem_size, int id)
 {
@@ -89,14 +85,14 @@ int	shape_add(t_scene *scene, char **elem, size_t elem_size, int id)
 
 	if (!shape)
 		return (0);
-	shape->type = id;
+	shape->type = t_sphere;
 	shape->radius = 1;
+	shape->specular = 500;
+	shape->reflective = 0.2;
 	if (id == ID_SPHERE || id == ID_CYLINDER)
 		shape->radius = ft_atof(elem[2]);
 	else if (id == ID_PLANE)
 		fill_vector(&shape->orientation, elem[2]);
-	shape->specular = 500;
-	shape->reflective = 0.2;
 	fill_vector(&shape->position, elem[1]);
 	fill_color(&shape->color, elem[elem_size - 1]);
 
@@ -104,9 +100,7 @@ int	shape_add(t_scene *scene, char **elem, size_t elem_size, int id)
 	print_vector(shape->position);
 	print_color(shape->color);
 
-
 	ft_void_arr_add(&scene->shapes, shape);
-	(void)elem;
 	return (1);
 }
 
@@ -141,7 +135,7 @@ int	parse_line(t_scene *scene, char **line)
 	if (id >= ID_SPHERE)
 		ret = parse_shape(scene, line, id);
 	else if (id >= ID_AMBIENT)
-		ret = parse_object(line, id);
+		ret = parse_object(scene, line, id);
 	return (ret);
 }
 
@@ -168,12 +162,6 @@ int	parse_scene(t_scene *scene, char ***matrix)
 }
 
 
-int	init_scene(t_scene *scene)
-{
-	ft_init_void_arr(&scene->shapes);
-	return (1);
-}
-
 int	parse_file(char *file, t_scene *scene)
 {
 	char	***matrix;
@@ -181,12 +169,11 @@ int	parse_file(char *file, t_scene *scene)
 	int		ret;
 
 	ret = 0;
+	ft_bzero(scene, sizeof(t_scene));
 	data = file_load(file);
 	if (!data)
 		return (0);
-	printf("scene %s raw data:\n %s\n-------------\n", file, data);
-
-	init_scene(scene);
+	scene_init(scene);
 	matrix = array_matrix(data);
 	ret = parse_scene(scene, matrix);
 	array_matrix_free(matrix);

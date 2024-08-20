@@ -13,7 +13,7 @@ enum
 	ID_UNKNOWN
 };
 
-int	identifier_type(char *id);
-int	parse_file(char *file, t_scene *scene);
+int		identifier_type(char *id);
+int		parse_file(char *file, t_scene *scene);
 
 #endif

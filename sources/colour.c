@@ -135,9 +135,3 @@ float	ft_modify_channel(float ch, float i)
 		return (255);
 	return (ch);
 }
-
-t_vct ft_reflect_ray(t_vct R, t_vct N)
-{
-	return (ft_vct_sub(ft_vct_sclr_mult(N, 2 * ft_vct_dot(N, R)), R));
-}
-
