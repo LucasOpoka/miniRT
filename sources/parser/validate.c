@@ -3,24 +3,6 @@
 #include "../../includes/miniRT.h"
 #include "../../includes/parser.h"
 
-/*
-static int	validate_id(char *id)
-{
-	size_t	len;
-
-	len = ft_strlen(id);
-	if (len != 1 && len != 2)
-		return (0);
-	while (*id)
-	{
-		if (!ft_isalpha(*id))
-			return (0);
-		id++;
-	}
-	return (1);
-}
-*/
-
 int	identifier_type(char *id)
 {
 	const char	*identifiers[] = {"A", "C", "L", "sp", "pl", "cy", 0 };

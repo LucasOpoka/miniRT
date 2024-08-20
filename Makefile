@@ -47,7 +47,7 @@ OFILES = ${SRCS:.c=.o}
 target debug: CFLAGS = -Wall -Wextra -Werror -fsanitize=address,undefined -O1 -g
 target debug: CDEBUG = -DDEBUG=1
 
-target symbols: CFLAGS = -Wall -Wextra -Werror -g
+target symbols: CFLAGS = -Wall -Wextra -Werror -gdwarf-4
 target symbols: CDEBUG = -DDEBUG=1
 
 
