@@ -30,6 +30,8 @@ int	camera_add(t_scene *scene, char **elem)
 {
 	fill_vector(&scene->camera.position, elem[1]);
 	fill_vector(&scene->camera.direction, elem[2]);
+	scene->camera.position.w = 1;
+	scene->camera.direction.w = 0;
 	scene->camera.fov = ft_atof(elem[3]);
 	print_vector(scene->camera.position);
 	print_vector(scene->camera.direction);
@@ -160,38 +162,6 @@ int	parse_scene(t_scene *scene, char ***matrix)
 }
 
 
-int	init_scene(t_scene *scene)
-{
-	ft_init_void_arr(&scene->shapes);
-	ft_init_void_arr(&scene->lights);
-
-	scene->camera.fov = FOV;
-
-	scene->camera.position.x = 0;
-	scene->camera.position.y = 0;
-	scene->camera.position.z = 0;
-	scene->camera.position.w = 1;
-
-	scene->camera.direction.x = 0;
-	scene->camera.direction.y = 0;
-	scene->camera.direction.z = 1;
-	scene->camera.direction.w = 0;
-
-	t_light *light2 = malloc(sizeof(t_light));
-	light2->type = t_point;
-	light2->intensity = 0.6;
-	light2->position = ft_create_vct(2, 1, 0);
-	
-	t_light *light3 = malloc(sizeof(t_light));
-	light3->type = t_directional;
-	light3->intensity = 0.2;
-	light3->direction = ft_create_vct(1, 4, 4);
-	
-	ft_void_arr_add(&scene->lights, light2);
-	ft_void_arr_add(&scene->lights, light3);
-
-	return (1);
-}
 
 int	parse_file(char *file, t_scene *scene)
 {
@@ -205,7 +175,7 @@ int	parse_file(char *file, t_scene *scene)
 		return (0);
 	printf("scene %s raw data:\n %s\n-------------\n", file, data);
 
-	init_scene(scene);
+	scene_init(scene);
 	matrix = array_matrix(data);
 	ret = parse_scene(scene, matrix);
 	array_matrix_free(matrix);

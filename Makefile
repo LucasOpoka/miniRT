@@ -31,6 +31,7 @@ SRCS	=	sources/main.c \
 			sources/mtrx_math.c \
 			sources/mtrx_transform.c \
 			sources/camera.c \
+			sources/scene.c \
 			sources/parser/parser.c \
 			sources/parser/validate.c \
 			sources/parser/file.c \

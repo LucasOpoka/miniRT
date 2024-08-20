@@ -11,6 +11,8 @@
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
 
+void	scene_free(t_scene *scene);
+
 int	main(int ac, char **av)
 {
 	t_mrt	mrt;
@@ -38,5 +40,6 @@ int	main(int ac, char **av)
 	//mlx_loop_hook(mrt.mlx, ft_loop_hook, &mrt);
 	mlx_loop(mrt.mlx);
 	mlx_terminate(mrt.mlx);
+	scene_free(&scene);
 	return (0);
 }
