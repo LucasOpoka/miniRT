@@ -65,21 +65,14 @@ int	camera_add(t_scene *scene, char **elem)
 
 int	parse_object(t_scene *scene, char **object, int id)
 {
-	size_t	i;
+	int		ret;
 
-	i = 0;
-	printf("OBJ:\t%d", id);
-	while (object[i])
-	{
-		printf("\t%s", object[i]);
-		i++;
-	}
-	printf("\n");
+	ret = 0;
 	if (id == ID_CAMERA)
-		camera_add(scene, object);
+		ret = camera_add(scene, object);
 	else if (id == ID_AMBIENT || id == ID_LIGHT)
-		light_add(scene, object, id);
-	return (1);
+		ret = light_add(scene, object, id);
+	return (ret);
 }
 
 int	parse_shape(t_scene *scene, char **line, int id)
