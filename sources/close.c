@@ -11,14 +11,10 @@
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
 
-void	ft_close(t_mrt *mrt, int code)
+void	ft_close(t_mrt *mrt)
 {
 	if (mrt->img)
 		mlx_delete_image(mrt->mlx, mrt->img);
 	if (mrt->mlx)
-	{
 		mlx_close_window(mrt->mlx);
-		mlx_terminate(mrt->mlx);
-	}
-	exit (code);
 }

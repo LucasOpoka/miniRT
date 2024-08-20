@@ -13,7 +13,7 @@
 
 void	ft_close_hook(void *vd)
 {
-	ft_close((t_mrt *)vd, 0);
+	ft_close((t_mrt *)vd);
 }
 
 void	ft_loop_hook(void *vd)
@@ -28,5 +28,5 @@ void	ft_keyboard_hooks(mlx_key_data_t k_data, void *vd)
 
 	mrt = (t_mrt *)vd;
 	if (k_data.key == MLX_KEY_ESCAPE && k_data.action == MLX_PRESS)
-		ft_close(mrt, 0);
+		ft_close(mrt);
 }

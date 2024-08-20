@@ -162,7 +162,6 @@ int	parse_scene(t_scene *scene, char ***matrix)
 }
 
 
-
 int	parse_file(char *file, t_scene *scene)
 {
 	char	***matrix;
@@ -170,11 +169,10 @@ int	parse_file(char *file, t_scene *scene)
 	int		ret;
 
 	ret = 0;
+	ft_bzero(scene, sizeof(t_scene));
 	data = file_load(file);
 	if (!data)
 		return (0);
-	printf("scene %s raw data:\n %s\n-------------\n", file, data);
-
 	scene_init(scene);
 	matrix = array_matrix(data);
 	ret = parse_scene(scene, matrix);
