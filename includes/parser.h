@@ -13,6 +13,8 @@ enum
 	ID_UNKNOWN
 };
 
+size_t	array_size(char **arr);
+void	array_free(char **arr);
 double	ft_atof(const char *s);
 void	fill_vector(t_vct *vector, char	*s);
 void	fill_color(t_clr *vector, char	*s);

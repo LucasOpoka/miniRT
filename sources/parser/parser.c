@@ -3,11 +3,9 @@
 #include "../../includes/miniRT.h"
 #include "../../includes/parser.h"
 
-size_t	array_size(char **arr);
-void	array_free(char **arr);
 char	***array_matrix(char *data);
-void	print_matrix(char ***m);
 void	array_matrix_free(char ***arr);
+void	print_matrix(char ***m);
 char	*file_load(char *file);
 int		validate_identifiers(char ***elements);
 t_vct	ft_create_vct(float x, float y, float z);
