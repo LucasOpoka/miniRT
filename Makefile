@@ -28,7 +28,7 @@ SOURCES = main.c hooks.c init.c show_img.c close.c \
 		  get_test_scene.c
 
 PARSER_DIR = sources/parser
-PARSER_SRC= parser.c validate.c file.c array.c \
+PARSER_SRC = parser.c validate.c file.c array.c \
 			fill.c ft_atof.c shape.c
 PARSER_OBJ = $(addprefix $(PARSER_DIR)/,$(PARSER_SRC:.c=.o))
 
