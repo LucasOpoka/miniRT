@@ -3,6 +3,8 @@
 #include "../../includes/miniRT.h"
 #include "../../includes/parser.h"
 
+size_t	array_size(char **arr);
+void	array_free(char **arr);
 char	***array_matrix(char *data);
 void	array_matrix_free(char ***arr);
 void	print_matrix(char ***m);

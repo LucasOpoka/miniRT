@@ -4,8 +4,9 @@
 #include "../../includes/parser.h"
 
 double	ft_atof(const char *s);
+int		validate_color(char *s);
 
-void	fill_vector(t_vct *vector, char	*s)
+int	fill_vector(t_vct *vector, char	*s)
 {
 	size_t	i = 0;
 	double	val = 0.0;
@@ -25,14 +26,20 @@ void	fill_vector(t_vct *vector, char	*s)
 			s = colon + 1;
 		i++;
 	}
+	return (1);
 }
 
-void	fill_color(t_clr *vector, char	*s)
+int	fill_color(t_clr *vector, char	*s)
 {
 	size_t	i = 0;
 	double	val = 0.0;
 	char	*colon;
 
+	if (!validate_color(s))
+	{
+		printf("INVALID COLOR\n");
+		return (0);
+	}
 	while(i < 3 && *s)
 	{
 		colon = ft_strchr(s, ',');
@@ -47,4 +54,5 @@ void	fill_color(t_clr *vector, char	*s)
 			s = colon + 1;
 		i++;
 	}
+	return (1);
 }

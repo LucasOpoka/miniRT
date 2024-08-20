@@ -18,6 +18,44 @@ int	identifier_type(char *id)
 	return (i);
 }
 
+size_t	len_till(char *s, int c)
+{
+	char	*character;
+
+	character = ft_strchr(s, c);
+	if (character)
+		return (character - s);
+	return (ft_strlen(s));
+}
+
+int	validate_color(char *s)
+{
+	char	*comma;
+	size_t	count;
+	size_t	len;
+
+	count = 0;
+	while (*s)
+	{
+		len = len_till(s, ',');
+		if (len < 1 || len > 3)
+			return (0);
+		if (ft_atof(s) < 0 || ft_atof(s) > 255)
+			return (0);
+		while (len--)
+		{
+			if (!ft_isdigit(s[len]))
+				return (0);
+		}
+		comma = ft_strchr(s, ',');
+		if (!comma)
+			break ;
+		count++;
+		s = comma + 1;
+	}
+	return (count == 2);
+}
+
 static int	validate_object_count(char **line, int id)
 {
 	const size_t	expected[] = { 3, 4, 4, 4, 4, 6, 0};

@@ -9,7 +9,8 @@ int	sphere_add(t_shape *shape, char **elem)
 	shape->reflective = 0.2;
 	fill_vector(&shape->position, elem[1]);
 	shape->radius = ft_atof(elem[2]);
-	fill_color(&shape->color, elem[3]);
+	if (!fill_color(&shape->color, elem[3]))
+		return (0);
 	return (1);
 }
 
@@ -20,7 +21,8 @@ int	plane_add(t_shape *shape, char **elem)
 	shape->reflective = 0.2;
 	fill_vector(&shape->position, elem[1]);
 	fill_vector(&shape->orientation, elem[2]);
-	fill_color(&shape->color, elem[3]);
+	if (!fill_color(&shape->color, elem[3]))
+		return (0);
 	return (1);
 }
 
@@ -33,6 +35,7 @@ int	cylinder_add(t_shape *shape, char **elem)
 	fill_vector(&shape->orientation, elem[2]);
 	shape->radius = ft_atof(elem[3]);
 	shape->height = ft_atof(elem[4]);
-	fill_color(&shape->color, elem[5]);
+	if (!fill_color(&shape->color, elem[5]))
+		return (0);
 	return (1);
 }
