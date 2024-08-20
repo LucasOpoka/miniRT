@@ -38,6 +38,7 @@ SRCS	=	sources/main.c \
 			sources/parser/array.c \
 			sources/parser/fill.c \
 			sources/parser/ft_atof.c \
+			sources/parser/shape.c \
 			sources/get_test_scene.c \
 			sources/colour.c \
 

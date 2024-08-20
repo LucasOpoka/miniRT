@@ -42,6 +42,7 @@ typedef struct s_shape
 	int		type;
 	t_vct	position;
 	float	radius;
+	float	height;
 	t_clr	color;
 	int		specular;
 	float	reflective;

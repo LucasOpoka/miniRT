@@ -13,6 +13,9 @@ enum
 	ID_UNKNOWN
 };
 
+double	ft_atof(const char *s);
+void	fill_vector(t_vct *vector, char	*s);
+void	fill_color(t_clr *vector, char	*s);
 int		identifier_type(char *id);
 int		parse_file(char *file, t_scene *scene);
 
