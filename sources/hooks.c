@@ -18,7 +18,8 @@ void	ft_close_hook(void *vd)
 
 void	ft_loop_hook(void *vd)
 {
-	ft_show_img((t_mrt *) vd);
+	(void)vd;
+	//ft_show_img((t_mrt *) vd);
 }
 
 void	ft_keyboard_hooks(mlx_key_data_t k_data, void *vd)

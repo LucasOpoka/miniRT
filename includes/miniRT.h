@@ -31,7 +31,7 @@
 # define VIEW_HGHT	1
 # define DISTANCE	1
 
-void		ft_show_img(t_mrt *mrt);
+void		ft_show_img(t_mrt *mrt, t_scene *scene);
 t_clr	ft_create_clr(float r, float g, float b);
 
 void		ft_loop_hook(void *vd);

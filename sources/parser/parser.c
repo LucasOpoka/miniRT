@@ -16,11 +16,44 @@ t_clr	ft_create_clr(float r, float g, float b);
 void	fill_vector(t_vct *vector, char	*s);
 void	fill_color(t_clr *vector, char	*s);
 
+void	print_vector(t_vct v)
+{
+	printf("VECTOR: x: %f, y: %f, z: %f\n", v.x, v.y, v.z);
+}
+
+void	print_color(t_clr v)
+{
+	printf("COLOR: r: %f, g: %f, b: %f\n", v.r, v.g, v.b);
+}
+
 int	camera_add(t_scene *scene, char **elem)
 {
 	fill_vector(&scene->camera.position, elem[1]);
 	fill_vector(&scene->camera.direction, elem[2]);
-	scene->camera.fov = ft_atof(elem[2]);
+	scene->camera.fov = ft_atof(elem[3]);
+	print_vector(scene->camera.position);
+	print_vector(scene->camera.direction);
+	printf("scene->camera.fov: %f\n", scene->camera.fov);
+	return (1);
+}
+
+int	light_add(t_scene *scene, char **elem, int id)
+{
+	t_light *light = malloc(sizeof(t_light));
+	if (id == ID_AMBIENT)
+	{
+		light->type = t_ambient;
+		light->intensity = ft_atof(elem[1]);
+		printf("ambient intensity: %f\n", light->intensity);
+		//light->color here
+	}
+	/*
+	if (id == ID_LIGHT)
+	{
+		light->type = t_light;
+	}
+	*/
+	ft_void_arr_add(&scene->lights, light);
 	return (1);
 }
 
@@ -38,18 +71,11 @@ int	parse_object(t_scene *scene, char **object, int id)
 	printf("\n");
 	if (id == ID_CAMERA)
 		camera_add(scene, object);
+	else if (id == ID_AMBIENT)
+		light_add(scene, object, id);
 	return (1);
 }
 
-void	print_vector(t_vct v)
-{
-	printf("VECTOR: x: %f, y: %f, z: %f\n", v.x, v.y, v.z);
-}
-
-void	print_color(t_clr v)
-{
-	printf("COLOR: r: %f, g: %f, b: %f\n", v.r, v.g, v.b);
-}
 
 int	shape_add(t_scene *scene, char **elem, size_t elem_size, int id)
 {
@@ -57,7 +83,7 @@ int	shape_add(t_scene *scene, char **elem, size_t elem_size, int id)
 
 	if (!shape)
 		return (0);
-	shape->type = id;
+	shape->type = t_sphere;
 	shape->radius = 1;
 	shape->specular = 500;
 	shape->reflective = 0.2;
@@ -71,7 +97,6 @@ int	shape_add(t_scene *scene, char **elem, size_t elem_size, int id)
 
 	print_vector(shape->position);
 	print_color(shape->color);
-
 
 	ft_void_arr_add(&scene->shapes, shape);
 	return (1);
@@ -151,6 +176,19 @@ int	init_scene(t_scene *scene)
 	scene->camera.direction.y = 0;
 	scene->camera.direction.z = 1;
 	scene->camera.direction.w = 0;
+
+	t_light *light2 = malloc(sizeof(t_light));
+	light2->type = t_point;
+	light2->intensity = 0.6;
+	light2->position = ft_create_vct(2, 1, 0);
+	
+	t_light *light3 = malloc(sizeof(t_light));
+	light3->type = t_directional;
+	light3->intensity = 0.2;
+	light3->direction = ft_create_vct(1, 4, 4);
+	
+	ft_void_arr_add(&scene->lights, light2);
+	ft_void_arr_add(&scene->lights, light3);
 
 	return (1);
 }
