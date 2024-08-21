@@ -12,6 +12,8 @@
 #include "../includes/miniRT.h"
 
 void	scene_free(t_scene *scene);
+int		threads_init(t_mrt *mrt);
+void	threads_join(t_mrt *mrt);
 
 int	main(int ac, char **av)
 {
@@ -21,6 +23,8 @@ int	main(int ac, char **av)
 	if (ac != 2)
 	{
 		printf("Usage: ./miniRT <scene.rt file>\n");
+		threads_init(&mrt);
+		threads_join(&mrt);
 		return (EXIT_FAILURE);
 	}
 	if (!parse_file(av[1], &scene))
