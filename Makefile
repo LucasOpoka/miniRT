@@ -25,6 +25,7 @@ SOURCE_DIR = sources
 SOURCES = main.c hooks.c init.c show_img.c close.c \
 		  void_arr.c vct_math.c mtrx_math.c \
 		  mtrx_transform.c camera.c scene.c colour.c \
+		  thread.c \
 		  get_test_scene.c
 
 PARSER_DIR = sources/parser
