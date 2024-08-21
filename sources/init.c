@@ -11,16 +11,14 @@
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
 
-void	ft_init_stc(t_mrt *mrt, int ac, char **av)
+void	ft_init_stc(t_mrt *mrt)
 {
-	(void) ac;
-	(void) av;
 	mrt->mlx = NULL;
 	mrt->img = NULL;
 	mrt->mlx = mlx_init(CANV_WDTH, CANV_HGHT, "miniRT", true);
 	if (!mrt->mlx)
-		ft_close(mrt, 1);
+		ft_close(mrt);
 	mrt->img = mlx_new_image(mrt->mlx, CANV_WDTH, CANV_HGHT);
 	if (!mrt->img || mlx_image_to_window(mrt->mlx, mrt->img, 0, 0) < 0)
-		ft_close(mrt, 1);
+		ft_close(mrt);
 }

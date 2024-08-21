@@ -6,7 +6,7 @@
 /*   By: lucas <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 13:41:19 by lopoka            #+#    #+#             */
-/*   Updated: 2024/08/19 16:06:44 by lucas            ###   ########.fr       */
+/*   Updated: 2024/08/21 16:05:29 by lucas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -65,7 +65,7 @@ void	ft_set_world_to_camera(t_mtrx4 *world_to_camera, t_vct cam_position, t_vct 
 	rotation_matrix[2][1] = -cam_z_axis.y;
 	rotation_matrix[2][2] = -cam_z_axis.z;
 	rotation_matrix[3][3] = 1;
-	ft_translation_mtrx(&translation_matrix, -cam_position.x, -cam_position.y, -cam_position.z);
+	ft_set_translation_mtrx(&translation_matrix, -cam_position.x, -cam_position.y, -cam_position.z);
 	ft_mtrx_mtrx_mult(world_to_camera, rotation_matrix, translation_matrix);
 }
 

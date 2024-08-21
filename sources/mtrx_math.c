@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 09:57:29 by lopoka            #+#    #+#             */
-/*   Updated: 2024/08/17 19:57:03 by lucas            ###   ########.fr       */
+/*   Updated: 2024/08/20 17:41:10 by lucas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -182,6 +182,24 @@ void	ft_mtrx_mtrx_mult(t_mtrx4 *res, t_mtrx4 a, t_mtrx4 b)
 			col++;
 		}
 		row++;
+	}
+}
+
+void	ft_mtrx4_transpose(t_mtrx4 *res, t_mtrx4 in)
+{
+	int	r;
+	int	c;
+
+	r = 0;
+	while (r < 4)
+	{
+		c = 0;
+		while (c < 4)
+		{
+			res[0][r][c] = in[c][r];
+			c++;
+		}
+		r++;
 	}
 }
 

@@ -46,10 +46,10 @@ char	***array_matrix(char *data)
 
 	i = 0;
 	lines = ft_split(data, '\n');
-	if (array_size(lines) < 6)
+	if (array_size(lines) <= 3)
 	{
 		free_array(lines);
-		printf("array_size(lines) < 6\n");
+		printf("invalid object count!\n");
 		return (NULL);
 	}
 	ret = ft_calloc(1, sizeof(char **) * (array_size(lines) + 1));
@@ -58,7 +58,7 @@ char	***array_matrix(char *data)
 		ret[i] = ft_split(lines[i], ' ');
 		if (!ret[i] || array_size(ret[i]) <= 2 || array_size(ret[i]) > 8)
 		{
-			printf("array_size: %zu\n", array_size(ret[i]));
+			printf("invalid object array_size: %zu\n", array_size(ret[i]));
 			array_matrix_free(ret);
 			ret = NULL;
 			break ;

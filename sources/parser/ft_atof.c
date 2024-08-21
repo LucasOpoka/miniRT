@@ -12,13 +12,12 @@ double ft_atof(const char *s)
 		s++;
 	while (*s && ft_isdigit(*s))
 		a = a*10.0 + (*s++ - '0');
-	if (*s++ == '.')
+	if (*s == '.')
+		s++;
+	while (*s && ft_isdigit(*s))
 	{
-		while (*s && ft_isdigit(*s))
-		{
-			a = a*10.0 + (*s++ - '0');
-			e = e-1;
-		}
+		a = a*10.0 + (*s++ - '0');
+		e = e-1;
 	}
 	while (e < 0)
 	{

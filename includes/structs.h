@@ -16,10 +16,15 @@ typedef float	t_mtrx2[2][2];
 typedef float	t_mtrx3[3][3];
 typedef float	t_mtrx4[4][4];
 
+#define MAX_THREADS 4
+
 typedef struct s_mrt
 {
-	mlx_t			*mlx;
-	mlx_image_t		*img;
+	mlx_t				*mlx;
+	mlx_image_t			*img;
+	pthread_t			threads[MAX_THREADS + 1];
+	size_t				thread_count;
+	pthread_mutex_t		lock;
 }	t_mrt;
 
 typedef struct s_vct
@@ -42,6 +47,7 @@ typedef struct s_shape
 	int		type;
 	t_vct	position;
 	float	radius;
+	float	height;
 	t_clr	color;
 	int		specular;
 	float	reflective;
@@ -58,6 +64,7 @@ typedef struct s_light
 	float	intensity;
 	t_vct	position;
 	t_vct	direction;
+	t_clr	color;
 }	t_light;
 
 typedef enum e_light_type
