@@ -6,56 +6,10 @@
 /*   By: lucas <lopoka@student.hive.fi>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 16:55:43 by lopoka            #+#    #+#             */
-/*   Updated: 2024/08/19 17:22:34 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/08/20 21:10:21 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
-
-void	ft_check_closest_shape(t_shape *shape, float t, float t_min, float t_max, float *t_closest, t_shape **shape_closest)
-{
-	if ((t >= t_min && t <= t_max) && t < *t_closest)
-	{
-		*t_closest = t;
-		*shape_closest = shape;
-	}
-}
-
-// P - C = D*t + X
-// Where C is a center point of a shape that we hit and X equals O-C. 
-
-void	ft_closest_intersection(t_vct O, t_vct D, t_scene *scene, float t_min, float t_max, float *t_closest, t_shape **shape_closest)
-{
-	//X = CO
-
-	t_shape	*shape;
-	size_t	i;
-	
-	i = 0;
-	while (i < scene->shapes.i)
-	{
-		shape = (t_shape *) scene->shapes.arr[i++];
-		if (shape->type == t_sphere)
-		{
-			t_vct	X = ft_vct_sub(O, shape->position);
-			float	a = ft_vct_dot(D, D);
-			float	b = 2 * ft_vct_dot(X, D);
-			float	c = ft_vct_dot(X, X) - (shape->radius * shape->radius);
-
-			float discr = b * b - 4 * a * c;
-			if (discr < 0)
-				continue ;
-			ft_check_closest_shape(shape, (-b + sqrt(discr)) / (2 * a), t_min, t_max, t_closest, shape_closest);
-			ft_check_closest_shape(shape, (-b - sqrt(discr)) / (2 * a), t_min, t_max, t_closest, shape_closest);
-		}
-		if (shape->type == t_plane)
-		{
-			float	denom = ft_vct_dot(D, shape->orientation);
-			if (fabs(denom) < 0.0001)
-				continue ;
-			ft_check_closest_shape(shape, ft_vct_dot(ft_vct_sub(shape->position, O), shape->orientation) / denom, t_min, t_max, t_closest, shape_closest);
-		}
-	}
-}
 
 void	ft_show_img(t_mrt *mrt)
 {
@@ -71,6 +25,7 @@ void	ft_show_img(t_mrt *mrt)
 	// Init camera
 	ft_init_camera(&scene.camera);
 	ft_set_camera_matrices(&scene.camera);
+	ft_set_all_shapes_matrices(&scene);
 
 	// Closest shape variables
 	float		t_closest;

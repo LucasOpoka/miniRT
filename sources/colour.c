@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 16:47:05 by lopoka            #+#    #+#             */
-/*   Updated: 2024/08/19 17:03:25 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/08/21 14:51:00 by lucas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -19,7 +19,8 @@ t_clr	ft_get_color(t_vct O, t_vct D, t_scene *scene, float t_min, float t_max, i
 
 	if (!shape_closest)
     	return (ft_create_clr(0, 0, 0));
-	
+	return shape_closest->color;
+
 	// Light
 	t_vct P = ft_vct_add(O, ft_vct_sclr_mult(D, t_closest));
 	t_vct N = ft_vct_sub(P, shape_closest->position);

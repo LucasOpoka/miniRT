@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 14:16:04 by lopoka            #+#    #+#             */
-/*   Updated: 2024/08/18 13:38:14 by lucas            ###   ########.fr       */
+/*   Updated: 2024/08/20 17:47:11 by lucas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef STRUCTS_H
@@ -46,6 +46,10 @@ typedef struct s_shape
 	int		specular;
 	float	reflective;
 	t_vct	orientation;
+	t_vct	scale;
+	t_mtrx4	shape_to_world;
+	t_mtrx4	world_to_shape;
+	t_mtrx4	normal_to_world;
 }	t_shape;
 
 typedef struct s_light
