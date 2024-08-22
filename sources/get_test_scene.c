@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 12:47:38 by lopoka            #+#    #+#             */
-/*   Updated: 2024/08/21 15:28:33 by lucas            ###   ########.fr       */
+/*   Updated: 2024/08/22 16:17:48 by lucas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -80,13 +80,23 @@ t_scene	get_test_scene(void)
 	shape5->specular = 1000;
 	shape5->reflective = 0.4;
 	shape5->scale = ft_create_vct(1, 1, 1);
-	shape5->orientation = ft_create_vct(0, 0, 0);
 	
-	ft_void_arr_add(&scene.shapes, shape1);
-	ft_void_arr_add(&scene.shapes, shape2);
-	ft_void_arr_add(&scene.shapes, shape3);
-	ft_void_arr_add(&scene.shapes, shape4);
+	t_shape *shape6 = malloc(sizeof(t_shape));
+	shape6->type = t_cylinder;
+	shape6->position = ft_create_vct(0, 0, 5);
+	shape6->color = ft_create_clr(90, 34, 139);
+	shape6->orientation = ft_create_vct(0, 1, 0);
+	shape6->specular = 1000;
+	shape6->reflective = 0.4;
+	shape6->scale = ft_create_vct(1, 1, 1);
+	shape6->height = 2;
+	
+	//ft_void_arr_add(&scene.shapes, shape1);
+	//ft_void_arr_add(&scene.shapes, shape2);
+	//ft_void_arr_add(&scene.shapes, shape3);
+	//ft_void_arr_add(&scene.shapes, shape4);
 	//ft_void_arr_add(&scene.shapes, shape5);
+	ft_void_arr_add(&scene.shapes, shape6);
 
 	// Lights
 	ft_init_void_arr(&scene.lights);
