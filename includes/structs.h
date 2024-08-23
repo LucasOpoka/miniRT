@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 14:16:04 by lopoka            #+#    #+#             */
-/*   Updated: 2024/08/20 17:47:11 by lucas            ###   ########.fr       */
+/*   Updated: 2024/08/23 11:47:47 by lucas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef STRUCTS_H
@@ -90,7 +90,7 @@ typedef struct s_void_arr
 	size_t	to_add;
 }	t_void_arr;
 
-typedef struct t_camera
+typedef struct s_camera
 {
 	t_vct	position;
 	t_vct	direction;
@@ -102,11 +102,16 @@ typedef struct t_camera
 	t_mtrx4	camera_to_world;
 }	t_camera;
 
-typedef	struct t_scene
+typedef	struct s_scene
 {
 	t_camera	camera;
 	t_void_arr	lights;
 	t_void_arr	shapes;
 }	t_scene;
 
+typedef	struct s_ray
+{
+	t_vct	O;
+	t_vct	D;
+}	t_ray;
 #endif

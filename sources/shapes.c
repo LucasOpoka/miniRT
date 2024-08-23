@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:44:06 by lopoka            #+#    #+#             */
-/*   Updated: 2024/08/21 16:08:05 by lucas            ###   ########.fr       */
+/*   Updated: 2024/08/23 14:16:57 by lucas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -34,7 +34,7 @@ void	ft_set_shape_matrices(t_shape *shape)
 	ft_set_scaling_mtrx(&scaling_mtrx, shape->scale.x, shape->scale.y, shape->scale.z);
 	ft_set_rotation_mtrx(&rotation_mtrx, shape);
 	ft_set_translation_mtrx(&translation_mtrx, shape->position.x, shape->position.y, shape->position.z);
-	ft_combine_shape_transforms(shape, scaling_mtrx, rotation_mtrx, translation_mtrx);
+	ft_combine_shape_transforms(shape, &scaling_mtrx, &rotation_mtrx, &translation_mtrx);
 }
 
 void	ft_set_rotation_mtrx(t_mtrx4 *rotation_mtrx, t_shape *shape)
@@ -54,9 +54,9 @@ void	ft_set_rotation_mtrx(t_mtrx4 *rotation_mtrx, t_shape *shape)
 	y_axis.y = 1;
 	ft_vct_norm(&y_axis);
 	ft_vct_norm(&shape->orientation);
-	ft_vct_cross_prod(&rotation_axis, y_axis, shape->orientation);
+	ft_vct_cross_prod(&rotation_axis, &y_axis, &shape->orientation);
 	ft_vct_norm(&rotation_axis);
-	rotation_angle = acos(ft_vct_dot(shape->orientation, y_axis));
+	rotation_angle = acos(ft_vct_dot(&shape->orientation, &y_axis));
 	ft_rotation_mtrx_from_axis_and_angle(rotation_mtrx, rotation_axis, rotation_angle);
 }
 
@@ -97,12 +97,12 @@ void	ft_set_rotation_around_x(t_mtrx4 *rotation_mtrx, float rot_angle)
 
 // The Raytracer Challenge p.54 The matrices need to be multiplied in the reverse order that the one in which we want them applied
 // https://www.scratchapixel.com/lessons/mathematics-physics-for-computer-graphics/geometry/transforming-normals.html
-void	ft_combine_shape_transforms(t_shape *shape, t_mtrx4 scaling_mtrx, t_mtrx4 rotation_mtrx, t_mtrx4 translation_mtrx)
+void	ft_combine_shape_transforms(t_shape *shape, t_mtrx4 *scaling_mtrx, t_mtrx4 *rotation_mtrx, t_mtrx4 *translation_mtrx)
 {
 	t_mtrx4	trnsl_x_rot;
 
 	ft_mtrx_mtrx_mult(&trnsl_x_rot, translation_mtrx, rotation_mtrx);
-	ft_mtrx_mtrx_mult(&shape->shape_to_world, trnsl_x_rot, scaling_mtrx);
+	ft_mtrx_mtrx_mult(&shape->shape_to_world, &trnsl_x_rot, scaling_mtrx);
 	ft_mtrx4_inv(&shape->world_to_shape, &shape->shape_to_world);
-	ft_mtrx4_transpose(&shape->normal_to_world, shape->shape_to_world);
+	ft_mtrx4_transpose(&shape->normal_to_world, &shape->shape_to_world);
 }

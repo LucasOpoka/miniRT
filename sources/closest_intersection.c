@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 21:05:34 by lopoka            #+#    #+#             */
-/*   Updated: 2024/08/22 16:14:14 by lucas            ###   ########.fr       */
+/*   Updated: 2024/08/23 14:22:39 by lucas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -26,10 +26,11 @@ void	ft_check_closest_shape(t_shape *shape, float t, float t_min, float t_max, f
 
 void	ft_sphere_intersection(t_vct O, t_vct D, t_shape *shape, float t_min, float t_max, float *t_closest, t_shape **shape_closest)
 {
-	t_vct	X = ft_vct_sub(O, ft_create_vct(0, 0, 0));
-	float	a = ft_vct_dot(D, D);
-	float	b = 2 * ft_vct_dot(X, D);
-	float	c = ft_vct_dot(X, X) - (shape->radius * shape->radius);
+	t_vct	center = ft_create_vct(0, 0, 0);
+	t_vct	X = ft_vct_sub(&O, &center);
+	float	a = ft_vct_dot(&D, &D);
+	float	b = 2 * ft_vct_dot(&X, &D);
+	float	c = ft_vct_dot(&X, &X) - (shape->radius * shape->radius);
 
 	float discr = b * b - 4 * a * c;
 	if (discr < 0)
@@ -40,10 +41,11 @@ void	ft_sphere_intersection(t_vct O, t_vct D, t_shape *shape, float t_min, float
 
 void	ft_plane_intersection(t_vct O, t_vct D, t_shape *shape, float t_min, float t_max, float *t_closest, t_shape **shape_closest)
 {
-	float	denom = ft_vct_dot(D, shape->orientation);
+	float	denom = ft_vct_dot(&D, &shape->orientation);
 	if (fabs(denom) < 0.0001)
 		return ;
-	ft_check_closest_shape(shape, ft_vct_dot(ft_vct_sub(shape->position, O), shape->orientation) / denom, t_min, t_max, t_closest, shape_closest);
+	t_vct diff = ft_vct_sub(&shape->position, &O);
+	ft_check_closest_shape(shape, ft_vct_dot(&diff, &shape->orientation) / denom, t_min, t_max, t_closest, shape_closest);
 }
 
 int	ft_check_caps(t_vct O, t_vct D, float t)
@@ -112,26 +114,29 @@ void	ft_cylinder_intersection(t_vct O, t_vct D, t_shape *shape, float t_min, flo
 	ft_intersect_caps(O, D, shape, t_min, t_max, t_closest, shape_closest);
 }
 
-void	ft_closest_intersection(t_vct O, t_vct D, t_scene *scene, float t_min, float t_max, float *t_closest, t_shape **shape_closest)
+void	ft_ray_to_shape_space(t_ray *shape_ray, t_ray *world_ray, t_shape *shape)
+{	
+	ft_vct_mtrx_mult(&shape_ray->O, &shape->world_to_shape, &world_ray->O);
+	ft_vct_mtrx_mult(&shape_ray->D, &shape->world_to_shape, &world_ray->D);
+}
+
+void	ft_closest_intersection(t_ray world_ray, t_scene *scene, float t_min, float t_max, float *t_closest, t_shape **shape_closest)
 {
 	t_shape	*shape;
+	t_ray	shape_ray;
 	size_t	i;
-	t_vct	NO;
-	t_vct	ND;
 	
 	i = 0;
 	while (i < scene->shapes.i)
 	{
 		shape = (t_shape *) scene->shapes.arr[i++];
-
-		ft_vct_mtrx_mult(&NO, shape->world_to_shape, O);
-		ft_vct_mtrx_mult(&ND, shape->world_to_shape, D);
+		ft_ray_to_shape_space(&shape_ray, &world_ray, shape);
 	
 		if (shape->type == t_sphere)
-			ft_sphere_intersection(NO, ND, shape, t_min, t_max, t_closest, shape_closest);
+			ft_sphere_intersection(shape_ray.O, shape_ray.D, shape, t_min, t_max, t_closest, shape_closest);
 		if (shape->type == t_plane)
-			ft_plane_intersection(NO, ND, shape, t_min, t_max, t_closest, shape_closest);
+			ft_plane_intersection(shape_ray.O, shape_ray.D, shape, t_min, t_max, t_closest, shape_closest);
 		if (shape->type == t_cylinder)
-			ft_cylinder_intersection(NO, ND, shape, t_min, t_max, t_closest, shape_closest);
+			ft_cylinder_intersection(shape_ray.O, shape_ray.D, shape, t_min, t_max, t_closest, shape_closest);
 	}
 }

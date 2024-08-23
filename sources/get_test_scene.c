@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 12:47:38 by lopoka            #+#    #+#             */
-/*   Updated: 2024/08/22 16:17:48 by lucas            ###   ########.fr       */
+/*   Updated: 2024/08/23 14:26:10 by lucas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -92,9 +92,9 @@ t_scene	get_test_scene(void)
 	shape6->height = 2;
 	
 	//ft_void_arr_add(&scene.shapes, shape1);
-	//ft_void_arr_add(&scene.shapes, shape2);
-	//ft_void_arr_add(&scene.shapes, shape3);
-	//ft_void_arr_add(&scene.shapes, shape4);
+	ft_void_arr_add(&scene.shapes, shape2);
+	ft_void_arr_add(&scene.shapes, shape3);
+	ft_void_arr_add(&scene.shapes, shape4);
 	//ft_void_arr_add(&scene.shapes, shape5);
 	ft_void_arr_add(&scene.shapes, shape6);
 
