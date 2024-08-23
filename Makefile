@@ -41,7 +41,7 @@ SOURCES	=	main.c \
 
 PARSER_DIR = sources/parser
 PARSER_SRC = parser.c parser_utils.c validate.c file.c array.c \
-			fill.c ft_atof.c shape.c camera.c light.c
+			fill.c ft_atof.c identifier.c shape.c camera.c light.c
 PARSER_OBJ = $(addprefix $(PARSER_DIR)/,$(PARSER_SRC:.c=.o))
 
 OFILES = $(addprefix $(SOURCE_DIR)/,$(SOURCES:.c=.o))
