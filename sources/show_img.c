@@ -13,6 +13,10 @@
 #include <time.h>
 #include <sys/time.h>
 
+int		threads_init(t_mrt *mrt, t_scene *scene);
+void	threads_wait(t_mrt *mrt);
+void	threads_join(t_mrt *mrt);
+
 long long time_ms(void) {
     struct timeval tv;
 
@@ -20,6 +24,7 @@ long long time_ms(void) {
     return (((long long)tv.tv_sec)*1000)+(tv.tv_usec/1000);
 }
 
+/*
 void	ft_show_img(t_mrt *mrt, t_scene *scene)
 {
 	t_ray		world_ray;
@@ -54,11 +59,10 @@ void	ft_show_img(t_mrt *mrt, t_scene *scene)
 	printf("time_taken: %lld\n", ms_end - ms_start);
 	mlx_image_to_window(mrt->mlx, mrt->img, 0, 0);
 }
+*/
 
 #include <pthread.h>
 
-int		threads_init(t_mrt *mrt, t_scene *scene);
-void	threads_join(t_mrt *mrt);
 
 #define	BLOCK_SIZE 4
 
@@ -68,13 +72,22 @@ void	*worker_routine(void *ptr)
 	t_mrt		*mrt;
 	t_scene		*scene;
 	int			index;
+	t_void_arr	intersections;
 
 	worker = (t_worker *)ptr;
 	mrt = worker->mrt;
 	scene = worker->scene;
 	index = worker->index;
+
+	ft_init_void_arr(&intersections);
+
 	pthread_mutex_lock(&worker->mrt->lock);
+
+	while (!worker->mrt->do_render)
+		pthread_cond_wait(&worker->mrt->notify, &worker->mrt->lock);
+
 	pthread_mutex_unlock(&worker->mrt->lock);
+
 	printf("worker: %d starting\n", index);
 
 	int			block_count = CANV_HGHT / BLOCK_SIZE;
@@ -83,19 +96,13 @@ void	*worker_routine(void *ptr)
 
 	t_ray		world_ray;
 	t_clr		color;
-	t_void_arr	intersections;
 
-	ft_init_void_arr(&intersections);
 	while (i < block_count)
 	{
 		int start_y = i * block_size;
 		if (i == block_count - 1)
 			block_size += CANV_HGHT % BLOCK_SIZE;
 	
-		/*
-		printf("w: %d, start_y: %d\n", index,
-				start_y);		
-				*/
 		int pixel_y = start_y;
 		while (pixel_y < (start_y + block_size))
 		{
@@ -112,6 +119,13 @@ void	*worker_routine(void *ptr)
 		}
 		i += MAX_THREADS;
 	}
+
+	pthread_mutex_lock(&worker->mrt->lock);
+
+	mrt->threads_finished++;
+	pthread_cond_signal(&worker->mrt->notify);
+
+	pthread_mutex_unlock(&worker->mrt->lock);
 	ft_free_void_arr(&intersections);
 
 	(void)mrt;
@@ -142,9 +156,19 @@ void	render_image(t_mrt *mrt, t_scene *scene)
 
 	pixel_y = 0;
 	threads_init(mrt, scene);
+	sleep(1);
+	
+	pthread_mutex_lock(&mrt->lock);
+	printf("lock obtained\n");
+	mrt->threads_finished = 0;
+	mrt->do_render = 1;
+
+	pthread_cond_broadcast(&mrt->notify);
+
 	pthread_mutex_unlock(&mrt->lock);
+
 	long long ms_start = time_ms();
-	threads_join(mrt);
+	threads_wait(mrt);
 	long long ms_end = time_ms();
 	printf("time_taken: %lld\n", ms_end - ms_start);
 	/*
