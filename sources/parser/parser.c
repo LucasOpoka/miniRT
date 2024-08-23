@@ -16,6 +16,7 @@ int		sphere_add(t_shape *shape, char **elem);
 int		plane_add(t_shape *shape, char **elem);
 int		cylinder_add(t_shape *shape, char **elem);
 int		camera_add(t_scene *scene, char **elem);
+int		light_add(t_scene *scene, char **elem, int id);
 
 void	print_vector(t_vct v)
 {
@@ -25,36 +26,6 @@ void	print_vector(t_vct v)
 void	print_color(t_clr v)
 {
 	printf("COLOR: r: %f, g: %f, b: %f\n", v.r, v.g, v.b);
-}
-
-int	light_add(t_scene *scene, char **elem, int id)
-{
-	t_light	*light;
-
-	light = malloc(sizeof(t_light));
-	if (id == ID_AMBIENT)
-	{
-		if (!validate_ratio(elem[1], 0.0, 1.0))
-			return (0);
-		light->type = t_ambient;
-		light->intensity = ft_atof(elem[1]);
-		fill_color(&light->color, elem[2]);
-		printf("ambient intensity: %f\n", light->intensity);
-	}
-	if (id == ID_LIGHT)
-	{
-		if (!validate_coords(elem[1]))
-			return (0);
-		if (!validate_ratio(elem[2], 0.0, 1.0))
-			return (0);
-		light->type = t_point;
-		fill_vector(&light->position, elem[1]);
-		light->intensity = ft_atof(elem[2]);
-		fill_color(&light->color, elem[3]);
-		printf("L intensity: %f\n", light->intensity);
-	}
-	ft_void_arr_add(&scene->lights, light);
-	return (1);
 }
 
 int	parse_object(t_scene *scene, char **object, int id)
