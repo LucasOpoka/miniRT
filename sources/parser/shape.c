@@ -6,12 +6,14 @@ int	validate_orientation(t_vct v);
 
 static int	sphere_add(t_shape *shape, char **elem)
 {
+	if (!str_isfloat(elem[2]))
+		return (0);
 	shape->type = t_sphere;
 	shape->specular = 500;
 	shape->reflective = 0.2;
 	fill_vector(&shape->position, elem[1]);
 	shape->radius = ft_atof(elem[2]);
-	if (!fill_color(&shape->color, elem[3]))
+	if ((shape->radius < 0.0) || !fill_color(&shape->color, elem[3]))
 		return (0);
 	return (1);
 }

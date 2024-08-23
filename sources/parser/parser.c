@@ -53,10 +53,7 @@ int	parse_scene(t_scene *scene, char ***matrix)
 		return (0);
 	}
 	if (!identifiers_validate(matrix))
-	{
-		printf("Error: invalid identifiers detected\n");
 		return (0);
-	}
 	while (matrix[i])
 	{
 		if (!parse_object(scene, matrix[i]))
@@ -87,5 +84,7 @@ int	parse_file(char *file, t_scene *scene)
 	ret = parse_scene(scene, matrix);
 	array_matrix_free(matrix);
 	free(data);
+	if (!ret)
+		scene_free(scene);
 	return (ret);
 }

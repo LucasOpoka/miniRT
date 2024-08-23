@@ -33,7 +33,6 @@ int	main(int ac, char **av)
 	}
 	else if (!parse_file(av[1], &scene))
 	{
-		ft_putstr_fd("Error\n", 2);
 		return (EXIT_FAILURE);
 	}
 	printf("using scene: %s\n", av[1]);
