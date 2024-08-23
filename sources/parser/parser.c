@@ -62,7 +62,10 @@ int	parse_scene(t_scene *scene, char ***matrix)
 	while (matrix[i])
 	{
 		if (!parse_object(scene, matrix[i]))
+		{
+			parser_error("malfored object information detected");
 			return (0);
+		}
 		i++;
 	}
 	return (1);

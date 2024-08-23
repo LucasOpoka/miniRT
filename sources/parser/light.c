@@ -11,7 +11,6 @@ int	light_add_ambient(t_light *light, char **elem)
 		return (0);
 	light->type = t_ambient;
 	light->intensity = ft_atof(elem[1]);
-	printf("ambient intensity: %f\n", light->intensity);
 	return (1);
 }
 
@@ -26,7 +25,6 @@ int	light_add_point(t_light *light, char **elem)
 	light->intensity = ft_atof(elem[2]);
 	if (!fill_color(&light->color, elem[3]))
 		return (0);
-	printf("L intensity: %f\n", light->intensity);
 	return (1);
 }
 
