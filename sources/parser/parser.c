@@ -47,11 +47,14 @@ int	parse_scene(t_scene *scene, char ***matrix)
 	size_t	i;
 
 	i = 0;
-	if (!matrix)
+	if (!scene_init(scene))
+	{
+		printf("Error: failed to initialize scene\n");
 		return (0);
+	}
 	if (!identifiers_validate(matrix))
 	{
-		printf("Error: validate_identifiers\n");
+		printf("Error: invalid identifiers detected\n");
 		return (0);
 	}
 	while (matrix[i])
@@ -74,11 +77,15 @@ int	parse_file(char *file, t_scene *scene)
 	data = file_load(file);
 	if (!data)
 		return (0);
-	scene_init(scene);
 	matrix = array_matrix(data);
+	if (!matrix)
+	{
+		printf("Error: ft_split failed\n");
+		free(data);
+		return (0);
+	}
 	ret = parse_scene(scene, matrix);
 	array_matrix_free(matrix);
-
 	free(data);
 	return (ret);
 }

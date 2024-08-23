@@ -40,6 +40,12 @@ static char	*file_read_data(int fd)
 		printf("Error: unexpected error encounter while reading file\n");
 		return (NULL);
 	}
+	if (!size)
+	{
+		printf("Error: file is empty\n");
+		free(data);
+		return (NULL);
+	}
 	if (size != ft_strlen(data) || !valid_chars(data))
 	{
 		printf("Error: invalid characters on scene file\n");
