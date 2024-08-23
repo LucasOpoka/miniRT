@@ -2,6 +2,8 @@
 #include "../../includes/miniRT.h"
 #include "../../includes/parser.h"
 
+int	validate_orientation(t_vct v);
+
 static int	sphere_add(t_shape *shape, char **elem)
 {
 	shape->type = t_sphere;
@@ -23,6 +25,8 @@ static int	plane_add(t_shape *shape, char **elem)
 	fill_vector(&shape->orientation, elem[2]);
 	if (!fill_color(&shape->color, elem[3]))
 		return (0);
+	if (!validate_orientation(shape->orientation))
+		return (0);
 	return (1);
 }
 
@@ -36,6 +40,8 @@ static int	cylinder_add(t_shape *shape, char **elem)
 	shape->radius = ft_atof(elem[3]);
 	shape->height = ft_atof(elem[4]);
 	if (!fill_color(&shape->color, elem[5]))
+		return (0);
+	if (!validate_orientation(shape->orientation))
 		return (0);
 	return (1);
 }

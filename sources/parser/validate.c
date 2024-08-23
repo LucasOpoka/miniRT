@@ -2,6 +2,15 @@
 #include "../../includes/miniRT.h"
 #include "../../includes/parser.h"
 
+int	validate_orientation(t_vct v)
+{
+	if (v.x < -1.0 || v.y < -1.0 || v.z < -1.0)
+		return (0);
+	if (v.x > 1.0 || v.y > 1.0 || v.z > 1.0)
+		return (0);
+	return (1);
+}
+
 int	validate_ratio(char	*s, double min, double max)
 {
 	size_t	len;

@@ -2,6 +2,8 @@
 #include "../../includes/miniRT.h"
 #include "../../includes/parser.h"
 
+int	validate_orientation(t_vct v);
+
 static int	valid_fov(char *fov)
 {
 	size_t	fov_len;
@@ -12,15 +14,6 @@ static int	valid_fov(char *fov)
 		return (0);
 	fov_val = ft_atof(fov);
 	if (fov_val < 0.0 || fov_val > 180.0)
-		return (0);
-	return (1);
-}
-
-static int	valid_orientation(t_vct v)
-{
-	if (v.x < -1.0 || v.y < -1.0 || v.z < -1.0)
-		return (0);
-	if (v.x > 1.0 || v.y > 1.0 || v.z > 1.0)
 		return (0);
 	return (1);
 }
@@ -39,7 +32,7 @@ int	camera_add(t_scene *scene, char **elem)
 	print_vector(scene->camera.position);
 	print_vector(scene->camera.direction);
 	printf("scene->camera.fov: %f\n", scene->camera.fov);
-	if (!valid_orientation(scene->camera.direction))
+	if (!validate_orientation(scene->camera.direction))
 		return (0);
 	return (1);
 }
