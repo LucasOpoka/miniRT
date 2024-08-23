@@ -43,6 +43,8 @@ int	light_add(t_scene *scene, char **elem, int id)
 	}
 	if (id == ID_LIGHT)
 	{
+		if (!validate_ratio(elem[2], 0.0, 1.0))
+			return (0);
 		light->type = t_point;
 		fill_vector(&light->position, elem[1]);
 		light->intensity = ft_atof(elem[2]);
