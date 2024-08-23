@@ -9,7 +9,7 @@ char	***array_matrix(char *data);
 void	array_matrix_free(char ***arr);
 void	print_matrix(char ***m);
 char	*file_load(char *file);
-int		validate_identifiers(char ***elements);
+int		identifiers_validate(char ***elements);
 t_vct	ft_create_vct(float x, float y, float z);
 t_clr	ft_create_clr(float r, float g, float b);
 int		camera_add(t_scene *scene, char **elem);
@@ -49,7 +49,7 @@ int	parse_scene(t_scene *scene, char ***matrix)
 	i = 0;
 	if (!matrix)
 		return (0);
-	if (!validate_identifiers(matrix))
+	if (!identifiers_validate(matrix))
 	{
 		printf("Error: validate_identifiers\n");
 		return (0);
@@ -62,7 +62,6 @@ int	parse_scene(t_scene *scene, char ***matrix)
 	}
 	return (1);
 }
-
 
 int	parse_file(char *file, t_scene *scene)
 {
