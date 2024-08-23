@@ -27,6 +27,7 @@ typedef struct s_mrt
 	int					threads_finished;
 	pthread_mutex_t		lock;
 	pthread_cond_t		notify;
+	pthread_cond_t		complete;
 	int					do_render;
 }	t_mrt;
 

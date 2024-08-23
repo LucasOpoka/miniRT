@@ -26,6 +26,8 @@ int	threads_init(t_mrt *mrt, t_scene *scene)
 		return (0);
 	if (pthread_cond_init(&mrt->notify, NULL) != 0)
 		return (0);
+	if (pthread_cond_init(&mrt->complete, NULL) != 0)
+		return (0);
 	while (i < MAX_THREADS)
 	{
 		t_worker *worker = worker_init(mrt, scene, i);
@@ -45,8 +47,9 @@ void	threads_wait(t_mrt *mrt)
 	pthread_mutex_lock(&mrt->lock);
 
 	while (mrt->threads_finished != MAX_THREADS)
-		pthread_cond_wait(&mrt->notify, &mrt->lock);
+		pthread_cond_wait(&mrt->complete, &mrt->lock);
 
+	mrt->do_render = 0;
 	pthread_mutex_unlock(&mrt->lock);
 }
 
