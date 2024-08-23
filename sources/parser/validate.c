@@ -51,10 +51,10 @@ int	validate_vector(char *s)
 int	validate_color(char *s)
 {
 	char	*comma;
-	size_t	count;
 	size_t	len;
 
-	count = 0;
+	if (str_charcount(s, ',') != 2)
+		return (0);
 	while (*s)
 	{
 		len = len_till(s, ',');
@@ -70,8 +70,7 @@ int	validate_color(char *s)
 		comma = ft_strchr(s, ',');
 		if (!comma)
 			break ;
-		count++;
 		s = comma + 1;
 	}
-	return (count == 2);
+	return (1);
 }
