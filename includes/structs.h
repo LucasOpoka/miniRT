@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 14:16:04 by lopoka            #+#    #+#             */
-/*   Updated: 2024/08/23 11:47:47 by lucas            ###   ########.fr       */
+/*   Updated: 2024/08/23 18:28:20 by lucas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef STRUCTS_H
@@ -114,4 +114,11 @@ typedef	struct s_ray
 	t_vct	O;
 	t_vct	D;
 }	t_ray;
+
+typedef struct s_intersection
+{
+	t_shape *shape;
+	float	t;
+}	t_intersection;
+
 #endif

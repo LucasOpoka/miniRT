@@ -6,12 +6,37 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 16:47:05 by lopoka            #+#    #+#             */
-/*   Updated: 2024/08/23 13:07:33 by lucas            ###   ########.fr       */
+/*   Updated: 2024/08/23 19:55:35 by lucas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
 
-t_clr	ft_get_color(t_vct O, t_vct D, t_scene *scene, float t_min, float t_max, int recursion_depth, float t_closest, t_shape *shape_closest)
+t_intersection	*ft_closest_intersection(t_void_arr *intersections)
+{
+	t_intersection	*current;
+	t_intersection	*closest;
+	float			lowest_time;
+	size_t				i;
+
+	if (!intersections->arr)
+		return (NULL);
+	lowest_time = FLT_MAX;
+	i = 0;
+	closest = NULL;
+	while (i < intersections->i)
+	{
+		current = (t_intersection *) intersections->arr[i];
+		if (0 <= current->t && current->t < lowest_time)
+		{
+			lowest_time = current->t;
+			closest = current;
+		}
+		i++;
+	}
+	return (closest);
+}
+
+t_clr	ft_get_color(t_vct O, t_vct D, t_scene *scene, int recursion_depth, t_void_arr *intersections)
 {
 	//t_clr		local_color;
 	//t_clr		reflected_color;
@@ -20,14 +45,15 @@ t_clr	ft_get_color(t_vct O, t_vct D, t_scene *scene, float t_min, float t_max, i
 	(void) O;
 	(void) D;
 	(void) scene;
-	(void) t_min;
-	(void) t_max;
 	(void) recursion_depth;
-	(void) t_closest;
 
-	if (!shape_closest)
+	t_intersection	*closest;
+
+	closest = ft_closest_intersection(intersections);
+
+	if (!closest)
     	return (ft_create_clr(0, 0, 0));
-	return shape_closest->color;
+	return closest->shape->color;
 }
 /*
 	// Light

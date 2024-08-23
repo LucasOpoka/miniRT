@@ -6,7 +6,7 @@
 #    By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/29 14:59:04 by lopoka            #+#    #+#              #
-#    Updated: 2024/08/21 15:37:29 by lucas            ###   ########.fr        #
+#    Updated: 2024/08/23 20:07:57 by lucas            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,7 @@ SOURCES	=	main.c \
 			shapes.c \
 			get_test_scene.c \
 			colour.c \
-			closest_intersection.c \
+			intersections.c \
 
 PARSER_DIR = sources/parser
 PARSER_SRC = parser.c parser_utils.c validate.c file.c array.c \

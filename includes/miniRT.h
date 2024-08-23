@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:06:19 by lopoka            #+#    #+#             */
-/*   Updated: 2024/08/23 13:02:34 by lucas            ###   ########.fr       */
+/*   Updated: 2024/08/23 20:08:33 by lucas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINIRT_H
@@ -51,9 +51,11 @@ void		ft_void_arr_add(t_void_arr *void_arr, void *pointer);
 void		ft_free_void_arr(t_void_arr *void_arr);
 
 // REMOVE IN THE FUTURE - test functions
-t_scene		get_test_scene(void);
-void		ft_closest_intersection(t_ray world_ray, t_scene *scene, float t_min, float t_max, float *t_closest, t_shape **shape_closest);
-int			scene_init(t_scene *scene);
-void		scene_free(t_scene *scene);
+t_scene			get_test_scene(void);
+void			ft_get_intersections(t_ray world_ray, t_scene *scene, t_void_arr *intersections);
+void			ft_add_intersection(t_void_arr *intersections, t_shape *shape, float t);
+t_intersection	*ft_closest_intersection(t_void_arr *intersections);
+int				scene_init(t_scene *scene);
+void			scene_free(t_scene *scene);
 
 #endif
