@@ -36,9 +36,13 @@ static char	*file_read_data(int fd)
 	size = 0;
 	data = read_file(fd, 1024, &size);
 	if (!data)
+	{
+		printf("Error: unexpected error encounter while reading file\n");
 		return (NULL);
+	}
 	if (size != ft_strlen(data) || !valid_chars(data))
 	{
+		printf("Error: invalid characters on scene file\n");
 		free(data);
 		return (NULL);
 	}
@@ -52,13 +56,13 @@ char	*file_load(char *file)
 
 	if (!file_validate_name(file))
 	{
-		printf("Error: Invalid filename\n");
+		printf("Error: invalid filename\n");
 		return (NULL);
 	}
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
 	{
-		perror("Error");
+		printf("Error: could not open file\n");
 		return (NULL);
 	}
 	data = file_read_data(fd);
