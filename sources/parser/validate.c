@@ -55,7 +55,8 @@ int	validate_color(char *s)
 
 	if (str_charcount(s, ',') != 2)
 		return (0);
-	while (*s)
+	comma = ft_strchr(s, ',');
+	while (comma)
 	{
 		len = len_till(s, ',');
 		if (len < 1 || len > 3)
