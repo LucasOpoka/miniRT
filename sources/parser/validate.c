@@ -35,7 +35,7 @@ int	validate_ratio(char	*s, double min, double max)
 	return (1);
 }
 
-int	validate_coords(char *s)
+int	validate_vector(char *s)
 {
 	char	*comma;
 	int		i;

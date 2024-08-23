@@ -47,7 +47,7 @@ int	parse_shape(t_scene *scene, char **line, int id)
 
 	ret = 0;
 	shape = malloc(sizeof(t_shape));
-	if (!shape || !validate_coords(line[1]))
+	if (!shape || !validate_vector(line[1]))
 	{
 		free(shape);
 		return (0);

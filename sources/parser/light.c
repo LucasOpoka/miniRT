@@ -17,7 +17,7 @@ int	light_add_ambient(t_light *light, char **elem)
 
 int	light_add_point(t_light *light, char **elem)
 {
-	if (!validate_coords(elem[1]))
+	if (!validate_vector(elem[1]))
 		return (0);
 	if (!validate_ratio(elem[2], 0.0, 1.0))
 		return (0);

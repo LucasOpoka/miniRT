@@ -2,25 +2,34 @@
 #include "../../includes/miniRT.h"
 #include "../../includes/parser.h"
 
-static int	validate_fov(char **elem)
+static int	valid_fov(char *fov)
 {
 	size_t	fov_len;
 	double	fov_val;
 
-	fov_len = ft_strlen(elem[3]);
-	if (!str_isdigit(elem[3]) || (fov_len > 3))
+	fov_len = ft_strlen(fov);
+	if (!str_isdigit(fov) || (fov_len > 3))
 		return (0);
-	fov_val = ft_atof(elem[3]);
+	fov_val = ft_atof(fov);
 	if (fov_val < 0.0 || fov_val > 180.0)
+		return (0);
+	return (1);
+}
+
+static int	valid_orientation(t_vct v)
+{
+	if (v.x < -1.0 || v.y < -1.0 || v.z < -1.0)
+		return (0);
+	if (v.x > 1.0 || v.y > 1.0 || v.z > 1.0)
 		return (0);
 	return (1);
 }
 
 int	camera_add(t_scene *scene, char **elem)
 {
-	if (!validate_coords(elem[1]))
+	if (!validate_vector(elem[1]) || !validate_vector(elem[2]))
 		return (0);
-	if (!validate_fov(elem))
+	if (!valid_fov(elem[3]))
 		return (0);
 	fill_vector(&scene->camera.position, elem[1]);
 	fill_vector(&scene->camera.direction, elem[2]);
@@ -30,5 +39,7 @@ int	camera_add(t_scene *scene, char **elem)
 	print_vector(scene->camera.position);
 	print_vector(scene->camera.direction);
 	printf("scene->camera.fov: %f\n", scene->camera.fov);
+	if (!valid_orientation(scene->camera.direction))
+		return (0);
 	return (1);
 }
