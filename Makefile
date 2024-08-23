@@ -68,7 +68,7 @@ bonus : .bonus
 .mandatory : ${OFILES}
 	cmake ${MLX42} -B ${MLX42}/build $(CDEBUG) && make -C ${MLX42}/build -j4
 	$(MAKE) -C $(LIBFTDIR)
-	${CC} -o ${NAME} ${CFLAGS} ${OFILES} ${LIBS}
+	${CC} -o ${NAME} ${CFLAGS} -pthread ${OFILES} ${LIBS}
 	@touch .mandatory
 	@rm -f .bonus
 

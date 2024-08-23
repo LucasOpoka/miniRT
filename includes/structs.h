@@ -16,7 +16,7 @@ typedef float	t_mtrx2[2][2];
 typedef float	t_mtrx3[3][3];
 typedef float	t_mtrx4[4][4];
 
-#define MAX_THREADS 4
+#define MAX_THREADS 8
 
 typedef struct s_mrt
 {
@@ -120,5 +120,14 @@ typedef struct s_intersection
 	t_shape *shape;
 	float	t;
 }	t_intersection;
+
+typedef struct t_worker
+{
+	t_mrt	*mrt;
+	t_scene *scene;
+	int		index;
+	int		block_count;
+	int		status;
+}	t_worker;
 
 #endif
