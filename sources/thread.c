@@ -3,18 +3,8 @@
 #include "../includes/miniRT.h"
 #include <pthread.h>
 
+t_worker	*worker_init(t_mrt *mrt, t_scene *scene, int i);
 void	*worker_routine(void *ptr);
-
-t_worker	*worker_init(t_mrt *mrt, t_scene *scene, int i)
-{
-	t_worker	*worker;
-
-	worker = malloc(sizeof(t_worker));
-	worker->mrt = mrt;
-	worker->scene = scene;
-	worker->index = i;
-	return (worker);
-}
 
 int	threads_init(t_mrt *mrt, t_scene *scene)
 {

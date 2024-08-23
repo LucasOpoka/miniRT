@@ -15,7 +15,7 @@ NAME = miniRT
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -Ofast
 MLX42 = sources/MLX42
 
 LIBFTDIR = ./libft
@@ -34,6 +34,7 @@ SOURCES	=	main.c \
 			camera.c \
 			scene.c \
 			thread.c \
+			worker.c \
 			shapes.c \
 			get_test_scene.c \
 			colour.c \

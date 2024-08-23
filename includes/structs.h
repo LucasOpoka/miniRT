@@ -131,7 +131,7 @@ typedef struct t_worker
 	t_scene *scene;
 	int		index;
 	int		block_count;
-	int		status;
+	int		done;
 }	t_worker;
 
 #endif
