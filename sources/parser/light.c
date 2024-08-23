@@ -24,7 +24,8 @@ int	light_add_point(t_light *light, char **elem)
 	light->type = t_point;
 	fill_vector(&light->position, elem[1]);
 	light->intensity = ft_atof(elem[2]);
-	fill_color(&light->color, elem[3]);
+	if (!fill_color(&light->color, elem[3]))
+		return (0);
 	printf("L intensity: %f\n", light->intensity);
 	return (1);
 }
