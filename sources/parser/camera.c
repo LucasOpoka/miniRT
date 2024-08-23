@@ -18,6 +18,8 @@ static int	validate_fov(char **elem)
 
 int	camera_add(t_scene *scene, char **elem)
 {
+	if (!validate_coords(elem[1]))
+		return (0);
 	if (!validate_fov(elem))
 		return (0);
 	fill_vector(&scene->camera.position, elem[1]);

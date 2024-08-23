@@ -35,6 +35,27 @@ int	validate_ratio(char	*s, double min, double max)
 	return (1);
 }
 
+int	validate_coords(char *s)
+{
+	char	*comma;
+	int		i;
+
+	if (str_charcount(s, ',') != 2)
+		return (0);
+	i = 3;
+	while (i-- > 0)
+	{
+		if (!str_isfloat(s))
+			return (0);
+		comma = ft_strchr(s, ',');
+		if (!comma)
+			break ;
+		s = comma + 1;
+	}
+
+	return (1);
+}
+
 int	validate_color(char *s)
 {
 	char	*comma;

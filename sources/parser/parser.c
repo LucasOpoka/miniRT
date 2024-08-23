@@ -74,8 +74,11 @@ int	parse_shape(t_scene *scene, char **line, int id)
 
 	ret = 0;
 	shape = malloc(sizeof(t_shape));
-	if (!shape)
+	if (!shape || !validate_coords(line[1]))
+	{
+		free(shape);
 		return (0);
+	}
 	if (id == ID_SPHERE)
 		ret = sphere_add(shape, line);
 	else if (id == ID_PLANE)
