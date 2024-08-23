@@ -12,11 +12,9 @@ char	*file_load(char *file);
 int		validate_identifiers(char ***elements);
 t_vct	ft_create_vct(float x, float y, float z);
 t_clr	ft_create_clr(float r, float g, float b);
-int		sphere_add(t_shape *shape, char **elem);
-int		plane_add(t_shape *shape, char **elem);
-int		cylinder_add(t_shape *shape, char **elem);
 int		camera_add(t_scene *scene, char **elem);
 int		light_add(t_scene *scene, char **elem, int id);
+int		shape_add(t_scene *scene, char **elem, int id);
 
 void	print_vector(t_vct v)
 {
@@ -28,57 +26,19 @@ void	print_color(t_clr v)
 	printf("COLOR: r: %f, g: %f, b: %f\n", v.r, v.g, v.b);
 }
 
-int	parse_object(t_scene *scene, char **object, int id)
-{
-	int		ret;
-
-	ret = 0;
-	if (id == ID_CAMERA)
-		ret = camera_add(scene, object);
-	else if (id == ID_AMBIENT || id == ID_LIGHT)
-		ret = light_add(scene, object, id);
-	return (ret);
-}
-
-int	parse_shape(t_scene *scene, char **line, int id)
-{
-	t_shape *shape;
-	int		ret;
-
-	ret = 0;
-	shape = malloc(sizeof(t_shape));
-	if (!shape || !validate_vector(line[1]))
-	{
-		free(shape);
-		return (0);
-	}
-	if (id == ID_SPHERE)
-		ret = sphere_add(shape, line);
-	else if (id == ID_PLANE)
-		ret = plane_add(shape, line);
-	else if (id == ID_CYLINDER)
-		ret = cylinder_add(shape, line);
-	if (!ret)
-	{
-		free(shape);
-		return (0);
-	}
-	ft_void_arr_add(&scene->shapes, shape);
-	return (1);
-}
-
-int	parse_line(t_scene *scene, char **line)
+int	parse_object(t_scene *scene, char **line)
 {
 	int		ret;
 	int		id;
 
-	id = identifier_type(line[0]);
-
 	ret = 0;
-	if (id >= ID_SPHERE)
-		ret = parse_shape(scene, line, id);
-	else if (id >= ID_AMBIENT)
-		ret = parse_object(scene, line, id);
+	id = identifier_type(line[0]);
+	if (id == ID_CAMERA)
+		ret = camera_add(scene, line);
+	else if (id == ID_AMBIENT || id == ID_LIGHT)
+		ret = light_add(scene, line, id);
+	else if (id >= ID_SPHERE)
+		ret = shape_add(scene, line, id);
 	return (ret);
 }
 
@@ -96,7 +56,7 @@ int	parse_scene(t_scene *scene, char ***matrix)
 	}
 	while (matrix[i])
 	{
-		if (!parse_line(scene, matrix[i]))
+		if (!parse_object(scene, matrix[i]))
 			return (0);
 		i++;
 	}

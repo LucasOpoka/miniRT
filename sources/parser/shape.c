@@ -2,7 +2,7 @@
 #include "../../includes/miniRT.h"
 #include "../../includes/parser.h"
 
-int	sphere_add(t_shape *shape, char **elem)
+static int	sphere_add(t_shape *shape, char **elem)
 {
 	shape->type = t_sphere;
 	shape->specular = 500;
@@ -14,7 +14,7 @@ int	sphere_add(t_shape *shape, char **elem)
 	return (1);
 }
 
-int	plane_add(t_shape *shape, char **elem)
+static int	plane_add(t_shape *shape, char **elem)
 {
 	shape->type = t_plane;
 	shape->specular = 500;
@@ -26,7 +26,7 @@ int	plane_add(t_shape *shape, char **elem)
 	return (1);
 }
 
-int	cylinder_add(t_shape *shape, char **elem)
+static int	cylinder_add(t_shape *shape, char **elem)
 {
 	shape->type = t_cylinder;
 	shape->specular = 500;
@@ -37,5 +37,31 @@ int	cylinder_add(t_shape *shape, char **elem)
 	shape->height = ft_atof(elem[4]);
 	if (!fill_color(&shape->color, elem[5]))
 		return (0);
+	return (1);
+}
+
+int	shape_add(t_scene *scene, char **elem, int id)
+{
+	t_shape	*shape;
+	int		ret;
+
+	ret = 0;
+	if (!validate_vector(elem[1]))
+		return (0);
+	shape = malloc(sizeof(t_shape));
+	if (!shape)
+		return (0);
+	if (id == ID_SPHERE)
+		ret = sphere_add(shape, elem);
+	else if (id == ID_PLANE)
+		ret = plane_add(shape, elem);
+	else if (id == ID_CYLINDER)
+		ret = cylinder_add(shape, elem);
+	if (!ret)
+	{
+		free(shape);
+		return (0);
+	}
+	ft_void_arr_add(&scene->shapes, shape);
 	return (1);
 }
