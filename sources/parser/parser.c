@@ -34,6 +34,8 @@ int	light_add(t_scene *scene, char **elem, int id)
 	light = malloc(sizeof(t_light));
 	if (id == ID_AMBIENT)
 	{
+		if (!validate_ratio(elem[1], 0.0, 1.0))
+			return (0);
 		light->type = t_ambient;
 		light->intensity = ft_atof(elem[1]);
 		fill_color(&light->color, elem[2]);

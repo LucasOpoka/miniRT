@@ -21,14 +21,16 @@ int	identifier_type(char *id)
 
 int	validate_ratio(char	*s, double min, double max)
 {
-	char	*comma;
-	size_t	len_str;
+	size_t	len;
+	double	ratio;
 
-	len_str = ft_strlen(s);
-	comma = ft_strchr(s, ',');
-	if (len_str != 7 || !comma)
+	len = ft_strlen(s);
+	if (len != 3)
 		return (0);
-	if (ft_atof(s) < min || ft_atof(comma + 1) > max)
+	if (!ft_isdigit(s[0]) || s[1] != '.' || !ft_isdigit(s[2]))
+		return (0);
+	ratio = ft_atof(s);
+	if (ratio < min || ratio > max)
 		return (0);
 	return (1);
 }
