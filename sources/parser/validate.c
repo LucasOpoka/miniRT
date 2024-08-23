@@ -18,14 +18,19 @@ int	identifier_type(char *id)
 	return (i);
 }
 
-size_t	len_till(char *s, int c)
-{
-	char	*character;
 
-	character = ft_strchr(s, c);
-	if (character)
-		return (character - s);
-	return (ft_strlen(s));
+int	validate_ratio(char	*s, double min, double max)
+{
+	char	*comma;
+	size_t	len_str;
+
+	len_str = ft_strlen(s);
+	comma = ft_strchr(s, ',');
+	if (len_str != 7 || !comma)
+		return (0);
+	if (ft_atof(s) < min || ft_atof(comma + 1) > max)
+		return (0);
+	return (1);
 }
 
 int	validate_color(char *s)

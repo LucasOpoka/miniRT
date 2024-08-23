@@ -15,6 +15,7 @@ t_clr	ft_create_clr(float r, float g, float b);
 int		sphere_add(t_shape *shape, char **elem);
 int		plane_add(t_shape *shape, char **elem);
 int		cylinder_add(t_shape *shape, char **elem);
+int		camera_add(t_scene *scene, char **elem);
 
 void	print_vector(t_vct v)
 {
@@ -47,19 +48,6 @@ int	light_add(t_scene *scene, char **elem, int id)
 		printf("L intensity: %f\n", light->intensity);
 	}
 	ft_void_arr_add(&scene->lights, light);
-	return (1);
-}
-
-int	camera_add(t_scene *scene, char **elem)
-{
-	fill_vector(&scene->camera.position, elem[1]);
-	fill_vector(&scene->camera.direction, elem[2]);
-	scene->camera.position.w = 1;
-	scene->camera.direction.w = 0;
-	scene->camera.fov = ft_atof(elem[3]);
-	print_vector(scene->camera.position);
-	print_vector(scene->camera.direction);
-	printf("scene->camera.fov: %f\n", scene->camera.fov);
 	return (1);
 }
 

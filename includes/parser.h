@@ -13,6 +13,11 @@ enum
 	ID_UNKNOWN
 };
 
+void	print_vector(t_vct v);
+void	print_color(t_clr v);
+int		str_isdigit(char *s);
+size_t	len_till(char *s, int c);
+
 size_t	array_size(char **arr);
 void	array_free(char **arr);
 double	ft_atof(const char *s);
@@ -20,5 +25,6 @@ int		fill_vector(t_vct *vector, char	*s);
 int		fill_color(t_clr *vector, char	*s);
 int		identifier_type(char *id);
 int		parse_file(char *file, t_scene *scene);
+int		validate_ratio(char	*s, double min, double max);
 
 #endif
