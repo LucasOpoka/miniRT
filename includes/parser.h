@@ -15,6 +15,7 @@ enum
 
 void	print_vector(t_vct v);
 void	print_color(t_clr v);
+void	parser_error(char *err_str);
 int		str_isdigit(char *s);
 int		str_isfloat(char *s);
 size_t	str_charcount(char *s, int c);

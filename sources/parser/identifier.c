@@ -56,14 +56,14 @@ int	identifiers_validate(char ***elements)
 	i = 0;
 	if (!identifiers_check(elements))
 	{
-		printf("Error: invalid or duplicate identifiers\n");
+		parser_error("invalid or duplicate identifiers");
 		return (0);
 	}
 	while (elements[i])
 	{
 		if (!validate_object_count(elements[i], identifier_type(elements[i][0])))
 		{
-			printf("Error: invalid element count on an object\n");
+			parser_error("invalid element count on an object");
 			return (0);
 		}
 		i++;

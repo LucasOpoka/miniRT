@@ -36,10 +36,7 @@ int	fill_color(t_clr *vector, char	*s)
 	char	*colon;
 
 	if (!validate_color(s))
-	{
-		printf("INVALID COLOR\n");
 		return (0);
-	}
 	while(i < 3 && *s)
 	{
 		colon = ft_strchr(s, ',');

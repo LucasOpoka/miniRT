@@ -31,7 +31,6 @@ int	camera_add(t_scene *scene, char **elem)
 	scene->camera.fov = ft_atof(elem[3]);
 	print_vector(scene->camera.position);
 	print_vector(scene->camera.direction);
-	printf("scene->camera.fov: %f\n", scene->camera.fov);
 	if (!validate_orientation(scene->camera.direction))
 		return (0);
 	return (1);

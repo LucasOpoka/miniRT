@@ -26,6 +26,11 @@ void	print_color(t_clr v)
 	printf("COLOR: r: %f, g: %f, b: %f\n", v.r, v.g, v.b);
 }
 
+void	parser_error(char *err_str)
+{
+	printf("Error\n%s\n", err_str);
+}
+
 int	parse_object(t_scene *scene, char **line)
 {
 	int		ret;
@@ -49,7 +54,7 @@ int	parse_scene(t_scene *scene, char ***matrix)
 	i = 0;
 	if (!scene_init(scene))
 	{
-		printf("Error: failed to initialize scene\n");
+		parser_error("failed to initialize scene");
 		return (0);
 	}
 	if (!identifiers_validate(matrix))
@@ -77,7 +82,7 @@ int	parse_file(char *file, t_scene *scene)
 	matrix = array_matrix(data);
 	if (!matrix)
 	{
-		printf("Error: ft_split failed\n");
+		parser_error("ft_split failed");
 		free(data);
 		return (0);
 	}
