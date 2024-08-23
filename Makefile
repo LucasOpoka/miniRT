@@ -33,6 +33,7 @@ SOURCES	=	main.c \
 			mtrx_transform.c \
 			camera.c \
 			scene.c \
+			thread.c \
 			shapes.c \
 			get_test_scene.c \
 			colour.c \
