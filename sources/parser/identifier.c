@@ -49,18 +49,39 @@ static int	check_duplicates(char ***elements, int i)
 	return (1);
 }
 
+static int	identifiers_check(char ***elements)
+{
+	size_t	i;
+	int		found[16];
+	int		id;
+
+	i = 0;
+	ft_bzero(found, 16 * sizeof(int));
+	while (elements[i])
+	{
+		id = identifier_type(elements[i][0]);
+		if (id == ID_UNKNOWN)
+			return (0);
+		if (id == ID_CAMERA)
+			found[0] += 1;
+		if (id == ID_AMBIENT)
+			found[1] += 1;
+		i++;
+	}
+	if (!found[0] || !found[1])
+		return (0);
+	return (1);
+}
+
 int	identifiers_validate(char ***elements)
 {
 	size_t	i;
 
 	i = 0;
+	if (!identifiers_check(elements))
+		return (0);
 	while (elements[i])
 	{
-		if (identifier_type(elements[i][0]) == ID_UNKNOWN)
-		{
-			printf("Invalid identifier found!\n");
-			return (0);
-		}
 		if (!validate_object_count(elements[i], identifier_type(elements[i][0])))
 		{
 			printf("Invalid object count!\n");
