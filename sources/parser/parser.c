@@ -43,6 +43,8 @@ int	light_add(t_scene *scene, char **elem, int id)
 	}
 	if (id == ID_LIGHT)
 	{
+		if (!validate_coords(elem[1]))
+			return (0);
 		if (!validate_ratio(elem[2], 0.0, 1.0))
 			return (0);
 		light->type = t_point;
