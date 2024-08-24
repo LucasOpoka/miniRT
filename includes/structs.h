@@ -6,17 +6,18 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 14:16:04 by lopoka            #+#    #+#             */
-/*   Updated: 2024/08/24 17:33:33 by atorma           ###   ########.fr       */
+/*   Updated: 2024/08/24 18:26:18 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef STRUCTS_H
 # define STRUCTS_H
 
+#include "worker.h"
+
 typedef float	t_mtrx2[2][2];
 typedef float	t_mtrx3[3][3];
 typedef float	t_mtrx4[4][4];
 
-#define MAX_THREADS 6
 
 typedef struct s_mrt
 {

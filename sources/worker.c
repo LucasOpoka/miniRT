@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:29:51 by atorma            #+#    #+#             */
-/*   Updated: 2024/08/24 17:29:55 by atorma           ###   ########.fr       */
+/*   Updated: 2024/08/24 18:21:03 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,6 @@ void	*worker_routine(void *ptr)
 			worker_render_section(worker, worker->scene, i);
 			i += MAX_THREADS;
 		}
-		printf("worker %d finished\n", worker->index);
 		worker_signal_finish(worker);	
 	}
 
