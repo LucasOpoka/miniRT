@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 18:07:54 by atorma            #+#    #+#             */
-/*   Updated: 2024/08/24 18:07:55 by atorma           ###   ########.fr       */
+/*   Updated: 2024/08/24 18:13:04 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int	sphere_add(t_shape *shape, char **elem)
 	if ((shape->radius < 0.0) || !fill_color(&shape->color, elem[3]))
 		return (0);
 	shape->scale = ft_create_vct(1, 1, 1);
-	shape->orientation = ft_create_vct(1, 0, 0);
+	shape->orientation = ft_create_vct(0, 1, 0);
 	return (1);
 }
 
