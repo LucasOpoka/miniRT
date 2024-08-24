@@ -6,11 +6,9 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:29:51 by atorma            #+#    #+#             */
-/*   Updated: 2024/08/24 18:53:05 by lucas            ###   ########.fr       */
+/*   Updated: 2024/08/24 18:56:06 by lucas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-
 #include "../includes/miniRT.h"
 #include <pthread.h>
 
@@ -101,7 +99,6 @@ void	*worker_routine(void *ptr)
 			worker_render_section(worker, worker->scene, i);
 			i += MAX_THREADS;
 		}
-		printf("worker %d finished\n", worker->index);
 		worker_signal_finish(worker);	
 	}
 

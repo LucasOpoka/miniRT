@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:06:19 by lopoka            #+#    #+#             */
-/*   Updated: 2024/08/24 12:42:56 by lucas            ###   ########.fr       */
+/*   Updated: 2024/08/24 18:55:14 by lucas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINIRT_H
@@ -34,7 +34,6 @@
 # define VIEW_HGHT	1
 # define DISTANCE	1
 
-# define BLOCK_SIZE 8
 
 void		ft_show_img(t_mrt *mrt, t_scene *scene);
 t_clr		ft_create_clr(float r, float g, float b);
