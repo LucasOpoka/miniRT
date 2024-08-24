@@ -41,6 +41,6 @@ void	render(t_mrt *mrt, t_scene *scene)
 	ft_set_camera_matrices(&scene->camera);
 	ft_set_all_shapes_matrices(scene);
 
-	mlx_image_to_window(mrt->mlx, mrt->img, 0, 0);
+	//mlx_image_to_window(mrt->mlx, mrt->img, 0, 0);
 	render_image(mrt);
 }

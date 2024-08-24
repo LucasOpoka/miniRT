@@ -40,7 +40,6 @@ void	threads_wait(t_mrt *mrt)
 		pthread_cond_wait(&mrt->complete, &mrt->lock);
 
 	mrt->do_render = 0;
-	mrt->threads_finished = 0;
 	pthread_cond_broadcast(&mrt->notify);
 	pthread_mutex_unlock(&mrt->lock);
 }

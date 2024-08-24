@@ -23,6 +23,8 @@ void	worker_wait(t_worker *worker)
 
 	mrt = worker->mrt;
 	pthread_mutex_lock(&mrt->lock);
+	while (worker->done && mrt->do_render)
+		pthread_cond_wait(&mrt->notify, &mrt->lock);
 	while (!mrt->do_render)
 		pthread_cond_wait(&mrt->notify, &mrt->lock);
 	pthread_mutex_unlock(&mrt->lock);
@@ -82,12 +84,13 @@ void	*worker_routine(void *ptr)
 	while (1)
 	{
 		i = worker->index;
-		worker_wait(worker);	
+		worker_wait(worker);
 		while (i < block_count)
 		{
 			worker_render_section(worker, worker->scene, i);
 			i += MAX_THREADS;
 		}
+		printf("worker %d finished\n", worker->index);
 		worker_signal_finish(worker);	
 	}
 
