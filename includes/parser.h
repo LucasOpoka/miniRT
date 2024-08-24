@@ -30,7 +30,7 @@ int		identifier_type(char *id);
 int		parse_file(char *file, t_scene *scene);
 int		validate_ratio(char	*s, double min, double max);
 int		validate_vector(char *s);
-int		light_add_ambient(t_light *light, char **elem);
+int		light_add_ambient(t_ambient *ambient, char **elem);
 int		light_add_point(t_light *light, char **elem);
 
 #endif

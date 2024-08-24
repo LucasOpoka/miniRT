@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 14:16:04 by lopoka            #+#    #+#             */
-/*   Updated: 2024/08/24 13:41:50 by lucas            ###   ########.fr       */
+/*   Updated: 2024/08/24 18:47:24 by lucas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef STRUCTS_H
@@ -16,7 +16,7 @@ typedef float	t_mtrx2[2][2];
 typedef float	t_mtrx3[3][3];
 typedef float	t_mtrx4[4][4];
 
-#define MAX_THREADS 4
+#define MAX_THREADS 6
 
 typedef struct s_mrt
 {
@@ -24,7 +24,11 @@ typedef struct s_mrt
 	mlx_image_t			*img;
 	pthread_t			threads[MAX_THREADS + 1];
 	size_t				thread_count;
+	int					threads_finished;
 	pthread_mutex_t		lock;
+	pthread_cond_t		notify;
+	pthread_cond_t		complete;
+	int					do_render;
 }	t_mrt;
 
 typedef struct s_vct
@@ -69,7 +73,6 @@ typedef struct s_light
 
 typedef enum e_light_type
 {
-	t_ambient,
 	t_point,
 	t_directional
 }	t_light_type;
@@ -102,9 +105,16 @@ typedef struct s_camera
 	t_mtrx4	camera_to_world;
 }	t_camera;
 
+typedef	struct	t_ambient
+{
+	float	intensity;
+	t_clr	color;
+}	t_ambient;
+
 typedef	struct s_scene
 {
 	t_camera	camera;
+	t_ambient	ambient;
 	t_void_arr	lights;
 	t_void_arr	shapes;
 }	t_scene;
@@ -138,5 +148,16 @@ typedef struct s_comps
 	t_vct	over_point;
 	int		inside;
 }	t_comps;
+
+typedef struct t_worker
+{
+	t_mrt	*mrt;
+	t_scene *scene;
+	int		index;
+	int		block_count;
+	int		block_size;
+	int		done;
+	t_void_arr	intersections;
+}	t_worker;
 
 #endif

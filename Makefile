@@ -15,7 +15,7 @@ NAME = miniRT
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -Ofast
+CFLAGS = -Wall -Wextra -Werror -O2
 MLX42 = sources/MLX42
 
 LIBFTDIR = ./libft
@@ -25,7 +25,6 @@ SOURCE_DIR = sources
 SOURCES	=	main.c \
 			hooks.c \
 			init.c \
-			show_img.c \
 			close.c \
 			void_arr.c \
 			vct_math.c \
@@ -33,7 +32,9 @@ SOURCES	=	main.c \
 			mtrx_transform.c \
 			camera.c \
 			scene.c \
+			render.c \
 			thread.c \
+			worker.c \
 			shapes.c \
 			get_test_scene.c \
 			colour.c \
@@ -68,7 +69,7 @@ bonus : .bonus
 .mandatory : ${OFILES}
 	cmake ${MLX42} -B ${MLX42}/build $(CDEBUG) && make -C ${MLX42}/build -j4
 	$(MAKE) -C $(LIBFTDIR)
-	${CC} -o ${NAME} ${CFLAGS} ${OFILES} ${LIBS}
+	${CC} -o ${NAME} ${CFLAGS} -pthread ${OFILES} ${LIBS}
 	@touch .mandatory
 	@rm -f .bonus
 

@@ -1,38 +1,59 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   thread.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/24 17:29:57 by atorma            #+#    #+#             */
+/*   Updated: 2024/08/24 17:30:00 by atorma           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../libft/libft.h"
 #include "../includes/miniRT.h"
 #include <pthread.h>
 
-void	*thread_routine(void *ptr)
-{
-	t_mrt	*mrt;
+t_worker	*worker_init(t_mrt *mrt, t_scene *scene, int i);
+void	*worker_routine(void *ptr);
 
-	mrt = (t_mrt *)ptr;
-	pthread_mutex_lock(&mrt->lock);
-	pthread_mutex_unlock(&mrt->lock);
-	printf("thread_routine\n");
-	return (NULL);
-}
-
-int	threads_init(t_mrt *mrt)
+int	threads_init(t_mrt *mrt, t_scene *scene)
 {
 	size_t	i;
 
 	i = 0;
+	mrt->do_render = 0;
+	mrt->threads_finished = 0;
 	if (pthread_mutex_init(&mrt->lock, NULL) != 0)
 		return (0);
-	pthread_mutex_lock(&mrt->lock);
+	if (pthread_cond_init(&mrt->notify, NULL) != 0)
+		return (0);
+	if (pthread_cond_init(&mrt->complete, NULL) != 0)
+		return (0);
 	while (i < MAX_THREADS)
 	{
-		if (pthread_create(&mrt->threads[i], NULL, thread_routine, mrt) != 0)
+		t_worker *worker = worker_init(mrt, scene, i);
+		if (pthread_create(&mrt->threads[i], NULL, worker_routine, worker) != 0)
 		{
+			free(worker);
 			return (0);
 		}
 		i++;
 		mrt->thread_count = i;
 	}
-	pthread_mutex_unlock(&mrt->lock);
 	return (1);
+}
+
+void	threads_wait(t_mrt *mrt)
+{
+	pthread_mutex_lock(&mrt->lock);
+
+	while (mrt->threads_finished != MAX_THREADS)
+		pthread_cond_wait(&mrt->complete, &mrt->lock);
+
+	mrt->do_render = 0;
+	pthread_cond_broadcast(&mrt->notify);
+	pthread_mutex_unlock(&mrt->lock);
 }
 
 void	threads_join(t_mrt *mrt)
