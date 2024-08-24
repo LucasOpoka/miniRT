@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 14:16:04 by lopoka            #+#    #+#             */
-/*   Updated: 2024/08/24 16:41:48 by atorma           ###   ########.fr       */
+/*   Updated: 2024/08/24 17:33:33 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef STRUCTS_H
@@ -73,7 +73,6 @@ typedef struct s_light
 
 typedef enum e_light_type
 {
-	t_ambient,
 	t_point,
 	t_directional
 }	t_light_type;
@@ -106,9 +105,16 @@ typedef struct s_camera
 	t_mtrx4	camera_to_world;
 }	t_camera;
 
+typedef	struct	t_ambient
+{
+	float	intensity;
+	t_clr	color;
+}	t_ambient;
+
 typedef	struct s_scene
 {
 	t_camera	camera;
+	t_ambient	ambient;
 	t_void_arr	lights;
 	t_void_arr	shapes;
 }	t_scene;

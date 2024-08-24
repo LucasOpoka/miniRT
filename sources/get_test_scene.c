@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 12:47:38 by lopoka            #+#    #+#             */
-/*   Updated: 2024/08/23 19:52:19 by lucas            ###   ########.fr       */
+/*   Updated: 2024/08/24 17:36:45 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -101,9 +101,7 @@ t_scene	get_test_scene(void)
 	// Lights
 	ft_init_void_arr(&scene.lights);
 
-	t_light *light1 = malloc(sizeof(t_light));
-	light1->type = t_ambient;
-	light1->intensity = 0.2;
+	scene.ambient.intensity = 0.2;
 
 	t_light *light2 = malloc(sizeof(t_light));
 	light2->type = t_point;
@@ -115,7 +113,6 @@ t_scene	get_test_scene(void)
 	light3->intensity = 0.2;
 	light3->direction = ft_create_vct(1, 4, 4);
 	
-	ft_void_arr_add(&scene.lights, light1);
 	ft_void_arr_add(&scene.lights, light2);
 	ft_void_arr_add(&scene.lights, light3);
 

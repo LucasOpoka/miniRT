@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   thread.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/24 17:29:57 by atorma            #+#    #+#             */
+/*   Updated: 2024/08/24 17:30:00 by atorma           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../libft/libft.h"
 #include "../includes/miniRT.h"
@@ -12,6 +23,7 @@ int	threads_init(t_mrt *mrt, t_scene *scene)
 
 	i = 0;
 	mrt->do_render = 0;
+	mrt->threads_finished = 0;
 	if (pthread_mutex_init(&mrt->lock, NULL) != 0)
 		return (0);
 	if (pthread_cond_init(&mrt->notify, NULL) != 0)
