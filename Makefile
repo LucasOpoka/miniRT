@@ -25,7 +25,6 @@ SOURCE_DIR = sources
 SOURCES	=	main.c \
 			hooks.c \
 			init.c \
-			show_img.c \
 			close.c \
 			void_arr.c \
 			vct_math.c \
@@ -33,6 +32,7 @@ SOURCES	=	main.c \
 			mtrx_transform.c \
 			camera.c \
 			scene.c \
+			render.c \
 			thread.c \
 			worker.c \
 			shapes.c \

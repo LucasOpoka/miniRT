@@ -22,6 +22,8 @@ void	ft_loop_hook(void *vd)
 	//ft_show_img((t_mrt *) vd);
 }
 
+void	render_image(t_mrt *mrt);
+
 void	ft_keyboard_hooks(mlx_key_data_t k_data, void *vd)
 {
 	t_mrt	*mrt;
@@ -29,4 +31,6 @@ void	ft_keyboard_hooks(mlx_key_data_t k_data, void *vd)
 	mrt = (t_mrt *)vd;
 	if (k_data.key == MLX_KEY_ESCAPE && k_data.action == MLX_PRESS)
 		ft_close(mrt);
+	if (k_data.key == MLX_KEY_C && k_data.action == MLX_PRESS)
+		render_image(mrt);
 }

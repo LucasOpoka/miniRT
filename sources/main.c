@@ -12,7 +12,8 @@
 #include "../includes/miniRT.h"
 
 void	scene_free(t_scene *scene);
-void	render_image(t_mrt *mrt, t_scene *scene);
+void	render(t_mrt *mrt, t_scene *scene);
+int		threads_init(t_mrt *mrt, t_scene *scene);
 
 int	main(int ac, char **av)
 {
@@ -33,12 +34,13 @@ int	main(int ac, char **av)
 		return (EXIT_FAILURE);
 	}
 	printf("using scene: %s\n", av[1]);
+	threads_init(&mrt, &scene);
 	ft_init_stc(&mrt);
 	mlx_close_hook(mrt.mlx, &ft_close_hook, &mrt);
 	mlx_key_hook(mrt.mlx, &ft_keyboard_hooks, &mrt);
 	
 	//ft_show_img(&mrt, &scene);
-	render_image(&mrt, &scene);
+	render(&mrt, &scene);
 	//mlx_loop_hook(mrt.mlx, ft_loop_hook, &mrt);
 	//We probably only want to render the image on changes, not every frame in the hook
 	//Otherwise our performance will be garbage since raytracing is very expensive
