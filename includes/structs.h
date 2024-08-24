@@ -131,7 +131,9 @@ typedef struct t_worker
 	t_scene *scene;
 	int		index;
 	int		block_count;
+	int		block_size;
 	int		done;
+	t_void_arr	intersections;
 }	t_worker;
 
 #endif

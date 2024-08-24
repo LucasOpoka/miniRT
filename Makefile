@@ -15,7 +15,7 @@ NAME = miniRT
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -Ofast
+CFLAGS = -Wall -Wextra -Werror -O2
 MLX42 = sources/MLX42
 
 LIBFTDIR = ./libft
