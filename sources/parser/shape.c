@@ -15,6 +15,8 @@ static int	sphere_add(t_shape *shape, char **elem)
 	shape->radius = ft_atof(elem[2]);
 	if ((shape->radius < 0.0) || !fill_color(&shape->color, elem[3]))
 		return (0);
+	shape->scale = ft_create_vct(1, 1, 1);
+	shape->orientation = ft_create_vct(1, 0, 0);
 	return (1);
 }
 
