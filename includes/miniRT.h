@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:06:19 by lopoka            #+#    #+#             */
-/*   Updated: 2024/08/23 20:08:33 by lucas            ###   ########.fr       */
+/*   Updated: 2024/08/24 12:42:56 by lucas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINIRT_H
@@ -25,6 +25,7 @@
 # include "colour.h"
 # include "../libft/libft.h"
 
+# define EPSILON	0.0001
 # define MAYA_STYLE	0
 # define CANV_WDTH	1100
 # define CANV_HGHT	1100

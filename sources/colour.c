@@ -6,17 +6,88 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 16:47:05 by lopoka            #+#    #+#             */
-/*   Updated: 2024/08/23 19:55:35 by lucas            ###   ########.fr       */
+/*   Updated: 2024/08/24 17:12:37 by lucas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
+
+t_vct	ft_reflect(const t_vct *in, const t_vct *normal)
+{
+	t_vct	res;
+
+	res = ft_vct_sclr_mult(normal, 2 * ft_vct_dot(in, normal));
+	res = ft_vct_sub(in, &res);
+	return (res);
+}
+
+t_vct	ft_sphere_normal(const t_shape *shape, const t_vct *world_point)
+{
+	t_vct	shape_point;
+	t_vct	world_normal;
+	
+	ft_vct_mtrx_mult(&shape_point, &shape->world_to_shape, world_point);
+	ft_vct_mtrx_mult(&world_normal, &shape->normal_to_world, &shape_point);
+	ft_vct_norm(&world_normal);
+	return (world_normal);
+}
+
+t_vct	ft_shape_normal(const t_shape *shape, const t_vct *world_point)
+{
+	if (shape->type == t_sphere)
+		return (ft_sphere_normal(shape, world_point));
+
+
+	return (ft_create_vct(0,0,0));
+}
+
+t_vct	ft_ray_point(const t_ray *ray, float t)
+{
+	t_vct	position;
+
+	position.x = ray->O.x + ray->D.x * t;
+	position.y = ray->O.y + ray->D.y * t;
+	position.z = ray->O.z + ray->D.z * t;
+	position.w = 1;
+	return (position);
+}
+
+// over_point - The Ray Tracer Challenge p.115
+t_vct	ft_over_point(const t_vct *point, const t_vct *normal)
+{
+	t_vct	res;
+
+	res = ft_vct_sclr_mult(normal, EPSILON);
+	res = ft_vct_add(point, &res);
+	return (res);
+}
+
+// prepare_computations - The Ray Tracer Challenge p.76 p.93
+void	ft_prepare_computations(t_comps *comps, t_intersection *closest, const t_ray *ray)
+{
+	comps->t = closest->t;
+	comps->shape = closest->shape;
+	comps->point = ft_ray_point(ray, comps->t); 
+	comps->eye = ft_vct_neg(&ray->D);
+	comps->eye.w = 0;
+	comps->normal = ft_shape_normal(comps->shape, &comps->point);
+	comps->inside = 0;
+	if (ft_vct_dot(&comps->normal, &comps->eye) < 0)
+	{
+		comps->inside = 1;
+		comps->normal = ft_vct_neg(&comps->normal);
+	}
+	comps->reflect = ft_reflect(&ray->D, &comps->normal);
+	comps->over_point = ft_over_point(&comps->point, &comps->normal);
+}
+
+
 
 t_intersection	*ft_closest_intersection(t_void_arr *intersections)
 {
 	t_intersection	*current;
 	t_intersection	*closest;
 	float			lowest_time;
-	size_t				i;
+	size_t			i;
 
 	if (!intersections->arr)
 		return (NULL);
@@ -36,25 +107,42 @@ t_intersection	*ft_closest_intersection(t_void_arr *intersections)
 	return (closest);
 }
 
-t_clr	ft_get_color(t_vct O, t_vct D, t_scene *scene, int recursion_depth, t_void_arr *intersections)
+t_clr	ft_get_color(const t_ray *ray, t_scene *scene, int recursion_depth, t_void_arr *intersections)
 {
-	//t_clr		local_color;
-	//t_clr		reflected_color;
-	//float		rfl;
-
-	(void) O;
-	(void) D;
-	(void) scene;
-	(void) recursion_depth;
-
+	t_comps			comps;
+	(void)			scene;
+	(void)			recursion_depth;
 	t_intersection	*closest;
+	//t_clr			surface_color;
+	size_t			i;
+	t_light			*light;
+
 
 	closest = ft_closest_intersection(intersections);
 
 	if (!closest)
     	return (ft_create_clr(0, 0, 0));
+	ft_prepare_computations(&comps, closest, ray);
+	i = 0;
+	while (i < scene->lights.i)
+	{
+		light = (t_light *) scene->lights.arr[i++];
+		//surface_color = ft_lighting(&comps, scene, light);
+	}
+	(void) light;
+	
+
 	return closest->shape->color;
 }
+
+/*t_clr	ft_lighting(t_comps *comps, t_scene *scene, t_light *light)
+{
+	t_clr	res;
+	t_clr	shape_color;
+
+	shape_color = comps->shape->color;
+	res = ft_ambient
+}*/
 /*
 	// Light
 	t_vct P = ft_vct_add(O, ft_vct_sclr_mult(D, t_closest));
@@ -172,3 +260,6 @@ float	ft_modify_channel(float ch, float i)
 		return (255);
 	return (ch);
 }
+
+
+

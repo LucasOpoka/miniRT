@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 14:16:04 by lopoka            #+#    #+#             */
-/*   Updated: 2024/08/23 18:28:20 by lucas            ###   ########.fr       */
+/*   Updated: 2024/08/24 13:41:50 by lucas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef STRUCTS_H
@@ -119,6 +119,24 @@ typedef struct s_intersection
 {
 	t_shape *shape;
 	float	t;
+	t_vct	position;
+	t_vct	eye;
+	t_vct	light;
+	t_vct	normal;
+	t_vct	reflection;
 }	t_intersection;
+
+typedef struct s_comps
+{
+	t_shape *shape;
+	float	t;
+	t_vct	point;
+	t_vct	eye;
+	t_vct	light;
+	t_vct	normal;
+	t_vct	reflect;
+	t_vct	over_point;
+	int		inside;
+}	t_comps;
 
 #endif
