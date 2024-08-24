@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 14:16:04 by lopoka            #+#    #+#             */
-/*   Updated: 2024/08/24 19:45:51 by atorma           ###   ########.fr       */
+/*   Updated: 2024/08/24 20:01:13 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef STRUCTS_H
@@ -148,11 +148,6 @@ typedef struct t_worker
 	int		block_size;
 	int		done;
 	t_intersects	intersects;
-	/*
-	t_intersection	*intersect;
-	size_t			intersect_count;
-	size_t			intersect_size;
-	*/
 }	t_worker;
 
 #endif
