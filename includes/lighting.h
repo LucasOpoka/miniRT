@@ -12,7 +12,8 @@
 #ifndef LIGHTING_H
 # define LIGHTING_H
 
-t_clr	ft_lighting(t_comps *comps, t_scene *scene, t_light *light, t_clr *ambient);
+t_clr	ft_lighting(t_comps *comps, t_scene *scene, t_light *light, t_clr *ambient,
+		t_intersects *intersect);
 t_clr	ft_get_ambient(t_ambient *ambient, t_clr *shape_color);
 
 #endif

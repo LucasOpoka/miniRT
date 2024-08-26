@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:29:51 by atorma            #+#    #+#             */
-/*   Updated: 2024/08/24 18:56:06 by lucas            ###   ########.fr       */
+/*   Updated: 2024/08/24 19:58:51 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -24,6 +24,8 @@ t_worker	*worker_init(t_mrt *mrt, t_scene *scene, int i)
 	worker->mrt = mrt;
 	worker->scene = scene;
 	worker->index = i;
+	worker->intersects.size = 256;
+	worker->intersects.arr = malloc(worker->intersects.size * sizeof(t_intersection));
 	return (worker);
 }
 
@@ -59,6 +61,7 @@ void	worker_render_section(t_worker *worker, t_scene *scene, int i)
 	t_clr		color;
 	int			block_count = CANV_HGHT / BLOCK_SIZE;
 	int			block_size = BLOCK_SIZE;
+	t_intersects *inter = &worker->intersects;
 
 	int start_y = i * block_size;
 	if (i == block_count - 1)
@@ -70,12 +73,10 @@ void	worker_render_section(t_worker *worker, t_scene *scene, int i)
 		int x = 0;
 		while (x < CANV_WDTH)
 		{
-			ft_init_void_arr(&worker->intersections);
 			ft_pixel_to_ray(&world_ray, x, y, &scene->camera);
-			ft_get_intersections(world_ray, scene, &worker->intersections);
-			color = ft_get_color(&world_ray, scene, 3, &worker->intersections);
+			ft_get_intersections(world_ray, scene, inter);
+			color = ft_get_color(&world_ray, scene, 3, inter);
 			mlx_put_pixel(worker->mrt->img, x, y, ft_clr_to_int(color));
-			ft_free_void_arr(&worker->intersections);
 			x++;
 		}
 		y++;

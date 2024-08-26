@@ -152,6 +152,13 @@ typedef struct s_comps
 	int		inside;
 }	t_comps;
 
+typedef struct t_intersects
+{
+	t_intersection	*arr;
+	size_t			i;
+	size_t			size;
+}	t_intersects;
+
 typedef struct t_worker
 {
 	t_mrt	*mrt;
@@ -160,7 +167,7 @@ typedef struct t_worker
 	int		block_count;
 	int		block_size;
 	int		done;
-	t_void_arr	intersections;
+	t_intersects	intersects;
 }	t_worker;
 
 #endif

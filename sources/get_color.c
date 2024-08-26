@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
 
-t_clr	ft_get_color(const t_ray *ray, t_scene *scene, int recursion_depth, t_void_arr *intersections)
+t_clr	ft_get_color(const t_ray *ray, t_scene *scene, int recursion_depth, t_intersects *intersect)
 {
 	t_comps			comps;
 	(void)			recursion_depth;
@@ -24,7 +24,7 @@ t_clr	ft_get_color(const t_ray *ray, t_scene *scene, int recursion_depth, t_void
 
 	ft_bzero(&final_color, sizeof(t_clr));
 
-	closest = ft_closest_intersection(intersections);
+	closest = ft_closest_intersection(intersect);
 	if (!closest)
     	return (ft_create_clr(0, 0, 0));
 
@@ -36,7 +36,7 @@ t_clr	ft_get_color(const t_ray *ray, t_scene *scene, int recursion_depth, t_void
 	while (i < scene->lights.i)
 	{
 		light = (t_light *) scene->lights.arr[i++];
-		surface_color = ft_lighting(&comps, scene, light, &ambient);
+		surface_color = ft_lighting(&comps, scene, light, &ambient, intersect);
 		final_color = ft_clr_add(surface_color, final_color);
 	}
 	return final_color;

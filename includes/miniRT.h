@@ -57,9 +57,9 @@ void		ft_void_arr_realloc(t_void_arr *void_arr);
 void		ft_void_arr_add(t_void_arr *void_arr, void *pointer);
 void		ft_free_void_arr(t_void_arr *void_arr);
 
-// REMOVE IN THE FUTURE - test functions
-t_scene			get_test_scene(void);
 int				scene_init(t_scene *scene);
 void			scene_free(t_scene *scene);
+// REMOVE IN THE FUTURE - test functions
+t_scene			get_test_scene(void);
 
 #endif

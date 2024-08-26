@@ -21,7 +21,8 @@ t_clr	ft_get_ambient(t_ambient *ambient, t_clr *shape_color)
 	return (res);
 }
 
-int	ft_in_shadow(t_scene *scene, t_vct *light_vct, t_vct *over_point)
+int	ft_in_shadow(t_scene *scene, t_vct *light_vct, t_vct *over_point,
+		t_intersects *intersect)
 {
 	t_ray	point_to_light;
 	float	distance;
@@ -32,18 +33,15 @@ int	ft_in_shadow(t_scene *scene, t_vct *light_vct, t_vct *over_point)
 	ft_vct_norm(&point_to_light.D);
 	point_to_light.O = *over_point;
 
-	t_void_arr	intersections;
-	ft_init_void_arr(&intersections);
-	ft_get_intersections(point_to_light, scene, &intersections);
-	t_intersection	*closest = ft_closest_intersection(&intersections);
+	ft_get_intersections(point_to_light, scene, intersect);
+	t_intersection	*closest = ft_closest_intersection(intersect);
 	res = 1;
 	if (!closest || closest->t > distance)
 		res = 0;
-	ft_free_void_arr(&intersections);
 	return (res);
 }
 
-t_clr	ft_lighting(t_comps *comps, t_scene *scene, t_light *light, t_clr *ambient)
+t_clr	ft_lighting(t_comps *comps, t_scene *scene, t_light *light, t_clr *ambient, t_intersects *intersect)
 {
 	t_clr	result;
 	t_clr	effective;
@@ -56,7 +54,7 @@ t_clr	ft_lighting(t_comps *comps, t_scene *scene, t_light *light, t_clr *ambient
 	ft_vct_norm(&light_vct);
 	comps->normal.w = 0;
 	float light_dot_normal = ft_vct_dot(&light_vct, &comps->normal);
-	if (light_dot_normal < 0.1 || ft_in_shadow(scene, &light_vct, &comps->over_point))
+	if (light_dot_normal < 0.1 || ft_in_shadow(scene, &light_vct, &comps->over_point, intersect))
 		return (result);
 
 	// Diffuse

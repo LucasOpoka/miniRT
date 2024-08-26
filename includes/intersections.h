@@ -12,7 +12,8 @@
 #ifndef INTERSECTIONS_H
 #define INTERSECTIONS_H
 
-void			ft_get_intersections(t_ray world_ray, t_scene *scene, t_void_arr *intersections);
-t_intersection	*ft_closest_intersection(t_void_arr *intersections);
+void			ft_get_intersections(t_ray world_ray, t_scene *scene,
+		t_intersects *intersects);
+t_intersection	*ft_closest_intersection(t_intersects *intersect);
 
 #endif

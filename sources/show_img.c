@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
 
+/*
 void	ft_show_img(t_mrt *mrt, t_scene *scene)
 {
 	t_ray		world_ray;
@@ -41,3 +42,4 @@ void	ft_show_img(t_mrt *mrt, t_scene *scene)
 	}
 	mlx_image_to_window(mrt->mlx, mrt->img, 0, 0);
 }
+*/

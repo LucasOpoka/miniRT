@@ -12,6 +12,7 @@
 #ifndef GET_COLOUR_H
 # define GET_COLOUR_H
 
-t_clr		ft_get_color(const t_ray *ray, t_scene *scene, int recursion_depth, t_void_arr *intersections);
+t_clr	ft_get_color(const t_ray *ray, t_scene *scene,
+		int recursion_depth, t_intersects *intersect);
 
 #endif
