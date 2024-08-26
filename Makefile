@@ -6,7 +6,7 @@
 #    By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/29 14:59:04 by lopoka            #+#    #+#              #
-#    Updated: 2024/08/24 18:21:50 by atorma           ###   ########.fr        #
+#    Updated: 2024/08/26 17:16:13 by lopoka           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,16 +28,21 @@ SOURCES	=	main.c \
 			close.c \
 			void_arr.c \
 			vct_math.c \
+			clr_math.c \
 			mtrx_math.c \
 			mtrx_transform.c \
 			camera.c \
 			scene.c \
+			show_img.c \
 			render.c \
 			thread.c \
 			worker.c \
-			shapes.c \
+			shapes_transforms.c \
+			prep_comps.c \
+			shapes_normals.c \
 			get_test_scene.c \
-			colour.c \
+			lighting.c \
+			get_color.c \
 			intersections.c \
 
 PARSER_DIR = sources/parser

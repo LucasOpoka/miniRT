@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 14:16:04 by lopoka            #+#    #+#             */
-/*   Updated: 2024/08/24 18:55:34 by lucas            ###   ########.fr       */
+/*   Updated: 2024/08/25 09:00:39 by lucas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef STRUCTS_H
@@ -54,8 +54,10 @@ typedef struct s_shape
 	float	radius;
 	float	height;
 	t_clr	color;
-	int		specular;
+	float	specular;
 	float	reflective;
+	float	diffuse;
+	int		shininess;
 	t_vct	orientation;
 	t_vct	scale;
 	t_mtrx4	shape_to_world;

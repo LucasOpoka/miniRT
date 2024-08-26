@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:06:19 by lopoka            #+#    #+#             */
-/*   Updated: 2024/08/24 18:55:14 by lucas            ###   ########.fr       */
+/*   Updated: 2024/08/26 17:15:53 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINIRT_H
@@ -21,8 +21,13 @@
 # include "mtrx.h"
 # include "vct.h"
 # include "camera.h"
-# include "shapes.h"
-# include "colour.h"
+# include "shapes_transforms.h"
+# include "intersections.h"
+# include "prep_comps.h"
+# include "shapes_normals.h"
+# include "get_color.h"
+# include "lighting.h"
+# include "clr_math.h"
 # include "../libft/libft.h"
 
 # define EPSILON	0.0001
@@ -54,9 +59,6 @@ void		ft_free_void_arr(t_void_arr *void_arr);
 
 // REMOVE IN THE FUTURE - test functions
 t_scene			get_test_scene(void);
-void			ft_get_intersections(t_ray world_ray, t_scene *scene, t_void_arr *intersections);
-void			ft_add_intersection(t_void_arr *intersections, t_shape *shape, float t);
-t_intersection	*ft_closest_intersection(t_void_arr *intersections);
 int				scene_init(t_scene *scene);
 void			scene_free(t_scene *scene);
 

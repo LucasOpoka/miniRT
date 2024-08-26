@@ -6,14 +6,25 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 21:05:34 by lopoka            #+#    #+#             */
-/*   Updated: 2024/08/23 20:08:14 by lucas            ###   ########.fr       */
+/*   Updated: 2024/08/26 17:07:10 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
 
-// P - C = D*t + X
-// Where C is a center point of a shape that we hit and X equals O-C. 
-// X = CO
+void	ft_add_intersection(t_void_arr *intersections, t_shape *shape, float t)
+{
+	t_intersection	*intr;
+
+	if (!intersections->arr)
+		return ;
+	intr = malloc(sizeof(t_intersection));
+	if (!intr)
+		return (ft_free_void_arr(intersections));
+	intr->shape = shape;
+	intr->t = t;
+	ft_void_arr_add(intersections, intr);
+	
+}
 
 void	ft_sphere_intersection(t_vct O, t_vct D, t_shape *shape, t_void_arr *intersections)
 {
@@ -111,21 +122,6 @@ void	ft_ray_to_shape_space(t_ray *shape_ray, t_ray *world_ray, t_shape *shape)
 	ft_vct_mtrx_mult(&shape_ray->D, &shape->world_to_shape, &world_ray->D);
 }
 
-void	ft_add_intersection(t_void_arr *intersections, t_shape *shape, float t)
-{
-	t_intersection	*intr;
-
-	if (!intersections->arr)
-		return ;
-	intr = malloc(sizeof(t_intersection));
-	if (!intr)
-		return (ft_free_void_arr(intersections));
-	intr->shape = shape;
-	intr->t = t;
-	ft_void_arr_add(intersections, intr);
-	
-}
-
 void	ft_get_intersections(t_ray world_ray, t_scene *scene, t_void_arr *intersections)
 {
 	t_shape	*shape;
@@ -145,4 +141,29 @@ void	ft_get_intersections(t_ray world_ray, t_scene *scene, t_void_arr *intersect
 		if (shape->type == t_cylinder)
 			ft_cylinder_intersection(shape_ray.O, shape_ray.D, shape, intersections);
 	}
+}
+
+t_intersection	*ft_closest_intersection(t_void_arr *intersections)
+{
+	t_intersection	*current;
+	t_intersection	*closest;
+	float			lowest_time;
+	size_t			i;
+
+	if (!intersections->arr)
+		return (NULL);
+	lowest_time = FLT_MAX;
+	i = 0;
+	closest = NULL;
+	while (i < intersections->i)
+	{
+		current = (t_intersection *) intersections->arr[i];
+		if (0 <= current->t && current->t < lowest_time)
+		{
+			lowest_time = current->t;
+			closest = current;
+		}
+		i++;
+	}
+	return (closest);
 }

@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 17:47:44 by lopoka            #+#    #+#             */
-/*   Updated: 2024/08/24 17:14:19 by atorma           ###   ########.fr       */
+/*   Updated: 2024/08/24 19:06:04 by lucas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -39,8 +39,8 @@ int	main(int ac, char **av)
 	mlx_close_hook(mrt.mlx, &ft_close_hook, &mrt);
 	mlx_key_hook(mrt.mlx, &ft_keyboard_hooks, &mrt);
 	
-	//ft_show_img(&mrt, &scene);
-	render(&mrt, &scene);
+	ft_show_img(&mrt, &scene);
+	//render(&mrt, &scene);
 	//mlx_loop_hook(mrt.mlx, ft_loop_hook, &mrt);
 	//We probably only want to render the image on changes, not every frame in the hook
 	//Otherwise our performance will be garbage since raytracing is very expensive
