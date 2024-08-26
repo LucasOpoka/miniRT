@@ -60,6 +60,7 @@ target symbols: CFLAGS = -Wall -Wextra -Werror -gdwarf-4
 target symbols: CDEBUG = -DDEBUG=1
 
 target fast: CFLAGS += -O2 -fno-math-errno -fno-trapping-math
+target profile:	CFLAGS += -O2 -fno-math-errno -fno-trapping-math -gdwarf-4
 
 export CFLAGS
 
@@ -103,5 +104,6 @@ re: fclean all
 debug: debug_clean all
 symbols: re
 fast: re
+profile: re
 
-.PHONY: debug, debug_clean, symbols, fast, all, clean, fclean, re, mlx42
+.PHONY: debug, debug_clean, symbols, fast, profile, all, clean, fclean, re, mlx42
