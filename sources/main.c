@@ -14,7 +14,7 @@
 void	scene_free(t_scene *scene);
 void	render(t_mrt *mrt, t_scene *scene);
 int		threads_init(t_mrt *mrt, t_scene *scene);
-void	bhv_test(t_void_arr *shapes);
+void	bvh_test(t_void_arr *shapes);
 
 int	main(int ac, char **av)
 {
@@ -29,7 +29,7 @@ int	main(int ac, char **av)
 	if (ft_strcmp(av[1], "test") == 0)
 	{
 		scene = get_test_scene();
-		bhv_test(&scene.shapes);
+		bvh_test(&scene.shapes);
 		scene_free(&scene);
 		return (0);
 	}

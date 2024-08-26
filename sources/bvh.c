@@ -79,9 +79,10 @@ void	bvh_subdivide(t_node *node)
 	float split_pos = node->aabb_min[axis] + extent[axis] * 0.5;
 	printf("split_pos: %f\n", split_pos);
 }
+
 t_node	*bvh_build(t_void_arr *shapes)
 {
-	t_node	*root = ft_calloc(1, (shapes->i * sizeof(t_node)));
+	t_node	*root = ft_calloc(1, (shapes->i * 2 * sizeof(t_node)));
 
 	root->count = shapes->i;
 	root->is_prim = 0;
@@ -91,8 +92,8 @@ t_node	*bvh_build(t_void_arr *shapes)
 	return (root);
 }
 
-void	bhv_test(t_void_arr *shapes)
+void	bvh_test(t_void_arr *shapes)
 {
-	t_node *root = bhv_build(shapes);
+	t_node *root = bvh_build(shapes);
 	free(root);
 }

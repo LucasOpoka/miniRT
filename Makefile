@@ -36,7 +36,7 @@ SOURCES	=	main.c \
 			thread.c \
 			worker.c \
 			shapes.c \
-			bhv.c \
+			bvh.c \
 			get_test_scene.c \
 			colour.c \
 			intersections.c \
