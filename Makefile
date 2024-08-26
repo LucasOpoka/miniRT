@@ -6,7 +6,7 @@
 #    By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/29 14:59:04 by lopoka            #+#    #+#              #
-#    Updated: 2024/08/24 19:18:11 by atorma           ###   ########.fr        #
+#    Updated: 2024/08/26 17:16:13 by lopoka           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME = miniRT
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -O3
+CFLAGS = -Wall -Wextra -Werror
 MLX42 = sources/MLX42
 
 LIBFTDIR = ./libft
@@ -28,17 +28,22 @@ SOURCES	=	main.c \
 			close.c \
 			void_arr.c \
 			vct_math.c \
+			clr_math.c \
 			mtrx_math.c \
 			mtrx_transform.c \
 			camera.c \
 			scene.c \
+			show_img.c \
 			render.c \
 			thread.c \
 			worker.c \
-			shapes.c \
 			bvh.c \
+			shapes_transforms.c \
+			prep_comps.c \
+			shapes_normals.c \
 			get_test_scene.c \
-			colour.c \
+			lighting.c \
+			get_color.c \
 			intersections.c \
 
 PARSER_DIR = sources/parser
@@ -55,6 +60,8 @@ target debug: CDEBUG = -DDEBUG=1
 target symbols: CFLAGS = -Wall -Wextra -Werror -gdwarf-4
 target symbols: CDEBUG = -DDEBUG=1
 
+target fast: CFLAGS += -O2 -fno-math-errno -fno-trapping-math
+target profile:	CFLAGS += -O2 -fno-math-errno -fno-trapping-math -gdwarf-4
 
 export CFLAGS
 
@@ -97,5 +104,7 @@ debug_clean:
 re: fclean all
 debug: debug_clean all
 symbols: re
+fast: re
+profile: re
 
-.PHONY: debug, debug_clean, symbols, all, clean, fclean, re, mlx42
+.PHONY: debug, debug_clean, symbols, fast, profile, all, clean, fclean, re, mlx42

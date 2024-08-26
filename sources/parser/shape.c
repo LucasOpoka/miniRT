@@ -29,6 +29,8 @@ static int	sphere_add(t_shape *shape, char **elem)
 		return (0);
 	shape->scale = ft_create_vct(1, 1, 1);
 	shape->orientation = ft_create_vct(0, 1, 0);
+	shape->diffuse = 0.5;
+	shape->shininess = 500;
 	return (1);
 }
 

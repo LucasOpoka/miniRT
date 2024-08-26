@@ -64,20 +64,47 @@ void	bvh_update_bounds(t_node *node, t_void_arr *shapes)
 	printf("aabb_max.z: %f\n", node->aabb_max.z);
 }
 
-void	bvh_subdivide(t_node *node)
+void	bvh_subdivide(t_node *node, t_void_arr *shapes)
 {
-	int		axis = 0;
 	float	extent[3];
+	float	min_axis;
+	float	extent_axis;
 
 	extent[0] = node->aabb_max.x - node->aabb_min.x;
 	extent[1] = node->aabb_max.y - node->aabb_min.y;
 	extent[2] = node->aabb_max.z - node->aabb_min.z;
+	min_axis = node->aabb_max.x;
+	extent_axis = extent[0];
+	int axis = 0;
 	if (extent[1] > extent[0])
+	{
+		min_axis = node->aabb_max.y;
+		extent_axis = extent[1];
 		axis = 1;
+	}
 	if (extent[2] > extent[axis])
+	{
+		min_axis = node->aabb_max.z;
+		extent_axis = extent[2];
 		axis = 2;
-	float split_pos = node->aabb_min[axis] + extent[axis] * 0.5;
+	}
+	float split_pos = min_axis + extent_axis * 0.5;
 	printf("split_pos: %f\n", split_pos);
+
+	size_t	i = 0;
+	while (i < node->count)
+	{
+		t_shape *shape = (t_shape *)shapes->arr[i];
+		if (axis == 0 && shape->position.x < split_pos)
+			printf("left shape: %zu\n", i);
+		else if (axis == 1 && shape->position.y < split_pos)
+			printf("left shape: %zu\n", i);
+		else if (axis == 2 && shape->position.z < split_pos)
+			printf("left shape: %zu\n", i);
+		else
+			printf("right shape: %zu\n", i);
+		i++;
+	}
 }
 
 t_node	*bvh_build(t_void_arr *shapes)
@@ -87,8 +114,8 @@ t_node	*bvh_build(t_void_arr *shapes)
 	root->count = shapes->i;
 	root->is_prim = 0;
 
-	bhv_update_bounds(root, shapes);
-	bhv_subdivide(root);
+	bvh_update_bounds(root, shapes);
+	bvh_subdivide(root, shapes);
 	return (root);
 }
 

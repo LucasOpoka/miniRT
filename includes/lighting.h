@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   worker.h                                           :+:      :+:    :+:   */
+/*   lighting.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/24 18:25:17 by atorma            #+#    #+#             */
-/*   Updated: 2024/08/24 18:25:45 by atorma           ###   ########.fr       */
+/*   Created: 2024/08/26 17:13:02 by lopoka            #+#    #+#             */
+/*   Updated: 2024/08/26 17:13:33 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#ifndef LIGHTING_H
+# define LIGHTING_H
 
-#ifndef WORKER_H
-# define WORKER_H
-
-# define MAX_THREADS 6
-# define BLOCK_SIZE 6
+t_clr	ft_lighting(t_comps *comps, t_scene *scene, t_light *light, t_clr *ambient,
+		t_intersects *intersect);
+t_clr	ft_get_ambient(t_ambient *ambient, t_clr *shape_color);
 
 #endif

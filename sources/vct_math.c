@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 12:45:19 by lopoka            #+#    #+#             */
-/*   Updated: 2024/08/23 14:15:29 by lucas            ###   ########.fr       */
+/*   Updated: 2024/08/25 17:34:37 by lucas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -71,6 +71,8 @@ void	ft_vct_norm(t_vct *a)
 	float	len;	
 
 	len = ft_vct_len(a);
+	if (len < EPSILON)
+		return ;
 	ft_vct_scale(&tmp, a, 1 / len);
 	tmp.w = 0;
 	*a = tmp;

@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:06:19 by lopoka            #+#    #+#             */
-/*   Updated: 2024/08/24 19:55:31 by atorma           ###   ########.fr       */
+/*   Updated: 2024/08/26 17:15:53 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINIRT_H
@@ -21,10 +21,16 @@
 # include "mtrx.h"
 # include "vct.h"
 # include "camera.h"
-# include "shapes.h"
-# include "colour.h"
+# include "shapes_transforms.h"
+# include "intersections.h"
+# include "prep_comps.h"
+# include "shapes_normals.h"
+# include "get_color.h"
+# include "lighting.h"
+# include "clr_math.h"
 # include "../libft/libft.h"
 
+# define EPSILON	0.0001
 # define MAYA_STYLE	0
 # define CANV_WDTH	1100
 # define CANV_HGHT	1100
@@ -51,12 +57,9 @@ void		ft_void_arr_realloc(t_void_arr *void_arr);
 void		ft_void_arr_add(t_void_arr *void_arr, void *pointer);
 void		ft_free_void_arr(t_void_arr *void_arr);
 
-// REMOVE IN THE FUTURE - test functions
-t_scene			get_test_scene(void);
-void			ft_get_intersections(t_ray world_ray, t_scene *scene, t_intersects *intersect);
-void			ft_add_intersection(t_intersects *intersect, t_shape *shape, float t);
-t_intersection	*ft_closest_intersection(t_intersects *intersect);
 int				scene_init(t_scene *scene);
 void			scene_free(t_scene *scene);
+// REMOVE IN THE FUTURE - test functions
+t_scene			get_test_scene(void);
 
 #endif

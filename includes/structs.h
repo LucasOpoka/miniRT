@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 14:16:04 by lopoka            #+#    #+#             */
-/*   Updated: 2024/08/24 20:01:13 by atorma           ###   ########.fr       */
+/*   Updated: 2024/08/25 09:00:39 by lucas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef STRUCTS_H
@@ -54,8 +54,10 @@ typedef struct s_shape
 	float	radius;
 	float	height;
 	t_clr	color;
-	int		specular;
+	float	specular;
 	float	reflective;
+	float	diffuse;
+	int		shininess;
 	t_vct	orientation;
 	t_vct	scale;
 	t_mtrx4	shape_to_world;
@@ -130,7 +132,25 @@ typedef struct s_intersection
 {
 	t_shape *shape;
 	float	t;
+	t_vct	position;
+	t_vct	eye;
+	t_vct	light;
+	t_vct	normal;
+	t_vct	reflection;
 }	t_intersection;
+
+typedef struct s_comps
+{
+	t_shape *shape;
+	float	t;
+	t_vct	point;
+	t_vct	eye;
+	t_vct	light;
+	t_vct	normal;
+	t_vct	reflect;
+	t_vct	over_point;
+	int		inside;
+}	t_comps;
 
 typedef struct t_intersects
 {

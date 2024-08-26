@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   shapes.c                                           :+:      :+:    :+:   */
+/*   shapes_transforms.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:44:06 by lopoka            #+#    #+#             */
-/*   Updated: 2024/08/23 14:16:57 by lucas            ###   ########.fr       */
+/*   Updated: 2024/08/26 16:14:26 by lucas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -37,19 +37,21 @@ void	ft_set_shape_matrices(t_shape *shape)
 	ft_combine_shape_transforms(shape, &scaling_mtrx, &rotation_mtrx, &translation_mtrx);
 }
 
+int	ft_is_zero_vct(t_vct a)
+{
+	if (fabs(a.x) < EPSILON && fabs(a.y) < EPSILON && fabs(a.z) < EPSILON)
+		return (1);
+	return (0);
+}
+
 void	ft_set_rotation_mtrx(t_mtrx4 *rotation_mtrx, t_shape *shape)
 {
 	t_vct	y_axis;
 	t_vct	rotation_axis;
 	float	rotation_angle;
 
-	if (shape->orientation.x == 0 && shape->orientation.z == 0)
-	{
-		if (fabs(shape->orientation.y - 1) < 0.001)
-			return	(ft_set_rotation_around_x(rotation_mtrx, 0));
-		if (fabs(shape->orientation.y - 1) < 0.001)
-			return	(ft_set_rotation_around_x(rotation_mtrx, -M_PI));
-	}
+	if (ft_is_zero_vct(shape->orientation))
+		return (ft_set_identity_mtrx(rotation_mtrx));
 	ft_bzero(&y_axis, sizeof(t_vct));
 	y_axis.y = 1;
 	ft_vct_norm(&y_axis);
@@ -84,17 +86,6 @@ void ft_rotation_mtrx_from_axis_and_angle(t_mtrx4 *rotation_mtrx, t_vct r_ax, fl
 	rotation_mtrx[0][3][3] = 1;
 }
 
-void	ft_set_rotation_around_x(t_mtrx4 *rotation_mtrx, float rot_angle)
-{
-	ft_bzero(rotation_mtrx, sizeof(t_mtrx4));
-	rotation_mtrx[0][0][0] = 1;
-	rotation_mtrx[0][1][1] = cos(rot_angle);
-	rotation_mtrx[0][1][2] = -sin(rot_angle);
-	rotation_mtrx[0][2][1] = sin(rot_angle);
-	rotation_mtrx[0][2][2] = cos(rot_angle);
-	rotation_mtrx[0][3][3] = 1;
-}
-
 // The Raytracer Challenge p.54 The matrices need to be multiplied in the reverse order that the one in which we want them applied
 // https://www.scratchapixel.com/lessons/mathematics-physics-for-computer-graphics/geometry/transforming-normals.html
 void	ft_combine_shape_transforms(t_shape *shape, t_mtrx4 *scaling_mtrx, t_mtrx4 *rotation_mtrx, t_mtrx4 *translation_mtrx)
@@ -104,5 +95,5 @@ void	ft_combine_shape_transforms(t_shape *shape, t_mtrx4 *scaling_mtrx, t_mtrx4 
 	ft_mtrx_mtrx_mult(&trnsl_x_rot, translation_mtrx, rotation_mtrx);
 	ft_mtrx_mtrx_mult(&shape->shape_to_world, &trnsl_x_rot, scaling_mtrx);
 	ft_mtrx4_inv(&shape->world_to_shape, &shape->shape_to_world);
-	ft_mtrx4_transpose(&shape->normal_to_world, &shape->shape_to_world);
+	ft_mtrx4_transpose(&shape->normal_to_world, &shape->world_to_shape);
 }

@@ -9,8 +9,6 @@
 /*   Updated: 2024/08/24 19:58:51 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-
 #include "../includes/miniRT.h"
 #include <pthread.h>
 
@@ -75,11 +73,9 @@ void	worker_render_section(t_worker *worker, t_scene *scene, int i)
 		int x = 0;
 		while (x < CANV_WDTH)
 		{
-			inter->i = 0;
 			ft_pixel_to_ray(&world_ray, x, y, &scene->camera);
 			ft_get_intersections(world_ray, scene, inter);
-			color = ft_get_color(world_ray.O, world_ray.D,
-					scene, 3, inter);
+			color = ft_get_color(&world_ray, scene, 3, inter);
 			mlx_put_pixel(worker->mrt->img, x, y, ft_clr_to_int(color));
 			x++;
 		}

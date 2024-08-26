@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   worker.h                                           :+:      :+:    :+:   */
+/*   intersections.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
+/*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/24 18:25:17 by atorma            #+#    #+#             */
-/*   Updated: 2024/08/24 18:25:45 by atorma           ###   ########.fr       */
+/*   Created: 2024/08/26 17:03:58 by lopoka            #+#    #+#             */
+/*   Updated: 2024/08/26 17:04:37 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#ifndef INTERSECTIONS_H
+#define INTERSECTIONS_H
 
-#ifndef WORKER_H
-# define WORKER_H
-
-# define MAX_THREADS 6
-# define BLOCK_SIZE 6
+void			ft_get_intersections(t_ray world_ray, t_scene *scene,
+		t_intersects *intersects);
+t_intersection	*ft_closest_intersection(t_intersects *intersect);
 
 #endif
