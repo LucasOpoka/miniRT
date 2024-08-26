@@ -30,13 +30,15 @@ long long time_ms(void)
 
 void	render_image(t_mrt *mrt)
 {
-	pthread_mutex_lock(&mrt->lock);
+	mlx_image_t	*img;
 
+	img = mrt->img;
+	ft_bzero(img->pixels, img->width * img->height * sizeof(int));
+
+	pthread_mutex_lock(&mrt->lock);
 	mrt->threads_finished = 0;
 	mrt->do_render = 1;
-
 	pthread_cond_broadcast(&mrt->notify);
-
 	pthread_mutex_unlock(&mrt->lock);
 
 	long long ms_start = time_ms();
