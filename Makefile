@@ -15,7 +15,7 @@ NAME = miniRT
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -O2
+CFLAGS = -Wall -Wextra -Werror
 MLX42 = sources/MLX42
 
 LIBFTDIR = ./libft
@@ -59,6 +59,7 @@ target debug: CDEBUG = -DDEBUG=1
 target symbols: CFLAGS = -Wall -Wextra -Werror -gdwarf-4
 target symbols: CDEBUG = -DDEBUG=1
 
+target fast: CFLAGS += -O2 -fno-math-errno -fno-trapping-math
 
 export CFLAGS
 
@@ -101,5 +102,6 @@ debug_clean:
 re: fclean all
 debug: debug_clean all
 symbols: re
+fast: re
 
-.PHONY: debug, debug_clean, symbols, all, clean, fclean, re, mlx42
+.PHONY: debug, debug_clean, symbols, fast, all, clean, fclean, re, mlx42
