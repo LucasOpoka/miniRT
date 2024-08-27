@@ -117,7 +117,7 @@ t_scene	get_test_scene(void)
 	
 	t_shape *shape6 = malloc(sizeof(t_shape));
 	shape6->type = t_cylinder;
-	shape6->position = ft_create_vct(0, 0, 10);
+	shape6->position = ft_create_vct(0, 0, 11);
 	shape6->color = ft_create_clr(90, 34, 139);
 	shape6->orientation = ft_create_vct(0, 0, 1);
 	shape6->specular = 1000;
@@ -145,7 +145,7 @@ t_scene	get_test_scene(void)
 	ft_void_arr_add(&scene.shapes, shapex);
 	//ft_void_arr_add(&scene.shapes, shapex1);
 	//ft_void_arr_add(&scene.shapes, shape5);
-	//ft_void_arr_add(&scene.shapes, shape6);
+	ft_void_arr_add(&scene.shapes, shape6);
 
 	// Lights
 	ft_init_void_arr(&scene.lights);

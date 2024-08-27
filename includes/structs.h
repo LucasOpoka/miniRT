@@ -32,6 +32,16 @@ typedef struct s_mrt
 	int					do_render;
 }	t_mrt;
 
+typedef	struct	t_node
+{
+	float		min[3];
+	float		max[3];
+	uint32_t	left;
+	uint32_t	right;
+	uint32_t	first_index;
+	uint32_t	count;
+}	t_node;
+
 typedef struct s_vct
 {
 	float	x;
@@ -115,15 +125,6 @@ typedef	struct	t_ambient
 	t_clr	color;
 }	t_ambient;
 
-typedef	struct	t_node
-{
-	float		min[3];
-	float		max[3];
-	uint32_t	left;
-	uint32_t	right;
-	uint32_t	first_index;
-	uint32_t	count;
-}	t_node;
 
 typedef	struct s_scene
 {

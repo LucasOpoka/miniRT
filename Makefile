@@ -37,7 +37,6 @@ SOURCES	=	main.c \
 			render.c \
 			thread.c \
 			worker.c \
-			bvh.c \
 			shapes_transforms.c \
 			prep_comps.c \
 			shapes_normals.c \
@@ -51,8 +50,12 @@ PARSER_SRC = parser.c parser_utils.c validate.c file.c array.c \
 			fill.c ft_atof.c identifier.c shape.c camera.c light.c
 PARSER_OBJ = $(addprefix $(PARSER_DIR)/,$(PARSER_SRC:.c=.o))
 
+BVH_DIR = sources/bvh
+BVH_SRC = bvh.c bounds.c node.c
+BVH_OBJ = $(addprefix $(BVH_DIR)/,$(BVH_SRC:.c=.o))
+
 OFILES = $(addprefix $(SOURCE_DIR)/,$(SOURCES:.c=.o))
-OFILES += $(PARSER_OBJ)
+OFILES += $(PARSER_OBJ) $(BVH_OBJ)
 
 target debug: CFLAGS = -Wall -Wextra -Werror -fsanitize=address,undefined -O1 -g
 target debug: CDEBUG = -DDEBUG=1

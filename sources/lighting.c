@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
+#include "../includes/bvh.h"
 
 t_clr	ft_get_ambient(t_ambient *ambient, t_clr *shape_color)
 {
@@ -21,8 +22,6 @@ t_clr	ft_get_ambient(t_ambient *ambient, t_clr *shape_color)
 	return (res);
 }
 
-void	bvh_intersect(t_ray ray, t_scene *scene, t_node *root, uint32_t	index,
-		t_intersects *intersect);
 int	ft_in_shadow(t_scene *scene, t_vct *light_vct, t_vct *over_point,
 		t_intersects *intersect)
 {

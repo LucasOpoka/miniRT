@@ -78,7 +78,7 @@ void	worker_render_section(t_worker *worker, t_scene *scene, int i)
 			ft_pixel_to_ray(&ray, x, y, &scene->camera);
 			inter->i = 0;
 			bvh_intersect(ray, scene, scene->bhv_root, 0, inter);
-			//ft_get_intersections(world_ray, scene, inter);
+		//	ft_get_intersections(ray, scene, inter);
 			color = ft_get_color(&ray, scene, 3, inter);
 			mlx_put_pixel(worker->mrt->img, x, y, ft_clr_to_int(color));
 			x++;

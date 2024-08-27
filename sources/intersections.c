@@ -120,8 +120,6 @@ void	ft_ray_to_shape_space(t_ray *shape_ray, t_ray *world_ray, t_shape *shape)
 }
 
 
-void	bvh_intersect(t_ray ray, t_scene *scene, t_node *root, uint32_t	index,
-		t_intersects *intersect);
 void	ft_get_intersections(t_ray world_ray, t_scene *scene, t_intersects *intersect)
 {
 	t_shape	*shape;
