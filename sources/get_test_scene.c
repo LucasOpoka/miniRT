@@ -44,6 +44,32 @@ t_scene	get_test_scene(void)
 	shape1->scale = ft_create_vct(1, 1, 1);
 	shape1->orientation = ft_create_vct(0, 0, 0);
 
+	t_shape *shapex = malloc(sizeof(t_shape));
+	shapex->type = t_sphere;
+	shapex->position = ft_create_vct(0, 4, 4); //ON THE RIGHT
+	shapex->radius = 1;
+	shapex->color = ft_create_clr(0, 0, 255); //BLUE
+	shapex->specular = 0.9;
+	shapex->diffuse = 0.5;
+	shapex->shininess = 500;
+	shapex->reflective = 0.3;
+	shapex->scale = ft_create_vct(1, 1, 1);
+	shapex->orientation = ft_create_vct(0, 0, 1);
+
+	/*
+	t_shape *shapex1 = malloc(sizeof(t_shape));
+	shapex1->type = t_sphere;
+	shapex1->position = ft_create_vct(-1, 4, 4); //ON THE RIGHT
+	shapex1->radius = 1;
+	shapex1->color = ft_create_clr(0, 0, 255); //BLUE
+	shapex1->specular = 0.9;
+	shapex1->diffuse = 0.5;
+	shapex1->shininess = 500;
+	shapex1->reflective = 0.3;
+	shapex1->scale = ft_create_vct(1, 1, 1);
+	shapex1->orientation = ft_create_vct(0, 0, 1);
+	*/
+
 	t_shape *shape2 = malloc(sizeof(t_shape));
 	shape2->type = t_sphere;
 	shape2->position = ft_create_vct(2, 0, 4); //ON THE RIGHT
@@ -99,10 +125,25 @@ t_scene	get_test_scene(void)
 	shape6->scale = ft_create_vct(1, 1, 1);
 	shape6->height = 2;
 	
+	t_shape *shape7 = malloc(sizeof(t_shape));
+	shape7->type = t_sphere;
+	shape7->position = ft_create_vct(-15, 0, 3); //ON THE LEFT
+	shape7->radius = 1;
+	shape7->color = ft_create_clr(0, 255, 0); // GREEN
+	shape7->specular = 0.9;
+	shape7->diffuse = 0.5;
+	shape7->shininess = 10;
+	shape7->reflective = 0.4;
+	shape7->scale = ft_create_vct(1, 1, 1);
+	shape7->orientation = ft_create_vct(0, 0, 1);
+
 	ft_void_arr_add(&scene.shapes, shape1);
 	ft_void_arr_add(&scene.shapes, shape2);
 	ft_void_arr_add(&scene.shapes, shape3);
-	ft_void_arr_add(&scene.shapes, shape4);
+	//ft_void_arr_add(&scene.shapes, shape4);
+	ft_void_arr_add(&scene.shapes, shape7);
+	ft_void_arr_add(&scene.shapes, shapex);
+	//ft_void_arr_add(&scene.shapes, shapex1);
 	//ft_void_arr_add(&scene.shapes, shape5);
 	//ft_void_arr_add(&scene.shapes, shape6);
 

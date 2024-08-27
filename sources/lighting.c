@@ -21,6 +21,8 @@ t_clr	ft_get_ambient(t_ambient *ambient, t_clr *shape_color)
 	return (res);
 }
 
+void	bvh_intersect(t_ray ray, t_scene *scene, t_node *root, uint32_t	index,
+		t_intersects *intersect);
 int	ft_in_shadow(t_scene *scene, t_vct *light_vct, t_vct *over_point,
 		t_intersects *intersect)
 {
@@ -33,7 +35,9 @@ int	ft_in_shadow(t_scene *scene, t_vct *light_vct, t_vct *over_point,
 	ft_vct_norm(&point_to_light.D);
 	point_to_light.O = *over_point;
 
-	ft_get_intersections(point_to_light, scene, intersect);
+	intersect->i = 0;
+	bvh_intersect(point_to_light, scene, scene->bhv_root, 0, intersect);
+	//ft_get_intersections(point_to_light, scene, intersect);
 	t_intersection	*closest = ft_closest_intersection(intersect);
 	res = 1;
 	if (!closest || closest->t > distance)

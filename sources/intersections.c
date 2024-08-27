@@ -119,6 +119,9 @@ void	ft_ray_to_shape_space(t_ray *shape_ray, t_ray *world_ray, t_shape *shape)
 	ft_vct_mtrx_mult(&shape_ray->D, &shape->world_to_shape, &world_ray->D);
 }
 
+
+void	bvh_intersect(t_ray ray, t_scene *scene, t_node *root, uint32_t	index,
+		t_intersects *intersect);
 void	ft_get_intersections(t_ray world_ray, t_scene *scene, t_intersects *intersect)
 {
 	t_shape	*shape;
@@ -127,6 +130,7 @@ void	ft_get_intersections(t_ray world_ray, t_scene *scene, t_intersects *interse
 	
 	i = 0;
 	intersect->i = 0;
+	
 	while (i < scene->shapes.i)
 	{
 		shape = (t_shape *) scene->shapes.arr[i++];

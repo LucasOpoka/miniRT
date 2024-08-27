@@ -55,9 +55,11 @@ void	worker_signal_finish(t_worker *worker)
 	worker->done = 1;
 }
 
+void	bvh_intersect(t_ray ray, t_scene *scene, t_node *root, uint32_t	index,
+		t_intersects *intersect);
 void	worker_render_section(t_worker *worker, t_scene *scene, int i)
 {
-	t_ray		world_ray;
+	t_ray		ray;
 	t_clr		color;
 	int			block_count = CANV_HGHT / BLOCK_SIZE;
 	int			block_size = BLOCK_SIZE;
@@ -73,9 +75,11 @@ void	worker_render_section(t_worker *worker, t_scene *scene, int i)
 		int x = 0;
 		while (x < CANV_WDTH)
 		{
-			ft_pixel_to_ray(&world_ray, x, y, &scene->camera);
-			ft_get_intersections(world_ray, scene, inter);
-			color = ft_get_color(&world_ray, scene, 3, inter);
+			ft_pixel_to_ray(&ray, x, y, &scene->camera);
+			inter->i = 0;
+			bvh_intersect(ray, scene, scene->bhv_root, 0, inter);
+			//ft_get_intersections(world_ray, scene, inter);
+			color = ft_get_color(&ray, scene, 3, inter);
 			mlx_put_pixel(worker->mrt->img, x, y, ft_clr_to_int(color));
 			x++;
 		}

@@ -49,6 +49,7 @@ typedef struct s_clr
 
 typedef struct s_shape
 {
+	float	centroid;
 	int		type;
 	t_vct	position;
 	float	radius;
@@ -114,12 +115,23 @@ typedef	struct	t_ambient
 	t_clr	color;
 }	t_ambient;
 
+typedef	struct	t_node
+{
+	float		min[3];
+	float		max[3];
+	uint32_t	left;
+	uint32_t	right;
+	uint32_t	first_index;
+	uint32_t	count;
+}	t_node;
+
 typedef	struct s_scene
 {
 	t_camera	camera;
 	t_ambient	ambient;
 	t_void_arr	lights;
 	t_void_arr	shapes;
+	t_node		*bhv_root;
 }	t_scene;
 
 typedef	struct s_ray
