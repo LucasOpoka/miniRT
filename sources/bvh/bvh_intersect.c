@@ -72,6 +72,10 @@ void	bvh_intersect_ordered(t_ray ray, t_scene* scene, t_intersects *intersect)
 	t_stack	    s;
 
 	s.ptr = 0;
+	intersect->i = 0;
+	ray.rd.x = 1.0 / ray.D.x;
+	ray.rd.y = 1.0 / ray.D.y;
+	ray.rd.z = 1.0 / ray.D.z;
 	while (node)
 	{
 		if (node->count > 0)

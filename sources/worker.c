@@ -42,6 +42,8 @@ void	worker_wait(t_worker *worker)
 		pthread_cond_wait(&mrt->notify, &mrt->lock);
 	pthread_mutex_unlock(&mrt->lock);
 	worker->done = 0;
+	worker->block_count = mrt->img->height / BLOCK_SIZE;
+	worker->block_size = BLOCK_SIZE;
 }
 
 void	worker_signal_finish(t_worker *worker)
@@ -60,25 +62,22 @@ void	worker_render_section(t_worker *worker, t_scene *scene, int i)
 {
 	t_ray		ray;
 	t_clr		color;
-	int			block_count = CANV_HGHT / BLOCK_SIZE;
-	int			block_size = BLOCK_SIZE;
 	t_intersects *inter = &worker->intersects;
 
-	int start_y = i * block_size;
-	if (i == block_count - 1)
-		block_size += CANV_HGHT % BLOCK_SIZE;
+	int start_y = i * worker->block_size;
+	if (i == worker->block_count - 1)
+		worker->block_size += worker->mrt->img->height % BLOCK_SIZE;
 
 	int y = start_y;
-	while (y < (start_y + block_size))
+	while (y < (start_y + worker->block_size))
 	{
 		int x = 0;
 		while (x < CANV_WDTH)
 		{
 			ft_pixel_to_ray(&ray, x, y, &scene->camera);
-			inter->i = 0;
-			//bvh_intersect(ray, scene, scene->bhv_root, 0, inter);
+			//bvh_intersect(ray, scene, 0, inter);
 			bvh_intersect_ordered(ray, scene, inter);
-		//	ft_get_intersections(ray, scene, inter);
+			//ft_get_intersections(ray, scene, inter);
 			color = ft_get_color(&ray, scene, 3, inter);
 			mlx_put_pixel(worker->mrt->img, x, y, ft_clr_to_int(color));
 			x++;
@@ -92,14 +91,13 @@ void	*worker_routine(void *ptr)
 	t_worker	*worker;
 
 	worker = (t_worker *)ptr;
-	int			block_count = CANV_HGHT / BLOCK_SIZE;
 	int	i;
 
 	while (1)
 	{
 		i = worker->index;
 		worker_wait(worker);
-		while (i < block_count)
+		while (i < worker->block_count)
 		{
 			worker_render_section(worker, worker->scene, i);
 			i += MAX_THREADS;

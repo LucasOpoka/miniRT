@@ -34,7 +34,6 @@ int	ft_in_shadow(t_scene *scene, t_vct *light_vct, t_vct *over_point,
 	ft_vct_norm(&point_to_light.D);
 	point_to_light.O = *over_point;
 
-	intersect->i = 0;
 	bvh_intersect_ordered(point_to_light, scene, intersect);
 	//ft_get_intersections(point_to_light, scene, intersect);
 	t_intersection	*closest = ft_closest_intersection(intersect);

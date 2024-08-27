@@ -146,6 +146,7 @@ typedef	struct s_ray
 {
 	t_vct	O;
 	t_vct	D;
+	t_vct	rd;
 }	t_ray;
 
 typedef struct s_intersection
