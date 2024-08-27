@@ -63,7 +63,7 @@ target debug: CDEBUG = -DDEBUG=1
 target symbols: CFLAGS = -Wall -Wextra -Werror -gdwarf-4
 target symbols: CDEBUG = -DDEBUG=1
 
-target fast: CFLAGS += -O2 -fno-math-errno -fno-trapping-math -ffast-math
+target fast: CFLAGS += -O2 -fno-math-errno -fno-trapping-math
 target profile:	CFLAGS += -O2 -fno-math-errno -fno-trapping-math -gdwarf-4
 
 export CFLAGS

@@ -42,6 +42,12 @@ typedef	struct	t_node
 	uint32_t	count;
 }	t_node;
 
+typedef struct	t_stack
+{
+    t_node	*stack[64];
+    uint32_t	ptr;
+}   t_stack;
+
 typedef struct s_vct
 {
 	float	x;

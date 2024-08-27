@@ -2,7 +2,7 @@
 #include "../../includes/miniRT.h"
 #include <math.h>
 
-int aabb_raycast(t_ray ray, float bmin[3], float bmax[3])
+float aabb_raycast(t_ray ray, float bmin[3], float bmax[3])
 {
     t_vct   rd;
     rd.x = 1.0 / ray.D.x;
@@ -20,10 +20,10 @@ int aabb_raycast(t_ray ray, float bmin[3], float bmax[3])
 
     // if tmax < 0, ray (line) is intersecting AABB, but whole AABB is behing us
     if (tmax < 0)
-	return (0);
+	return (FLT_MAX);
     // if tmin > tmax, ray doesn't intersect AABB
     if (tmin > tmax)
-	return (0);
-    return (1);
+	return (FLT_MAX);
+    return (0);
     //return (tmin < tmax);
 }

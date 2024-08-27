@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
+#include "../includes/bvh.h"
 #include <pthread.h>
 
 long long	time_ms(void);
@@ -55,8 +56,6 @@ void	worker_signal_finish(t_worker *worker)
 	worker->done = 1;
 }
 
-void	bvh_intersect(t_ray ray, t_scene *scene, t_node *root, uint32_t	index,
-		t_intersects *intersect);
 void	worker_render_section(t_worker *worker, t_scene *scene, int i)
 {
 	t_ray		ray;
@@ -77,7 +76,8 @@ void	worker_render_section(t_worker *worker, t_scene *scene, int i)
 		{
 			ft_pixel_to_ray(&ray, x, y, &scene->camera);
 			inter->i = 0;
-			bvh_intersect(ray, scene, scene->bhv_root, 0, inter);
+			//bvh_intersect(ray, scene, scene->bhv_root, 0, inter);
+			bvh_intersect_ordered(ray, scene, inter);
 		//	ft_get_intersections(ray, scene, inter);
 			color = ft_get_color(&ray, scene, 3, inter);
 			mlx_put_pixel(worker->mrt->img, x, y, ft_clr_to_int(color));
