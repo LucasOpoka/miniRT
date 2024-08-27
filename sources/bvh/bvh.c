@@ -21,18 +21,20 @@ int aabb_raycast(t_ray ray, float bmin[3], float bmax[3]);
 void	bvh_update_bounds(t_node *root, uint32_t index, t_void_arr *shapes)
 {
 	t_node	*node = &root[index];
+	t_shape	*shape;
 	size_t	i;
 
 	i = 0;
 
 	uint32_t    first = node->first_index;
-	t_shape *shape = (t_shape *)shapes->arr[shape_index[first + i]];
-	if (shape->type == t_sphere)
-		sphere_bounds(node->min, node->max, shape);
-	else if (shape->type == t_cylinder)
-		cylinder_bounds(node->min, node->max, shape);
 
-	i++;
+	node->min[0] = FLT_MAX;
+	node->min[1] = FLT_MAX;
+	node->min[2] = FLT_MAX;
+
+	node->max[0] = FLT_MIN;
+	node->max[1] = FLT_MIN;
+	node->max[2] = FLT_MIN;
 	while (i < node->count)
 	{
 		shape = (t_shape *)shapes->arr[shape_index[first + i]];
@@ -113,6 +115,7 @@ void	bvh_subdivide(t_node *root, uint32_t index, t_void_arr *shapes)
 	node->left = left_index;
 	node->right = right_index;
 	node->count = 0;
+	//node->right can later be removed as it is not used anymore
 
 	bvh_update_bounds(root, left_index, shapes);
 	bvh_update_bounds(root, right_index, shapes);
