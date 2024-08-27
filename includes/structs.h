@@ -49,7 +49,7 @@ typedef struct s_clr
 
 typedef struct s_shape
 {
-	float	centroid;
+	float	centroid[3];
 	int		type;
 	t_vct	position;
 	float	radius;

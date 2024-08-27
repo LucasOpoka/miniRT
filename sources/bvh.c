@@ -115,7 +115,6 @@ void	bvh_subdivide(t_node *root, uint32_t index, t_void_arr *shapes)
 	int	axis;
 	float	split_pos;
 	float	extent[3];
-	float	centroid[3];
 
 	if (node->count <= 2)
 		return ;
@@ -130,10 +129,7 @@ void	bvh_subdivide(t_node *root, uint32_t index, t_void_arr *shapes)
 	while (i <= j)
 	{
 		t_shape *shape = (t_shape *)shapes->arr[shape_index[i]];
-		centroid[0] = shape->position.x;
-		centroid[1] = shape->position.y;
-		centroid[2] = shape->position.z;
-		if (centroid[axis] < split_pos)
+		if (shape->centroid[axis] < split_pos)
 		{
 			left_count++;
 			i++;
@@ -177,6 +173,10 @@ t_node	*bvh_build(t_void_arr *shapes)
 	while (i < shapes->i)
 	{
 		shape_index[i] = i;
+		t_shape *shape = shapes->arr[i];
+		shape->centroid[0] = shape->position.x;
+		shape->centroid[1] = shape->position.y;
+		shape->centroid[2] = shape->position.z;
 		i++;
 	}
 	bvh_update_bounds(root, 0, shapes);
