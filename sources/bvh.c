@@ -82,24 +82,12 @@ void	print_node(t_node *node, t_void_arr *shapes, int axis, float split_pos)
 	}
 }
 
-int bvh_split_axis(t_node *node)
+int bvh_split_plane(t_node *node, float *extent, int *axis_out)
 {
-	int axis = 0;
+	float	split_pos;
+	int	axis;
 
-}
-
-void	bvh_subdivide(t_node *root, uint32_t index, t_void_arr *shapes)
-{
-	t_node	*node = &root[index];
-	float	extent[3];
-	float	centroid[3];
-	int axis = 0;
-
-	if (node->count <= 2)
-	{
-		return ;
-	}
-	printf("bvh_subdivide depth: %u\n", index);
+	axis = 0;
 	extent[0] = node->max[0] - node->min[0];
 	extent[1] = node->max[1] - node->min[1];
 	extent[2] = node->max[2] - node->min[2];
@@ -107,7 +95,22 @@ void	bvh_subdivide(t_node *root, uint32_t index, t_void_arr *shapes)
 		axis = 1;
 	if (extent[2] > extent[axis])
 		axis = 2;
-	float split_pos = node->min[axis] + extent[axis] * 0.5f;
+	*axis_out = axis;
+	split_pos = node->min[axis] + extent[axis] * 0.5f;
+	return (split_pos);
+}
+
+void	bvh_subdivide(t_node *root, uint32_t index, t_void_arr *shapes)
+{
+	t_node	*node = &root[index];
+	int	axis;
+	float	split_pos;
+	float	extent[3];
+	float	centroid[3];
+
+	if (node->count <= 2)
+		return ;
+	split_pos = bvh_split_plane(node, extent, &axis);
 	printf("split_pos: %f\n", split_pos);
 	printf("split_axis: %d\n", axis);
 
