@@ -5,7 +5,6 @@
 
 
 uint32_t used = 1;
-uint32_t    shape_index[256];
 
 void	node_print_entry(t_node *node);
 void	node_print_full(t_node *node, t_void_arr *shapes, int axis, float split_pos);
@@ -16,19 +15,13 @@ void	sphere_bounds(float *min, float *max, t_shape *sphere);
 void	cylinder_bounds(float *min, float *max, t_shape *cylinder);
 void	shape_bounds_update(t_node *node, t_shape *shape);
 
-//int aabb_raycast(t_ray ray, float bmin[3], float bmax[3]);
-float aabb_raycast(t_ray ray, float bmin[3], float bmax[3]);
-
-void	bvh_update_bounds(t_node *root, uint32_t index, t_void_arr *shapes)
+void	bvh_update_bounds(t_node *root, uint32_t index, t_scene *scene)
 {
-	t_node	*node = &root[index];
-	t_shape	*shape;
-	size_t	i;
+	t_node	    *node = &root[index];
+	t_shape	    *shape;
+	size_t	    i;
 
 	i = 0;
-
-	uint32_t    first = node->first_index;
-
 	node->min[0] = FLT_MAX;
 	node->min[1] = FLT_MAX;
 	node->min[2] = FLT_MAX;
@@ -38,7 +31,7 @@ void	bvh_update_bounds(t_node *root, uint32_t index, t_void_arr *shapes)
 	node->max[2] = FLT_MIN;
 	while (i < node->count)
 	{
-		shape = (t_shape *)shapes->arr[shape_index[first + i]];
+		shape = scene->shapes.arr[scene->bvh_index[node->first_index+ i]];
 		shape_bounds_update(node, shape);
 		i++;
 	}
@@ -64,7 +57,7 @@ int bvh_split_plane(t_node *node, float *extent, int *axis_out)
 	return (split_pos);
 }
 
-void	swap_qsort(int i, int j)
+void	swap_qsort(uint32_t *shape_index, int i, int j)
 {
 	uint32_t    tmp;
 
@@ -73,7 +66,7 @@ void	swap_qsort(int i, int j)
 	shape_index[j] = tmp;
 }
 
-void	bvh_subdivide(t_node *root, uint32_t index, t_void_arr *shapes)
+void	bvh_subdivide(t_node *root, uint32_t index, t_scene *scene)
 {
 	t_node	*node = &root[index];
 	int	axis;
@@ -92,7 +85,7 @@ void	bvh_subdivide(t_node *root, uint32_t index, t_void_arr *shapes)
 	uint32_t    right_count = 0;
 	while (i <= j)
 	{
-		t_shape *shape = (t_shape *)shapes->arr[shape_index[i]];
+		t_shape *shape = scene->shapes.arr[scene->bvh_index[i]];
 		if (shape->centroid[axis] < split_pos)
 		{
 			left_count++;
@@ -100,7 +93,7 @@ void	bvh_subdivide(t_node *root, uint32_t index, t_void_arr *shapes)
 		}
 		else
 		{
-			swap_qsort(i, j--);
+			swap_qsort(scene->bvh_index, i, j--);
 			right_count++;
 		}
 	}
@@ -118,131 +111,40 @@ void	bvh_subdivide(t_node *root, uint32_t index, t_void_arr *shapes)
 	node->count = 0;
 	//node->right can later be removed as it is not used anymore
 
-	bvh_update_bounds(root, left_index, shapes);
-	bvh_update_bounds(root, right_index, shapes);
-	bvh_subdivide(root, left_index, shapes);
-	bvh_subdivide(root, right_index, shapes);
+	bvh_update_bounds(root, left_index, scene);
+	bvh_update_bounds(root, right_index, scene);
+	bvh_subdivide(root, left_index, scene);
+	bvh_subdivide(root, right_index, scene);
 }
 
-t_node	*bvh_build(t_void_arr *shapes)
+t_node	*bvh_build(t_scene *scene)
 {
-	t_node	*root = ft_calloc(1, (shapes->i * 2 * sizeof(t_node)));
+	uint32_t    i;
+	t_node	    *root;
+	uint32_t    *bvh_index;
 
-	if (!root)
-		return (NULL);
-	root->count = shapes->i;
-
-	uint32_t i = 0;
-	while (i < shapes->i)
+	root = ft_calloc(1, (scene->shapes.i * 2 * sizeof(t_node)));
+	bvh_index = ft_calloc(1, (scene->shapes.i * sizeof(uint32_t)));
+	if (!root || !bvh_index)
 	{
-		shape_index[i] = i;
-		t_shape *shape = shapes->arr[i];
+		free(root);
+		free(bvh_index);
+		return (NULL);
+	}
+	scene->bvh_root = root;
+	scene->bvh_index = bvh_index;
+	root->count = scene->shapes.i;
+	i = 0;
+	while (i < root->count)
+	{
+		scene->bvh_index[i] = i;
+		t_shape *shape = scene->shapes.arr[i];
 		shape->centroid[0] = shape->position.x;
 		shape->centroid[1] = shape->position.y;
 		shape->centroid[2] = shape->position.z;
 		i++;
 	}
-	bvh_update_bounds(root, 0, shapes);
-	bvh_subdivide(root, 0, shapes);
+	bvh_update_bounds(root, 0, scene);
+	bvh_subdivide(root, 0, scene);
 	return (root);
-}
-
-
-
-void	ft_ray_to_shape_space(t_ray *shape_ray, t_ray *world_ray, t_shape *shape);
-
-void	ft_get_intersections(t_ray world_ray, t_scene *scene, t_intersects *intersect);
-void	ft_sphere_intersection(t_vct O, t_vct D, t_shape *shape, t_intersects *intersect);
-void	ft_cylinder_intersection(t_vct O, t_vct D, t_shape *shape, t_intersects *intersect);
-
-void	intersects_shape(t_ray ray, t_scene *scene, t_node *node, t_intersects *intersect)
-{
-	t_shape	    *shape;
-	t_ray	    s_ray;
-	uint32_t    i;
-
-	i = 0;
-	while (i < node->count)
-	{
-		shape = scene->shapes.arr[shape_index[node->first_index + i]];
-		ft_ray_to_shape_space(&s_ray, &ray, shape);
-
-		if (shape->type == t_sphere)
-			ft_sphere_intersection(s_ray.O, s_ray.D, shape, intersect);
-		if (shape->type == t_cylinder)
-			ft_cylinder_intersection(s_ray.O, s_ray.D, shape, intersect);
-		i++;
-	}
-}
-
-void	swap_float_node(float *f1, float *f2, t_node **n1, t_node **n2)
-{
-	float	tmp;
-	t_node	*tmp_node;
-
-	tmp = *f1;
-	*f1 = *f2;
-	*f2 = tmp;
-	tmp_node = *n1;
-	*n1 = *n2;
-	*n2 = tmp_node;
-}
-
-t_node *intersects_node(t_ray ray, t_node *root, t_node *curr, t_stack *s)
-{
-	t_node	*left;
-	t_node	*right;
-	float	d1;
-	float	d2;
-
-	left = &root[curr->left];
-	right = &root[curr->left + 1];
-	d1 = aabb_raycast(ray, left->min, left->max);
-	d2 = aabb_raycast(ray, right->min, right->max);
-	if (d1 > d2)
-		swap_float_node(&d1, &d2, &left, &right);
-	if (d1 == FLT_MAX) //Miss
-	{
-		if (s->ptr == 0)
-			return (NULL);
-		return (s->stack[--s->ptr]);
-	}
-	if (d2 != FLT_MAX)
-		s->stack[s->ptr++] = right;
-	return (left);
-}
-
-void	bvh_intersect_ordered(t_ray ray, t_scene* scene, t_intersects *intersect)
-{
-	t_node	    *node = &scene->bhv_root[0];
-	t_stack	    s;
-
-	s.ptr = 0;
-	while (node)
-	{
-		if (node->count > 0)
-		{
-			intersects_shape(ray, scene, node, intersect);
-			if (s.ptr == 0)
-				break;
-			node = s.stack[--s.ptr];
-			continue;
-		}
-		node = intersects_node(ray, scene->bhv_root, node, &s);
-	}
-}
-
-void	bvh_intersect(t_ray ray, t_scene *scene, uint32_t index, t_intersects *intersect)
-{
-	t_node	*node = &scene->bhv_root[index];
-
-	if (aabb_raycast(ray, node->min, node->max) == FLT_MAX)
-		return ;
-	if (node->count > 0)
-	{
-		intersects_shape(ray, scene, node, intersect);
-		return ;
-	}
-	bvh_intersect(ray, scene, node->left, intersect);
-	bvh_intersect(ray, scene, node->left + 1, intersect);
 }

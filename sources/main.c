@@ -10,11 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
+#include "../includes/bvh.h"
 
 void	scene_free(t_scene *scene);
 void	render(t_mrt *mrt, t_scene *scene);
 int		threads_init(t_mrt *mrt, t_scene *scene);
-t_node	*bvh_build(t_void_arr *shapes);
 
 int	main(int ac, char **av)
 {
@@ -36,7 +36,7 @@ int	main(int ac, char **av)
 	}
 	printf("using scene: %s\n", av[1]);
 
-	scene.bhv_root = bvh_build(&scene.shapes);
+	scene.bvh_root = bvh_build(&scene);
 
 	threads_init(&mrt, &scene);
 	ft_init_stc(&mrt);

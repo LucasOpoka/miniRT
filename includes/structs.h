@@ -138,7 +138,8 @@ typedef	struct s_scene
 	t_ambient	ambient;
 	t_void_arr	lights;
 	t_void_arr	shapes;
-	t_node		*bhv_root;
+	t_node		*bvh_root;
+	uint32_t	*bvh_index;
 }	t_scene;
 
 typedef	struct s_ray
