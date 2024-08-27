@@ -100,6 +100,15 @@ int bvh_split_plane(t_node *node, float *extent, int *axis_out)
 	return (split_pos);
 }
 
+void	swap_qsort(int i, int j)
+{
+	uint32_t    tmp;
+
+	tmp = shape_index[i];
+	shape_index[i] = shape_index[j];
+	shape_index[j] = tmp;
+}
+
 void	bvh_subdivide(t_node *root, uint32_t index, t_void_arr *shapes)
 {
 	t_node	*node = &root[index];
@@ -131,11 +140,7 @@ void	bvh_subdivide(t_node *root, uint32_t index, t_void_arr *shapes)
 		}
 		else
 		{
-			//quicksort partition swap
-			uint32_t    tmp;
-			tmp = shape_index[i];
-			shape_index[i] = shape_index[j];
-			shape_index[j--] = tmp;
+			swap_qsort(i, j--);
 			right_count++;
 		}
 	}
