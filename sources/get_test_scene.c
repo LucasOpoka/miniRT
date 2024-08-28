@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 12:47:38 by lopoka            #+#    #+#             */
-/*   Updated: 2024/08/28 15:32:11 by lucas            ###   ########.fr       */
+/*   Updated: 2024/08/28 17:45:25 by lucas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -20,12 +20,12 @@ t_scene	get_test_scene(void)
 	scene.camera.fov = FOV;
 
 	scene.camera.position.x = 0;
-	scene.camera.position.y = 0;
+	scene.camera.position.y = 3;
 	scene.camera.position.z = -5;
 	scene.camera.position.w = 1;
 
 	scene.camera.direction.x = 0;
-	scene.camera.direction.y = 0;
+	scene.camera.direction.y = -0.3;
 	scene.camera.direction.z = 1;
 	scene.camera.direction.w = 0;
 
@@ -82,29 +82,32 @@ t_scene	get_test_scene(void)
 
 	t_shape *shape5 = malloc(sizeof(t_shape));
 	shape5->type = t_plane;
-	shape5->position = ft_create_vct(0, 0, 10);
+	shape5->position = ft_create_vct(0, 0, 10); //PURPLE PLANE
 	shape5->color = ft_create_clr(90, 34, 139);
-	shape5->orientation = ft_create_vct(0, 1, -1);
-	shape5->specular = 100;
-	shape5->reflective = 0.4;
+	shape5->orientation = ft_create_vct(0, 0, -1);
+	shape5->specular = 0.9;
+	shape5->shininess = 100;
+	shape5->reflective = 0.1;
 	shape5->scale = ft_create_vct(1, 1, 1);
 	
 	t_shape *shape6 = malloc(sizeof(t_shape));
 	shape6->type = t_cylinder;
-	shape6->position = ft_create_vct(0, 0, 10);
-	shape6->color = ft_create_clr(90, 34, 139);
+	shape6->position = ft_create_vct(-3, 0, 2); //CYLINDER
+	shape6->color = ft_create_clr(150, 100, 75);
 	shape6->orientation = ft_create_vct(0, 0, 1);
-	shape6->specular = 1000;
-	shape6->reflective = 0.4;
-	shape6->scale = ft_create_vct(1, 1, 1);
+	shape6->specular = 0.9;
+	shape6->shininess = 100;
+	shape6->reflective = 0.2;
+	shape6->scale = ft_create_vct(0.75, 1, 1);
+	shape6->orientation = ft_create_vct(0, 0, 0);
 	shape6->height = 2;
 	
 	ft_void_arr_add(&scene.shapes, shape1);
 	ft_void_arr_add(&scene.shapes, shape2);
 	ft_void_arr_add(&scene.shapes, shape3);
 	ft_void_arr_add(&scene.shapes, shape4);
-	//ft_void_arr_add(&scene.shapes, shape5);
-	//ft_void_arr_add(&scene.shapes, shape6);
+	ft_void_arr_add(&scene.shapes, shape5);
+	ft_void_arr_add(&scene.shapes, shape6);
 
 	// Lights
 	ft_init_void_arr(&scene.lights);

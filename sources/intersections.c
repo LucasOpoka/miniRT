@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 21:05:34 by lopoka            #+#    #+#             */
-/*   Updated: 2024/08/28 14:11:51 by lucas            ###   ########.fr       */
+/*   Updated: 2024/08/28 17:51:07 by lucas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -26,12 +26,12 @@ void	ft_add_intersection(t_void_arr *intersections, t_shape *shape, double t)
 	
 }
 
-void	ft_sphere_intersection(t_vct O, t_vct D, t_shape *shape, t_void_arr *intersections)
+void	ft_sphere_intersection(t_ray ray, t_shape *shape, t_void_arr *intersections)
 {
 	t_vct	center = ft_create_vct(0, 0, 0);
-	t_vct	X = ft_vct_sub(&O, &center);
-	double	a = ft_vct_dot(&D, &D);
-	double	b = 2 * ft_vct_dot(&X, &D);
+	t_vct	X = ft_vct_sub(&ray.O, &center);
+	double	a = ft_vct_dot(&ray.D, &ray.D);
+	double	b = 2 * ft_vct_dot(&X, &ray.D);
 	double	c = ft_vct_dot(&X, &X) - (shape->radius * shape->radius);
 
 	double discr = b * b - 4 * a * c;
@@ -41,41 +41,39 @@ void	ft_sphere_intersection(t_vct O, t_vct D, t_shape *shape, t_void_arr *inters
 	ft_add_intersection(intersections, shape, (-b - sqrt(discr)) / (2 * a));
 }
 
-void	ft_plane_intersection(t_vct O, t_vct D, t_shape *shape, t_void_arr *intersections)
+void	ft_plane_intersection(t_ray ray, t_shape *shape, t_void_arr *intersections)
 {
-	double	denom = ft_vct_dot(&D, &shape->orientation);
-	if (fabs(denom) < 0.0001)
+	if (fabs(ray.D.y) < EPSILON)
 		return ;
-	t_vct diff = ft_vct_sub(&shape->position, &O);
-	ft_add_intersection(intersections, shape, ft_vct_dot(&diff, &shape->orientation) / denom);
+	ft_add_intersection(intersections, shape, -ray.O.y / ray.D.y);
 }
 
-int	ft_check_caps(t_vct O, t_vct D, double t)
+int	ft_check_caps(t_ray ray, double t)
 {
 	double	x;
 	double	z;
 
-	x = O.x + D.x * t;
-	z = O.z + D.z * t;
+	x = ray.O.x + ray.D.x * t;
+	z = ray.O.z + ray.D.z * t;
 	return (x * x + z * z <= 1);
 }
 
-void	ft_intersect_caps(t_vct O, t_vct D, t_shape *shape, t_void_arr *intersections)
+void	ft_intersect_caps(t_ray ray, t_shape *shape, t_void_arr *intersections)
 {
 	double	t;
 
-	if (fabs(D.y) < 0.001)
+	if (fabs(ray.D.y) < EPSILON)
 		return ;
-	t = ((-shape->height / 2) - O.y) / D.y;
-	if (ft_check_caps(O, D, t))
+	t = ((-shape->height / 2) - ray.O.y) / ray.D.y;
+	if (ft_check_caps(ray, t))
 		ft_add_intersection(intersections, shape, t);
-	t = ((shape->height / 2) - O.y) / D.y;
-	if (ft_check_caps(O, D, t))
+	t = ((shape->height / 2) - ray.O.y) / ray.D.y;
+	if (ft_check_caps(ray, t))
 		ft_add_intersection(intersections, shape, t);
 }
 
 // The Raytracer Challenge p.177
-void	ft_cylinder_intersection(t_vct O, t_vct D, t_shape *shape, t_void_arr *intersections)
+void	ft_cylinder_intersection(t_ray ray, t_shape *shape, t_void_arr *intersections)
 {
 	double	a;
 	double	b;
@@ -86,9 +84,9 @@ void	ft_cylinder_intersection(t_vct O, t_vct D, t_shape *shape, t_void_arr *inte
 	double	y[2];
 	double	half_h;
 
-	a = D.x * D.x + D.z * D.z;
-	b = 2 * O.x * D.x + 2 * O.z * D.z;
-	c = O.x * O.x + O.z * O.z - 1;
+	a = ray.D.x * ray.D.x + ray.D.z * ray.D.z;
+	b = 2 * ray.O.x * ray.D.x + 2 * ray.O.z * ray.D.z;
+	c = ray.O.x * ray.O.x + ray.O.z * ray.O.z - 1;
 	disc = b * b - 4 * a * c;
 
 	if (disc >= 0)
@@ -106,14 +104,14 @@ void	ft_cylinder_intersection(t_vct O, t_vct D, t_shape *shape, t_void_arr *inte
 
 		half_h = shape->height / 2;
 
-		y[0] = O.y + t[0] * D.y;
+		y[0] = ray.O.y + t[0] * ray.D.y;
 		if ((-half_h < y[0]) && (y[0] < half_h))
 			ft_add_intersection(intersections, shape, t[0]);
-		y[1] = O.y + t[1] * D.y;
+		y[1] = ray.O.y + t[1] * ray.D.y;
 		if ((-half_h < y[1]) && (y[1] < half_h))
 			ft_add_intersection(intersections, shape, t[1]);
 	}
-	ft_intersect_caps(O, D, shape, intersections);
+	ft_intersect_caps(ray, shape, intersections);
 }
 
 void	ft_ray_to_shape_space(t_ray *shape_ray, t_ray *world_ray, t_shape *shape)
@@ -135,11 +133,11 @@ void	ft_get_intersections(t_ray world_ray, t_scene *scene, t_void_arr *intersect
 		ft_ray_to_shape_space(&shape_ray, &world_ray, shape);
 	
 		if (shape->type == t_sphere)
-			ft_sphere_intersection(shape_ray.O, shape_ray.D, shape, intersections);
+			ft_sphere_intersection(shape_ray, shape, intersections);
 		if (shape->type == t_plane)
-			ft_plane_intersection(shape_ray.O, shape_ray.D, shape, intersections);
+			ft_plane_intersection(shape_ray, shape, intersections);
 		if (shape->type == t_cylinder)
-			ft_cylinder_intersection(shape_ray.O, shape_ray.D, shape, intersections);
+			ft_cylinder_intersection(shape_ray, shape, intersections);
 	}
 }
 
