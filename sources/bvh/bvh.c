@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 16:52:06 by atorma            #+#    #+#             */
-/*   Updated: 2024/08/28 18:32:37 by atorma           ###   ########.fr       */
+/*   Updated: 2024/08/28 18:40:21 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	swap_qsort(uint32_t *shape_index, int i, int j)
 
 t_split	find_best_split(t_node *node, t_scene *scene);
 
-int node_partition(t_node *node, t_scene *scene, t_split split,
+uint32_t    node_partition(t_node *node, t_scene *scene, t_split split,
 		uint32_t *left_count, uint32_t *right_count)
 {
 	uint32_t    i = node->first_index;
@@ -103,7 +103,7 @@ void	bvh_subdivide(t_node *root, uint32_t index, t_scene *scene)
 
 	uint32_t    left_count = 0;
 	uint32_t    right_count = 0;
-	int i = node_partition(node, scene, split, &left_count, &right_count);
+	uint32_t i = node_partition(node, scene, split, &left_count, &right_count);
 	if (!left_count || !right_count)
 		return ;
 	printf("left_count: %d, right_count: %d\n", left_count, right_count);
