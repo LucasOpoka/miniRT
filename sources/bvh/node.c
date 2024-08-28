@@ -2,15 +2,27 @@
 #include "../../includes/miniRT.h"
 #include <math.h>
 
-void	node_min_max(t_node *node, float *min, float *max)
+void	node_min_max(float *to_min, float *to_max, float *min, float *max)
 {
-	node->min[0] = fminf(node->min[0], min[0]);
-	node->min[1] = fminf(node->min[1], min[1]);
-	node->min[2] = fminf(node->min[2], min[2]);
+	to_min[0] = fminf(to_min[0], min[0]);
+	to_min[1] = fminf(to_min[1], min[1]);
+	to_min[2] = fminf(to_min[2], min[2]);
 
-	node->max[0] = fmaxf(node->max[0], max[0]);
-	node->max[1] = fmaxf(node->max[1], max[1]);
-	node->max[2] = fmaxf(node->max[2], max[2]);
+	to_max[0] = fmaxf(to_max[0], max[0]);
+	to_max[1] = fmaxf(to_max[1], max[1]);
+	to_max[2] = fmaxf(to_max[2], max[2]);
+}
+
+float	node_cost(t_node *node)
+{
+	float	extent[3];
+	float	area;
+
+	extent[0] = node->max[0] - node->min[0];
+	extent[1] = node->max[1] - node->min[1];
+	extent[2] = node->max[2] - node->min[2];
+	area = extent[0] * extent[1] + extent[1] * extent[2] + extent[2] * extent[0];
+	return (node->count * area);
 }
 
 void	node_print_entry(t_node *node)

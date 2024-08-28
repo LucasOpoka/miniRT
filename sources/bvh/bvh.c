@@ -9,11 +9,19 @@ uint32_t used = 1;
 void	node_print_entry(t_node *node);
 void	node_print_full(t_node *node, t_void_arr *shapes, int axis, float split_pos);
 
-void	node_min_max(t_node *node, float *min, float *max);
+void	node_min_max(float *to_min, float *to_max, float *min, float *max);
+float	node_cost(t_node *node);
 
 void	sphere_bounds(float *min, float *max, t_shape *sphere);
 void	cylinder_bounds(float *min, float *max, t_shape *cylinder);
 void	shape_bounds_update(t_node *node, t_shape *shape);
+
+void	float_set(float *f, float value)
+{
+	f[0] = value;
+	f[1] = value;
+	f[2] = value;
+}
 
 void	bvh_update_bounds(t_node *root, uint32_t index, t_scene *scene)
 {
@@ -22,13 +30,9 @@ void	bvh_update_bounds(t_node *root, uint32_t index, t_scene *scene)
 	size_t	    i;
 
 	i = 0;
-	node->min[0] = FLT_MAX;
-	node->min[1] = FLT_MAX;
-	node->min[2] = FLT_MAX;
+	float_set(node->min, FLT_MAX);
+	float_set(node->max, FLT_MIN);
 
-	node->max[0] = FLT_MIN;
-	node->max[1] = FLT_MIN;
-	node->max[2] = FLT_MIN;
 	while (i < node->count)
 	{
 		shape = scene->shapes.arr[scene->bvh_index[node->first_index+ i]];
@@ -38,10 +42,11 @@ void	bvh_update_bounds(t_node *root, uint32_t index, t_scene *scene)
 }
 
 
-//Plane is split along the longest axis
-int bvh_split_plane(t_node *node, float *extent, int *axis_out)
+//Plane is split along the longest axis, not used anymore this is bad
+float bvh_split_plane_old(t_node *node)
 {
 	float	split_pos;
+	float	extent[3];
 	int	axis;
 
 	axis = 0;
@@ -52,10 +57,10 @@ int bvh_split_plane(t_node *node, float *extent, int *axis_out)
 		axis = 1;
 	if (extent[2] > extent[axis])
 		axis = 2;
-	*axis_out = axis;
 	split_pos = node->min[axis] + extent[axis] * 0.5f;
 	return (split_pos);
 }
+
 
 void	swap_qsort(uint32_t *shape_index, int i, int j)
 {
@@ -66,19 +71,108 @@ void	swap_qsort(uint32_t *shape_index, int i, int j)
 	shape_index[j] = tmp;
 }
 
+float	area(float  *min, float *max)
+{
+	float	extent[3];
+	float	area;
+
+	extent[0] = max[0] - min[0];
+	extent[1] = max[1] - min[1];
+	extent[2] = max[2] - min[2];
+	area = extent[0] * extent[1] + extent[1] * extent[2] + extent[2] * extent[0];
+	return (area);
+}
+void	shape_bounds_min_max(float *to_min, float *to_max, t_shape *shape);
+
+float	evaluate(t_node *node, int axis, float pos, t_scene *scene)
+{
+	uint32_t    left_count = 0;
+	uint32_t    right_count = 0;
+	uint32_t    i = 0;
+	float	    cost = 0;
+	float	    min_left[3];
+	float	    max_left[3];
+	float	    min_right[3];
+	float	    max_right[3];
+
+	float_set(min_left, FLT_MAX);
+	float_set(min_right, FLT_MAX);
+	float_set(max_left, FLT_MIN);
+	float_set(max_right, FLT_MIN);
+	while (i < node->count)
+	{
+		t_shape *shape = scene->shapes.arr[scene->bvh_index[node->first_index + i]];
+		if (shape->centroid[axis] < pos)
+		{
+			shape_bounds_min_max(min_left, max_left, shape);
+			left_count++;
+		}
+		else
+		{
+			shape_bounds_min_max(min_right, max_right, shape);
+			right_count++;
+		}
+		i++;
+	}
+	cost = left_count * area(min_left, max_left) + right_count * area(min_right, max_right);
+	if (cost > 0)
+		return cost;
+	return (FLT_MAX);
+}
+
+float	find_best_split(t_node *node, int *axis, float *split_pos, t_scene *scene)
+{
+	float	best_cost = FLT_MAX;
+	uint32_t    a;
+	uint32_t    i;
+
+	a = 0;
+	while (a < 3)
+	{
+		i = 0;
+		float bmin = node->min[a];
+		float bmax = node->max[a];
+		if (bmin == bmax)
+			continue ;
+		float scale = (bmax - bmin) / 100;
+		//reduce this 
+		while (i < 50)
+		{
+			float pos = bmin + i * scale;
+			float cost = evaluate(node, a, pos, scene);
+			if (cost < best_cost)
+			{
+				*split_pos = pos;
+				*axis = a;
+				best_cost = cost;
+			}
+			i++;
+		}
+		a++;
+	}
+	return (best_cost);
+}
 void	bvh_subdivide(t_node *root, uint32_t index, t_scene *scene)
 {
 	t_node	*node = &root[index];
 	int	axis;
 	float	split_pos;
-	float	extent[3];
+	//float	extent[3];
 
+	/*
 	if (node->count <= 2)
 		return ;
 	split_pos = bvh_split_plane(node, extent, &axis);
 	printf("split_pos: %f\n", split_pos);
 	printf("split_axis: %d\n", axis);
+	*/
+	float no_split_cost = node_cost(node);	
+	float split_cost = find_best_split(node, &axis, &split_pos, scene);
+	if (split_cost >= no_split_cost)
+		return ;
 
+	printf("no_split_cost: %f, split_cost: %f, split_pos: %f, axis: %d\n",
+			no_split_cost, split_cost, split_pos, axis);
 	uint32_t    i = node->first_index;
 	uint32_t    j = node->count + i - 1;
 	uint32_t    left_count = 0;
@@ -117,6 +211,8 @@ void	bvh_subdivide(t_node *root, uint32_t index, t_scene *scene)
 	bvh_subdivide(root, right_index, scene);
 }
 
+long long	time_ms(void);
+
 t_node	*bvh_build(t_scene *scene)
 {
 	uint32_t    i;
@@ -144,7 +240,10 @@ t_node	*bvh_build(t_scene *scene)
 		shape->centroid[2] = shape->position.z;
 		i++;
 	}
+	long long ms_start = time_ms();
 	bvh_update_bounds(root, 0, scene);
 	bvh_subdivide(root, 0, scene);
+	long long ms_end = time_ms();
+	printf("bhv_build took: %lldms\n", ms_end - ms_start);
 	return (root);
 }

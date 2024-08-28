@@ -2,7 +2,7 @@
 #include "../../includes/miniRT.h"
 #include <math.h>
 
-void	node_min_max(t_node *node, float *min, float *max);
+void	node_min_max(float *to_min, float *to_max, float *min, float *max);
 
 void	sphere_bounds(float *min, float *max, t_shape *sphere)
 {
@@ -43,5 +43,17 @@ void	shape_bounds_update(t_node *node, t_shape *shape)
 		sphere_bounds(min, max, shape);
 	else if (shape->type == t_cylinder)
 		cylinder_bounds(min, max, shape);
-	node_min_max(node, min, max);
+	node_min_max(node->min, node->max, min, max);
+}
+
+void	shape_bounds_min_max(float *to_min, float *to_max, t_shape *shape)
+{
+	float	min[3];
+	float	max[3];
+
+	if (shape->type == t_sphere)
+		sphere_bounds(min, max, shape);
+	else if (shape->type == t_cylinder)
+		cylinder_bounds(min, max, shape);
+	node_min_max(to_min, to_max, min, max);
 }
