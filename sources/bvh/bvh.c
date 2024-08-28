@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 16:52:06 by atorma            #+#    #+#             */
-/*   Updated: 2024/08/28 18:05:22 by atorma           ###   ########.fr       */
+/*   Updated: 2024/08/28 18:32:37 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,30 @@ void	swap_qsort(uint32_t *shape_index, int i, int j)
 
 t_split	find_best_split(t_node *node, t_scene *scene);
 
+int node_partition(t_node *node, t_scene *scene, t_split split,
+		uint32_t *left_count, uint32_t *right_count)
+{
+	uint32_t    i = node->first_index;
+	uint32_t    j = node->count + i - 1;
+	t_shape	    *shape;
+
+	while (i <= j)
+	{
+		shape = scene->shapes.arr[scene->bvh_index[i]];
+		if (shape->centroid[split.axis] < split.pos)
+		{
+			*left_count += 1;
+			i++;
+		}
+		else
+		{
+			swap_qsort(scene->bvh_index, i, j--);
+			*right_count += 1;
+		}
+	}
+	return (i);
+}
+
 void	bvh_subdivide(t_node *root, uint32_t index, t_scene *scene)
 {
 	t_node	*node = &root[index];
@@ -77,24 +101,9 @@ void	bvh_subdivide(t_node *root, uint32_t index, t_scene *scene)
 	printf("no_split_cost: %f, split.cost: %f, split.pos: %f, split.axis: %d\n",
 			no_split_cost, split.cost, split.pos, split.axis);
 
-	uint32_t    i = node->first_index;
-	uint32_t    j = node->count + i - 1;
 	uint32_t    left_count = 0;
 	uint32_t    right_count = 0;
-	while (i <= j)
-	{
-		t_shape *shape = scene->shapes.arr[scene->bvh_index[i]];
-		if (shape->centroid[split.axis] < split.pos)
-		{
-			left_count++;
-			i++;
-		}
-		else
-		{
-			swap_qsort(scene->bvh_index, i, j--);
-			right_count++;
-		}
-	}
+	int i = node_partition(node, scene, split, &left_count, &right_count);
 	if (!left_count || !right_count)
 		return ;
 	printf("left_count: %d, right_count: %d\n", left_count, right_count);
@@ -105,9 +114,10 @@ void	bvh_subdivide(t_node *root, uint32_t index, t_scene *scene)
 	root[right_index].first_index = i;
 	root[right_index].count = right_count;
 	node->left = left_index;
-	node->right = right_index;
-	node->count = 0;
 	//node->right can later be removed as it is not used anymore
+	node->right = right_index;
+	//Node that we have split the count should be set to 0
+	node->count = 0;
 
 	bvh_update_bounds(root, left_index, scene);
 	bvh_update_bounds(root, right_index, scene);
