@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 16:31:32 by atorma            #+#    #+#             */
-/*   Updated: 2024/08/28 16:51:24 by atorma           ###   ########.fr       */
+/*   Updated: 2024/08/28 18:03:24 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,27 @@
 
 void	float_set(float *f, float value);
 void	shape_bounds_min_max(float *to_min, float *to_max, t_shape *shape);
+
+/*
+//Plane is split along the longest axis, not used anymore this is bad
+float bvh_split_plane_old(t_node *node)
+{
+	float	split_pos;
+	float	extent[3];
+	int	axis;
+
+	axis = 0;
+	extent[0] = node->max[0] - node->min[0];
+	extent[1] = node->max[1] - node->min[1];
+	extent[2] = node->max[2] - node->min[2];
+	if (extent[1] > extent[0])
+		axis = 1;
+	if (extent[2] > extent[axis])
+		axis = 2;
+	split_pos = node->min[axis] + extent[axis] * 0.5f;
+	return (split_pos);
+}
+*/
 
 float	area(float  *min, float *max)
 {
@@ -29,12 +50,12 @@ float	area(float  *min, float *max)
 	return (area);
 }
 
-float	evaluate(t_node *node, int axis, float pos, t_scene *scene)
+float	evaluate_cost(t_node *node, t_split current, t_scene *scene)
 {
 	uint32_t    left_count = 0;
 	uint32_t    right_count = 0;
 	uint32_t    i = 0;
-	float	    cost = 0;
+	float	    cost = FLT_MAX;
 	float	    min_left[3];
 	float	    max_left[3];
 	float	    min_right[3];
@@ -47,7 +68,7 @@ float	evaluate(t_node *node, int axis, float pos, t_scene *scene)
 	while (i < node->count)
 	{
 		t_shape *shape = scene->shapes.arr[scene->bvh_index[node->first_index + i]];
-		if (shape->centroid[axis] < pos)
+		if (shape->centroid[current.axis] < current.pos)
 		{
 			shape_bounds_min_max(min_left, max_left, shape);
 			left_count++;
@@ -60,42 +81,47 @@ float	evaluate(t_node *node, int axis, float pos, t_scene *scene)
 		i++;
 	}
 	cost = left_count * area(min_left, max_left) + right_count * area(min_right, max_right);
-	if (cost > 0)
-		return cost;
-	return (FLT_MAX);
+	return (cost);
 }
 
-float	find_best_split(t_node *node, int *axis, float *split_pos, t_scene *scene)
-{
-	float	best_cost = FLT_MAX;
-	uint32_t    a;
-	uint32_t    i;
 
-	a = 0;
-	while (a < 3)
+void	update_cost(t_split *best, t_split *current)
+{
+	if (current->cost < best->cost)
 	{
-		i = 0;
-		float bmin = node->min[a];
-		float bmax = node->max[a];
-		if (bmin == bmax)
+		best->pos = current->pos;
+		best->axis = current->axis;
+		best->cost = current->cost;
+	}
+}
+
+t_split	find_best_split(t_node *node, t_scene *scene)
+{
+	t_split	    best;
+	t_split	    current;
+	uint32_t    i;
+	float	    scale;
+
+	best.cost = FLT_MAX;
+	current.axis = 0;
+	while (current.axis < 3)
+	{
+		//bounds_min & bounds_max
+		if (node->min[current.axis] == node->max[current.axis])
 		{
-			a++;
+			current.axis++;
 			continue ;
 		}
-		float scale = (bmax - bmin) / 64;
+		scale = (node->max[current.axis] - node->min[current.axis]) / 64;
+		i = 0;
 		while (i < 64)
 		{
-			float pos = bmin + i * scale;
-			float cost = evaluate(node, a, pos, scene);
-			if (cost < best_cost)
-			{
-				*split_pos = pos;
-				*axis = a;
-				best_cost = cost;
-			}
+			current.pos = node->min[current.axis] + i * scale;
+			current.cost = evaluate_cost(node, current, scene);
+			update_cost(&best, &current);
 			i++;
 		}
-		a++;
+		current.axis++;
 	}
-	return (best_cost);
+	return (best);
 }

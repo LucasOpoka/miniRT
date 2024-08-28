@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 16:52:06 by atorma            #+#    #+#             */
-/*   Updated: 2024/08/28 16:52:07 by atorma           ###   ########.fr       */
+/*   Updated: 2024/08/28 18:05:22 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,26 +53,6 @@ void	bvh_update_bounds(t_node *root, uint32_t index, t_scene *scene)
 }
 
 
-//Plane is split along the longest axis, not used anymore this is bad
-float bvh_split_plane_old(t_node *node)
-{
-	float	split_pos;
-	float	extent[3];
-	int	axis;
-
-	axis = 0;
-	extent[0] = node->max[0] - node->min[0];
-	extent[1] = node->max[1] - node->min[1];
-	extent[2] = node->max[2] - node->min[2];
-	if (extent[1] > extent[0])
-		axis = 1;
-	if (extent[2] > extent[axis])
-		axis = 2;
-	split_pos = node->min[axis] + extent[axis] * 0.5f;
-	return (split_pos);
-}
-
-
 void	swap_qsort(uint32_t *shape_index, int i, int j)
 {
 	uint32_t    tmp;
@@ -82,29 +62,21 @@ void	swap_qsort(uint32_t *shape_index, int i, int j)
 	shape_index[j] = tmp;
 }
 
-float	find_best_split(t_node *node, int *axis, float *split_pos, t_scene *scene);
+t_split	find_best_split(t_node *node, t_scene *scene);
 
 void	bvh_subdivide(t_node *root, uint32_t index, t_scene *scene)
 {
 	t_node	*node = &root[index];
-	int	axis;
-	float	split_pos;
-	//float	extent[3];
+	const float no_split_cost = node_cost(node);
+	t_split	split;
 
-	/*
-	if (node->count <= 2)
-		return ;
-	split_pos = bvh_split_plane(node, extent, &axis);
-	printf("split_pos: %f\n", split_pos);
-	printf("split_axis: %d\n", axis);
-	*/
-	float no_split_cost = node_cost(node);	
-	float split_cost = find_best_split(node, &axis, &split_pos, scene);
-	if (split_cost >= no_split_cost)
+	split = find_best_split(node, scene);
+	if (split.cost >= no_split_cost)
 		return ;
 
-	printf("no_split_cost: %f, split_cost: %f, split_pos: %f, axis: %d\n",
-			no_split_cost, split_cost, split_pos, axis);
+	printf("no_split_cost: %f, split.cost: %f, split.pos: %f, split.axis: %d\n",
+			no_split_cost, split.cost, split.pos, split.axis);
+
 	uint32_t    i = node->first_index;
 	uint32_t    j = node->count + i - 1;
 	uint32_t    left_count = 0;
@@ -112,7 +84,7 @@ void	bvh_subdivide(t_node *root, uint32_t index, t_scene *scene)
 	while (i <= j)
 	{
 		t_shape *shape = scene->shapes.arr[scene->bvh_index[i]];
-		if (shape->centroid[axis] < split_pos)
+		if (shape->centroid[split.axis] < split.pos)
 		{
 			left_count++;
 			i++;

@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 14:16:04 by lopoka            #+#    #+#             */
-/*   Updated: 2024/08/25 09:00:39 by lucas            ###   ########.fr       */
+/*   Updated: 2024/08/28 17:27:54 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef STRUCTS_H
@@ -41,6 +41,13 @@ typedef	struct	t_node
 	uint32_t	first_index;
 	uint32_t	count;
 }	t_node;
+
+typedef	struct	t_split
+{
+	float	    cost;
+	float	    pos;
+	uint32_t    axis;
+}	t_split;
 
 typedef struct	t_stack
 {
