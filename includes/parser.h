@@ -17,7 +17,7 @@ void	print_vector(t_vct v);
 void	print_color(t_clr v);
 void	parser_error(char *err_str);
 int		str_isdigit(char *s);
-int		str_isfloat(char *s);
+int		str_isdouble(char *s);
 size_t	str_charcount(char *s, int c);
 size_t	len_till(char *s, int c);
 

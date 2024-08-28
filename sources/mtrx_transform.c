@@ -22,7 +22,7 @@ void	ft_set_identity_mtrx(t_mtrx4 *mtrx4)
 
 // Create a translation matrix
 // https://www.brainvoyager.com/bv/doc/UsersGuide/CoordsAndTransforms/SpatialTransformationMatrices.html
-void	ft_set_translation_mtrx(t_mtrx4 *mtrx4, float x, float y, float z)
+void	ft_set_translation_mtrx(t_mtrx4 *mtrx4, double x, double y, double z)
 {
 	ft_set_identity_mtrx(mtrx4);
 	mtrx4[0][0][3] = x;
@@ -30,7 +30,7 @@ void	ft_set_translation_mtrx(t_mtrx4 *mtrx4, float x, float y, float z)
 	mtrx4[0][2][3] = z;
 }
 
-void	ft_set_scaling_mtrx(t_mtrx4 *mtrx4, float x, float y, float z)
+void	ft_set_scaling_mtrx(t_mtrx4 *mtrx4, double x, double y, double z)
 {
 	ft_bzero(mtrx4, sizeof(t_mtrx4));
 	mtrx4[0][0][0] = x;

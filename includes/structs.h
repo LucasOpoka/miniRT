@@ -14,9 +14,9 @@
 
 #include "worker.h"
 
-typedef float	t_mtrx2[2][2];
-typedef float	t_mtrx3[3][3];
-typedef float	t_mtrx4[4][4];
+typedef double	t_mtrx2[2][2];
+typedef double	t_mtrx3[3][3];
+typedef double	t_mtrx4[4][4];
 
 
 typedef struct s_mrt
@@ -34,29 +34,29 @@ typedef struct s_mrt
 
 typedef struct s_vct
 {
-	float	x;
-	float	y;
-	float	z;
-	float	w;
+	double	x;
+	double	y;
+	double	z;
+	double	w;
 }	t_vct;
 
 typedef struct s_clr
 {
-	float	r;
-	float	g;
-	float	b;
+	double	r;
+	double	g;
+	double	b;
 }	t_clr;
 
 typedef struct s_shape
 {
 	int		type;
 	t_vct	position;
-	float	radius;
-	float	height;
+	double	radius;
+	double	height;
 	t_clr	color;
-	float	specular;
-	float	reflective;
-	float	diffuse;
+	double	specular;
+	double	reflective;
+	double	diffuse;
 	int		shininess;
 	t_vct	orientation;
 	t_vct	scale;
@@ -68,7 +68,7 @@ typedef struct s_shape
 typedef struct s_light
 {
 	int		type;
-	float	intensity;
+	double	intensity;
 	t_vct	position;
 	t_vct	direction;
 	t_clr	color;
@@ -100,17 +100,17 @@ typedef struct s_camera
 {
 	t_vct	position;
 	t_vct	direction;
-	float	fov;
-	float	pixel_size;
-	float	half_wdth;
-	float	half_hght;
+	double	fov;
+	double	pixel_size;
+	double	half_wdth;
+	double	half_hght;
 	t_mtrx4	world_to_camera;
 	t_mtrx4	camera_to_world;
 }	t_camera;
 
 typedef	struct	t_ambient
 {
-	float	intensity;
+	double	intensity;
 	t_clr	color;
 }	t_ambient;
 
@@ -131,7 +131,7 @@ typedef	struct s_ray
 typedef struct s_intersection
 {
 	t_shape *shape;
-	float	t;
+	double	t;
 	t_vct	position;
 	t_vct	eye;
 	t_vct	light;
@@ -142,7 +142,7 @@ typedef struct s_intersection
 typedef struct s_comps
 {
 	t_shape *shape;
-	float	t;
+	double	t;
 	t_vct	point;
 	t_vct	eye;
 	t_vct	light;

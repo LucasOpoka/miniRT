@@ -12,15 +12,15 @@
 #ifndef VCT_H
 # define VCT_H
 
-t_vct	ft_create_vct(float x, float y, float z);
-float	ft_vct_dot(const t_vct *a, const t_vct *b);
-t_vct	ft_vct_sclr_mult(const t_vct *a, float b);
-t_vct	ft_vct_sclr_div(const t_vct *a, float b);
+t_vct	ft_create_vct(double x, double y, double z);
+double	ft_vct_dot(const t_vct *a, const t_vct *b);
+t_vct	ft_vct_sclr_mult(const t_vct *a, double b);
+t_vct	ft_vct_sclr_div(const t_vct *a, double b);
 t_vct	ft_vct_neg(const t_vct *a);
 t_vct	ft_vct_sub(const t_vct *a, const t_vct *b);
 t_vct	ft_vct_add(const t_vct *a, const t_vct *b);
-float	ft_vct_len(const t_vct *a);
-void	ft_vct_scale(t_vct *res, const t_vct *a, float scale);
+double	ft_vct_len(const t_vct *a);
+void	ft_vct_scale(t_vct *res, const t_vct *a, double scale);
 void	ft_vct_norm(t_vct *a);
 void	ft_vct_cross_prod(t_vct *res, const t_vct *a, const t_vct *b);
 

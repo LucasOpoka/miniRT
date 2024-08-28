@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:06:19 by lopoka            #+#    #+#             */
-/*   Updated: 2024/08/26 17:15:53 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/08/28 15:36:40 by lucas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINIRT_H
@@ -30,7 +30,7 @@
 # include "clr_math.h"
 # include "../libft/libft.h"
 
-# define EPSILON	0.0001
+# define EPSILON	0.0001f
 # define MAYA_STYLE	0
 # define CANV_WDTH	1100
 # define CANV_HGHT	1100
@@ -41,7 +41,7 @@
 
 
 void		ft_show_img(t_mrt *mrt, t_scene *scene);
-t_clr		ft_create_clr(float r, float g, float b);
+t_clr		ft_create_clr(double r, double g, double b);
 
 void		ft_loop_hook(void *vd);
 void		ft_close_hook(void *vd);

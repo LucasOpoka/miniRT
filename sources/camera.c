@@ -13,8 +13,8 @@
 
 void	ft_init_camera(t_camera *camera)
 {
-	float fov_distance;
-	float aspect_ratio;
+	double fov_distance;
+	double aspect_ratio;
 
 	fov_distance = tan(camera->fov * 0.5 * M_PI / 180);
 	aspect_ratio = CANV_WDTH / CANV_HGHT;
@@ -69,7 +69,7 @@ void	ft_set_world_to_camera(t_mtrx4 *world_to_camera, const t_vct *cam_position,
 	ft_mtrx_mtrx_mult(world_to_camera, &rotation_matrix, &translation_matrix);
 }
 
-void	ft_pixel_to_ray(t_ray *world_ray, float pixel_x, float pixel_y, t_camera *camera)
+void	ft_pixel_to_ray(t_ray *world_ray, double pixel_x, double pixel_y, t_camera *camera)
 {
 	t_ray	camera_ray;
 	t_vct	pixel_world;

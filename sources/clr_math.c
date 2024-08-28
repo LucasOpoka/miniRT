@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
 
-t_clr	ft_create_clr(float r, float g, float b)
+t_clr	ft_create_clr(double r, double g, double b)
 {
 	t_clr	c;
 
@@ -31,7 +31,7 @@ t_clr	ft_clr_add(t_clr a, t_clr b)
 	return (res);
 }
 
-t_clr	ft_clr_sclr_mult(t_clr clr, float x)
+t_clr	ft_clr_sclr_mult(t_clr clr, double x)
 {
 	t_clr	res;
 
@@ -51,7 +51,7 @@ t_clr	ft_clr_clr_mult(t_clr a, t_clr b)
 	return (res);
 }
 
-float	ft_clip_color(float clr)
+double	ft_clip_color(double clr)
 {
 	if (clr < 0)
 		return (0);

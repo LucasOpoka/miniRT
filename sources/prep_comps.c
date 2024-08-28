@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 16:28:57 by lopoka            #+#    #+#             */
-/*   Updated: 2024/08/26 16:41:38 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/08/28 15:39:25 by lucas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -31,7 +31,7 @@ void	ft_prepare_computations(t_comps *comps, t_intersection *closest, const t_ra
 }
 
 // position - The Ray Tracer Challenge p.58
-t_vct	ft_ray_point(const t_ray *ray, float t)
+t_vct	ft_ray_point(const t_ray *ray, double t)
 {
 	t_vct	position;
 

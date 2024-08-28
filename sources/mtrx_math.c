@@ -61,14 +61,14 @@ void	ft_mtrx4_sub(t_mtrx3 *mtrx3, const t_mtrx4 *mtrx4, int row, int col)
 	}
 }
 
-float	ft_mtrx2_det(const t_mtrx2 *mtrx2)
+double	ft_mtrx2_det(const t_mtrx2 *mtrx2)
 {
 	return (mtrx2[0][0][0] * mtrx2[0][1][1] - mtrx2[0][0][1] * mtrx2[0][1][0]);
 }
 
 // Get cofactor of 4x4 matrix at row and col
 // https://byjus.com/maths/cofactor/
-float	ft_mtrx4_cfc(const t_mtrx4 *mtrx4, int row, int col)
+double	ft_mtrx4_cfc(const t_mtrx4 *mtrx4, int row, int col)
 {
 	t_mtrx3	mtrx3;
 
@@ -80,10 +80,10 @@ float	ft_mtrx4_cfc(const t_mtrx4 *mtrx4, int row, int col)
 
 // Get determinant of a 4x4 matrix
 // https://www.cuemath.com/algebra/determinant-of-matrix/
-float	ft_mtrx4_det(const t_mtrx4 *mtrx4)
+double	ft_mtrx4_det(const t_mtrx4 *mtrx4)
 {
 	int		col;
-	float	res;
+	double	res;
 
 	col = 0;
 	res = 0;
@@ -98,7 +98,7 @@ float	ft_mtrx4_det(const t_mtrx4 *mtrx4)
 
 // Get cofactor of 3x3 matrix at row and col
 // https://byjus.com/maths/cofactor/
-float	ft_mtrx3_cfc(const t_mtrx3 *mtrx3, int row, int col)
+double	ft_mtrx3_cfc(const t_mtrx3 *mtrx3, int row, int col)
 {
 	t_mtrx2	mtrx2;
 
@@ -110,10 +110,10 @@ float	ft_mtrx3_cfc(const t_mtrx3 *mtrx3, int row, int col)
 
 // Get determinant of a 3x3 matrix
 // https://www.cuemath.com/algebra/determinant-of-matrix/
-float	ft_mtrx3_det(const t_mtrx3 *mtrx3)
+double	ft_mtrx3_det(const t_mtrx3 *mtrx3)
 {
 	int		col;
-	float	res;
+	double	res;
 
 	col = 0;
 	res = 0;
@@ -129,7 +129,7 @@ float	ft_mtrx3_det(const t_mtrx3 *mtrx3)
 // https://www.cuemath.com/algebra/inverse-of-a-matrix/
 void	ft_mtrx4_inv(t_mtrx4 *res, const t_mtrx4 *mtrx4)
 {
-	float	det;
+	double	det;
 	int		r;
 	int		c;
 

@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 17:09:25 by lopoka            #+#    #+#             */
-/*   Updated: 2024/08/26 17:12:50 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/08/28 14:27:00 by lucas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -21,14 +21,14 @@ t_clr	ft_get_ambient(t_ambient *ambient, t_clr *shape_color)
 	return (res);
 }
 
-int	ft_in_shadow(t_scene *scene, t_vct *light_vct, t_vct *over_point)
+int	ft_in_shadow(t_scene *scene, t_light *light, t_vct *over_point)
 {
 	t_ray	point_to_light;
 	float	distance;
 	int		res;
 
-	distance = ft_vct_len(light_vct);
-	point_to_light.D = *light_vct;
+	point_to_light.D = ft_vct_sub(&light->position, over_point);
+	distance = ft_vct_len(&point_to_light.D);
 	ft_vct_norm(&point_to_light.D);
 	point_to_light.O = *over_point;
 
@@ -36,9 +36,9 @@ int	ft_in_shadow(t_scene *scene, t_vct *light_vct, t_vct *over_point)
 	ft_init_void_arr(&intersections);
 	ft_get_intersections(point_to_light, scene, &intersections);
 	t_intersection	*closest = ft_closest_intersection(&intersections);
-	res = 1;
-	if (!closest || closest->t > distance)
-		res = 0;
+	res = 0;
+	if (closest && closest->t < distance)
+		res = 1;
 	ft_free_void_arr(&intersections);
 	return (res);
 }
@@ -56,7 +56,7 @@ t_clr	ft_lighting(t_comps *comps, t_scene *scene, t_light *light, t_clr *ambient
 	ft_vct_norm(&light_vct);
 	comps->normal.w = 0;
 	float light_dot_normal = ft_vct_dot(&light_vct, &comps->normal);
-	if (light_dot_normal < 0.1 || ft_in_shadow(scene, &light_vct, &comps->over_point))
+	if (light_dot_normal < 0 || ft_in_shadow(scene, light, &comps->over_point))
 		return (result);
 
 	// Diffuse

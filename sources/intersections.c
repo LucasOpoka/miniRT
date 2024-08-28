@@ -6,12 +6,12 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 21:05:34 by lopoka            #+#    #+#             */
-/*   Updated: 2024/08/26 17:07:10 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/08/28 14:11:51 by lucas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
 
-void	ft_add_intersection(t_void_arr *intersections, t_shape *shape, float t)
+void	ft_add_intersection(t_void_arr *intersections, t_shape *shape, double t)
 {
 	t_intersection	*intr;
 
@@ -30,11 +30,11 @@ void	ft_sphere_intersection(t_vct O, t_vct D, t_shape *shape, t_void_arr *inters
 {
 	t_vct	center = ft_create_vct(0, 0, 0);
 	t_vct	X = ft_vct_sub(&O, &center);
-	float	a = ft_vct_dot(&D, &D);
-	float	b = 2 * ft_vct_dot(&X, &D);
-	float	c = ft_vct_dot(&X, &X) - (shape->radius * shape->radius);
+	double	a = ft_vct_dot(&D, &D);
+	double	b = 2 * ft_vct_dot(&X, &D);
+	double	c = ft_vct_dot(&X, &X) - (shape->radius * shape->radius);
 
-	float discr = b * b - 4 * a * c;
+	double discr = b * b - 4 * a * c;
 	if (discr < 0)
 		return ;
 	ft_add_intersection(intersections, shape, (-b + sqrt(discr)) / (2 * a));
@@ -43,17 +43,17 @@ void	ft_sphere_intersection(t_vct O, t_vct D, t_shape *shape, t_void_arr *inters
 
 void	ft_plane_intersection(t_vct O, t_vct D, t_shape *shape, t_void_arr *intersections)
 {
-	float	denom = ft_vct_dot(&D, &shape->orientation);
+	double	denom = ft_vct_dot(&D, &shape->orientation);
 	if (fabs(denom) < 0.0001)
 		return ;
 	t_vct diff = ft_vct_sub(&shape->position, &O);
 	ft_add_intersection(intersections, shape, ft_vct_dot(&diff, &shape->orientation) / denom);
 }
 
-int	ft_check_caps(t_vct O, t_vct D, float t)
+int	ft_check_caps(t_vct O, t_vct D, double t)
 {
-	float	x;
-	float	z;
+	double	x;
+	double	z;
 
 	x = O.x + D.x * t;
 	z = O.z + D.z * t;
@@ -62,7 +62,7 @@ int	ft_check_caps(t_vct O, t_vct D, float t)
 
 void	ft_intersect_caps(t_vct O, t_vct D, t_shape *shape, t_void_arr *intersections)
 {
-	float	t;
+	double	t;
 
 	if (fabs(D.y) < 0.001)
 		return ;
@@ -77,14 +77,14 @@ void	ft_intersect_caps(t_vct O, t_vct D, t_shape *shape, t_void_arr *intersectio
 // The Raytracer Challenge p.177
 void	ft_cylinder_intersection(t_vct O, t_vct D, t_shape *shape, t_void_arr *intersections)
 {
-	float	a;
-	float	b;
-	float	c;
-	float	disc;
-	float	t[2];
-	float	tmp;
-	float	y[2];
-	float	half_h;
+	double	a;
+	double	b;
+	double	c;
+	double	disc;
+	double	t[2];
+	double	tmp;
+	double	y[2];
+	double	half_h;
 
 	a = D.x * D.x + D.z * D.z;
 	b = 2 * O.x * D.x + 2 * O.z * D.z;
@@ -147,12 +147,12 @@ t_intersection	*ft_closest_intersection(t_void_arr *intersections)
 {
 	t_intersection	*current;
 	t_intersection	*closest;
-	float			lowest_time;
+	double			lowest_time;
 	size_t			i;
 
 	if (!intersections->arr)
 		return (NULL);
-	lowest_time = FLT_MAX;
+	lowest_time = DBL_MAX;
 	i = 0;
 	closest = NULL;
 	while (i < intersections->i)
