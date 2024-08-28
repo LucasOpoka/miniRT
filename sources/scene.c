@@ -21,4 +21,6 @@ void	scene_free(t_scene *scene)
 {
 	ft_free_void_arr(&scene->lights);
 	ft_free_void_arr(&scene->shapes);
+	free(scene->bvh_root);
+	free(scene->bvh_index);
 }

@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 17:47:44 by lopoka            #+#    #+#             */
-/*   Updated: 2024/08/24 19:06:04 by lucas            ###   ########.fr       */
+/*   Updated: 2024/08/28 18:51:19 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -40,7 +40,6 @@ int	main(int ac, char **av)
 
 	threads_init(&mrt, &scene);
 	ft_init_stc(&mrt);
-	mlx_close_hook(mrt.mlx, &ft_close_hook, &mrt);
 	mlx_key_hook(mrt.mlx, &ft_keyboard_hooks, &mrt);
 	
 	//ft_show_img(&mrt, &scene);

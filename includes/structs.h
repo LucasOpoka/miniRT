@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 14:16:04 by lopoka            #+#    #+#             */
-/*   Updated: 2024/08/28 17:27:54 by atorma           ###   ########.fr       */
+/*   Updated: 2024/08/28 18:56:42 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef STRUCTS_H
@@ -30,6 +30,7 @@ typedef struct s_mrt
 	pthread_cond_t		notify;
 	pthread_cond_t		complete;
 	int					do_render;
+	int				exit;
 }	t_mrt;
 
 typedef	struct	t_node

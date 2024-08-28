@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:29:51 by atorma            #+#    #+#             */
-/*   Updated: 2024/08/28 18:10:30 by atorma           ###   ########.fr       */
+/*   Updated: 2024/08/28 19:14:28 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -30,20 +30,28 @@ t_worker	*worker_init(t_mrt *mrt, t_scene *scene, int i)
 	return (worker);
 }
 
-void	worker_wait(t_worker *worker)
+int	worker_wait(t_worker *worker)
 {
+	int exit_status = 0;
 	t_mrt	*mrt;
 
 	mrt = worker->mrt;
 	pthread_mutex_lock(&mrt->lock);
-	while (worker->done && mrt->do_render)
+	while (!mrt->exit && worker->done && mrt->do_render)
 		pthread_cond_wait(&mrt->notify, &mrt->lock);
-	while (!mrt->do_render)
+	while (!mrt->exit && !mrt->do_render)
 		pthread_cond_wait(&mrt->notify, &mrt->lock);
+	exit_status = mrt->exit;
 	pthread_mutex_unlock(&mrt->lock);
+	if (exit_status)
+	{
+		printf("worker %d, exiting...\n", worker->index);
+		return (0);
+	}
 	worker->done = 0;
 	worker->block_count = mrt->img->height / BLOCK_SIZE;
 	worker->block_size = BLOCK_SIZE;
+	return (1);
 }
 
 void	worker_signal_finish(t_worker *worker)
@@ -96,7 +104,8 @@ void	*worker_routine(void *ptr)
 	while (1)
 	{
 		i = worker->index;
-		worker_wait(worker);
+		if (!worker_wait(worker))
+			break ;
 		while (i < worker->block_count)
 		{
 			worker_render_section(worker, worker->scene, i);
@@ -104,7 +113,7 @@ void	*worker_routine(void *ptr)
 		}
 		worker_signal_finish(worker);	
 	}
-
+	free(worker->intersects.arr);
 	free(ptr);
 	return (NULL);
 }
