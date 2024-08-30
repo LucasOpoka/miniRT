@@ -67,8 +67,8 @@ t_split	find_best_split(t_node *node, t_scene *scene);
 uint32_t    node_partition(t_node *node, t_scene *scene, t_split split,
 		uint32_t *left_count, uint32_t *right_count)
 {
-	uint32_t    i = node->first_index;
-	uint32_t    j = node->count + i - 1;
+	int i = node->first_index;
+	int j = node->count + i - 1;
 	t_shape	    *shape;
 
 	while (i <= j)
