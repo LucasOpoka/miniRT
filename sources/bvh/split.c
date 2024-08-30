@@ -55,7 +55,6 @@ float	evaluate_cost(t_node *node, t_split current, t_scene *scene)
 	uint32_t    left_count = 0;
 	uint32_t    right_count = 0;
 	uint32_t    i = 0;
-	float	    cost = FLT_MAX;
 	float	    min_left[3];
 	float	    max_left[3];
 	float	    min_right[3];
@@ -80,8 +79,12 @@ float	evaluate_cost(t_node *node, t_split current, t_scene *scene)
 		}
 		i++;
 	}
-	cost = left_count * area(min_left, max_left) + right_count * area(min_right, max_right);
-	return (cost);
+	float cost = left_count * area(min_left, max_left) + right_count * area(min_right, max_right);
+	if (cost > 0)
+	{
+		return (cost);
+	}
+	return (FLT_MAX);
 }
 
 
@@ -112,9 +115,9 @@ t_split	find_best_split(t_node *node, t_scene *scene)
 			current.axis++;
 			continue ;
 		}
-		scale = (node->max[current.axis] - node->min[current.axis]) / 64;
-		i = 0;
-		while (i < 64)
+		scale = (node->max[current.axis] - node->min[current.axis]) / 50;
+		i = 1;
+		while (i < 50)
 		{
 			current.pos = node->min[current.axis] + i * scale;
 			current.cost = evaluate_cost(node, current, scene);

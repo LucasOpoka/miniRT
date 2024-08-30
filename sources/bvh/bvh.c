@@ -98,15 +98,16 @@ void	bvh_subdivide(t_node *root, uint32_t index, t_scene *scene)
 	if (split.cost >= no_split_cost)
 		return ;
 
+
 	printf("no_split_cost: %f, split.cost: %f, split.pos: %f, split.axis: %d\n",
 			no_split_cost, split.cost, split.pos, split.axis);
-
+//
 	uint32_t    left_count = 0;
 	uint32_t    right_count = 0;
 	uint32_t i = node_partition(node, scene, split, &left_count, &right_count);
 	if (!left_count || !right_count)
 		return ;
-	printf("left_count: %d, right_count: %d\n", left_count, right_count);
+	//printf("left_count: %d, right_count: %d\n", left_count, right_count);
 	int left_index = used++;
 	int right_index  = used++;
 	root[left_index].first_index = node->first_index;
