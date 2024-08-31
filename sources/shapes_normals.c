@@ -6,13 +6,15 @@
 /*   By: lucas <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 16:17:04 by lucas             #+#    #+#             */
-/*   Updated: 2024/08/28 17:41:02 by lucas            ###   ########.fr       */
+/*   Updated: 2024/08/30 18:13:51 by lucas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
 
-t_vct	ft_sphere_normal(const t_shape *shape, const t_vct *world_point)
+void	ft_sphere_normal_and_color(t_comps *comps)
 {
+	t_shape	*shape = comps->shape;
+	t_vct	*world_point = &comps->point;
 	t_vct	shape_point;
 	t_vct	world_normal;
 	
@@ -20,11 +22,13 @@ t_vct	ft_sphere_normal(const t_shape *shape, const t_vct *world_point)
 	ft_vct_mtrx_mult(&world_normal, &shape->normal_to_world, &shape_point);	
 	world_normal.w = 0;
 	ft_vct_norm(&world_normal);
-	return (world_normal);
+	comps->normal = world_normal;
+	comps->color = comps->shape->color;
 }
 
-t_vct	ft_plane_normal(const t_shape *shape)
+void	ft_plane_normal_and_color(t_comps *comps)
 {
+	t_shape *shape = comps->shape;
 	t_vct	shape_normal;
 	t_vct	world_normal;
 
@@ -33,11 +37,22 @@ t_vct	ft_plane_normal(const t_shape *shape)
 	ft_vct_mtrx_mult(&world_normal, &shape->normal_to_world, &shape_normal);
 	world_normal.w = 0;
 	ft_vct_norm(&world_normal);
-	return (world_normal);	
+	comps->normal = world_normal;
+
+	t_vct	shape_point;	
+	ft_vct_mtrx_mult(&shape_point, &shape->world_to_shape, &comps->point);
+
+	if ( (int) (floor(shape_point.x) + floor(shape_point.z)) % 2 == 0)
+		comps->color = ft_create_clr(255,255,255);
+	else
+	comps->color = comps->shape->color;
+
 }
 
-t_vct	ft_cylinder_normal(const t_shape *shape, const t_vct *world_point)
+void	ft_cylinder_normal_and_color(t_comps *comps)
 {
+	t_shape	*shape = comps->shape;
+	t_vct	*world_point = &comps->point;
 	t_vct	shape_point;
 	t_vct	shape_normal;
 	t_vct	world_normal;
@@ -60,18 +75,18 @@ t_vct	ft_cylinder_normal(const t_shape *shape, const t_vct *world_point)
 	ft_vct_mtrx_mult(&world_normal, &shape->normal_to_world, &shape_normal);
 	world_normal.w = 0;
 	ft_vct_norm(&world_normal);
-	return (world_normal);
+	comps->normal = world_normal;
+	comps->color = comps->shape->color;
 }
 
-t_vct	ft_shape_normal(const t_shape *shape, const t_vct *world_point)
+void	ft_get_shape_normal_and_color(t_comps *comps)
 {
-	if (shape->type == t_sphere)
-		return (ft_sphere_normal(shape, world_point));
-	if (shape->type == t_plane)
-		return (ft_plane_normal(shape));
-	if (shape->type == t_cylinder)
-		return (ft_cylinder_normal(shape, world_point));
+	if (comps->shape->type == t_sphere)
+		return (ft_sphere_normal_and_color(comps));
+	if (comps->shape->type == t_plane)
+		return (ft_plane_normal_and_color(comps));
+	if (comps->shape->type == t_cylinder)
+		return (ft_cylinder_normal_and_color(comps));
 	// To-do: add other shapes
 
-	return (ft_create_vct(12,13,14));
 }

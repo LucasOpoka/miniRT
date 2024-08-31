@@ -6,10 +6,14 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 21:05:34 by lopoka            #+#    #+#             */
-/*   Updated: 2024/08/28 17:51:07 by lucas            ###   ########.fr       */
+/*   Updated: 2024/08/30 12:44:38 by lucas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
+
+
+int ft_intersect_compare(const void *a, const void *b);
+
 
 void	ft_add_intersection(t_void_arr *intersections, t_shape *shape, double t)
 {
@@ -29,6 +33,7 @@ void	ft_add_intersection(t_void_arr *intersections, t_shape *shape, double t)
 void	ft_sphere_intersection(t_ray ray, t_shape *shape, t_void_arr *intersections)
 {
 	t_vct	center = ft_create_vct(0, 0, 0);
+	center.w = 1;
 	t_vct	X = ft_vct_sub(&ray.O, &center);
 	double	a = ft_vct_dot(&ray.D, &ray.D);
 	double	b = 2 * ft_vct_dot(&X, &ray.D);
@@ -139,6 +144,9 @@ void	ft_get_intersections(t_ray world_ray, t_scene *scene, t_void_arr *intersect
 		if (shape->type == t_cylinder)
 			ft_cylinder_intersection(shape_ray, shape, intersections);
 	}
+	// Sort the intersections
+	if (intersections->arr)
+		qsort(intersections->arr, intersections->i, sizeof(void *), ft_intersect_compare);
 }
 
 t_intersection	*ft_closest_intersection(t_void_arr *intersections)
@@ -164,4 +172,16 @@ t_intersection	*ft_closest_intersection(t_void_arr *intersections)
 		i++;
 	}
 	return (closest);
+}
+
+// Sorting stuff
+int ft_intersect_compare(const void *a, const void *b)
+{
+	double	t_a;
+	double	t_b; 
+
+	t_a = ((t_intersection **) a)[0]->t;
+	t_b = ((t_intersection **) b)[0]->t;
+
+	return ((t_a > t_b) - (t_a < t_b));
 }

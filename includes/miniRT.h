@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:06:19 by lopoka            #+#    #+#             */
-/*   Updated: 2024/08/28 15:36:40 by lucas            ###   ########.fr       */
+/*   Updated: 2024/08/31 18:01:34 by lucas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINIRT_H
@@ -35,6 +35,7 @@
 # define CANV_WDTH	1100
 # define CANV_HGHT	1100
 # define FOV		53
+//# define FOV		25.7831
 # define VIEW_WDTH	1
 # define VIEW_HGHT	1
 # define DISTANCE	1

@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 14:16:04 by lopoka            #+#    #+#             */
-/*   Updated: 2024/08/25 09:00:39 by lucas            ###   ########.fr       */
+/*   Updated: 2024/08/31 18:02:22 by lucas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef STRUCTS_H
@@ -55,9 +55,11 @@ typedef struct s_shape
 	double	height;
 	t_clr	color;
 	double	specular;
-	double	reflective;
 	double	diffuse;
 	int		shininess;
+	double	reflective;
+	double	refractive;
+	double	transparency;
 	t_vct	orientation;
 	t_vct	scale;
 	t_mtrx4	shape_to_world;
@@ -132,11 +134,6 @@ typedef struct s_intersection
 {
 	t_shape *shape;
 	double	t;
-	t_vct	position;
-	t_vct	eye;
-	t_vct	light;
-	t_vct	normal;
-	t_vct	reflection;
 }	t_intersection;
 
 typedef struct s_comps
@@ -147,9 +144,14 @@ typedef struct s_comps
 	t_vct	eye;
 	t_vct	light;
 	t_vct	normal;
+	t_clr	color;
 	t_vct	reflect;
 	t_vct	over_point;
+	t_vct	under_point;
 	int		inside;
+	double	n1;
+	double	n2;
+	double	schlick;
 }	t_comps;
 
 typedef struct t_worker

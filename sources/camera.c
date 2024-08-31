@@ -6,7 +6,7 @@
 /*   By: lucas <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 13:41:19 by lopoka            #+#    #+#             */
-/*   Updated: 2024/08/23 14:16:21 by lucas            ###   ########.fr       */
+/*   Updated: 2024/08/30 12:40:16 by lucas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -83,5 +83,6 @@ void	ft_pixel_to_ray(t_ray *world_ray, double pixel_x, double pixel_y, t_camera 
 	ft_vct_mtrx_mult(&world_ray->O, &camera->camera_to_world, &camera_ray.O);
 	ft_vct_mtrx_mult(&pixel_world, &camera->camera_to_world, &camera_ray.D);
 	world_ray->D = ft_vct_sub(&pixel_world, &world_ray->O);
+	world_ray->D.w = 0;
 	ft_vct_norm(&world_ray->D);
 }

@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 12:45:19 by lopoka            #+#    #+#             */
-/*   Updated: 2024/08/28 15:19:12 by lucas            ###   ########.fr       */
+/*   Updated: 2024/08/30 12:43:14 by lucas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -24,7 +24,7 @@ t_vct	ft_create_vct(double x, double y, double z)
 
 double	ft_vct_dot(const t_vct *a, const t_vct *b)
 {
-	return (a->x * b->x + a->y * b->y + a->z * b->z);// + a->w * b->w);
+	return (a->x * b->x + a->y * b->y + a->z * b->z + a->w * b->w);
 }
 
 t_vct	ft_vct_sclr_mult(const t_vct *a, double b)
