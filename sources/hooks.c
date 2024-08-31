@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 14:14:55 by lopoka            #+#    #+#             */
-/*   Updated: 2024/08/28 19:15:58 by atorma           ###   ########.fr       */
+/*   Updated: 2024/08/31 18:05:23 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -17,8 +17,11 @@ void	render_image(t_mrt *mrt);
 void	threads_wait(t_mrt *mrt);
 void	threads_join(t_mrt *mrt);
 
-static void close_window(t_mrt *mrt)
+void close_hook(void *ptr)
 {
+	t_mrt	*mrt;
+
+	mrt = ptr;
 	pthread_mutex_lock(&mrt->lock);
 	mrt->exit = 1;
 	pthread_mutex_unlock(&mrt->lock);
@@ -38,7 +41,7 @@ void	ft_keyboard_hooks(mlx_key_data_t k_data, void *vd)
 
 	mrt = (t_mrt *)vd;
 	if (k_data.key == MLX_KEY_ESCAPE && k_data.action == MLX_PRESS)
-		close_window(mrt);
+		close_hook(mrt);
 	if (k_data.key == MLX_KEY_C && k_data.action == MLX_PRESS)
 		render_image(mrt);
 }
