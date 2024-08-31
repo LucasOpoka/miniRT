@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 14:14:55 by lopoka            #+#    #+#             */
-/*   Updated: 2024/08/31 18:24:52 by atorma           ###   ########.fr       */
+/*   Updated: 2024/08/31 18:29:37 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -22,11 +22,11 @@ void close_hook(void *ptr)
 	t_mrt	*mrt;
 
 	mrt = ptr;
+	threads_wait(mrt);
 	pthread_mutex_lock(&mrt->lock);
 	mrt->exit = 1;
 	pthread_cond_broadcast(&mrt->notify);
 	pthread_mutex_unlock(&mrt->lock);
-	threads_wait(mrt);
 	printf("closing... threads finished\n");
 	if (mrt->img)
 		mlx_delete_image(mrt->mlx, mrt->img);
