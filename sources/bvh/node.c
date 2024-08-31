@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 16:52:24 by atorma            #+#    #+#             */
-/*   Updated: 2024/08/28 16:52:26 by atorma           ###   ########.fr       */
+/*   Updated: 2024/08/31 17:18:50 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,34 +35,3 @@ float	node_cost(t_node *node)
 	area = extent[0] * extent[1] + extent[1] * extent[2] + extent[2] * extent[0];
 	return (node->count * area);
 }
-
-void	node_print_entry(t_node *node)
-{
-	printf("PRINT_NODE: count: %u\n", node->count);
-	printf("node->first_index: %d\n", node->first_index);
-	printf("aabb_min.x: %f\n", node->min[0]);
-	printf("aabb_min.y: %f\n", node->min[1]);
-	printf("aabb_min.z: %f\n", node->min[2]);
-}
-
-/*
-void	node_print_full(t_node *node, t_void_arr *shapes, int axis, float split_pos)
-{
-	float	centroid[3];
-	uint32_t    i = node->first_index;
-	uint32_t    j = node->count + i - 1;
-	printf("PRINT_NODE count: %u\n", node->count);
-	while (i <= j)
-	{
-		t_shape *shape = (t_shape *)shapes->arr[shape_index[i]];
-		centroid[0] = shape->position.x;
-		centroid[1] = shape->position.y;
-		centroid[2] = shape->position.z;
-		if (centroid[axis] < split_pos)
-			printf("LEFT: %u\n", i);
-		else
-			printf("RIGHT: %u\n", i);
-		i++;
-	}
-}
-*/
