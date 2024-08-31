@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 16:52:06 by atorma            #+#    #+#             */
-/*   Updated: 2024/08/31 17:13:34 by atorma           ###   ########.fr       */
+/*   Updated: 2024/08/31 17:21:12 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,6 +173,7 @@ t_node	*bvh_build(t_scene *scene)
 	bvh_update_bounds(root, 0, scene);
 	bvh_subdivide(root, 0, scene);
 	long long ms_end = time_ms();
-	printf("bhv_build took: %lldms\n", ms_end - ms_start);
+	printf("bhv_build took: %lldms, node struct size: %lu\n",
+			ms_end - ms_start, sizeof(t_node));
 	return (root);
 }

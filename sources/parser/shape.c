@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 18:07:54 by atorma            #+#    #+#             */
-/*   Updated: 2024/08/24 18:13:04 by atorma           ###   ########.fr       */
+/*   Updated: 2024/08/31 17:42:53 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	sphere_add(t_shape *shape, char **elem)
 	shape->reflective = 0.2;
 	fill_vector(&shape->position, elem[1]);
 	shape->radius = ft_atof(elem[2]);
-	if ((shape->radius < 0.0) || !fill_color(&shape->color, elem[3]))
+	if ((shape->radius <= 0.0) || !fill_color(&shape->color, elem[3]))
 		return (0);
 	shape->scale = ft_create_vct(1, 1, 1);
 	shape->orientation = ft_create_vct(0, 1, 0);
@@ -57,6 +57,8 @@ static int	cylinder_add(t_shape *shape, char **elem)
 	fill_vector(&shape->orientation, elem[2]);
 	shape->radius = ft_atof(elem[3]);
 	shape->height = ft_atof(elem[4]);
+	if (shape->radius <= 0.0 || shape->height <= 0.0)
+		return (0);
 	if (!fill_color(&shape->color, elem[5]))
 		return (0);
 	if (!validate_orientation(shape->orientation))

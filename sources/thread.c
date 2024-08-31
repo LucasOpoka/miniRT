@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:29:57 by atorma            #+#    #+#             */
-/*   Updated: 2024/08/28 19:12:29 by atorma           ###   ########.fr       */
+/*   Updated: 2024/08/31 17:43:30 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,11 @@
 t_worker	*worker_init(t_mrt *mrt, t_scene *scene, int i);
 void	*worker_routine(void *ptr);
 
-int	threads_init(t_mrt *mrt, t_scene *scene)
+int	threads_create(t_mrt *mrt, t_scene *scene)
 {
 	size_t	i;
 
 	i = 0;
-	mrt->do_render = 0;
-	mrt->threads_finished = 0;
-	mrt->exit = 0;
-	if (pthread_mutex_init(&mrt->lock, NULL) != 0)
-		return (0);
-	if (pthread_cond_init(&mrt->notify, NULL) != 0)
-		return (0);
-	if (pthread_cond_init(&mrt->complete, NULL) != 0)
-		return (0);
 	while (i < MAX_THREADS)
 	{
 		t_worker *worker = worker_init(mrt, scene, i);
@@ -42,6 +33,22 @@ int	threads_init(t_mrt *mrt, t_scene *scene)
 		i++;
 		mrt->thread_count = i;
 	}
+	return (1);
+}
+
+int	threads_init(t_mrt *mrt, t_scene *scene)
+{
+	mrt->do_render = 0;
+	mrt->threads_finished = 0;
+	mrt->exit = 0;
+	if (pthread_mutex_init(&mrt->lock, NULL) != 0)
+		return (0);
+	if (pthread_cond_init(&mrt->notify, NULL) != 0)
+		return (0);
+	if (pthread_cond_init(&mrt->complete, NULL) != 0)
+		return (0);
+	if (!threads_create(mrt, scene))
+		return (0);
 	return (1);
 }
 
