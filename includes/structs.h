@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 14:16:04 by lopoka            #+#    #+#             */
-/*   Updated: 2024/08/31 17:28:00 by atorma           ###   ########.fr       */
+/*   Updated: 2024/08/31 18:08:43 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef STRUCTS_H
@@ -193,7 +193,7 @@ typedef struct t_intersects
 	size_t			size;
 }	t_intersects;
 
-typedef struct t_worker
+typedef struct s_worker
 {
 	t_mrt	*mrt;
 	t_scene *scene;
