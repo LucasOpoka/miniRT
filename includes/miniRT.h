@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:06:19 by lopoka            #+#    #+#             */
-/*   Updated: 2024/08/26 17:15:53 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/08/31 16:19:06 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINIRT_H
@@ -32,8 +32,8 @@
 
 # define EPSILON	0.0001
 # define MAYA_STYLE	0
-# define CANV_WDTH	1100
-# define CANV_HGHT	1100
+# define CANV_WDTH	640
+# define CANV_HGHT	640
 # define FOV		53
 # define VIEW_WDTH	1
 # define VIEW_HGHT	1

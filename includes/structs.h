@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 14:16:04 by lopoka            #+#    #+#             */
-/*   Updated: 2024/08/28 18:56:42 by atorma           ###   ########.fr       */
+/*   Updated: 2024/08/31 16:37:32 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef STRUCTS_H
@@ -33,12 +33,17 @@ typedef struct s_mrt
 	int				exit;
 }	t_mrt;
 
+typedef struct	t_bounds
+{
+	float		min[3];
+	float		max[3];
+}	t_bounds;
+
 typedef	struct	t_node
 {
 	float		min[3];
 	float		max[3];
 	uint32_t	left;
-	uint32_t	right;
 	uint32_t	first_index;
 	uint32_t	count;
 }	t_node;

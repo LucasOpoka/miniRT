@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 16:31:32 by atorma            #+#    #+#             */
-/*   Updated: 2024/08/28 18:03:24 by atorma           ###   ########.fr       */
+/*   Updated: 2024/08/31 16:33:50 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,16 +38,22 @@ float bvh_split_plane_old(t_node *node)
 }
 */
 
-float	area(float  *min, float *max)
+float	area(t_bounds bounds, uint32_t	count)
 {
 	float	extent[3];
 	float	area;
 
-	extent[0] = max[0] - min[0];
-	extent[1] = max[1] - min[1];
-	extent[2] = max[2] - min[2];
+	extent[0] = bounds.max[0] - bounds.min[0];
+	extent[1] = bounds.max[1] - bounds.min[1];
+	extent[2] = bounds.max[2] - bounds.min[2];
 	area = extent[0] * extent[1] + extent[1] * extent[2] + extent[2] * extent[0];
-	return (area);
+	return (count * area);
+}
+
+void	bounds_init(t_bounds *bounds)
+{
+	float_set(bounds->min, FLT_MAX);
+	float_set(bounds->max, FLT_MIN);
 }
 
 float	evaluate_cost(t_node *node, t_split current, t_scene *scene)
@@ -55,41 +61,34 @@ float	evaluate_cost(t_node *node, t_split current, t_scene *scene)
 	uint32_t    left_count = 0;
 	uint32_t    right_count = 0;
 	uint32_t    i = 0;
-	float	    min_left[3];
-	float	    max_left[3];
-	float	    min_right[3];
-	float	    max_right[3];
+	t_bounds    left;
+	t_bounds    right;
 
-	float_set(min_left, FLT_MAX);
-	float_set(min_right, FLT_MAX);
-	float_set(max_left, FLT_MIN);
-	float_set(max_right, FLT_MIN);
+	bounds_init(&left);
+	bounds_init(&right);
 	while (i < node->count)
 	{
 		t_shape *shape = scene->shapes.arr[scene->bvh_index[node->first_index + i]];
 		if (shape->centroid[current.axis] < current.pos)
 		{
-			shape_bounds_min_max(min_left, max_left, shape);
+			shape_bounds_min_max(left.min, left.max, shape);
 			left_count++;
 		}
 		else
 		{
-			shape_bounds_min_max(min_right, max_right, shape);
+			shape_bounds_min_max(right.min, right.max, shape);
 			right_count++;
 		}
 		i++;
 	}
-	float cost = left_count * area(min_left, max_left) + right_count * area(min_right, max_right);
-	if (cost > 0)
-	{
-		return (cost);
-	}
-	return (FLT_MAX);
+	return (area(left, left_count) + area(right, right_count));
 }
 
 
 void	update_cost(t_split *best, t_split *current)
 {
+	if (current->cost <= 0)
+		return ;
 	if (current->cost < best->cost)
 	{
 		best->pos = current->pos;
