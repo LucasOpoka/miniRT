@@ -6,12 +6,12 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 12:45:19 by lopoka            #+#    #+#             */
-/*   Updated: 2024/08/25 17:34:37 by lucas            ###   ########.fr       */
+/*   Updated: 2024/08/30 12:43:14 by lucas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
 
-t_vct	ft_create_vct(float x, float y, float z)
+t_vct	ft_create_vct(double x, double y, double z)
 {
 	t_vct	v;
 
@@ -22,42 +22,63 @@ t_vct	ft_create_vct(float x, float y, float z)
 	return (v);
 }
 
-float	ft_vct_dot(const t_vct *a, const t_vct *b)
+double	ft_vct_dot(const t_vct *a, const t_vct *b)
 {
-	return (a->x * b->x + a->y * b->y + a->z * b->z);
+	return (a->x * b->x + a->y * b->y + a->z * b->z + a->w * b->w);
 }
 
-t_vct	ft_vct_sclr_mult(const t_vct *a, float b)
-{	
-	return (ft_create_vct(a->x * b, a->y * b, a->z * b));	
-}
+t_vct	ft_vct_sclr_mult(const t_vct *a, double b)
+{
+	t_vct res;
 
-t_vct	ft_vct_sclr_div(const t_vct *a, float b)
-{	
-	return (ft_create_vct(a->x / b, a->y / b, a->z / b));	
+	res.x = a->x * b;
+	res.y = a->y * b;
+	res.z = a->z * b;
+	res.w = a->w * b;
+	return (res);	
 }
 
 t_vct	ft_vct_neg(const t_vct *a)
 {	
-	return (ft_create_vct(-a->x, -a->y, -a->z));	
+	t_vct res;
+
+	res.x = -a->x;
+	res.y = -a->y;
+	res.z = -a->z;
+	res.w = -a->w;
+	return (res);
+
 }
 
 t_vct	ft_vct_sub(const t_vct *a, const t_vct *b)
 {
-	return (ft_create_vct(a->x - b->x, a->y - b->y, a->z - b->z));
+	t_vct res;
+
+	res.x = a->x - b->x;
+	res.y = a->y - b->y;
+	res.z = a->z - b->z;
+	res.w = a->w - b->w;
+	return (res);
+
 }
 
 t_vct	ft_vct_add(const t_vct *a, const t_vct *b)
 {
-	return (ft_create_vct(a->x + b->x, a->y + b->y, a->z + b->z));
+	t_vct res;
+
+	res.x = a->x + b->x;
+	res.y = a->y + b->y;
+	res.z = a->z + b->z;
+	res.w = a->w + b->w;
+	return (res);
 }
 
-float	ft_vct_len(const t_vct *a)
+double	ft_vct_len(const t_vct *a)
 {
 	return (sqrt(a->x * a->x + a->y * a->y + a->z * a->z));
 }
 
-void	ft_vct_scale(t_vct *res, const t_vct *a, float scale)
+void	ft_vct_scale(t_vct *res, const t_vct *a, double scale)
 {
 	res->x = a->x * scale;
 	res->y = a->y * scale;
@@ -68,7 +89,7 @@ void	ft_vct_scale(t_vct *res, const t_vct *a, float scale)
 void	ft_vct_norm(t_vct *a)
 {
 	t_vct	tmp;
-	float	len;	
+	double	len;	
 
 	len = ft_vct_len(a);
 	if (len < EPSILON)

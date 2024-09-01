@@ -41,7 +41,7 @@ size_t	str_charcount(char *s, int c)
 	return (count);
 }
 
-int	str_isfloat(char *s)
+int	str_isdouble(char *s)
 {
 	size_t	i;
 	size_t	len;

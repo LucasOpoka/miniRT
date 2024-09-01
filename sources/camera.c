@@ -6,15 +6,15 @@
 /*   By: lucas <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 13:41:19 by lopoka            #+#    #+#             */
-/*   Updated: 2024/08/23 14:16:21 by lucas            ###   ########.fr       */
+/*   Updated: 2024/08/30 12:40:16 by lucas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
 
 void	ft_init_camera(t_camera *camera)
 {
-	float fov_distance;
-	float aspect_ratio;
+	double fov_distance;
+	double aspect_ratio;
 
 	fov_distance = tan(camera->fov * 0.5 * M_PI / 180);
 	aspect_ratio = CANV_WDTH / CANV_HGHT;
@@ -69,7 +69,7 @@ void	ft_set_world_to_camera(t_mtrx4 *world_to_camera, const t_vct *cam_position,
 	ft_mtrx_mtrx_mult(world_to_camera, &rotation_matrix, &translation_matrix);
 }
 
-void	ft_pixel_to_ray(t_ray *world_ray, float pixel_x, float pixel_y, t_camera *camera)
+void	ft_pixel_to_ray(t_ray *world_ray, double pixel_x, double pixel_y, t_camera *camera)
 {
 	t_ray	camera_ray;
 	t_vct	pixel_world;
@@ -83,5 +83,6 @@ void	ft_pixel_to_ray(t_ray *world_ray, float pixel_x, float pixel_y, t_camera *c
 	ft_vct_mtrx_mult(&world_ray->O, &camera->camera_to_world, &camera_ray.O);
 	ft_vct_mtrx_mult(&pixel_world, &camera->camera_to_world, &camera_ray.D);
 	world_ray->D = ft_vct_sub(&pixel_world, &world_ray->O);
+	world_ray->D.w = 0;
 	ft_vct_norm(&world_ray->D);
 }

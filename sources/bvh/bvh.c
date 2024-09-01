@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 16:52:06 by atorma            #+#    #+#             */
-/*   Updated: 2024/08/31 17:21:12 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/01 15:48:27 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ int	bvh_split(t_node *root, t_node *node, t_split split, t_scene *scene)
 	if (!left_count || left_count == node->count)
 		return (-1);
 	right_count = node->count - left_count;
+	(void) right_count; // Not used?
 	left_index = nodes_used;
 	//Split node must have shape count set to 0 !
 	root[left_index].first_index = node->first_index;

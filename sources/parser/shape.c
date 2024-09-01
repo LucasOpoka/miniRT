@@ -18,7 +18,7 @@ int	validate_orientation(t_vct v);
 
 static int	sphere_add(t_shape *shape, char **elem)
 {
-	if (!str_isfloat(elem[2]))
+	if (!str_isdouble(elem[2]))
 		return (0);
 	shape->type = t_sphere;
 	shape->specular = 500;

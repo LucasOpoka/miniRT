@@ -48,7 +48,7 @@ void	ft_set_rotation_mtrx(t_mtrx4 *rotation_mtrx, t_shape *shape)
 {
 	t_vct	y_axis;
 	t_vct	rotation_axis;
-	float	rotation_angle;
+	double	rotation_angle;
 
 	if (ft_is_zero_vct(shape->orientation))
 		return (ft_set_identity_mtrx(rotation_mtrx));
@@ -64,11 +64,11 @@ void	ft_set_rotation_mtrx(t_mtrx4 *rotation_mtrx, t_shape *shape)
 
 // Set rotation matrix of an object
 // https://en.wikipedia.org/wiki/Rotation_matrix
-void ft_rotation_mtrx_from_axis_and_angle(t_mtrx4 *rotation_mtrx, t_vct r_ax, float r_angle)
+void ft_rotation_mtrx_from_axis_and_angle(t_mtrx4 *rotation_mtrx, t_vct r_ax, double r_angle)
 {
-	float	cs;
-	float	sn;
-	float	one_min_cs;
+	double	cs;
+	double	sn;
+	double	one_min_cs;
 
 	cs = cos(r_angle);
 	sn = sin(r_angle);

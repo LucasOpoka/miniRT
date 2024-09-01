@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:29:51 by atorma            #+#    #+#             */
-/*   Updated: 2024/08/28 19:14:28 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/01 15:35:23 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -26,7 +26,8 @@ t_worker	*worker_init(t_mrt *mrt, t_scene *scene, int i)
 	worker->scene = scene;
 	worker->index = i;
 	worker->intersects.size = 256;
-	worker->intersects.arr = malloc(worker->intersects.size * sizeof(t_intersection));
+	//worker->intersects.arr = malloc(worker->intersects.size * sizeof(t_intersection));
+	ft_init_xs(&worker->xs);
 	return (worker);
 }
 
@@ -70,7 +71,8 @@ void	worker_render_section(t_worker *worker, t_scene *scene, int i)
 {
 	t_ray		ray;
 	t_clr		color;
-	t_intersects *inter = &worker->intersects;
+	//t_intersects *inter = &worker->intersects;
+	t_xs		*xs = &worker->xs;
 
 	int start_y = i * worker->block_size;
 	if (i == worker->block_count - 1)
@@ -84,9 +86,10 @@ void	worker_render_section(t_worker *worker, t_scene *scene, int i)
 		{
 			ft_pixel_to_ray(&ray, x, y, &scene->camera);
 			//bvh_intersect(ray, scene, 0, inter);
-			bvh_intersect_ordered(ray, scene, inter);
+			bvh_intersect_ordered(ray, scene, xs);
 			//ft_get_intersections(ray, scene, inter);
-			color = ft_get_color(&ray, scene, 3, inter);
+			//color = ft_get_color(&ray, scene, 3, inter);
+			color = ft_get_color(&ray, scene, 3, xs);
 			mlx_put_pixel(worker->mrt->img, x, y, ft_clr_to_int(color));
 			x++;
 		}

@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 16:52:19 by atorma            #+#    #+#             */
-/*   Updated: 2024/08/28 16:52:21 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/01 15:53:23 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,26 +16,26 @@
 float aabb_raycast(t_ray ray, float bmin[3], float bmax[3]);
 
 void	ft_ray_to_shape_space(t_ray *shape_ray, t_ray *world_ray, t_shape *shape);
-void	ft_get_intersections(t_ray world_ray, t_scene *scene, t_intersects *intersect);
-void	ft_sphere_intersection(t_vct O, t_vct D, t_shape *shape, t_intersects *intersect);
-void	ft_cylinder_intersection(t_vct O, t_vct D, t_shape *shape, t_intersects *intersect);
+void	ft_get_intersections(t_ray world_ray, t_scene *scene, t_xs *xs);
+void	ft_sphere_intersection(t_ray shape_ray, t_shape *shape, t_xs *xs);
+void	ft_cylinder_intersection(t_ray shape_ray, t_shape *shape, t_xs *xs);
 
-void	intersects_shape(t_ray ray, t_scene *scene, t_node *node, t_intersects *intersect)
+void	intersects_shape(t_ray ray, t_scene *scene, t_node *node, t_xs *xs)
 {
 	t_shape	    *shape;
-	t_ray	    s_ray;
+	t_ray	    shape_ray;
 	uint32_t    i;
 
 	i = 0;
 	while (i < node->count)
 	{
 		shape = scene->shapes.arr[scene->bvh_index[node->first_index + i]];
-		ft_ray_to_shape_space(&s_ray, &ray, shape);
+		ft_ray_to_shape_space(&shape_ray, &ray, shape);
 
 		if (shape->type == t_sphere)
-			ft_sphere_intersection(s_ray.O, s_ray.D, shape, intersect);
+			ft_sphere_intersection(shape_ray, shape, xs);
 		if (shape->type == t_cylinder)
-			ft_cylinder_intersection(s_ray.O, s_ray.D, shape, intersect);
+			ft_cylinder_intersection(shape_ray, shape, xs);
 		i++;
 	}
 }
@@ -77,13 +77,13 @@ t_node *intersects_node(t_ray ray, t_node *root, t_node *curr, t_stack *s)
 	return (left);
 }
 
-void	bvh_intersect_ordered(t_ray ray, t_scene* scene, t_intersects *intersect)
+void	bvh_intersect_ordered(t_ray ray, t_scene* scene, t_xs *xs)
 {
 	t_node	    *node = &scene->bvh_root[0];
 	t_stack	    s;
 
 	s.ptr = 0;
-	intersect->i = 0;
+	//intersect->i = 0;
 	ray.rd.x = 1.0 / ray.D.x;
 	ray.rd.y = 1.0 / ray.D.y;
 	ray.rd.z = 1.0 / ray.D.z;
@@ -91,7 +91,7 @@ void	bvh_intersect_ordered(t_ray ray, t_scene* scene, t_intersects *intersect)
 	{
 		if (node->count > 0)
 		{
-			intersects_shape(ray, scene, node, intersect);
+			intersects_shape(ray, scene, node, xs);
 			if (s.ptr == 0)
 				break;
 			node = s.stack[--s.ptr];
@@ -101,7 +101,7 @@ void	bvh_intersect_ordered(t_ray ray, t_scene* scene, t_intersects *intersect)
 	}
 }
 
-void	bvh_intersect(t_ray ray, t_scene *scene, uint32_t index, t_intersects *intersect)
+void	bvh_intersect(t_ray ray, t_scene *scene, uint32_t index, t_xs *xs)
 {
 	t_node	*node = &scene->bvh_root[index];
 
@@ -109,9 +109,9 @@ void	bvh_intersect(t_ray ray, t_scene *scene, uint32_t index, t_intersects *inte
 		return ;
 	if (node->count > 0)
 	{
-		intersects_shape(ray, scene, node, intersect);
+		intersects_shape(ray, scene, node, xs);
 		return ;
 	}
-	bvh_intersect(ray, scene, node->left, intersect);
-	bvh_intersect(ray, scene, node->left + 1, intersect);
+	bvh_intersect(ray, scene, node->left, xs);
+	bvh_intersect(ray, scene, node->left + 1, xs);
 }

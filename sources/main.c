@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 17:47:44 by lopoka            #+#    #+#             */
-/*   Updated: 2024/08/31 18:05:50 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/01 15:29:22 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -37,15 +37,15 @@ int	main(int ac, char **av)
 	}
 	printf("using scene: %s\n", av[1]);
 
-	scene.bvh_root = bvh_build(&scene);
+	//scene.bvh_root = bvh_build(&scene);
 
-	threads_init(&mrt, &scene);
+	//threads_init(&mrt, &scene);
 	ft_init_stc(&mrt);
 	mlx_close_hook(mrt.mlx, &close_hook, &mrt);
 	mlx_key_hook(mrt.mlx, &ft_keyboard_hooks, &mrt);
 	
-	//ft_show_img(&mrt, &scene);
-	render(&mrt, &scene);
+	ft_show_img(&mrt, &scene);
+	//render(&mrt, &scene);
 	//mlx_loop_hook(mrt.mlx, ft_loop_hook, &mrt);
 	//We probably only want to render the image on changes, not every frame in the hook
 	//Otherwise our performance will be garbage since raytracing is very expensive

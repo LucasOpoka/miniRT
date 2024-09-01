@@ -49,7 +49,7 @@ int	validate_vector(char *s)
 	i = 3;
 	while (i-- > 0)
 	{
-		if (!str_isfloat(s))
+		if (!str_isdouble(s))
 			return (0);
 		comma = ft_strchr(s, ',');
 		if (!comma)
