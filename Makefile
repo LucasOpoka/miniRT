@@ -6,7 +6,7 @@
 #    By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/29 14:59:04 by lopoka            #+#    #+#              #
-#    Updated: 2024/08/26 17:16:13 by lopoka           ###   ########.fr        #
+#    Updated: 2024/09/01 14:45:51 by lopoka           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ SOURCES	=	main.c \
 			init.c \
 			close.c \
 			void_arr.c \
+			intersections_arr.c \
 			vct_math.c \
 			clr_math.c \
 			mtrx_math.c \

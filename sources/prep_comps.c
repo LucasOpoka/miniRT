@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 16:28:57 by lopoka            #+#    #+#             */
-/*   Updated: 2024/08/31 17:49:56 by lucas            ###   ########.fr       */
+/*   Updated: 2024/09/01 14:44:57 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -14,12 +14,12 @@
 
 void	ft_get_schlick(t_comps *comps);
 t_vct	ft_under_point(const t_vct *point, const t_vct *normal);
-int		ft_containers_include(t_void_arr *containers, t_shape *shape);
-void	ft_remove_container(t_void_arr *containers, t_intersection *curr);
-void	ft_get_refr_ind(t_comps *comps, t_void_arr *intersections, t_intersection *closest);
+int		ft_containers_include(t_xs *containers, t_shape *shape);
+void	ft_remove_container(t_xs *containers, t_intersection *curr);
+void	ft_get_refr_ind(t_comps *comps, t_xs *xs, t_intersection *closest);
 
 // prepare_computations - The Ray Tracer Challenge p.76 p.93
-void	ft_prepare_computations(t_comps *comps, t_intersection *closest, const t_ray *ray, t_void_arr *intersections)
+void	ft_prepare_computations(t_comps *comps, t_intersection *closest, const t_ray *ray, t_xs *xs)
 {
 	comps->t = closest->t;
 	comps->shape = closest->shape;
@@ -36,7 +36,7 @@ void	ft_prepare_computations(t_comps *comps, t_intersection *closest, const t_ra
 	comps->reflect = ft_reflect(&ray->D, &comps->normal);
 	comps->over_point = ft_over_point(&comps->point, &comps->normal);
 	comps->under_point = ft_under_point(&comps->point, &comps->normal);
-	ft_get_refr_ind(comps, intersections, closest);
+	ft_get_refr_ind(comps, xs, closest);
 	ft_get_schlick(comps);
 }
 
@@ -83,61 +83,61 @@ t_vct	ft_under_point(const t_vct *point, const t_vct *normal)
 }
 
 // Test to get n1 and n2
-void ft_get_refr_ind(t_comps *comps, t_void_arr *intersections, t_intersection *closest)
+void ft_get_refr_ind(t_comps *comps, t_xs *xs, t_intersection *closest)
 {
 	size_t			i;
 	t_intersection *curr;
-	t_void_arr		containers;
+	t_xs			containers;
 
-	ft_init_void_arr(&containers);
+	ft_init_xs(&containers);
 	i = 0;
-	while (i < intersections->i && containers.arr)
+	while (i < xs->i && containers.arr)
 	{
-		curr = (t_intersection *) intersections->arr[i++];
+		curr = (t_intersection *) &xs->arr[i++];
 		if (curr == closest)
 		{
 			if (containers.i == 0)
 				comps->n1 = 1;
 			else
-				comps->n1 = ((t_shape *)containers.arr[containers.i - 1])->refractive;
+				comps->n1 = containers.arr[containers.i - 1].shape->refractive;
 		}
 
 		if (ft_containers_include(&containers, curr->shape))
 			ft_remove_container(&containers, curr);
 		else
-			ft_void_arr_add(&containers, curr->shape);
+			ft_add_intersection(&containers, curr->shape, curr->t);
 
 		if (curr == closest)
 		{
 			if (containers.i == 0)
 				comps->n2 = 1;
 			else
-				comps->n2 = ((t_shape *)containers.arr[containers.i - 1])->refractive;
+				comps->n2 = containers.arr[containers.i - 1].shape->refractive;
 			break ;
 		}
 	}
-	free(containers.arr);
+	ft_free_xs(&containers);
 }
 
-int	ft_containers_include(t_void_arr *containers, t_shape *shape)
+int	ft_containers_include(t_xs *containers, t_shape *shape)
 {
 	size_t i;
 
 	i = 0;
 	while (i < containers->i)
 	{
-		if (shape == (t_shape *) containers->arr[i])
+		if (shape == containers->arr[i].shape)
 			return (1);
 		i++;
 	}
 	return (0);
 }
 
-void	ft_remove_container(t_void_arr *containers, t_intersection *curr)
+void	ft_remove_container(t_xs *containers, t_intersection *curr)
 {
-	size_t	reader;
-	size_t	writer;
-	t_intersection *intr;
+	size_t			reader;
+	size_t			writer;
+	t_intersection	intr;
 
 	if (!containers->arr)
 		return ;
@@ -145,8 +145,8 @@ void	ft_remove_container(t_void_arr *containers, t_intersection *curr)
 	writer = 0;
 	while (reader < containers->i)
 	{
-		intr = (t_intersection *) containers->arr[reader];
-		if (curr != intr)
+		intr = containers->arr[reader];
+		if (curr->shape != intr.shape)
 			containers->arr[writer++] = containers->arr[reader];
 		reader++;
 	}

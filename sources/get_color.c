@@ -6,16 +6,16 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 16:47:05 by lopoka            #+#    #+#             */
-/*   Updated: 2024/08/31 17:51:27 by lucas            ###   ########.fr       */
+/*   Updated: 2024/09/01 14:26:32 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
 
 t_clr	ft_refraction(t_comps *comps, t_light *light, t_scene *scene, int recursion_depth);
 t_clr	ft_reflection(t_comps *comps, t_light *light, t_scene *scene, int recursion_depth);
-t_clr	ft_get_color2(const t_ray *ray, t_scene *scene, int recursion_depth, t_void_arr *intersections, t_light *light);
+t_clr	ft_get_color2(const t_ray *ray, t_scene *scene, int recursion_depth, t_xs *xs, t_light *light);
 
-t_clr	ft_get_color(const t_ray *ray, t_scene *scene, int recursion_depth, t_void_arr *intersections)
+t_clr	ft_get_color(const t_ray *ray, t_scene *scene, int recursion_depth, t_xs *xs)
 {
 	t_comps			comps;
 	t_intersection	*closest;
@@ -29,11 +29,11 @@ t_clr	ft_get_color(const t_ray *ray, t_scene *scene, int recursion_depth, t_void
 
 	ft_bzero(&final_color, sizeof(t_clr));
 
-	closest = ft_closest_intersection(intersections);
+	closest = ft_closest_intersection(xs);
 	if (!closest)
     	return (ft_create_clr(0, 0, 0));
 
-	ft_prepare_computations(&comps, closest, ray, intersections);
+	ft_prepare_computations(&comps, closest, ray, xs);
 	
 	ambient = ft_get_ambient(&scene->ambient, &comps.color);
 
@@ -68,19 +68,19 @@ t_clr	ft_reflection(t_comps *comps, t_light *light, t_scene *scene, int recursio
 	reflection_ray.O = comps->over_point;
 	reflection_ray.D = comps->reflect;
 	
-	t_void_arr intersections;
-	ft_init_void_arr(&intersections);
-	ft_get_intersections(reflection_ray, scene, &intersections);	
+	t_xs xs;
+	ft_init_xs(&xs);
+	ft_get_intersections(reflection_ray, scene, &xs);	
 	
-	res = ft_get_color2(&reflection_ray, scene, recursion_depth, &intersections, light);
+	res = ft_get_color2(&reflection_ray, scene, recursion_depth, &xs, light);
 
-	ft_free_void_arr(&intersections);
+	ft_free_xs(&xs);
 
 	res = ft_clr_sclr_mult(res, comps->shape->reflective);
 	return (res);
 }
 
-t_clr	ft_get_color2(const t_ray *ray, t_scene *scene, int recursion_depth, t_void_arr *intersections, t_light *light)
+t_clr	ft_get_color2(const t_ray *ray, t_scene *scene, int recursion_depth, t_xs *xs, t_light *light)
 {
 	t_comps			comps;
 	t_intersection	*closest;
@@ -92,11 +92,11 @@ t_clr	ft_get_color2(const t_ray *ray, t_scene *scene, int recursion_depth, t_voi
 
 	ft_bzero(&final_color, sizeof(t_clr));
 
-	closest = ft_closest_intersection(intersections);
+	closest = ft_closest_intersection(xs);
 	if (!closest)
     	return (final_color);
 	
-	ft_prepare_computations(&comps, closest, ray, intersections);
+	ft_prepare_computations(&comps, closest, ray, xs);
 
 	ambient = ft_get_ambient(&scene->ambient, &comps.color);
 	surface_color = ft_lighting(&comps, scene, light, &ambient);
@@ -136,15 +136,15 @@ t_clr	ft_refraction(t_comps *comps, t_light *light, t_scene *scene, int recursio
 
 	refraction_ray.O = comps->under_point;
 	
-	t_void_arr intersections;
-	ft_init_void_arr(&intersections);
-	ft_get_intersections(refraction_ray, scene, &intersections);	
+	t_xs xs;
+	ft_init_xs(&xs);
+	ft_get_intersections(refraction_ray, scene, &xs);	
 	
-	res = ft_get_color2(&refraction_ray, scene, recursion_depth, &intersections, light);
+	res = ft_get_color2(&refraction_ray, scene, recursion_depth, &xs, light);
 	
 	res = ft_clr_sclr_mult(res, comps->shape->transparency);
 
-	ft_free_void_arr(&intersections);
+	ft_free_xs(&xs);
 
 	return (res);
 }

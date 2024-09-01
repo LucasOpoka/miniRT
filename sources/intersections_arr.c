@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 13:58:10 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/01 12:46:24 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/01 14:46:20 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -24,7 +24,7 @@ void	ft_xs_realloc(t_xs *xs)
 {
 	void	*dst;
 
-	if (!arr || xs->i < xs->size - 1)
+	if (!xs->arr || xs->i < xs->size - 1)
 		return ;
 	dst = (t_intersection *) malloc((xs->size + xs->to_add) * sizeof(t_intersection));
 	if (!dst)

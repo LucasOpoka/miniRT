@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:06:19 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/01 11:13:07 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/01 14:44:15 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINIRT_H
@@ -57,6 +57,12 @@ void		ft_init_void_arr(t_void_arr *void_arr);
 void		ft_void_arr_realloc(t_void_arr *void_arr);
 void		ft_void_arr_add(t_void_arr *void_arr, void *pointer);
 void		ft_free_void_arr(t_void_arr *void_arr);
+
+// t_xs
+void		ft_init_xs(t_xs *xs);
+void		ft_free_xs(t_xs *xs);
+void		ft_add_intersection(t_xs *xs, t_shape *shape, double t);
+
 
 // REMOVE IN THE FUTURE - test functions
 t_scene			get_test_scene(void);

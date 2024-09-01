@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 17:09:25 by lopoka            #+#    #+#             */
-/*   Updated: 2024/08/28 14:27:00 by lucas            ###   ########.fr       */
+/*   Updated: 2024/09/01 14:38:51 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -32,14 +32,14 @@ int	ft_in_shadow(t_scene *scene, t_light *light, t_vct *over_point)
 	ft_vct_norm(&point_to_light.D);
 	point_to_light.O = *over_point;
 
-	t_void_arr	intersections;
-	ft_init_void_arr(&intersections);
-	ft_get_intersections(point_to_light, scene, &intersections);
-	t_intersection	*closest = ft_closest_intersection(&intersections);
+	t_xs	xs;
+	ft_init_xs(&xs);
+	ft_get_intersections(point_to_light, scene, &xs);
+	t_intersection	*closest = ft_closest_intersection(&xs);
 	res = 0;
 	if (closest && closest->t < distance)
 		res = 1;
-	ft_free_void_arr(&intersections);
+	ft_free_xs(&xs);
 	return (res);
 }
 
