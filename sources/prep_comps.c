@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 16:28:57 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/01 14:44:57 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/01 18:55:44 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -18,8 +18,8 @@ int		ft_containers_include(t_xs *containers, t_shape *shape);
 void	ft_remove_container(t_xs *containers, t_intersection *curr);
 void	ft_get_refr_ind(t_comps *comps, t_xs *xs, t_intersection *closest);
 
-// prepare_computations - The Ray Tracer Challenge p.76 p.93
-void	ft_prepare_computations(t_comps *comps, t_intersection *closest, const t_ray *ray, t_xs *xs)
+// prepare computations - The Ray Tracer Challenge p.76 p.93
+void	ft_prep_comps(t_comps *comps, t_intersection *closest, const t_ray *ray, t_xs *xs)
 {
 	comps->t = closest->t;
 	comps->shape = closest->shape;

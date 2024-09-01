@@ -6,11 +6,10 @@
 /*   By: lucas <lopoka@student.hive.fi>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 16:55:43 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/01 15:53:47 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/01 19:24:52 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
-
 
 void	ft_show_img(t_mrt *mrt, t_scene *scene)
 {
@@ -20,17 +19,15 @@ void	ft_show_img(t_mrt *mrt, t_scene *scene)
 	int		pixel_y;
 	t_xs	xs;
 
-	// Init camera
 	ft_init_camera(&scene->camera);
 	ft_set_camera_matrices(&scene->camera);
 	ft_set_all_shapes_matrices(scene);
-
 	pixel_y = 0;
 	while (pixel_y < CANV_HGHT)
 	{
 		pixel_x = 0;
 		while (pixel_x < CANV_WDTH)
-		{	
+		{
 			ft_init_xs(&xs);
 			ft_pixel_to_ray(&world_ray, pixel_x, pixel_y, &scene->camera);
 			ft_get_intersections(world_ray, scene, &xs);
@@ -42,4 +39,3 @@ void	ft_show_img(t_mrt *mrt, t_scene *scene)
 	}
 	mlx_image_to_window(mrt->mlx, mrt->img, 0, 0);
 }
-

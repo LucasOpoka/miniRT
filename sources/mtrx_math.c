@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 09:57:29 by lopoka            #+#    #+#             */
-/*   Updated: 2024/08/23 13:48:31 by lucas            ###   ########.fr       */
+/*   Updated: 2024/09/01 19:19:07 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -95,7 +95,6 @@ double	ft_mtrx4_det(const t_mtrx4 *mtrx4)
 	return (res);
 }
 
-
 // Get cofactor of 3x3 matrix at row and col
 // https://byjus.com/maths/cofactor/
 double	ft_mtrx3_cfc(const t_mtrx3 *mtrx3, int row, int col)
@@ -151,12 +150,15 @@ void	ft_mtrx4_inv(t_mtrx4 *res, const t_mtrx4 *mtrx4)
 
 void	ft_vct_mtrx_mult(t_vct *res, const t_mtrx4 *m, const t_vct *v)
 {
-	res->x = v->x * m[0][0][0] + v->y * m[0][0][1] + v->z * m[0][0][2] + v->w * m[0][0][3];
-	res->y = v->x * m[0][1][0] + v->y * m[0][1][1] + v->z * m[0][1][2] + v->w * m[0][1][3];
-	res->z = v->x * m[0][2][0] + v->y * m[0][2][1] + v->z * m[0][2][2] + v->w * m[0][2][3];
-	res->w = v->x * m[0][3][0] + v->y * m[0][3][1] + v->z * m[0][3][2] + v->w * m[0][3][3];
+	res->x = v->x * m[0][0][0] + v->y * m[0][0][1]
+		+ v->z * m[0][0][2] + v->w * m[0][0][3];
+	res->y = v->x * m[0][1][0] + v->y * m[0][1][1]
+		+ v->z * m[0][1][2] + v->w * m[0][1][3];
+	res->z = v->x * m[0][2][0] + v->y * m[0][2][1]
+		+ v->z * m[0][2][2] + v->w * m[0][2][3];
+	res->w = v->x * m[0][3][0] + v->y * m[0][3][1]
+		+ v->z * m[0][3][2] + v->w * m[0][3][3];
 }
-
 
 // Multiply two matrices
 // https://www.mathsisfun.com/algebra/matrix-multiplying.html

@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 16:47:05 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/01 15:21:24 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/01 18:57:01 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -33,7 +33,7 @@ t_clr	ft_get_color(const t_ray *ray, t_scene *scene, int recursion_depth, t_xs *
 	if (!closest)
     	return (ft_create_clr(0, 0, 0));
 
-	ft_prepare_computations(&comps, closest, ray, xs);
+	ft_prep_comps(&comps, closest, ray, xs);
 	
 	ambient = ft_get_ambient(&scene->ambient, &comps.color);
 
@@ -96,7 +96,7 @@ t_clr	ft_get_color2(const t_ray *ray, t_scene *scene, int recursion_depth, t_xs 
 	if (!closest)
     	return (final_color);
 	
-	ft_prepare_computations(&comps, closest, ray, xs);
+	ft_prep_comps(&comps, closest, ray, xs);
 
 	ambient = ft_get_ambient(&scene->ambient, &comps.color);
 	surface_color = ft_lighting(&comps, scene, light, &ambient);

@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:44:06 by lopoka            #+#    #+#             */
-/*   Updated: 2024/08/26 16:14:26 by lucas            ###   ########.fr       */
+/*   Updated: 2024/09/01 19:30:04 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -64,7 +64,7 @@ void	ft_set_rotation_mtrx(t_mtrx4 *rotation_mtrx, t_shape *shape)
 
 // Set rotation matrix of an object
 // https://en.wikipedia.org/wiki/Rotation_matrix
-void ft_rotation_mtrx_from_axis_and_angle(t_mtrx4 *rotation_mtrx, t_vct r_ax, double r_angle)
+void	ft_rotation_mtrx_from_axis_and_angle(t_mtrx4 *rotation_mtrx, t_vct r_ax, double r_angle)
 {
 	double	cs;
 	double	sn;

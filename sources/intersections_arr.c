@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 13:58:10 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/01 14:46:20 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/01 19:33:13 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -22,16 +22,16 @@ void	ft_init_xs(t_xs *xs)
 
 void	ft_xs_realloc(t_xs *xs)
 {
-	void	*dst;
+	t_intersection	*new;
 
 	if (!xs->arr || xs->i < xs->size - 1)
 		return ;
-	dst = (t_intersection *) malloc((xs->size + xs->to_add) * sizeof(t_intersection));
-	if (!dst)
+	new = malloc((xs->size + xs->to_add) * sizeof(t_intersection));
+	if (!new)
 		return (ft_free_xs(xs));
-	ft_memmove(dst, xs->arr, xs->size * sizeof(t_intersection));
+	ft_memmove(new, xs->arr, xs->size * sizeof(t_intersection));
 	free(xs->arr);
-	xs->arr = dst;
+	xs->arr = new;
 	xs->size += xs->to_add;
 }
 

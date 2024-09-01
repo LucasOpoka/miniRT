@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 12:32:43 by lopoka            #+#    #+#             */
-/*   Updated: 2024/08/21 16:05:08 by lucas            ###   ########.fr       */
+/*   Updated: 2024/09/01 19:21:46 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -20,8 +20,6 @@ void	ft_set_identity_mtrx(t_mtrx4 *mtrx4)
 	mtrx4[0][3][3] = 1;
 }
 
-// Create a translation matrix
-// https://www.brainvoyager.com/bv/doc/UsersGuide/CoordsAndTransforms/SpatialTransformationMatrices.html
 void	ft_set_translation_mtrx(t_mtrx4 *mtrx4, double x, double y, double z)
 {
 	ft_set_identity_mtrx(mtrx4);

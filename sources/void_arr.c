@@ -6,11 +6,10 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 13:58:10 by lopoka            #+#    #+#             */
-/*   Updated: 2024/08/14 14:41:19 by lucas            ###   ########.fr       */
+/*   Updated: 2024/09/01 19:23:01 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
-#include "../libft/libft.h"
 
 void	ft_init_void_arr(t_void_arr *void_arr)
 {
@@ -27,7 +26,7 @@ void	ft_void_arr_realloc(t_void_arr *void_arr)
 
 	if (!void_arr->arr || void_arr->i < void_arr->size - 1)
 		return ;
-	dst = (void **) malloc((void_arr->size + void_arr->to_add) * sizeof(void *));
+	dst = malloc((void_arr->size + void_arr->to_add) * sizeof(void *));
 	if (!dst)
 		return (ft_free_void_arr(void_arr));
 	ft_memmove(dst, void_arr->arr, void_arr->size * sizeof(void *));
