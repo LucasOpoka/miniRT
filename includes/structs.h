@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 14:16:04 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/01 11:17:10 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/01 12:38:33 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef STRUCTS_H
@@ -135,6 +135,15 @@ typedef struct s_intersection
 	t_shape *shape;
 	double	t;
 }	t_intersection;
+
+typedef struct s_xs
+{
+	t_intersection	*arr;
+	size_t			size;
+	size_t			curr;
+	size_t			i;
+	size_t			to_add;
+}	t_xs;
 
 typedef struct s_comps
 {
