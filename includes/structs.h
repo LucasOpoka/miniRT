@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 14:16:04 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/02 17:21:05 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/02 17:24:33 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef STRUCTS_H
@@ -17,7 +17,6 @@
 typedef double	t_mtrx2[2][2];
 typedef double	t_mtrx3[3][3];
 typedef double	t_mtrx4[4][4];
-
 
 typedef struct s_mrt
 {

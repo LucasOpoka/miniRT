@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:29:51 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/02 17:20:42 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/02 17:23:32 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -81,13 +81,9 @@ void	worker_render_section(t_worker *worker, t_scene *scene, int i)
 		int x = 0;
 		while (x < CANV_WDTH)
 		{
-<<<<<<< HEAD
-			ft_pixel_to_ray(&ray, x, y, &scene->cam);
 			//bvh_intersect(ray, scene, 0, inter);
-=======
 			xs->i = 0; //This is fine
-			ft_pixel_to_ray(&ray, x, y, &scene->camera);
->>>>>>> 8f0a01b77832d0a2181ac3ff96fa7dfddc66892b
+			ft_pixel_to_ray(&ray, x, y, &scene->cam);
 			bvh_intersect_ordered(ray, scene, xs);
 			color = ft_get_color(&ray, scene, 5, xs);
 			mlx_put_pixel(worker->mrt->img, x, y, ft_clr_to_int(color));
@@ -116,10 +112,7 @@ void	*worker_routine(void *ptr)
 		}
 		worker_signal_finish(worker);	
 	}
-<<<<<<< HEAD
 	ft_free_xs(&worker->xs);
-=======
->>>>>>> 8f0a01b77832d0a2181ac3ff96fa7dfddc66892b
 	free(ptr);
 	return (NULL);
 }

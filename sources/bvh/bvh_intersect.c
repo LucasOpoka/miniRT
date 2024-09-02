@@ -40,23 +40,23 @@ void	intersects_obj(t_ray ray, t_scene *scene, t_node *node, t_xs *xs)
 	}
 }
 
-void	ft_plane_intersection(t_ray ray, t_shape *shape, t_xs *xs);
+void	ft_plane_intersection(t_ray ray, t_obj *obj, t_xs *xs);
 void	add_planes(t_ray ray, t_scene *scene, t_xs *xs)
 {
-	t_shape	    *shape;
-	t_void_arr  *shapes;
-	t_ray	    shape_ray;
+	t_obj	    *obj;
+	t_void_arr  *objs;
+	t_ray	    obj_ray;
 	uint32_t    i;
 
 	i = 0;
-	shapes = &scene->shapes;
-	while (i < shapes->i)
+	objs = &scene->objs;
+	while (i < objs->i)
 	{
-		shape = shapes->arr[i];
-		if (shape->type == t_plane)
+		obj = objs->arr[i];
+		if (obj->type == t_plane)
 		{
-			ft_ray_to_shape_space(&shape_ray, &ray, shape);
-			ft_plane_intersection(shape_ray, shape, xs);
+			ft_ray_to_obj_space(&obj_ray, &ray, obj);
+			ft_plane_intersection(obj_ray, obj, xs);
 		}
 		i++;
 	}
