@@ -14,7 +14,7 @@ void	bounds_init(t_bounds *bounds)
 	double_set(bounds->max, DBL_MIN);
 }
 
-void	swap_qsort(uint32_t *obj_index, int i, int j)
+void	swap_obj(uint32_t *obj_index, int i, int j)
 {
 	uint32_t    tmp;
 
