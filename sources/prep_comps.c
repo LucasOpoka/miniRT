@@ -14,7 +14,7 @@
 
 void	ft_get_schlick(t_comps *comps);
 t_vct	ft_under_point(const t_vct *point, const t_vct *normal);
-int		ft_containers_include(t_xs *containers, t_shape *shape);
+int		ft_containers_include(t_xs *containers, t_obj *obj);
 void	ft_remove_container(t_xs *containers, t_intersection *curr);
 void	ft_get_refr_ind(t_comps *comps, t_xs *xs, t_intersection *closest);
 
@@ -22,11 +22,11 @@ void	ft_get_refr_ind(t_comps *comps, t_xs *xs, t_intersection *closest);
 void	ft_prep_comps(t_comps *comps, t_intersection *closest, const t_ray *ray, t_xs *xs)
 {
 	comps->t = closest->t;
-	comps->shape = closest->shape;
+	comps->obj = closest->obj;
 	comps->point = ft_ray_point(ray, comps->t); 
 	comps->eye = ft_vct_neg(&ray->D);
 	comps->eye.w = 0;
-	ft_get_shape_normal_and_color(comps);
+	ft_get_obj_normal_and_color(comps);
 	comps->inside = 0;
 	if (ft_vct_dot(&comps->normal, &comps->eye) < 0)
 	{
@@ -40,7 +40,7 @@ void	ft_prep_comps(t_comps *comps, t_intersection *closest, const t_ray *ray, t_
 	ft_get_schlick(comps);
 }
 
-// position - The Ray Tracer Challenge p.58
+// pos - The Ray Tracer Challenge p.58
 t_vct	ft_ray_point(const t_ray *ray, double t)
 {
 	t_vct	point;
@@ -99,34 +99,34 @@ void ft_get_refr_ind(t_comps *comps, t_xs *xs, t_intersection *closest)
 			if (containers.i == 0)
 				comps->n1 = 1;
 			else
-				comps->n1 = containers.arr[containers.i - 1].shape->refractive;
+				comps->n1 = containers.arr[containers.i - 1].obj->refractive;
 		}
 
-		if (ft_containers_include(&containers, curr->shape))
+		if (ft_containers_include(&containers, curr->obj))
 			ft_remove_container(&containers, curr);
 		else
-			ft_add_intersection(&containers, curr->shape, curr->t);
+			ft_add_intersection(&containers, curr->obj, curr->t);
 
 		if (curr == closest)
 		{
 			if (containers.i == 0)
 				comps->n2 = 1;
 			else
-				comps->n2 = containers.arr[containers.i - 1].shape->refractive;
+				comps->n2 = containers.arr[containers.i - 1].obj->refractive;
 			break ;
 		}
 	}
 	ft_free_xs(&containers);
 }
 
-int	ft_containers_include(t_xs *containers, t_shape *shape)
+int	ft_containers_include(t_xs *containers, t_obj *obj)
 {
 	size_t i;
 
 	i = 0;
 	while (i < containers->i)
 	{
-		if (shape == containers->arr[i].shape)
+		if (obj == containers->arr[i].obj)
 			return (1);
 		i++;
 	}
@@ -146,7 +146,7 @@ void	ft_remove_container(t_xs *containers, t_intersection *curr)
 	while (reader < containers->i)
 	{
 		intr = containers->arr[reader];
-		if (curr->shape != intr.shape)
+		if (curr->obj != intr.obj)
 			containers->arr[writer++] = containers->arr[reader];
 		reader++;
 	}

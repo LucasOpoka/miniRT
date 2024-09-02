@@ -1,15 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mtrx_transform.c                                   :+:      :+:    :+:   */
+/*   mtrx3.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/17 12:32:43 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/01 19:21:46 by lopoka           ###   ########.fr       */
+/*   Created: 2024/09/02 17:03:01 by lopoka            #+#    #+#             */
+/*   Updated: 2024/09/02 17:03:21 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
+
+void	ft_mtrx4_transpose(t_mtrx4 *out, const t_mtrx4 *in)
+{
+	int	r;
+	int	c;
+
+	r = 0;
+	while (r < 4)
+	{
+		c = 0;
+		while (c < 4)
+		{
+			out[0][r][c] = in[0][c][r];
+			c++;
+		}
+		r++;
+	}
+}
 
 void	ft_set_identity_mtrx(t_mtrx4 *mtrx4)
 {
@@ -20,7 +38,7 @@ void	ft_set_identity_mtrx(t_mtrx4 *mtrx4)
 	mtrx4[0][3][3] = 1;
 }
 
-void	ft_set_translation_mtrx(t_mtrx4 *mtrx4, double x, double y, double z)
+void	ft_set_trnsl_mtrx(t_mtrx4 *mtrx4, double x, double y, double z)
 {
 	ft_set_identity_mtrx(mtrx4);
 	mtrx4[0][0][3] = x;

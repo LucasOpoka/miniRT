@@ -6,7 +6,7 @@
 #    By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/29 14:59:04 by lopoka            #+#    #+#              #
-#    Updated: 2024/09/01 15:17:09 by lopoka           ###   ########.fr        #
+#    Updated: 2024/09/02 17:11:07 by lopoka           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,19 +28,21 @@ SOURCES	=	main.c \
 			close.c \
 			void_arr.c \
 			intersections_arr.c \
-			vct_math.c \
+			vct1.c \
+			vct2.c \
 			clr_math.c \
-			mtrx_math.c \
-			mtrx_transform.c \
+			mtrx1.c \
+			mtrx2.c \
+			mtrx3.c \
 			camera.c \
 			scene.c \
 			show_img.c \
 			render.c \
 			thread.c \
 			worker.c \
-			shapes_transforms.c \
+			obj_transforms.c \
 			prep_comps.c \
-			shapes_normals.c \
+			obj_normals.c \
 			get_test_scene.c \
 			lighting.c \
 			get_color.c \
@@ -48,7 +50,7 @@ SOURCES	=	main.c \
 
 PARSER_DIR = sources/parser
 PARSER_SRC = parser.c parser_utils.c validate.c file.c array.c \
-			fill.c ft_atof.c identifier.c shape.c camera.c light.c
+			fill.c ft_atof.c identifier.c obj.c camera.c light.c
 PARSER_OBJ = $(addprefix $(PARSER_DIR)/,$(PARSER_SRC:.c=.o))
 
 BVH_DIR = sources/bvh

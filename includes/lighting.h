@@ -14,6 +14,6 @@
 
 t_clr	ft_lighting(t_comps *comps, t_scene *scene, t_light *light,
 			t_clr *ambient);
-t_clr	ft_get_ambient(t_ambient *ambient, t_clr *shape_color);
+t_clr	ft_get_ambient(t_ambient *ambient, t_clr *obj_color);
 
 #endif

@@ -6,18 +6,15 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 17:16:20 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/01 18:50:57 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/02 16:26:38 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef CAMERA_H
 # define CAMERA_H
 
-void	ft_init_camera(t_camera *camera);
-void	ft_set_camera_matrices(t_camera *camera);
-void	ft_set_world_to_camera(t_mtrx4 *world_to_camera,
-			const t_vct *cam_position, t_vct *cam_y_axis,
-			const t_vct *cam_z_axis);
-void	ft_pixel_to_ray(t_ray *world_ray, double pixel_x, double pixel_y,
-			t_camera *camera);
+void	ft_init_cam(t_cam *cam);
+void	ft_set_cam_matrices(t_cam *cam);
+void	ft_world_to_cam(t_mtrx4 *world_to_cam, t_vct *cam_pos, t_vct *cam_up, t_vct *cam_dir);
+void	ft_pixel_to_ray(t_ray *world_ray, double x, double y, t_cam *cam);
 
 #endif

@@ -31,7 +31,7 @@ int	light_add_point(t_light *light, char **elem)
 	if (!validate_ratio(elem[2], 0.0, 1.0))
 		return (0);
 	light->type = t_point;
-	fill_vector(&light->position, elem[1]);
+	fill_vector(&light->pos, elem[1]);
 	light->intensity = ft_atof(elem[2]);
 	if (!fill_color(&light->color, elem[3]))
 		return (0);

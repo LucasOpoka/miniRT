@@ -23,9 +23,9 @@ char	*file_load(char *file);
 int		identifiers_validate(char ***elements);
 t_vct	ft_create_vct(double x, double y, double z);
 t_clr	ft_create_clr(double r, double g, double b);
-int		camera_add(t_scene *scene, char **elem);
+int		cam_add(t_scene *scene, char **elem);
 int		light_add(t_scene *scene, char **elem, int id);
-int		shape_add(t_scene *scene, char **elem, int id);
+int		obj_add(t_scene *scene, char **elem, int id);
 
 void	print_vector(t_vct v)
 {
@@ -50,11 +50,11 @@ int	parse_object(t_scene *scene, char **line)
 	ret = 0;
 	id = identifier_type(line[0]);
 	if (id == ID_CAMERA)
-		ret = camera_add(scene, line);
+		ret = cam_add(scene, line);
 	else if (id == ID_AMBIENT || id == ID_LIGHT)
 		ret = light_add(scene, line, id);
 	else if (id >= ID_SPHERE)
-		ret = shape_add(scene, line, id);
+		ret = obj_add(scene, line, id);
 	return (ret);
 }
 

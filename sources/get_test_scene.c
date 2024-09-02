@@ -17,121 +17,121 @@ t_scene	get_test_scene(void)
 	t_scene scene;
 
 	//Camera
-	scene.camera.fov = FOV;
+	scene.cam.fov = FOV;
 
-	scene.camera.position.x = 0;
-	scene.camera.position.y = 0;
-	scene.camera.position.z = -5;
-	scene.camera.position.w = 1;
+	scene.cam.pos.x = 0;
+	scene.cam.pos.y = 0;
+	scene.cam.pos.z = -5;
+	scene.cam.pos.w = 1;
 
-	scene.camera.direction.x = 0;
-	scene.camera.direction.y = 0;
-	scene.camera.direction.z = 1;
-	scene.camera.direction.w = 0;
+	scene.cam.dir.x = 0;
+	scene.cam.dir.y = 0;
+	scene.cam.dir.z = 1;
+	scene.cam.dir.w = 0;
 
 	// Shapes
-	ft_init_void_arr(&scene.shapes);
+	ft_init_void_arr(&scene.objs);
 
-	t_shape *shape1 = malloc(sizeof(t_shape));
-	shape1->type = t_sphere;
-	shape1->position = ft_create_vct(0, 0, 0); // CENTER
-	shape1->radius = 1;
-	shape1->color = ft_create_clr(0, 0, 0); // RED
-	shape1->specular = 0.9;
-	shape1->diffuse = 0;
-	shape1->shininess = 300;
-	shape1->reflective = 0.9;
-	shape1->refractive = 1.5;
-	shape1->transparency = 0.9;
-	shape1->scale = ft_create_vct(1, 1, 1);
-	shape1->orientation = ft_create_vct(0, 0, 0);
+	t_obj *obj1 = malloc(sizeof(t_obj));
+	obj1->type = t_sphere;
+	obj1->pos = ft_create_vct(0, 0, 0); // CENTER
+	obj1->radius = 1;
+	obj1->color = ft_create_clr(0, 0, 0); // RED
+	obj1->specular = 0.9;
+	obj1->diffuse = 0;
+	obj1->shininess = 300;
+	obj1->reflective = 0.9;
+	obj1->refractive = 1.5;
+	obj1->transparency = 0.9;
+	obj1->scale = ft_create_vct(1, 1, 1);
+	obj1->orientation = ft_create_vct(0, 0, 0);
 
-	t_shape *shapex = malloc(sizeof(t_shape));
-	shapex->type = t_sphere;
-	shapex->position = ft_create_vct(0, 4, 4); //ON THE RIGHT
-	shapex->radius = 1;
-	shapex->color = ft_create_clr(0, 0, 255); //BLUE
-	shapex->specular = 0.9;
-	shapex->diffuse = 0.5;
-	shapex->shininess = 500;
-	shapex->reflective = 0.3;
-	shapex->scale = ft_create_vct(1, 1, 1);
-	shapex->orientation = ft_create_vct(0, 0, 1);
+	t_obj *objx = malloc(sizeof(t_obj));
+	objx->type = t_sphere;
+	objx->pos = ft_create_vct(0, 4, 4); //ON THE RIGHT
+	objx->radius = 1;
+	objx->color = ft_create_clr(0, 0, 255); //BLUE
+	objx->specular = 0.9;
+	objx->diffuse = 0.5;
+	objx->shininess = 500;
+	objx->reflective = 0.3;
+	objx->scale = ft_create_vct(1, 1, 1);
+	objx->orientation = ft_create_vct(0, 0, 1);
 
 	/*
-	t_shape *shapex1 = malloc(sizeof(t_shape));
-	shapex1->type = t_sphere;
-	shapex1->position = ft_create_vct(-1, 4, 4); //ON THE RIGHT
-	shapex1->radius = 1;
-	shapex1->color = ft_create_clr(0, 0, 255); //BLUE
-	shapex1->specular = 0.9;
-	shapex1->diffuse = 0.5;
-	shapex1->shininess = 500;
-	shapex1->reflective = 0.3;
-	shapex1->scale = ft_create_vct(1, 1, 1);
-	shapex1->orientation = ft_create_vct(0, 0, 1);
+	t_obj *objx1 = malloc(sizeof(t_obj));
+	objx1->type = t_sphere;
+	objx1->pos = ft_create_vct(-1, 4, 4); //ON THE RIGHT
+	objx1->radius = 1;
+	objx1->color = ft_create_clr(0, 0, 255); //BLUE
+	objx1->specular = 0.9;
+	objx1->diffuse = 0.5;
+	objx1->shininess = 500;
+	objx1->reflective = 0.3;
+	objx1->scale = ft_create_vct(1, 1, 1);
+	objx1->orientation = ft_create_vct(0, 0, 1);
 	*/
 
-	t_shape *shape2 = malloc(sizeof(t_shape));
-	shape2->type = t_sphere;
-	shape2->position = ft_create_vct(0, 0, 0); // INSIDE CENTER
-	shape2->radius = 0.5;
-	shape2->color = ft_create_clr(0, 0, 0); //BLUE
-	shape2->specular = 0.9;
-	shape2->diffuse = 0;
-	shape2->shininess = 300;
-	shape2->reflective = 0.9;
-	shape2->refractive = 1.0000034;
-	shape2->transparency = 0.9;
-	shape2->scale = ft_create_vct(1, 1, 1);
-	shape2->orientation = ft_create_vct(0, 0, 0);
+	t_obj *obj2 = malloc(sizeof(t_obj));
+	obj2->type = t_sphere;
+	obj2->pos = ft_create_vct(0, 0, 0); // INSIDE CENTER
+	obj2->radius = 0.5;
+	obj2->color = ft_create_clr(0, 0, 0); //BLUE
+	obj2->specular = 0.9;
+	obj2->diffuse = 0;
+	obj2->shininess = 300;
+	obj2->reflective = 0.9;
+	obj2->refractive = 1.0000034;
+	obj2->transparency = 0.9;
+	obj2->scale = ft_create_vct(1, 1, 1);
+	obj2->orientation = ft_create_vct(0, 0, 0);
 
-	t_shape *shape3 = malloc(sizeof(t_shape));
-	shape3->type = t_sphere;
-	shape3->position = ft_create_vct(-3, -2, 6); //ON THE LEFT
-	shape3->radius = 0.5;
-	shape3->color = ft_create_clr(0, 0, 0); // GREEN
-	shape3->specular = 0.9;
-	shape3->diffuse = 0.9;
-	shape3->shininess = 500;
-	shape3->reflective = 0.5;
-	shape3->refractive = 1.5;
-	shape3->transparency = 0;
-	shape3->scale = ft_create_vct(1, 1, 1);
-	shape3->orientation = ft_create_vct(0, 0, 0);
+	t_obj *obj3 = malloc(sizeof(t_obj));
+	obj3->type = t_sphere;
+	obj3->pos = ft_create_vct(-3, -2, 6); //ON THE LEFT
+	obj3->radius = 0.5;
+	obj3->color = ft_create_clr(0, 0, 0); // GREEN
+	obj3->specular = 0.9;
+	obj3->diffuse = 0.9;
+	obj3->shininess = 500;
+	obj3->reflective = 0.5;
+	obj3->refractive = 1.5;
+	obj3->transparency = 0;
+	obj3->scale = ft_create_vct(1, 1, 1);
+	obj3->orientation = ft_create_vct(0, 0, 0);
 
-	t_shape *shape4 = malloc(sizeof(t_shape));
-	shape4->type = t_sphere;
-	shape4->position = ft_create_vct(0, -5001, 0); //BIG AT BOTTOM
-	shape4->radius = 1;
-	shape4->color = ft_create_clr(255, 255, 0); // YELLOW
-	shape4->specular = 0.9;
-	shape4->diffuse = 0.9;
-	shape4->shininess = 100;
-	shape4->reflective = 0.9;
-	shape4->refractive = 1.5;
-	shape4->transparency = 0;
-	shape4->scale = ft_create_vct(5000, 5000, 5000);
-	shape4->orientation = ft_create_vct(0, 0, 1);
+	t_obj *obj4 = malloc(sizeof(t_obj));
+	obj4->type = t_sphere;
+	obj4->pos = ft_create_vct(0, -5001, 0); //BIG AT BOTTOM
+	obj4->radius = 1;
+	obj4->color = ft_create_clr(255, 255, 0); // YELLOW
+	obj4->specular = 0.9;
+	obj4->diffuse = 0.9;
+	obj4->shininess = 100;
+	obj4->reflective = 0.9;
+	obj4->refractive = 1.5;
+	obj4->transparency = 0;
+	obj4->scale = ft_create_vct(5000, 5000, 5000);
+	obj4->orientation = ft_create_vct(0, 0, 1);
 
-	t_shape *shape10 = malloc(sizeof(t_shape));
-	shape10->type = t_sphere;
-	shape10->position = ft_create_vct(0, 0, 5005); //BIG AT BOTTOM
-	shape10->radius = 1;
-	shape10->color = ft_create_clr(255, 255, 0); // YELLOW
-	shape10->specular = 0.9;
-	shape10->diffuse = 0.9;
-	shape10->shininess = 100;
-	shape10->reflective = 0.9;
-	shape10->refractive = 1.5;
-	shape10->transparency = 0;
-	shape10->scale = ft_create_vct(5000, 5000, 5000);
-	shape10->orientation = ft_create_vct(0, 0, 1);
+	t_obj *obj10 = malloc(sizeof(t_obj));
+	obj10->type = t_sphere;
+	obj10->pos = ft_create_vct(0, 0, 5005); //BIG AT BOTTOM
+	obj10->radius = 1;
+	obj10->color = ft_create_clr(255, 255, 0); // YELLOW
+	obj10->specular = 0.9;
+	obj10->diffuse = 0.9;
+	obj10->shininess = 100;
+	obj10->reflective = 0.9;
+	obj10->refractive = 1.5;
+	obj10->transparency = 0;
+	obj10->scale = ft_create_vct(5000, 5000, 5000);
+	obj10->orientation = ft_create_vct(0, 0, 1);
 
 
-	t_shape *back = malloc(sizeof(t_shape));
+	t_obj *back = malloc(sizeof(t_obj));
 	back->type = t_plane;
-	back->position = ft_create_vct(0, 0, 10); // BACK PLANE
+	back->pos = ft_create_vct(0, 0, 10); // BACK PLANE
 	back->color = ft_create_clr(0, 0, 0);
 	back->orientation = ft_create_vct(0, 0, -1);
 	back->specular = 0;
@@ -142,35 +142,35 @@ t_scene	get_test_scene(void)
 	back->transparency = 0;
 	back->scale = ft_create_vct(1, 1, 1);
 	
-	t_shape *shape6 = malloc(sizeof(t_shape));
-	shape6->type = t_cylinder;
-	shape6->position = ft_create_vct(-3, 0, 2); //CYLINDER
-	shape6->color = ft_create_clr(150, 100, 75);
-	shape6->orientation = ft_create_vct(0, 0, 1);
-	shape6->specular = 0.9;
-	shape6->shininess = 100;
-	shape6->reflective = 0.2;
-	shape6->refractive = 1.5;
-	shape6->transparency = 0.5;
-	shape6->scale = ft_create_vct(1, 1, 1);
-	shape6->orientation = ft_create_vct(0, 0, 0);
-	shape6->height = 3;
+	t_obj *obj6 = malloc(sizeof(t_obj));
+	obj6->type = t_cylinder;
+	obj6->pos = ft_create_vct(-3, 0, 2); //CYLINDER
+	obj6->color = ft_create_clr(150, 100, 75);
+	obj6->orientation = ft_create_vct(0, 0, 1);
+	obj6->specular = 0.9;
+	obj6->shininess = 100;
+	obj6->reflective = 0.2;
+	obj6->refractive = 1.5;
+	obj6->transparency = 0.5;
+	obj6->scale = ft_create_vct(1, 1, 1);
+	obj6->orientation = ft_create_vct(0, 0, 0);
+	obj6->height = 3;
 
-	t_shape *shape7 = malloc(sizeof(t_shape));
-	shape7->type = t_plane;
-	shape7->position = ft_create_vct(0, -4, 0); //PURPLE PLANE
-	shape7->color = ft_create_clr(0, 70, 139);
-	shape7->orientation = ft_create_vct(0, 1, 0);
-	shape7->specular = 0.9;
-	shape7->shininess = 100;
-	shape7->reflective = 0;
-	shape7->refractive = 1.5;
-	shape7->transparency = 0;
-	shape7->scale = ft_create_vct(1, 1, 1);
+	t_obj *obj7 = malloc(sizeof(t_obj));
+	obj7->type = t_plane;
+	obj7->pos = ft_create_vct(0, -4, 0); //PURPLE PLANE
+	obj7->color = ft_create_clr(0, 70, 139);
+	obj7->orientation = ft_create_vct(0, 1, 0);
+	obj7->specular = 0.9;
+	obj7->shininess = 100;
+	obj7->reflective = 0;
+	obj7->refractive = 1.5;
+	obj7->transparency = 0;
+	obj7->scale = ft_create_vct(1, 1, 1);
 
-	t_shape *r = malloc(sizeof(t_shape));
+	t_obj *r = malloc(sizeof(t_obj));
 	r->type = t_plane;
-	r->position = ft_create_vct(4, 0, 0); //PURPLE PLANE
+	r->pos = ft_create_vct(4, 0, 0); //PURPLE PLANE
 	r->color = ft_create_clr(255, 0, 255);
 	r->orientation = ft_create_vct(-1, 0, 0);
 	r->specular = 0.9;
@@ -180,9 +180,9 @@ t_scene	get_test_scene(void)
 	r->transparency = 0;
 	r->scale = ft_create_vct(1, 1, 1);
 
-	t_shape *l = malloc(sizeof(t_shape));
+	t_obj *l = malloc(sizeof(t_obj));
 	l->type = t_plane;
-	l->position = ft_create_vct(-4, 0, 0); //RED LEFT PLANE
+	l->pos = ft_create_vct(-4, 0, 0); //RED LEFT PLANE
 	l->color = ft_create_clr(255, 0, 0);
 	l->orientation = ft_create_vct(1, 0, 0);
 	l->specular = 0.9;
@@ -192,9 +192,9 @@ t_scene	get_test_scene(void)
 	l->transparency = 0;
 	l->scale = ft_create_vct(1, 1, 1);
 
-	t_shape *up = malloc(sizeof(t_shape));
+	t_obj *up = malloc(sizeof(t_obj));
 	up->type = t_plane;
-	up->position = ft_create_vct(0, 4, 0); //GREEN UP PLANE
+	up->pos = ft_create_vct(0, 4, 0); //GREEN UP PLANE
 	up->color = ft_create_clr(0, 255, 0);
 	up->orientation = ft_create_vct(0, -1, 0);
 	up->specular = 0.9;
@@ -204,9 +204,9 @@ t_scene	get_test_scene(void)
 	up->transparency = 0;
 	up->scale = ft_create_vct(1, 1, 1);
 
-	t_shape *front = malloc(sizeof(t_shape));
+	t_obj *front = malloc(sizeof(t_obj));
 	front->type = t_plane;
-	front->position = ft_create_vct(0, 0, -6); //BACK PLANE
+	front->pos = ft_create_vct(0, 0, -6); //BACK PLANE
 	front->color = ft_create_clr(255, 255, 0);
 	front->orientation = ft_create_vct(0, 0, 1);
 	front->specular = 0.9;
@@ -217,18 +217,18 @@ t_scene	get_test_scene(void)
 	front->scale = ft_create_vct(1, 1, 1);
 
 
-	ft_void_arr_add(&scene.shapes, shape1);
-	ft_void_arr_add(&scene.shapes, shape2);
-	//ft_void_arr_add(&scene.shapes, shape3);
-	//ft_void_arr_add(&scene.shapes, shape4);
-	//ft_void_arr_add(&scene.shapes, shape10);
-	//ft_void_arr_add(&scene.shapes, shape6);
-	//ft_void_arr_add(&scene.shapes, shape7);
-	ft_void_arr_add(&scene.shapes, back);
-	//ft_void_arr_add(&scene.shapes, r);
-	//ft_void_arr_add(&scene.shapes, l);
-	//ft_void_arr_add(&scene.shapes, up);
-	//ft_void_arr_add(&scene.shapes, front);
+	ft_void_arr_add(&scene.objs, obj1);
+	ft_void_arr_add(&scene.objs, obj2);
+	//ft_void_arr_add(&scene.objs, obj3);
+	//ft_void_arr_add(&scene.objs, obj4);
+	//ft_void_arr_add(&scene.objs, obj10);
+	//ft_void_arr_add(&scene.objs, obj6);
+	//ft_void_arr_add(&scene.objs, obj7);
+	ft_void_arr_add(&scene.objs, back);
+	//ft_void_arr_add(&scene.objs, r);
+	//ft_void_arr_add(&scene.objs, l);
+	//ft_void_arr_add(&scene.objs, up);
+	//ft_void_arr_add(&scene.objs, front);
 
 	// Lights
 	ft_init_void_arr(&scene.lights);
@@ -239,15 +239,15 @@ t_scene	get_test_scene(void)
 	t_light *light2 = malloc(sizeof(t_light));
 	light2->type = t_point;
 	light2->intensity = 0.5;
-	light2->position = ft_create_vct(2, 10, -5);
-	light2->direction = ft_create_vct(1, -1, 0);
+	light2->pos = ft_create_vct(2, 10, -5);
+	light2->dir = ft_create_vct(1, -1, 0);
 	light2->color = ft_create_clr(255, 255, 255);
 	
 	t_light *light3 = malloc(sizeof(t_light));
-	light3->type = t_directional;
+	light3->type = t_diral;
 	light3->intensity = 0.2;
-	light3->position = ft_create_vct(1, 3, 3);
-	light3->direction = ft_create_vct(-1, 1, 0);
+	light3->pos = ft_create_vct(1, 3, 3);
+	light3->dir = ft_create_vct(-1, 1, 0);
 	light3->color = ft_create_clr(255, 255, 255);
 	
 	ft_void_arr_add(&scene.lights, light2);

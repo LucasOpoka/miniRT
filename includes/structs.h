@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 14:16:04 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/01 15:32:50 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/02 15:57:48 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef STRUCTS_H
@@ -76,11 +76,11 @@ typedef struct s_clr
 	double	b;
 }	t_clr;
 
-typedef struct s_shape
+typedef struct s_obj
 {
 	float	centroid[3];
 	int		type;
-	t_vct	position;
+	t_vct	pos;
 	double	radius;
 	double	height;
 	t_clr	color;
@@ -92,32 +92,32 @@ typedef struct s_shape
 	double	transparency;
 	t_vct	orientation;
 	t_vct	scale;
-	t_mtrx4	shape_to_world;
-	t_mtrx4	world_to_shape;
+	t_mtrx4	obj_to_world;
+	t_mtrx4	world_to_obj;
 	t_mtrx4	normal_to_world;
-}	t_shape;
+}	t_obj;
 
 typedef struct s_light
 {
 	int		type;
 	double	intensity;
-	t_vct	position;
-	t_vct	direction;
+	t_vct	pos;
+	t_vct	dir;
 	t_clr	color;
 }	t_light;
 
 typedef enum e_light_type
 {
 	t_point,
-	t_directional
+	t_diral
 }	t_light_type;
 
-typedef enum e_shape_type
+typedef enum e_obj_type
 {
 	t_sphere,
 	t_plane,
 	t_cylinder
-}	t_shape_type;
+}	t_obj_type;
 
 typedef struct s_void_arr
 {
@@ -128,17 +128,17 @@ typedef struct s_void_arr
 	size_t	to_add;
 }	t_void_arr;
 
-typedef struct s_camera
+typedef struct s_cam
 {
-	t_vct	position;
-	t_vct	direction;
+	t_vct	pos;
+	t_vct	dir;
 	double	fov;
 	double	pixel_size;
 	double	half_wdth;
 	double	half_hght;
-	t_mtrx4	world_to_camera;
-	t_mtrx4	camera_to_world;
-}	t_camera;
+	t_mtrx4	world_to_cam;
+	t_mtrx4	cam_to_world;
+}	t_cam;
 
 typedef	struct	t_ambient
 {
@@ -149,10 +149,10 @@ typedef	struct	t_ambient
 
 typedef	struct s_scene
 {
-	t_camera	camera;
+	t_cam	cam;
 	t_ambient	ambient;
 	t_void_arr	lights;
-	t_void_arr	shapes;
+	t_void_arr	objs;
 	t_node		*bvh_root;
 	uint32_t	*bvh_index;
 }	t_scene;
@@ -166,7 +166,7 @@ typedef	struct s_ray
 
 typedef struct s_intersection
 {
-	t_shape *shape;
+	t_obj *obj;
 	double	t;
 }	t_intersection;
 
@@ -181,7 +181,7 @@ typedef struct s_xs
 
 typedef struct s_comps
 {
-	t_shape *shape;
+	t_obj *obj;
 	double	t;
 	t_vct	point;
 	t_vct	eye;
@@ -197,13 +197,6 @@ typedef struct s_comps
 	double	schlick;
 }	t_comps;
 
-typedef struct t_intersects
-{
-	t_intersection	*arr;
-	size_t			i;
-	size_t			size;
-}	t_intersects;
-
 typedef struct s_worker
 {
 	t_mrt	*mrt;
@@ -212,7 +205,6 @@ typedef struct s_worker
 	int		block_count;
 	int		block_size;
 	int		done;
-	t_intersects	intersects;
 	t_xs	xs;
 }	t_worker;
 

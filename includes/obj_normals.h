@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   shapes_normals.h                                   :+:      :+:    :+:   */
+/*   obj_normals.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,6 +12,6 @@
 #ifndef SHAPES_NORMALS_H
 # define SHAPES_NORMALS_H
 
-void	ft_get_shape_normal_and_color(t_comps *comps);
+void	ft_get_obj_normal_and_color(t_comps *comps);
 
 #endif

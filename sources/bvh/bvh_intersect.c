@@ -15,27 +15,27 @@
 
 float aabb_raycast(t_ray ray, float bmin[3], float bmax[3]);
 
-void	ft_ray_to_shape_space(t_ray *shape_ray, t_ray *world_ray, t_shape *shape);
+void	ft_ray_to_obj_space(t_ray *obj_ray, t_ray *world_ray, t_obj *obj);
 void	ft_get_intersections(t_ray world_ray, t_scene *scene, t_xs *xs);
-void	ft_sphere_intersection(t_ray shape_ray, t_shape *shape, t_xs *xs);
-void	ft_cylinder_intersection(t_ray shape_ray, t_shape *shape, t_xs *xs);
+void	ft_sphere_intersection(t_ray obj_ray, t_obj *obj, t_xs *xs);
+void	ft_cylinder_intersection(t_ray obj_ray, t_obj *obj, t_xs *xs);
 
-void	intersects_shape(t_ray ray, t_scene *scene, t_node *node, t_xs *xs)
+void	intersects_obj(t_ray ray, t_scene *scene, t_node *node, t_xs *xs)
 {
-	t_shape	    *shape;
-	t_ray	    shape_ray;
+	t_obj	    *obj;
+	t_ray	    obj_ray;
 	uint32_t    i;
 
 	i = 0;
 	while (i < node->count)
 	{
-		shape = scene->shapes.arr[scene->bvh_index[node->first_index + i]];
-		ft_ray_to_shape_space(&shape_ray, &ray, shape);
+		obj = scene->objs.arr[scene->bvh_index[node->first_index + i]];
+		ft_ray_to_obj_space(&obj_ray, &ray, obj);
 
-		if (shape->type == t_sphere)
-			ft_sphere_intersection(shape_ray, shape, xs);
-		if (shape->type == t_cylinder)
-			ft_cylinder_intersection(shape_ray, shape, xs);
+		if (obj->type == t_sphere)
+			ft_sphere_intersection(obj_ray, obj, xs);
+		if (obj->type == t_cylinder)
+			ft_cylinder_intersection(obj_ray, obj, xs);
 		i++;
 	}
 }
@@ -91,7 +91,7 @@ void	bvh_intersect_ordered(t_ray ray, t_scene* scene, t_xs *xs)
 	{
 		if (node->count > 0)
 		{
-			intersects_shape(ray, scene, node, xs);
+			intersects_obj(ray, scene, node, xs);
 			if (s.ptr == 0)
 				break;
 			node = s.stack[--s.ptr];
@@ -109,7 +109,7 @@ void	bvh_intersect(t_ray ray, t_scene *scene, uint32_t index, t_xs *xs)
 		return ;
 	if (node->count > 0)
 	{
-		intersects_shape(ray, scene, node, xs);
+		intersects_obj(ray, scene, node, xs);
 		return ;
 	}
 	bvh_intersect(ray, scene, node->left, xs);

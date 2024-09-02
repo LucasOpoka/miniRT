@@ -15,7 +15,7 @@
 #include <math.h>
 
 void	float_set(float *f, float value);
-void	shape_bounds_min_max(float *to_min, float *to_max, t_shape *shape);
+void	obj_bounds_min_max(float *to_min, float *to_max, t_obj *obj);
 
 /*
 //Plane is split along the longest axis, not used anymore this is bad
@@ -68,15 +68,15 @@ float	evaluate_cost(t_node *node, t_split current, t_scene *scene)
 	bounds_init(&right);
 	while (i < node->count)
 	{
-		t_shape *shape = scene->shapes.arr[scene->bvh_index[node->first_index + i]];
-		if (shape->centroid[current.axis] < current.pos)
+		t_obj *obj = scene->objs.arr[scene->bvh_index[node->first_index + i]];
+		if (obj->centroid[current.axis] < current.pos)
 		{
-			shape_bounds_min_max(left.min, left.max, shape);
+			obj_bounds_min_max(left.min, left.max, obj);
 			left_count++;
 		}
 		else
 		{
-			shape_bounds_min_max(right.min, right.max, shape);
+			obj_bounds_min_max(right.min, right.max, obj);
 			right_count++;
 		}
 		i++;

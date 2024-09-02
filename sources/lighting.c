@@ -12,12 +12,12 @@
 #include "../includes/miniRT.h"
 #include "../includes/bvh.h"
 
-t_clr	ft_get_ambient(t_ambient *ambient, t_clr *shape_color)
+t_clr	ft_get_ambient(t_ambient *ambient, t_clr *obj_color)
 {
 	t_clr	temp;
 	t_clr	res;
 
-	temp = ft_clr_sclr_mult(*shape_color, ambient->intensity);
+	temp = ft_clr_sclr_mult(*obj_color, ambient->intensity);
 	res = ft_clr_clr_mult(temp, ambient->color);
 	return (res);
 }
@@ -28,7 +28,7 @@ int	ft_in_shadow(t_scene *scene, t_light *light, t_vct *over_point)
 	float	distance;
 	int		res;
 
-	point_to_light.D = ft_vct_sub(&light->position, over_point);
+	point_to_light.D = ft_vct_sub(&light->pos, over_point);
 	distance = ft_vct_len(&point_to_light.D);
 	ft_vct_norm(&point_to_light.D);
 	point_to_light.O = *over_point;
@@ -51,10 +51,10 @@ t_clr	ft_lighting(t_comps *comps, t_scene *scene, t_light *light, t_clr *ambient
 	t_clr	effective;
 
 	result = *ambient;
-	effective = ft_clr_clr_mult(comps->shape->color, light->color);
+	effective = ft_clr_clr_mult(comps->obj->color, light->color);
 
 	// Check if in shadow
-	t_vct light_vct = ft_vct_sub(&light->position, &comps->over_point);
+	t_vct light_vct = ft_vct_sub(&light->pos, &comps->over_point);
 	ft_vct_norm(&light_vct);
 	comps->normal.w = 0;
 	float light_dot_normal = ft_vct_dot(&light_vct, &comps->normal);
@@ -62,7 +62,7 @@ t_clr	ft_lighting(t_comps *comps, t_scene *scene, t_light *light, t_clr *ambient
 		return (result);
 
 	// Diffuse
-	t_clr diffuse = ft_clr_sclr_mult(effective, light_dot_normal * comps->shape->diffuse * light->intensity);	
+	t_clr diffuse = ft_clr_sclr_mult(effective, light_dot_normal * comps->obj->diffuse * light->intensity);	
 
 	// Specular
 	t_vct neg_light_vct = ft_vct_neg(&light_vct);
@@ -72,7 +72,7 @@ t_clr	ft_lighting(t_comps *comps, t_scene *scene, t_light *light, t_clr *ambient
 	if (reflect_dot_eye < 0)
 		specular = ft_create_clr(0, 0, 0);
 	else
-		specular = ft_clr_sclr_mult(light->color, light->intensity * comps->shape->specular * pow(reflect_dot_eye, comps->shape->shininess));
+		specular = ft_clr_sclr_mult(light->color, light->intensity * comps->obj->specular * pow(reflect_dot_eye, comps->obj->shininess));
 	
 	result = ft_clr_add(result, diffuse);
 	result = ft_clr_add(result, specular);

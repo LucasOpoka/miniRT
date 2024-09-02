@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:06:19 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/01 15:19:41 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/02 16:33:24 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINIRT_H
@@ -21,10 +21,10 @@
 # include "mtrx.h"
 # include "vct.h"
 # include "camera.h"
-# include "shapes_transforms.h"
+# include "obj_transforms.h"
 # include "intersections.h"
 # include "prep_comps.h"
-# include "shapes_normals.h"
+# include "obj_normals.h"
 # include "get_color.h"
 # include "lighting.h"
 # include "clr_math.h"
@@ -61,7 +61,7 @@ void		ft_free_void_arr(t_void_arr *void_arr);
 // t_xs
 void		ft_init_xs(t_xs *xs);
 void		ft_free_xs(t_xs *xs);
-void		ft_add_intersection(t_xs *xs, t_shape *shape, double t);
+void		ft_add_intersection(t_xs *xs, t_obj *obj, double t);
 
 int				scene_init(t_scene *scene);
 void			scene_free(t_scene *scene);

@@ -50,10 +50,10 @@ void	render_image(t_mrt *mrt)
 
 void	render(t_mrt *mrt, t_scene *scene)
 {
-	// Init camera
-	ft_init_camera(&scene->camera);
-	ft_set_camera_matrices(&scene->camera);
-	ft_set_all_shapes_matrices(scene);
+	// Init cam
+	ft_init_cam(&scene->cam);
+	ft_set_cam_matrices(&scene->cam);
+	ft_set_all_objs_matrices(scene);
 
 	//mlx_image_to_window(mrt->mlx, mrt->img, 0, 0);
 	render_image(mrt);

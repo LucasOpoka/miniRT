@@ -18,14 +18,14 @@
 uint32_t nodes_used = 1;
 
 void	node_print_entry(t_node *node);
-void	node_print_full(t_node *node, t_void_arr *shapes, int axis, float split_pos);
+void	node_print_full(t_node *node, t_void_arr *objs, int axis, float split_pos);
 
 void	node_min_max(float *to_min, float *to_max, float *min, float *max);
 float	node_cost(t_node *node);
 
-void	sphere_bounds(float *min, float *max, t_shape *sphere);
-void	cylinder_bounds(float *min, float *max, t_shape *cylinder);
-void	shape_bounds_update(t_node *node, t_shape *shape);
+void	sphere_bounds(float *min, float *max, t_obj *sphere);
+void	cylinder_bounds(float *min, float *max, t_obj *cylinder);
+void	obj_bounds_update(t_node *node, t_obj *obj);
 
 void	float_set(float *f, float value)
 {
@@ -37,7 +37,7 @@ void	float_set(float *f, float value)
 void	bvh_update_bounds(t_node *root, uint32_t index, t_scene *scene)
 {
 	t_node	    *node = &root[index];
-	t_shape	    *shape;
+	t_obj	    *obj;
 	size_t	    i;
 
 	i = 0;
@@ -46,20 +46,20 @@ void	bvh_update_bounds(t_node *root, uint32_t index, t_scene *scene)
 
 	while (i < node->count)
 	{
-		shape = scene->shapes.arr[scene->bvh_index[node->first_index+ i]];
-		shape_bounds_update(node, shape);
+		obj = scene->objs.arr[scene->bvh_index[node->first_index+ i]];
+		obj_bounds_update(node, obj);
 		i++;
 	}
 }
 
 
-void	swap_qsort(uint32_t *shape_index, int i, int j)
+void	swap_qsort(uint32_t *obj_index, int i, int j)
 {
 	uint32_t    tmp;
 
-	tmp = shape_index[i];
-	shape_index[i] = shape_index[j];
-	shape_index[j] = tmp;
+	tmp = obj_index[i];
+	obj_index[i] = obj_index[j];
+	obj_index[j] = tmp;
 }
 
 t_split	find_best_split(t_node *node, t_scene *scene);
@@ -69,12 +69,12 @@ uint32_t    node_partition(t_node *node, t_scene *scene, t_split split,
 {
 	int i = node->first_index;
 	int j = node->count + i - 1;
-	t_shape	    *shape;
+	t_obj	    *obj;
 
 	while (i <= j)
 	{
-		shape = scene->shapes.arr[scene->bvh_index[i]];
-		if (shape->centroid[split.axis] < split.pos)
+		obj = scene->objs.arr[scene->bvh_index[i]];
+		if (obj->centroid[split.axis] < split.pos)
 		{
 			*left_count += 1;
 			i++;
@@ -100,7 +100,7 @@ int	bvh_split(t_node *root, t_node *node, t_split split, t_scene *scene)
 	right_count = node->count - left_count;
 	(void) right_count; // Not used?
 	left_index = nodes_used;
-	//Split node must have shape count set to 0 !
+	//Split node must have obj count set to 0 !
 	root[left_index].first_index = node->first_index;
 	root[left_index].count = left_count;
 	//node->right always is left_index + 1
@@ -145,10 +145,10 @@ void	set_centroids(t_node *root, t_scene *scene)
 	while (i < root->count)
 	{
 		scene->bvh_index[i] = i;
-		t_shape *shape = scene->shapes.arr[i];
-		shape->centroid[0] = shape->position.x;
-		shape->centroid[1] = shape->position.y;
-		shape->centroid[2] = shape->position.z;
+		t_obj *obj = scene->objs.arr[i];
+		obj->centroid[0] = obj->pos.x;
+		obj->centroid[1] = obj->pos.y;
+		obj->centroid[2] = obj->pos.z;
 		i++;
 	}
 }
@@ -158,8 +158,8 @@ t_node	*bvh_build(t_scene *scene)
 	t_node	    *root;
 	uint32_t    *bvh_index;
 
-	root = ft_calloc(1, (scene->shapes.i * 2 * sizeof(t_node)));
-	bvh_index = ft_calloc(1, (scene->shapes.i * sizeof(uint32_t)));
+	root = ft_calloc(1, (scene->objs.i * 2 * sizeof(t_node)));
+	bvh_index = ft_calloc(1, (scene->objs.i * sizeof(uint32_t)));
 	if (!root || !bvh_index)
 	{
 		free(root);
@@ -168,7 +168,7 @@ t_node	*bvh_build(t_scene *scene)
 	}
 	scene->bvh_root = root;
 	scene->bvh_index = bvh_index;
-	root->count = scene->shapes.i;
+	root->count = scene->objs.i;
 	set_centroids(root, scene);
 	long long ms_start = time_ms();
 	bvh_update_bounds(root, 0, scene);

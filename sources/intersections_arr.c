@@ -35,7 +35,7 @@ void	ft_xs_realloc(t_xs *xs)
 	xs->size += xs->to_add;
 }
 
-void	ft_add_intersection(t_xs *xs, t_shape *shape, double t)
+void	ft_add_intersection(t_xs *xs, t_obj *obj, double t)
 {
 	t_intersection	*intr;
 
@@ -43,7 +43,7 @@ void	ft_add_intersection(t_xs *xs, t_shape *shape, double t)
 	if (!xs->arr)
 		return ;
 	intr = &xs->arr[xs->i];
-	intr->shape = shape;
+	intr->obj = obj;
 	intr->t = t;
 	xs->i++;
 }

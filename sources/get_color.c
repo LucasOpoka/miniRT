@@ -44,7 +44,7 @@ t_clr	ft_get_color(const t_ray *ray, t_scene *scene, int recursion_depth, t_xs *
 		surface_color = ft_lighting(&comps, scene, light, &ambient);
 		reflect_color = ft_reflection(&comps, light, scene, recursion_depth);
 		refract_color = ft_refraction(&comps, light, scene, recursion_depth);
-		if (closest->shape->reflective > 0 && closest->shape->transparency > 0)
+		if (closest->obj->reflective > 0 && closest->obj->transparency > 0)
 		{
 			reflect_color = ft_clr_sclr_mult(reflect_color, comps.schlick);
 			refract_color = ft_clr_sclr_mult(refract_color, 1 - comps.schlick);
@@ -63,7 +63,7 @@ t_clr	ft_reflection(t_comps *comps, t_light *light, t_scene *scene, int recursio
 	
 
 	res = ft_create_clr(0, 0, 0);
-	if (comps->shape->reflective == 0 || recursion_depth == 0)
+	if (comps->obj->reflective == 0 || recursion_depth == 0)
 		return (res);
 	reflection_ray.O = comps->over_point;
 	reflection_ray.D = comps->reflect;
@@ -76,7 +76,7 @@ t_clr	ft_reflection(t_comps *comps, t_light *light, t_scene *scene, int recursio
 
 	ft_free_xs(&xs);
 
-	res = ft_clr_sclr_mult(res, comps->shape->reflective);
+	res = ft_clr_sclr_mult(res, comps->obj->reflective);
 	return (res);
 }
 
@@ -102,7 +102,7 @@ t_clr	ft_get_color2(const t_ray *ray, t_scene *scene, int recursion_depth, t_xs 
 	surface_color = ft_lighting(&comps, scene, light, &ambient);
 	reflect_color = ft_reflection(&comps, light, scene, recursion_depth - 1);
 	refract_color = ft_refraction(&comps, light, scene, recursion_depth - 1);
-	if (closest->shape->reflective > 0 && closest->shape->transparency > 0)
+	if (closest->obj->reflective > 0 && closest->obj->transparency > 0)
 	{
 		reflect_color = ft_clr_sclr_mult(reflect_color, comps.schlick);
 		refract_color = ft_clr_sclr_mult(refract_color, 1 - comps.schlick);
@@ -120,7 +120,7 @@ t_clr	ft_refraction(t_comps *comps, t_light *light, t_scene *scene, int recursio
 	double	n_ratio;
 
 	res = ft_create_clr(0, 0, 0);
-	if (comps->shape->transparency == 0 || recursion_depth == 0)
+	if (comps->obj->transparency == 0 || recursion_depth == 0)
 		return (res);
 	n_ratio = comps->n1 / comps->n2;
 	
@@ -142,7 +142,7 @@ t_clr	ft_refraction(t_comps *comps, t_light *light, t_scene *scene, int recursio
 	
 	res = ft_get_color2(&refraction_ray, scene, recursion_depth, &xs, light);
 	
-	res = ft_clr_sclr_mult(res, comps->shape->transparency);
+	res = ft_clr_sclr_mult(res, comps->obj->transparency);
 
 	ft_free_xs(&xs);
 

@@ -13,27 +13,27 @@
 
 int	ft_xs_compare(const void *a, const void *b);
 
-void	ft_sphere_intersection(t_ray ray, t_shape *shape, t_xs *xs)
+void	ft_sphere_intersection(t_ray ray, t_obj *obj, t_xs *xs)
 {
 	t_vct	center = ft_create_vct(0, 0, 0);
 	center.w = 1;
 	t_vct	X = ft_vct_sub(&ray.O, &center);
 	double	a = ft_vct_dot(&ray.D, &ray.D);
 	double	b = 2 * ft_vct_dot(&X, &ray.D);
-	double	c = ft_vct_dot(&X, &X) - (shape->radius * shape->radius);
+	double	c = ft_vct_dot(&X, &X) - (obj->radius * obj->radius);
 
 	double	discr = b * b - 4 * a * c;
 	if (discr < 0)
 		return ;
-	ft_add_intersection(xs, shape, (-b + sqrt(discr)) / (2 * a));
-	ft_add_intersection(xs, shape, (-b - sqrt(discr)) / (2 * a));
+	ft_add_intersection(xs, obj, (-b + sqrt(discr)) / (2 * a));
+	ft_add_intersection(xs, obj, (-b - sqrt(discr)) / (2 * a));
 }
 
-void	ft_plane_intersection(t_ray ray, t_shape *shape, t_xs *xs)
+void	ft_plane_intersection(t_ray ray, t_obj *obj, t_xs *xs)
 {
 	if (fabs(ray.D.y) < EPSILON)
 		return ;
-	ft_add_intersection(xs, shape, -ray.O.y / ray.D.y);
+	ft_add_intersection(xs, obj, -ray.O.y / ray.D.y);
 }
 
 int	ft_check_caps(t_ray ray, double t)
@@ -46,22 +46,22 @@ int	ft_check_caps(t_ray ray, double t)
 	return (x * x + z * z <= 1);
 }
 
-void	ft_intersect_caps(t_ray ray, t_shape *shape, t_xs *xs)
+void	ft_intersect_caps(t_ray ray, t_obj *obj, t_xs *xs)
 {
 	double	t;
 
 	if (fabs(ray.D.y) < EPSILON)
 		return ;
-	t = ((-shape->height / 2) - ray.O.y) / ray.D.y;
+	t = ((-obj->height / 2) - ray.O.y) / ray.D.y;
 	if (ft_check_caps(ray, t))
-		ft_add_intersection(xs, shape, t);
-	t = ((shape->height / 2) - ray.O.y) / ray.D.y;
+		ft_add_intersection(xs, obj, t);
+	t = ((obj->height / 2) - ray.O.y) / ray.D.y;
 	if (ft_check_caps(ray, t))
-		ft_add_intersection(xs, shape, t);
+		ft_add_intersection(xs, obj, t);
 }
 
 // The Raytracer Challenge p.177
-void	ft_cylinder_intersection(t_ray ray, t_shape *shape, t_xs *xs)
+void	ft_cylinder_intersection(t_ray ray, t_obj *obj, t_xs *xs)
 {
 	double	a;
 	double	b;
@@ -88,40 +88,40 @@ void	ft_cylinder_intersection(t_ray ray, t_shape *shape, t_xs *xs)
 			t[0] = t[1];
 			t[1] = tmp;
 		}
-		half_h = shape->height / 2;
+		half_h = obj->height / 2;
 		y[0] = ray.O.y + t[0] * ray.D.y;
 		if ((-half_h < y[0]) && (y[0] < half_h))
-			ft_add_intersection(xs, shape, t[0]);
+			ft_add_intersection(xs, obj, t[0]);
 		y[1] = ray.O.y + t[1] * ray.D.y;
 		if ((-half_h < y[1]) && (y[1] < half_h))
-			ft_add_intersection(xs, shape, t[1]);
+			ft_add_intersection(xs, obj, t[1]);
 	}
-	ft_intersect_caps(ray, shape, xs);
+	ft_intersect_caps(ray, obj, xs);
 }
 
-void	ft_ray_to_shape_space(t_ray *shape_ray, t_ray *world_ray, t_shape *shape)
+void	ft_ray_to_obj_space(t_ray *obj_ray, t_ray *world_ray, t_obj *obj)
 {
-	ft_vct_mtrx_mult(&shape_ray->O, &shape->world_to_shape, &world_ray->O);
-	ft_vct_mtrx_mult(&shape_ray->D, &shape->world_to_shape, &world_ray->D);
+	ft_vct_mtrx_mult(&obj_ray->O, &obj->world_to_obj, &world_ray->O);
+	ft_vct_mtrx_mult(&obj_ray->D, &obj->world_to_obj, &world_ray->D);
 }
 
 void	ft_get_intersections(t_ray world_ray, t_scene *scene, t_xs *xs)
 {
-	t_shape	*shape;
-	t_ray	shape_ray;
+	t_obj	*obj;
+	t_ray	obj_ray;
 	size_t	i;
 
 	i = 0;
-	while (i < scene->shapes.i && xs->arr)
+	while (i < scene->objs.i && xs->arr)
 	{
-		shape = (t_shape *) scene->shapes.arr[i++];
-		ft_ray_to_shape_space(&shape_ray, &world_ray, shape);
-		if (shape->type == t_sphere)
-			ft_sphere_intersection(shape_ray, shape, xs);
-		if (shape->type == t_plane)
-			ft_plane_intersection(shape_ray, shape, xs);
-		if (shape->type == t_cylinder)
-			ft_cylinder_intersection(shape_ray, shape, xs);
+		obj = (t_obj *) scene->objs.arr[i++];
+		ft_ray_to_obj_space(&obj_ray, &world_ray, obj);
+		if (obj->type == t_sphere)
+			ft_sphere_intersection(obj_ray, obj, xs);
+		if (obj->type == t_plane)
+			ft_plane_intersection(obj_ray, obj, xs);
+		if (obj->type == t_cylinder)
+			ft_cylinder_intersection(obj_ray, obj, xs);
 	}
 	if (xs->arr)
 		qsort(xs->arr, xs->i, sizeof(t_intersection), ft_xs_compare);
