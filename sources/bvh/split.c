@@ -19,47 +19,59 @@ void	bounds_update(t_bounds *bounds, t_obj *obj);
 
 static double	area(t_bounds bounds, uint32_t	count)
 {
-	double	extent[3];
+	double	ext[3];
 	double	area;
 
-	extent[0] = bounds.max[0] - bounds.min[0];
-	extent[1] = bounds.max[1] - bounds.min[1];
-	extent[2] = bounds.max[2] - bounds.min[2];
-	area = extent[0] * extent[1] + extent[1] * extent[2] + extent[2] * extent[0];
+	ext[0] = bounds.max[0] - bounds.min[0];
+	ext[1] = bounds.max[1] - bounds.min[1];
+	ext[2] = bounds.max[2] - bounds.min[2];
+	area = ext[0] * ext[1] + ext[1] * ext[2] + ext[2] * ext[0];
 	return (count * area);
 }
 
-
-double	evaluate_cost(t_node *node, t_split current, t_scene *scene)
+static int  update_bounds(t_node *node, t_split current,
+		t_bounds *bounds, t_scene *scene)
 {
-	uint32_t    left_count = 0;
-	uint32_t    right_count = 0;
-	uint32_t    i = 0;
-	t_bounds    left;
-	t_bounds    right;
+	t_obj	    *obj;
+	uint32_t    left_count;
+	uint32_t    obj_index;
+	uint32_t    i;
 
-	bounds_init(&left);
-	bounds_init(&right);
+	left_count = 0;
+	i = 0;
 	while (i < node->count)
 	{
-		t_obj *obj = scene->objs.arr[scene->bvh_index[node->first_index + i]];
+		obj_index = scene->bvh_index[node->first_index + i];
+		obj = scene->objs.arr[obj_index];
 		if (obj->centroid[current.axis] < current.pos)
 		{
-			bounds_update(&left, obj);
+			bounds_update(&bounds[0], obj);
 			left_count++;
 		}
 		else
-		{
-			bounds_update(&right, obj);
-			right_count++;
-		}
+			bounds_update(&bounds[1], obj);
 		i++;
 	}
-	return (area(left, left_count) + area(right, right_count));
+	return (left_count);
 }
 
+static double	evaluate_cost(t_node *node, t_split current, t_scene *scene)
+{
+	uint32_t    left_count;
+	uint32_t    right_count;
+	t_bounds    bounds[2];
 
-void	update_cost(t_split *best, t_split *current)
+	bounds_init(&bounds[0]);
+	bounds_init(&bounds[1]);
+
+	left_count = update_bounds(node, current, bounds, scene);
+	right_count = node->count - left_count;
+	if (!left_count)
+		right_count = node->count;
+	return (area(bounds[0], left_count) + area(bounds[1], right_count));
+}
+
+static void update_cost(t_split *best, t_split *current)
 {
 	if (current->cost > 0 && current->cost < best->cost)
 	{

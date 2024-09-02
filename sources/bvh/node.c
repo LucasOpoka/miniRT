@@ -13,15 +13,14 @@
 #include "../../includes/miniRT.h"
 #include <math.h>
 
-
 double	node_cost(t_node *node)
 {
-	double	extent[3];
+	double	ext[3];
 	double	area;
 
-	extent[0] = node->bounds.max[0] - node->bounds.min[0];
-	extent[1] = node->bounds.max[1] - node->bounds.min[1];
-	extent[2] = node->bounds.max[2] - node->bounds.min[2];
-	area = extent[0] * extent[1] + extent[1] * extent[2] + extent[2] * extent[0];
+	ext[0] = node->bounds.max[0] - node->bounds.min[0];
+	ext[1] = node->bounds.max[1] - node->bounds.min[1];
+	ext[2] = node->bounds.max[2] - node->bounds.min[2];
+	area = ext[0] * ext[1] + ext[1] * ext[2] + ext[2] * ext[0];
 	return (node->count * area);
 }
