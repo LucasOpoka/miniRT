@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 12:32:43 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/02 17:05:58 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/02 19:52:42 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -47,7 +47,7 @@ void	ft_mtrx4_inv(t_mtrx4 *res, const t_mtrx4 *mtrx4)
 
 	r = 0;
 	det = ft_mtrx4_det(mtrx4);
-	if (fabs(det) < 0.001)
+	if (fabs(det) < EPSILON)
 		return ;
 	while (r < 4)
 	{

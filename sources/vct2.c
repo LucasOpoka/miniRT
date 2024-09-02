@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 17:09:16 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/02 17:10:32 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/02 19:49:38 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -24,7 +24,7 @@ t_vct	ft_vct_add(const t_vct *a, const t_vct *b)
 
 double	ft_vct_len(const t_vct *a)
 {
-	return (sqrt(a->x * a->x + a->y * a->y + a->z * a->z));
+	return (sqrt(pow(a->x, 2) + pow(a->y, 2) + pow(a->z, 2)));
 }
 
 void	ft_vct_scale(t_vct *res, const t_vct *a, double scale)
