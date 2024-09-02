@@ -40,6 +40,28 @@ void	intersects_shape(t_ray ray, t_scene *scene, t_node *node, t_xs *xs)
 	}
 }
 
+void	ft_plane_intersection(t_ray ray, t_shape *shape, t_xs *xs);
+void	add_planes(t_ray ray, t_scene *scene, t_xs *xs)
+{
+	t_shape	    *shape;
+	t_void_arr  *shapes;
+	t_ray	    shape_ray;
+	uint32_t    i;
+
+	i = 0;
+	shapes = &scene->shapes;
+	while (i < shapes->i)
+	{
+		shape = shapes->arr[i];
+		if (shape->type == t_plane)
+		{
+			ft_ray_to_shape_space(&shape_ray, &ray, shape);
+			ft_plane_intersection(shape_ray, shape, xs);
+		}
+		i++;
+	}
+}
+
 void	swap_float_node(float *f1, float *f2, t_node **n1, t_node **n2)
 {
 	float	tmp;
@@ -77,6 +99,7 @@ t_node *intersects_node(t_ray ray, t_node *root, t_node *curr, t_stack *s)
 	return (left);
 }
 
+int	ft_xs_compare(const void *a, const void *b);
 void	bvh_intersect_ordered(t_ray ray, t_scene* scene, t_xs *xs)
 {
 	t_node	    *node = &scene->bvh_root[0];
@@ -99,6 +122,9 @@ void	bvh_intersect_ordered(t_ray ray, t_scene* scene, t_xs *xs)
 		}
 		node = intersects_node(ray, scene->bvh_root, node, &s);
 	}
+	add_planes(ray, scene, xs);
+	if (xs->arr && xs->i > 0)
+		qsort(xs->arr, xs->i, sizeof(t_intersection), ft_xs_compare);
 }
 
 void	bvh_intersect(t_ray ray, t_scene *scene, uint32_t index, t_xs *xs)

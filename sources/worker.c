@@ -25,7 +25,7 @@ t_worker	*worker_init(t_mrt *mrt, t_scene *scene, int i)
 	worker->mrt = mrt;
 	worker->scene = scene;
 	worker->index = i;
-	worker->intersects.size = 256;
+	//worker->intersects.size = 256;
 	//worker->intersects.arr = malloc(worker->intersects.size * sizeof(t_intersection));
 	ft_init_xs(&worker->xs);
 	return (worker);
@@ -71,7 +71,6 @@ void	worker_render_section(t_worker *worker, t_scene *scene, int i)
 {
 	t_ray		ray;
 	t_clr		color;
-	//t_intersects *inter = &worker->intersects;
 	t_xs		*xs = &worker->xs;
 
 	int start_y = i * worker->block_size;
@@ -84,12 +83,10 @@ void	worker_render_section(t_worker *worker, t_scene *scene, int i)
 		int x = 0;
 		while (x < CANV_WDTH)
 		{
+			xs->i = 0; //This is fine
 			ft_pixel_to_ray(&ray, x, y, &scene->camera);
-			//bvh_intersect(ray, scene, 0, inter);
 			bvh_intersect_ordered(ray, scene, xs);
-			//ft_get_intersections(ray, scene, inter);
-			//color = ft_get_color(&ray, scene, 3, inter);
-			color = ft_get_color(&ray, scene, 3, xs);
+			color = ft_get_color(&ray, scene, 5, xs);
 			mlx_put_pixel(worker->mrt->img, x, y, ft_clr_to_int(color));
 			x++;
 		}
@@ -116,7 +113,6 @@ void	*worker_routine(void *ptr)
 		}
 		worker_signal_finish(worker);	
 	}
-	free(worker->intersects.arr);
 	free(ptr);
 	return (NULL);
 }

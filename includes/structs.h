@@ -212,7 +212,7 @@ typedef struct s_worker
 	int		block_count;
 	int		block_size;
 	int		done;
-	t_intersects	intersects;
+	//t_intersects	intersects;
 	t_xs	xs;
 }	t_worker;
 
