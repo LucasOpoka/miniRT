@@ -54,7 +54,7 @@ PARSER_SRC = parser.c parser_utils.c validate.c file.c array.c \
 PARSER_OBJ = $(addprefix $(PARSER_DIR)/,$(PARSER_SRC:.c=.o))
 
 BVH_DIR = sources/bvh
-BVH_SRC = bvh.c bvh_intersect.c bounds.c node.c aabb.c split.c
+BVH_SRC = bvh.c bvh_intersect.c bvh_utils.c bounds.c node.c aabb.c split.c 
 BVH_OBJ = $(addprefix $(BVH_DIR)/,$(BVH_SRC:.c=.o))
 
 OFILES = $(addprefix $(SOURCE_DIR)/,$(SOURCES:.c=.o))

@@ -17,21 +17,13 @@
 
 uint32_t nodes_used = 1;
 
-void	obj_bounds_update(t_node *node, t_obj *obj);
-
-void	node_min_max(double *to_min, double *to_max, double *min, double *max);
+void	bounds_update(t_node *node, t_obj *obj);
 double	node_cost(t_node *node);
 
-void	sphere_bounds(double *min, double *max, t_obj *sphere);
-void	cylinder_bounds(double *min, double *max, t_obj *cylinder);
 void	obj_bounds_update(t_node *node, t_obj *obj);
-
-void	double_set(double *f, double value)
-{
-	f[0] = value;
-	f[1] = value;
-	f[2] = value;
-}
+void	bounds_init(t_bounds *bounds);
+void	swap_qsort(uint32_t *obj_index, int i, int j);
+t_split	find_best_split(t_node *node, t_scene *scene);
 
 void	bvh_update_bounds(t_node *root, uint32_t index, t_scene *scene)
 {
@@ -40,28 +32,14 @@ void	bvh_update_bounds(t_node *root, uint32_t index, t_scene *scene)
 	size_t	    i;
 
 	i = 0;
-	double_set(node->min, DBL_MAX);
-	double_set(node->max, DBL_MIN);
-
+	bounds_init(&node->bounds);
 	while (i < node->count)
 	{
 		obj = scene->objs.arr[scene->bvh_index[node->first_index+ i]];
-		obj_bounds_update(node, obj);
+		bounds_update(node, obj);
 		i++;
 	}
 }
-
-
-void	swap_qsort(uint32_t *obj_index, int i, int j)
-{
-	uint32_t    tmp;
-
-	tmp = obj_index[i];
-	obj_index[i] = obj_index[j];
-	obj_index[j] = tmp;
-}
-
-t_split	find_best_split(t_node *node, t_scene *scene);
 
 uint32_t    node_partition(t_node *node, t_scene *scene, t_split split,
 		uint32_t *left_count)

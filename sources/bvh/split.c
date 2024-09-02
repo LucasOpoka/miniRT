@@ -14,10 +14,10 @@
 #include "../../libft/libft.h"
 #include <math.h>
 
-void	double_set(double *f, double value);
-void	obj_bounds_min_max(double *to_min, double *to_max, t_obj *obj);
+void	bounds_init(t_bounds *bounds);
+void	bounds_update(t_bounds *bounds, t_obj *obj);
 
-double	area(t_bounds bounds, uint32_t	count)
+static double	area(t_bounds bounds, uint32_t	count)
 {
 	double	extent[3];
 	double	area;
@@ -29,11 +29,6 @@ double	area(t_bounds bounds, uint32_t	count)
 	return (count * area);
 }
 
-void	bounds_init(t_bounds *bounds)
-{
-	double_set(bounds->min, DBL_MAX);
-	double_set(bounds->max, DBL_MIN);
-}
 
 double	evaluate_cost(t_node *node, t_split current, t_scene *scene)
 {
@@ -50,12 +45,12 @@ double	evaluate_cost(t_node *node, t_split current, t_scene *scene)
 		t_obj *obj = scene->objs.arr[scene->bvh_index[node->first_index + i]];
 		if (obj->centroid[current.axis] < current.pos)
 		{
-			obj_bounds_min_max(left.min, left.max, obj);
+			bounds_update(&left, obj);
 			left_count++;
 		}
 		else
 		{
-			obj_bounds_min_max(right.min, right.max, obj);
+			bounds_update(&right, obj);
 			right_count++;
 		}
 		i++;
@@ -66,9 +61,7 @@ double	evaluate_cost(t_node *node, t_split current, t_scene *scene)
 
 void	update_cost(t_split *best, t_split *current)
 {
-	if (current->cost <= 0)
-		return ;
-	if (current->cost < best->cost)
+	if (current->cost > 0 && current->cost < best->cost)
 	{
 		best->pos = current->pos;
 		best->axis = current->axis;
@@ -88,16 +81,16 @@ t_split	find_best_split(t_node *node, t_scene *scene)
 	while (current.axis < 3)
 	{
 		//bounds_min & bounds_max
-		if (node->min[current.axis] == node->max[current.axis])
+		if (node->bounds.min[current.axis] == node->bounds.max[current.axis])
 		{
 			current.axis++;
 			continue ;
 		}
-		scale = (node->max[current.axis] - node->min[current.axis]) / 50;
+		scale = (node->bounds.max[current.axis] - node->bounds.min[current.axis]) / 50;
 		i = 1;
 		while (i < 50)
 		{
-			current.pos = node->min[current.axis] + i * scale;
+			current.pos = node->bounds.min[current.axis] + i * scale;
 			current.cost = evaluate_cost(node, current, scene);
 			update_cost(&best, &current);
 			i++;

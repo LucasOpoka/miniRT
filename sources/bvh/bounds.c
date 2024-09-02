@@ -13,58 +13,53 @@
 #include "../../includes/miniRT.h"
 #include <math.h>
 
-void	node_min_max(double *to_min, double *to_max, double *min, double *max);
+void	bounds_min_max(t_bounds *to, t_bounds *new)
+{
+	to->min[0] = fmin(to->min[0], new->min[0]);
+	to->min[1] = fmin(to->min[1], new->min[1]);
+	to->min[2] = fmin(to->min[2], new->min[2]);
 
-void	sphere_bounds(double *min, double *max, t_obj *sphere)
+	to->max[0] = fmax(to->max[0], new->max[0]);
+	to->max[1] = fmax(to->max[1], new->max[1]);
+	to->max[2] = fmax(to->max[2], new->max[2]);
+}
+
+void	sphere_bounds(t_bounds *bounds, t_obj *sphere)
 {
 	t_vct	pos = sphere->pos;
 	t_vct	scale = sphere->scale;
 	double	radius = sphere->radius;
 
-	min[0] = scale.x * -radius + pos.x;
-	min[1] = scale.y * -radius + pos.y;
-	min[2] = scale.z * -radius + pos.z;
+	bounds->min[0] = scale.x * -radius + pos.x;
+	bounds->min[1] = scale.y * -radius + pos.y;
+	bounds->min[2] = scale.z * -radius + pos.z;
 
-	max[0] = scale.x * radius + pos.x;
-	max[1] = scale.y * radius + pos.y;
-	max[2] = scale.z * radius + pos.z;
+	bounds->max[0] = scale.x * radius + pos.x;
+	bounds->max[1] = scale.y * radius + pos.y;
+	bounds->max[2] = scale.z * radius + pos.z;
 }
 
-void	cylinder_bounds(double *min, double *max, t_obj *cylinder)
+void	cylinder_bounds(t_bounds *bounds, t_obj *cylinder)
 {
 	t_vct scale = cylinder->scale;
 	t_vct pos = cylinder->pos;
 	double	radius = 1;
 
-	min[0] = scale.x * -radius + pos.x;
-	max[0] = scale.x * radius + pos.x;
-	min[1] = scale.y * -radius + pos.y;
-	max[1] = scale.y * radius + pos.y;
-	min[2] = scale.z * -(cylinder->height / 2.0) + pos.z;
-	max[2] = scale.z * (cylinder->height / 2.0) + pos.z;
+	bounds->min[0] = scale.x * -radius + pos.x;
+	bounds->max[0] = scale.x * radius + pos.x;
+	bounds->min[1] = scale.y * -radius + pos.y;
+	bounds->max[1] = scale.y * radius + pos.y;
+	bounds->min[2] = scale.z * -(cylinder->height / 2.0) + pos.z;
+	bounds->max[2] = scale.z * (cylinder->height / 2.0) + pos.z;
 }
 
-
-void	obj_bounds_update(t_node *node, t_obj *obj)
+void	bounds_update(t_bounds *bounds, t_obj *obj)
 {
-	double	min[3];
-	double	max[3];
+	t_bounds    new;
 
 	if (obj->type == t_sphere)
-		sphere_bounds(min, max, obj);
+		sphere_bounds(&new, obj);
 	else if (obj->type == t_cylinder)
-		cylinder_bounds(min, max, obj);
-	node_min_max(node->min, node->max, min, max);
-}
-
-void	obj_bounds_min_max(double *to_min, double *to_max, t_obj *obj)
-{
-	double	min[3];
-	double	max[3];
-
-	if (obj->type == t_sphere)
-		sphere_bounds(min, max, obj);
-	else if (obj->type == t_cylinder)
-		cylinder_bounds(min, max, obj);
-	node_min_max(to_min, to_max, min, max);
+		cylinder_bounds(&new, obj);
+	bounds_min_max(bounds, &new);
 }

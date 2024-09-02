@@ -84,8 +84,8 @@ t_node *intersects_node(t_ray ray, t_node *root, t_node *curr, t_stack *s)
 
 	left = &root[curr->left];
 	right = &root[curr->left + 1];
-	d1 = aabb_raycast(ray, left->min, left->max);
-	d2 = aabb_raycast(ray, right->min, right->max);
+	d1 = aabb_raycast(ray, left->bounds.min, left->bounds.max);
+	d2 = aabb_raycast(ray, right->bounds.min, right->bounds.max);
 	if (d1 > d2)
 		swap_float_node(&d1, &d2, &left, &right);
 	if (d1 == DBL_MAX) //Miss
@@ -126,6 +126,7 @@ void	bvh_intersect_ordered(t_ray ray, t_scene* scene, t_xs *xs)
 		qsort(xs->arr, xs->i, sizeof(t_intersection), ft_xs_compare);
 }
 
+/*
 void	bvh_intersect(t_ray ray, t_scene *scene, uint32_t index, t_xs *xs)
 {
 	t_node	*node = &scene->bvh_root[index];
@@ -140,3 +141,4 @@ void	bvh_intersect(t_ray ray, t_scene *scene, uint32_t index, t_xs *xs)
 	bvh_intersect(ray, scene, node->left, xs);
 	bvh_intersect(ray, scene, node->left + 1, xs);
 }
+*/

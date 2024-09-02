@@ -40,8 +40,7 @@ typedef struct	t_bounds
 
 typedef	struct	t_node
 {
-	double		min[3];
-	double		max[3];
+	t_bounds	bounds;
 	uint32_t	left;
 	uint32_t	first_index;
 	uint32_t	count;
