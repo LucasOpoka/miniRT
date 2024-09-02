@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
 
-void	ft_init_stc(t_mrt *mrt)
+void	init_mlx(t_mrt *mrt)
 {
 	mrt->mlx = NULL;
 	mrt->img = NULL;

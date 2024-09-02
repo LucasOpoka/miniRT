@@ -48,7 +48,7 @@ void		ft_loop_hook(void *vd);
 void		ft_close_hook(void *vd);
 void		ft_keyboard_hooks(mlx_key_data_t k_data, void *vd);
 
-void		ft_init_stc(t_mrt *mrt);
+void		init_mlx(t_mrt *mrt);
 
 void		ft_close(t_mrt *mrt);
 

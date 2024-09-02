@@ -40,7 +40,7 @@ int	main(int ac, char **av)
 	scene.bvh_root = bvh_build(&scene);
 
 	threads_init(&mrt, &scene);
-	ft_init_stc(&mrt);
+	init_mlx(&mrt);
 	mlx_close_hook(mrt.mlx, &close_hook, &mrt);
 	mlx_key_hook(mrt.mlx, &ft_keyboard_hooks, &mrt);
 	
