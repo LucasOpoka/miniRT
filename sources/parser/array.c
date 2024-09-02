@@ -74,20 +74,3 @@ char	***array_matrix(char *data)
 	array_free(lines);
 	return (ret);
 }
-
-void	print_matrix(char ***m)
-{
-	int i = 0;
-	while (m[i])
-	{
-		int j = 0;
-		while (m[i][j])
-		{
-			printf("%s ", m[i][j]);
-			j++;
-		}
-		printf("\n");
-		i++;
-	}
-}
-

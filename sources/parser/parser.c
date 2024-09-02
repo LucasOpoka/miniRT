@@ -18,24 +18,13 @@ size_t	array_size(char **arr);
 void	array_free(char **arr);
 char	***array_matrix(char *data);
 void	array_matrix_free(char ***arr);
-void	print_matrix(char ***m);
 char	*file_load(char *file);
-int		identifiers_validate(char ***elements);
+int	identifiers_validate(char ***elements);
 t_vct	ft_create_vct(double x, double y, double z);
 t_clr	ft_create_clr(double r, double g, double b);
-int		cam_add(t_scene *scene, char **elem);
-int		light_add(t_scene *scene, char **elem, int id);
-int		obj_add(t_scene *scene, char **elem, int id);
-
-void	print_vector(t_vct v)
-{
-	printf("VECTOR: x: %f, y: %f, z: %f\n", v.x, v.y, v.z);
-}
-
-void	print_color(t_clr v)
-{
-	printf("COLOR: r: %f, g: %f, b: %f\n", v.r, v.g, v.b);
-}
+int	cam_add(t_scene *scene, char **elem);
+int	light_add(t_scene *scene, char **elem, int id);
+int	obj_add(t_scene *scene, char **elem, int id);
 
 void	parser_error(char *err_str)
 {
