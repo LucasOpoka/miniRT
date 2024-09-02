@@ -17,17 +17,16 @@
 
 uint32_t nodes_used = 1;
 
-void	node_print_entry(t_node *node);
-void	node_print_full(t_node *node, t_void_arr *objs, int axis, float split_pos);
-
-void	node_min_max(float *to_min, float *to_max, float *min, float *max);
-float	node_cost(t_node *node);
-
-void	sphere_bounds(float *min, float *max, t_obj *sphere);
-void	cylinder_bounds(float *min, float *max, t_obj *cylinder);
 void	obj_bounds_update(t_node *node, t_obj *obj);
 
-void	float_set(float *f, float value)
+void	node_min_max(double *to_min, double *to_max, double *min, double *max);
+double	node_cost(t_node *node);
+
+void	sphere_bounds(double *min, double *max, t_obj *sphere);
+void	cylinder_bounds(double *min, double *max, t_obj *cylinder);
+void	obj_bounds_update(t_node *node, t_obj *obj);
+
+void	double_set(double *f, double value)
 {
 	f[0] = value;
 	f[1] = value;
@@ -41,8 +40,8 @@ void	bvh_update_bounds(t_node *root, uint32_t index, t_scene *scene)
 	size_t	    i;
 
 	i = 0;
-	float_set(node->min, FLT_MAX);
-	float_set(node->max, FLT_MIN);
+	double_set(node->min, DBL_MAX);
+	double_set(node->max, DBL_MIN);
 
 	while (i < node->count)
 	{
@@ -116,16 +115,16 @@ int	bvh_split(t_node *root, t_node *node, t_split split, t_scene *scene)
 void	bvh_subdivide(t_node *root, uint32_t index, t_scene *scene)
 {
 	t_node	    *node = &root[index];
-	const float no_split_cost = node_cost(node);
+	const double no_split_cost = node_cost(node);
 	t_split	    split;
 	int	    left_index;
 
 	split = find_best_split(node, scene);
 	if (split.cost >= no_split_cost)
 		return ;
+
 	printf("no_split_cost: %f, split.cost: %f, split.pos: %f, split.axis: %d\n",
 			no_split_cost, split.cost, split.pos, split.axis);
-
 	left_index = bvh_split(root, node, split, scene);
 	if (left_index <= 0)
 		return ;
@@ -142,13 +141,18 @@ void	set_centroids(t_node *root, t_scene *scene)
 	uint32_t    i;
 
 	i = 0;
-	while (i < root->count)
+	while (i < scene->objs.i)
 	{
-		scene->bvh_index[i] = i;
 		t_obj *obj = scene->objs.arr[i];
-		obj->centroid[0] = obj->pos.x;
-		obj->centroid[1] = obj->pos.y;
-		obj->centroid[2] = obj->pos.z;
+		if (obj->type != t_plane)
+		{
+			scene->bvh_index[root->count] = i;
+			t_obj *obj = scene->objs.arr[i];
+			obj->centroid[0] = obj->pos.x;
+			obj->centroid[1] = obj->pos.y;
+			obj->centroid[2] = obj->pos.z;
+			root->count++;
+		}
 		i++;
 	}
 }
@@ -168,7 +172,6 @@ t_node	*bvh_build(t_scene *scene)
 	}
 	scene->bvh_root = root;
 	scene->bvh_index = bvh_index;
-	root->count = scene->objs.i;
 	set_centroids(root, scene);
 	long long ms_start = time_ms();
 	bvh_update_bounds(root, 0, scene);

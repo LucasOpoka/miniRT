@@ -13,7 +13,7 @@
 #include "../../includes/miniRT.h"
 #include <math.h>
 
-float aabb_raycast(t_ray ray, float bmin[3], float bmax[3]);
+double aabb_raycast(t_ray ray, double bmin[3], double bmax[3]);
 
 void	ft_ray_to_obj_space(t_ray *obj_ray, t_ray *world_ray, t_obj *obj);
 void	ft_get_intersections(t_ray world_ray, t_scene *scene, t_xs *xs);
@@ -62,9 +62,9 @@ void	add_planes(t_ray ray, t_scene *scene, t_xs *xs)
 	}
 }
 
-void	swap_float_node(float *f1, float *f2, t_node **n1, t_node **n2)
+void	swap_float_node(double *f1, double *f2, t_node **n1, t_node **n2)
 {
-	float	tmp;
+	double	tmp;
 	t_node	*tmp_node;
 
 	tmp = *f1;
@@ -79,8 +79,8 @@ t_node *intersects_node(t_ray ray, t_node *root, t_node *curr, t_stack *s)
 {
 	t_node	*left;
 	t_node	*right;
-	float	d1;
-	float	d2;
+	double	d1;
+	double	d2;
 
 	left = &root[curr->left];
 	right = &root[curr->left + 1];
@@ -88,13 +88,13 @@ t_node *intersects_node(t_ray ray, t_node *root, t_node *curr, t_stack *s)
 	d2 = aabb_raycast(ray, right->min, right->max);
 	if (d1 > d2)
 		swap_float_node(&d1, &d2, &left, &right);
-	if (d1 == FLT_MAX) //Miss
+	if (d1 == DBL_MAX) //Miss
 	{
 		if (s->ptr == 0)
 			return (NULL);
 		return (s->stack[--s->ptr]);
 	}
-	if (d2 != FLT_MAX)
+	if (d2 != DBL_MAX)
 		s->stack[s->ptr++] = right;
 	return (left);
 }
@@ -106,7 +106,6 @@ void	bvh_intersect_ordered(t_ray ray, t_scene* scene, t_xs *xs)
 	t_stack	    s;
 
 	s.ptr = 0;
-	//intersect->i = 0;
 	ray.rd.x = 1.0 / ray.D.x;
 	ray.rd.y = 1.0 / ray.D.y;
 	ray.rd.z = 1.0 / ray.D.z;
@@ -131,7 +130,7 @@ void	bvh_intersect(t_ray ray, t_scene *scene, uint32_t index, t_xs *xs)
 {
 	t_node	*node = &scene->bvh_root[index];
 
-	if (aabb_raycast(ray, node->min, node->max) == FLT_MAX)
+	if (aabb_raycast(ray, node->min, node->max) == DBL_MAX)
 		return ;
 	if (node->count > 0)
 	{
