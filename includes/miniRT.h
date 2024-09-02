@@ -15,7 +15,7 @@
 # include <math.h>
 # include <float.h>
 # include <stdio.h>
-# include "../sources/MLX42/include/MLX42/MLX42.h"
+# include "../MLX42/include/MLX42/MLX42.h"
 # include "structs.h"
 # include "parser.h"
 # include "mtrx.h"

@@ -81,7 +81,6 @@ void	worker_render_section(t_worker *worker, t_scene *scene, int i)
 		int x = 0;
 		while (x < CANV_WDTH)
 		{
-			//bvh_intersect(ray, scene, 0, inter);
 			xs->i = 0; //This is fine
 			ft_pixel_to_ray(&ray, x, y, &scene->cam);
 			bvh_intersect_ordered(ray, scene, xs);
