@@ -40,6 +40,7 @@ SOURCES	=	main.c \
 			render.c \
 			thread.c \
 			worker.c \
+			heap_sort.c \
 			obj_transforms.c \
 			prep_comps.c \
 			obj_normals.c \

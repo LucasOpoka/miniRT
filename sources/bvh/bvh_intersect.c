@@ -100,7 +100,6 @@ t_node *intersects_node(t_ray ray, t_node *root, t_node *curr, t_stack *s)
 	return (left);
 }
 
-
 /*
  * Efficient BVH traversal using temporary stack
  * https://graphics.cg.uni-saarland.de/papers/perard-2017-gpce.pdf
@@ -128,8 +127,7 @@ void	bvh_intersect_ordered(t_ray ray, t_scene* scene, t_xs *xs)
 		node = intersects_node(ray, scene->bvh_root, node, &s);
 	}
 	add_planes(ray, scene, xs);
-	if (xs->arr && xs->i > 0)
-		qsort(xs->arr, xs->i, sizeof(t_intersection), ft_xs_compare);
+	heap_sort_xs(xs);
 }
 
 /*

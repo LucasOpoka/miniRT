@@ -11,8 +11,6 @@
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
 
-int	ft_xs_compare(const void *a, const void *b);
-
 void	ft_sphere_intersection(t_ray ray, t_obj *obj, t_xs *xs)
 {
 	t_vct	center = ft_create_vct(0, 0, 0);
@@ -123,8 +121,7 @@ void	ft_get_intersections(t_ray world_ray, t_scene *scene, t_xs *xs)
 		if (obj->type == t_cylinder)
 			ft_cylinder_intersection(obj_ray, obj, xs);
 	}
-	if (xs->arr)
-		qsort(xs->arr, xs->i, sizeof(t_intersection), ft_xs_compare);
+	heap_sort_xs(xs);
 }
 
 t_intersection	*ft_closest_intersection(t_xs *xs)
@@ -150,15 +147,4 @@ t_intersection	*ft_closest_intersection(t_xs *xs)
 		i++;
 	}
 	return (closest);
-}
-
-// Sorting stuff
-int	ft_xs_compare(const void *a, const void *b)
-{
-	double	t_a;
-	double	t_b;
-
-	t_a = ((t_intersection *) a)->t;
-	t_b = ((t_intersection *) b)->t;
-	return ((t_a > t_b) - (t_a < t_b));
 }

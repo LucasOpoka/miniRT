@@ -68,14 +68,11 @@ int	bvh_split(t_node *root, t_node *node, t_split split, t_scene *scene)
 {
 	int	    left_index;
 	uint32_t    left_count = 0;
-	uint32_t    right_count;
 	uint32_t    i;
 
 	i = node_partition(node, scene, split, &left_count);
 	if (!left_count || left_count == node->count)
 		return (-1);
-	right_count = node->count - left_count;
-	(void) right_count; // Not used?
 	left_index = nodes_used;
 	//Split node must have obj count set to 0 !
 	root[left_index].first_index = node->first_index;

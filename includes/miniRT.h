@@ -65,6 +65,8 @@ void		ft_add_intersection(t_xs *xs, t_obj *obj, double t);
 
 int				scene_init(t_scene *scene);
 void			scene_free(t_scene *scene);
+
+void		heap_sort_xs(t_xs *xs);
 // REMOVE IN THE FUTURE - test functions
 t_scene			get_test_scene(void);
 
