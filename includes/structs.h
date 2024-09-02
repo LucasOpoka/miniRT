@@ -34,14 +34,14 @@ typedef struct s_mrt
 
 typedef struct	t_bounds
 {
-	float		min[3];
-	float		max[3];
+	double		min[3];
+	double		max[3];
 }	t_bounds;
 
 typedef	struct	t_node
 {
-	float		min[3];
-	float		max[3];
+	double		min[3];
+	double		max[3];
 	uint32_t	left;
 	uint32_t	first_index;
 	uint32_t	count;
@@ -49,8 +49,8 @@ typedef	struct	t_node
 
 typedef	struct	t_split
 {
-	float	    cost;
-	float	    pos;
+	double	    cost;
+	double	    pos;
 	uint32_t    axis;
 }	t_split;
 

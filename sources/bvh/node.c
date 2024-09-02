@@ -13,7 +13,7 @@
 #include "../../includes/miniRT.h"
 #include <math.h>
 
-void	node_min_max(float *to_min, float *to_max, float *min, float *max)
+void	node_min_max(double *to_min, double *to_max, double *min, double *max)
 {
 	to_min[0] = fminf(to_min[0], min[0]);
 	to_min[1] = fminf(to_min[1], min[1]);
@@ -24,10 +24,10 @@ void	node_min_max(float *to_min, float *to_max, float *min, float *max)
 	to_max[2] = fmaxf(to_max[2], max[2]);
 }
 
-float	node_cost(t_node *node)
+double	node_cost(t_node *node)
 {
-	float	extent[3];
-	float	area;
+	double	extent[3];
+	double	area;
 
 	extent[0] = node->max[0] - node->min[0];
 	extent[1] = node->max[1] - node->min[1];

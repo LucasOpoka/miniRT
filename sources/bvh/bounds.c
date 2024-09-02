@@ -13,13 +13,13 @@
 #include "../../includes/miniRT.h"
 #include <math.h>
 
-void	node_min_max(float *to_min, float *to_max, float *min, float *max);
+void	node_min_max(double *to_min, double *to_max, double *min, double *max);
 
-void	sphere_bounds(float *min, float *max, t_obj *sphere)
+void	sphere_bounds(double *min, double *max, t_obj *sphere)
 {
 	t_vct	pos = sphere->pos;
 	t_vct	scale = sphere->scale;
-	float	radius = sphere->radius;
+	double	radius = sphere->radius;
 
 	min[0] = scale.x * -radius + pos.x;
 	min[1] = scale.y * -radius + pos.y;
@@ -30,11 +30,11 @@ void	sphere_bounds(float *min, float *max, t_obj *sphere)
 	max[2] = scale.z * radius + pos.z;
 }
 
-void	cylinder_bounds(float *min, float *max, t_obj *cylinder)
+void	cylinder_bounds(double *min, double *max, t_obj *cylinder)
 {
 	t_vct scale = cylinder->scale;
 	t_vct pos = cylinder->pos;
-	float	radius = 1;
+	double	radius = 1;
 
 	min[0] = scale.x * -radius + pos.x;
 	max[0] = scale.x * radius + pos.x;
@@ -47,8 +47,8 @@ void	cylinder_bounds(float *min, float *max, t_obj *cylinder)
 
 void	obj_bounds_update(t_node *node, t_obj *obj)
 {
-	float	min[3];
-	float	max[3];
+	double	min[3];
+	double	max[3];
 
 	if (obj->type == t_sphere)
 		sphere_bounds(min, max, obj);
@@ -57,10 +57,10 @@ void	obj_bounds_update(t_node *node, t_obj *obj)
 	node_min_max(node->min, node->max, min, max);
 }
 
-void	obj_bounds_min_max(float *to_min, float *to_max, t_obj *obj)
+void	obj_bounds_min_max(double *to_min, double *to_max, t_obj *obj)
 {
-	float	min[3];
-	float	max[3];
+	double	min[3];
+	double	max[3];
 
 	if (obj->type == t_sphere)
 		sphere_bounds(min, max, obj);
