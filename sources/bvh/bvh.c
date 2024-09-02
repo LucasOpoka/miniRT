@@ -16,8 +16,9 @@
 #include <math.h>
 
 
-uint32_t nodes_used = 1;
+long long	time_ms(void);
 
+void	    init_centroids(t_node *root, t_scene *scene);
 void	    bounds_update(t_node *node, t_obj *obj);
 double	    node_cost(t_node *node);
 uint32_t    node_partition(t_node *node, t_scene *scene, t_split split,
@@ -37,13 +38,12 @@ void	bvh_update_bounds(t_node *root, uint32_t index, t_scene *scene)
 	bounds_init(&node->bounds);
 	while (i < node->count)
 	{
-		obj_index = scene->bvh_index[node->first_index + i];
+		obj_index = scene->bvh.i[node->first_index + i];
 		obj = scene->objs.arr[obj_index];
 		bounds_update(node, obj);
 		i++;
 	}
 }
-
 
 int	bvh_split(t_node *root, t_node *node, t_split split, t_scene *scene)
 {
@@ -54,17 +54,17 @@ int	bvh_split(t_node *root, t_node *node, t_split split, t_scene *scene)
 	i = node_partition(node, scene, split, &left_count);
 	if (!left_count || left_count == node->count)
 		return (-1);
-	left_index = nodes_used;
-	//Split node must have obj count set to 0 !
+	left_index = scene->bvh.nodes_used;
 	root[left_index].first_index = node->first_index;
 	root[left_index].count = left_count;
 	//node->right always is left_index + 1
 	root[left_index + 1].first_index = i;
 	root[left_index + 1].count = node->count - left_count;
 
-	node->left = nodes_used;
+	node->left = left_index;
+	//Split node must have obj count set to 0 !
 	node->count = 0;
-	nodes_used += 2;
+	scene->bvh.nodes_used += 2;
 	return (left_index);
 }
 
@@ -92,29 +92,6 @@ void	bvh_subdivide(t_node *root, uint32_t index, t_scene *scene)
 	bvh_subdivide(root, left_index + 1, scene);
 }
 
-long long	time_ms(void);
-
-void	set_centroids(t_node *root, t_scene *scene)
-{
-	uint32_t    i;
-
-	i = 0;
-	while (i < scene->objs.i)
-	{
-		t_obj *obj = scene->objs.arr[i];
-		if (obj->type != t_plane)
-		{
-			scene->bvh_index[root->count] = i;
-			t_obj *obj = scene->objs.arr[i];
-			obj->centroid[0] = obj->pos.x;
-			obj->centroid[1] = obj->pos.y;
-			obj->centroid[2] = obj->pos.z;
-			root->count++;
-		}
-		i++;
-	}
-}
-
 t_node	*bvh_build(t_scene *scene)
 {
 	t_node	    *root;
@@ -128,14 +105,15 @@ t_node	*bvh_build(t_scene *scene)
 		free(bvh_index);
 		return (NULL);
 	}
-	scene->bvh_root = root;
-	scene->bvh_index = bvh_index;
-	set_centroids(root, scene);
+	scene->bvh.nodes_used = 1;
+	scene->bvh.root = root;
+	scene->bvh.i = bvh_index;
+	init_centroids(root, scene);
 	long long ms_start = time_ms();
 	bvh_update_bounds(root, 0, scene);
 	bvh_subdivide(root, 0, scene);
 	long long ms_end = time_ms();
-	printf("bhv_build took: %lldms, node struct size: %lu\n",
-			ms_end - ms_start, sizeof(t_node));
+	printf("BVH build took: %lldms\nBVH node count: %u\nBVH node struct size: %lu\n",
+			ms_end - ms_start, scene->bvh.nodes_used, sizeof(t_node));
 	return (root);
 }

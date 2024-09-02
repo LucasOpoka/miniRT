@@ -145,14 +145,20 @@ typedef	struct	t_ambient
 }	t_ambient;
 
 
+typedef	struct	t_bvh
+{
+	t_node	    *root;
+	uint32_t    *i;
+	uint32_t    nodes_used;
+}	t_bvh;
+
 typedef	struct s_scene
 {
 	t_cam	cam;
 	t_ambient	ambient;
 	t_void_arr	lights;
 	t_void_arr	objs;
-	t_node		*bvh_root;
-	uint32_t	*bvh_index;
+	t_bvh		bvh;
 }	t_scene;
 
 typedef	struct s_ray

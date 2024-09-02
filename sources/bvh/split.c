@@ -41,7 +41,7 @@ static int  update_bounds(t_node *node, t_split current,
 	i = 0;
 	while (i < node->count)
 	{
-		obj_index = scene->bvh_index[node->first_index + i];
+		obj_index = scene->bvh.i[node->first_index + i];
 		obj = scene->objs.arr[obj_index];
 		if (obj->centroid[current.axis] < current.pos)
 		{

@@ -21,6 +21,6 @@ void	scene_free(t_scene *scene)
 {
 	ft_free_void_arr(&scene->lights);
 	ft_free_void_arr(&scene->objs);
-	free(scene->bvh_root);
-	free(scene->bvh_index);
+	free(scene->bvh.root);
+	free(scene->bvh.i);
 }

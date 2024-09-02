@@ -30,7 +30,7 @@ void	intersects_obj(t_ray ray, t_scene *scene, t_node *node, t_xs *xs)
 	i = 0;
 	while (i < node->count)
 	{
-		obj = scene->objs.arr[scene->bvh_index[node->first_index + i]];
+		obj = scene->objs.arr[scene->bvh.i[node->first_index + i]];
 		ft_ray_to_obj_space(&obj_ray, &ray, obj);
 
 		if (obj->type == t_sphere)
@@ -106,7 +106,7 @@ t_node *intersects_node(t_ray ray, t_node *root, t_node *curr, t_stack *s)
 
 void	bvh_intersect_ordered(t_ray ray, t_scene* scene, t_xs *xs)
 {
-	t_node	    *node = &scene->bvh_root[0];
+	t_node	    *node = &scene->bvh.root[0];
 	t_stack	    s;
 
 	s.ptr = 0;
@@ -123,7 +123,7 @@ void	bvh_intersect_ordered(t_ray ray, t_scene* scene, t_xs *xs)
 			node = s.stack[--s.ptr];
 			continue;
 		}
-		node = intersects_node(ray, scene->bvh_root, node, &s);
+		node = intersects_node(ray, scene->bvh.root, node, &s);
 	}
 	add_planes(ray, scene, xs);
 	heap_sort_xs(xs);

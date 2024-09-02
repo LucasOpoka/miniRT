@@ -36,14 +36,14 @@ uint32_t    node_partition(t_node *node, t_scene *scene, t_split split,
 
 	while (i <= j)
 	{
-		obj = scene->objs.arr[scene->bvh_index[i]];
+		obj = scene->objs.arr[scene->bvh.i[i]];
 		if (obj->centroid[split.axis] < split.pos)
 		{
 			*left_count += 1;
 			i++;
 		}
 		else
-			swap_obj(scene->bvh_index, i, j--);
+			swap_obj(scene->bvh.i, i, j--);
 	}
 	return (i);
 }

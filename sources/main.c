@@ -37,7 +37,7 @@ int	main(int ac, char **av)
 	}
 	printf("using scene: %s\n", av[1]);
 
-	scene.bvh_root = bvh_build(&scene);
+	scene.bvh.root = bvh_build(&scene);
 
 	threads_init(&mrt, &scene);
 	init_mlx(&mrt);

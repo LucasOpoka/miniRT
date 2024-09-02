@@ -22,3 +22,25 @@ void	swap_obj(uint32_t *obj_index, int i, int j)
 	obj_index[i] = obj_index[j];
 	obj_index[j] = tmp;
 }
+
+void	init_centroids(t_node *root, t_scene *scene)
+{
+	uint32_t    i;
+	t_obj	    *obj;
+
+	i = 0;
+	while (i < scene->objs.i)
+	{
+		obj = scene->objs.arr[i];
+		if (obj->type != t_plane)
+		{
+			scene->bvh.i[root->count] = i;
+			obj = scene->objs.arr[i];
+			obj->centroid[0] = obj->pos.x;
+			obj->centroid[1] = obj->pos.y;
+			obj->centroid[2] = obj->pos.z;
+			root->count++;
+		}
+		i++;
+	}
+}
