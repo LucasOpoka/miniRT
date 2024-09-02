@@ -13,12 +13,14 @@
 #include "../../includes/miniRT.h"
 #include <math.h>
 
-double aabb_raycast(t_ray ray, double bmin[3], double bmax[3]);
+double aabb_raycast(t_ray ray, t_bounds bounds);
 
 void	ft_ray_to_obj_space(t_ray *obj_ray, t_ray *world_ray, t_obj *obj);
 void	ft_get_intersections(t_ray world_ray, t_scene *scene, t_xs *xs);
 void	ft_sphere_intersection(t_ray obj_ray, t_obj *obj, t_xs *xs);
+void	ft_plane_intersection(t_ray ray, t_obj *obj, t_xs *xs);
 void	ft_cylinder_intersection(t_ray obj_ray, t_obj *obj, t_xs *xs);
+int	ft_xs_compare(const void *a, const void *b);
 
 void	intersects_obj(t_ray ray, t_scene *scene, t_node *node, t_xs *xs)
 {
@@ -40,7 +42,6 @@ void	intersects_obj(t_ray ray, t_scene *scene, t_node *node, t_xs *xs)
 	}
 }
 
-void	ft_plane_intersection(t_ray ray, t_obj *obj, t_xs *xs);
 void	add_planes(t_ray ray, t_scene *scene, t_xs *xs)
 {
 	t_obj	    *obj;
@@ -84,8 +85,8 @@ t_node *intersects_node(t_ray ray, t_node *root, t_node *curr, t_stack *s)
 
 	left = &root[curr->left];
 	right = &root[curr->left + 1];
-	d1 = aabb_raycast(ray, left->bounds.min, left->bounds.max);
-	d2 = aabb_raycast(ray, right->bounds.min, right->bounds.max);
+	d1 = aabb_raycast(ray, left->bounds);
+	d2 = aabb_raycast(ray, right->bounds);
 	if (d1 > d2)
 		swap_float_node(&d1, &d2, &left, &right);
 	if (d1 == DBL_MAX) //Miss
@@ -99,7 +100,12 @@ t_node *intersects_node(t_ray ray, t_node *root, t_node *curr, t_stack *s)
 	return (left);
 }
 
-int	ft_xs_compare(const void *a, const void *b);
+
+/*
+ * Efficient BVH traversal using temporary stack
+ * https://graphics.cg.uni-saarland.de/papers/perard-2017-gpce.pdf
+ */
+
 void	bvh_intersect_ordered(t_ray ray, t_scene* scene, t_xs *xs)
 {
 	t_node	    *node = &scene->bvh_root[0];
@@ -127,6 +133,7 @@ void	bvh_intersect_ordered(t_ray ray, t_scene* scene, t_xs *xs)
 }
 
 /*
+ * Recursive version, this can have bad performance depending on camera position
 void	bvh_intersect(t_ray ray, t_scene *scene, uint32_t index, t_xs *xs)
 {
 	t_node	*node = &scene->bvh_root[index];
