@@ -20,7 +20,6 @@ void	ft_get_intersections(t_ray world_ray, t_scene *scene, t_xs *xs);
 void	ft_sphere_intersection(t_ray obj_ray, t_obj *obj, t_xs *xs);
 void	ft_plane_intersection(t_ray ray, t_obj *obj, t_xs *xs);
 void	ft_cylinder_intersection(t_ray obj_ray, t_obj *obj, t_xs *xs);
-int	ft_xs_compare(const void *a, const void *b);
 
 void	intersects_obj(t_ray ray, t_scene *scene, t_node *node, t_xs *xs)
 {

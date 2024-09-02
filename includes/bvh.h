@@ -15,6 +15,8 @@
 
 #include "miniRT.h"
 
+# define BVH_MAX_NODES 10 * 1024
+# define BVH_MIN_CHILDREN 1
 
 t_node	*bvh_build(t_scene *scene);
 void	bvh_intersect(t_ray ray, t_scene *scene, uint32_t index, t_xs *xs);

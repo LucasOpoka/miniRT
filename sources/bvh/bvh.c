@@ -12,6 +12,7 @@
 
 #include "../../includes/miniRT.h"
 #include "../../libft/libft.h"
+#include "../../includes/bvh.h"
 #include <math.h>
 
 
@@ -74,12 +75,14 @@ void	bvh_subdivide(t_node *root, uint32_t index, t_scene *scene)
 	t_split	    split;
 	int	    left_index;
 
+	if (index > BVH_MAX_NODES || node->count <= BVH_MIN_CHILDREN)
+		return ;
 	split = find_best_split(node, scene);
 	if (split.cost >= no_split_cost)
 		return ;
 
-	printf("no_split_cost: %f, split.cost: %f, split.pos: %f, split.axis: %d\n",
-			no_split_cost, split.cost, split.pos, split.axis);
+	printf("i: %u, no_split_cost: %f, split.cost: %f, split.pos: %f, split.axis: %d\n",
+			index, no_split_cost, split.cost, split.pos, split.axis);
 	left_index = bvh_split(root, node, split, scene);
 	if (left_index <= 0)
 		return ;
