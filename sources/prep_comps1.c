@@ -6,13 +6,13 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 16:28:57 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/03 16:42:50 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/03 16:46:39 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
 
 // prepare computations - The Ray Tracer Challenge p.76 p.93
-void	ft_prep_comps(t_comps *comps, t_intrsc *hit, const t_ray *ray, t_xs *xs)
+void	ft_prep_comps(t_comps *comps, t_intrsc *hit, t_ray *ray, t_xs *xs)
 {
 	comps->t = hit->t;
 	comps->obj = hit->obj;

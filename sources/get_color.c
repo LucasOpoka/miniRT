@@ -6,16 +6,16 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 16:47:05 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/03 10:59:43 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/03 16:48:38 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
 
 t_clr	ft_refraction(t_comps *comps, t_light *light, t_scene *scene, int recursion_depth);
 t_clr	ft_reflection(t_comps *comps, t_light *light, t_scene *scene, int recursion_depth);
-t_clr	ft_get_color2(const t_ray *ray, t_scene *scene, int recursion_depth, t_xs *xs, t_light *light);
+t_clr	ft_get_color2(t_ray *ray, t_scene *scene, int recursion_depth, t_xs *xs, t_light *light);
 
-t_clr	ft_get_color(const t_ray *ray, t_scene *scene, int recursion_depth, t_xs *xs)
+t_clr	ft_get_color(t_ray *ray, t_scene *scene, int recursion_depth, t_xs *xs)
 {
 	t_comps			comps;
 	t_intrsc	*hit;
@@ -80,7 +80,7 @@ t_clr	ft_reflection(t_comps *comps, t_light *light, t_scene *scene, int recursio
 	return (res);
 }
 
-t_clr	ft_get_color2(const t_ray *ray, t_scene *scene, int recursion_depth, t_xs *xs, t_light *light)
+t_clr	ft_get_color2(t_ray *ray, t_scene *scene, int recursion_depth, t_xs *xs, t_light *light)
 {
 	t_comps			comps;
 	t_intrsc	*hit;
