@@ -6,17 +6,16 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 13:58:10 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/01 19:33:13 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/03 11:10:38 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
 
 void	ft_init_xs(t_xs *xs)
 {
-	xs->size = 100;
+	xs->size = 200;
 	xs->to_add = 100;
 	xs->i = 0;
-	xs->curr = 0;
 	xs->arr = (t_intersection *) malloc(xs->size * sizeof(t_intersection));
 }
 

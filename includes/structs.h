@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 14:16:04 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/02 17:24:33 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/03 11:10:10 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef STRUCTS_H
@@ -121,7 +121,6 @@ typedef struct s_void_arr
 {
 	void	**arr;
 	size_t	size;
-	size_t	curr;
 	size_t	i;
 	size_t	to_add;
 }	t_void_arr;
@@ -154,7 +153,7 @@ typedef	struct	t_bvh
 
 typedef	struct s_scene
 {
-	t_cam	cam;
+	t_cam		cam;
 	t_ambient	ambient;
 	t_void_arr	lights;
 	t_void_arr	objs;
@@ -170,7 +169,7 @@ typedef	struct s_ray
 
 typedef struct s_intersection
 {
-	t_obj *obj;
+	t_obj	*obj;
 	double	t;
 }	t_intersection;
 
@@ -178,7 +177,6 @@ typedef struct s_xs
 {
 	t_intersection	*arr;
 	size_t			size;
-	size_t			curr;
 	size_t			i;
 	size_t			to_add;
 }	t_xs;

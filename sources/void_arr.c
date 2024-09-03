@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 13:58:10 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/01 19:23:01 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/03 11:09:28 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -16,7 +16,6 @@ void	ft_init_void_arr(t_void_arr *void_arr)
 	void_arr->size = 5;
 	void_arr->to_add = 5;
 	void_arr->i = 0;
-	void_arr->curr = 0;
 	void_arr->arr = (void **) malloc(void_arr->size * sizeof(void *));
 }
 
