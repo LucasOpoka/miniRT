@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 14:14:55 by lopoka            #+#    #+#             */
-/*   Updated: 2024/08/31 18:29:37 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/03 10:32:20 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -17,7 +17,7 @@ void	render_image(t_mrt *mrt);
 void	threads_wait(t_mrt *mrt);
 void	threads_join(t_mrt *mrt);
 
-void close_hook(void *ptr)
+void	close_hook(void *ptr)
 {
 	t_mrt	*mrt;
 
