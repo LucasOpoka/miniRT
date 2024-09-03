@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 16:28:57 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/03 10:44:43 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/03 11:24:00 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -81,12 +81,20 @@ t_vct	ft_under_point(const t_vct *point, const t_vct *normal)
 	return (res);
 }
 
+void	ft_set_refr_ind(double *n, t_xs *containers)
+{
+	if (containers->i == 0)
+		*n = 1;
+	else
+		*n = containers->arr[containers->i - 1].obj->refractive;
+}
+
 // Test to get n1 and n2
 void	ft_get_refr_ind(t_comps *comps, t_xs *xs, t_intrsc *hit)
 {
-	size_t			i;
+	size_t		i;
 	t_intrsc	*curr;
-	t_xs			containers;
+	t_xs		containers;
 
 	ft_init_xs(&containers);
 	i = 0;
@@ -94,24 +102,13 @@ void	ft_get_refr_ind(t_comps *comps, t_xs *xs, t_intrsc *hit)
 	{
 		curr = (t_intrsc *) &xs->arr[i++];
 		if (curr == hit)
-		{
-			if (containers.i == 0)
-				comps->n1 = 1;
-			else
-				comps->n1 = containers.arr[containers.i - 1].obj->refractive;
-		}
+			ft_set_refr_ind(&comps->n1, &containers);
 		if (ft_containers_include(&containers, curr->obj))
 			ft_remove_container(&containers, curr);
 		else
 			ft_add_intersection(&containers, curr->obj, curr->t);
 		if (curr == hit)
-		{
-			if (containers.i == 0)
-				comps->n2 = 1;
-			else
-				comps->n2 = containers.arr[containers.i - 1].obj->refractive;
-			break ;
-		}
+			ft_set_refr_ind(&comps->n2, &containers);
 	}
 	ft_free_xs(&containers);
 }
@@ -132,8 +129,8 @@ int	ft_containers_include(t_xs *containers, t_obj *obj)
 
 void	ft_remove_container(t_xs *containers, t_intrsc *curr)
 {
-	size_t			reader;
-	size_t			writer;
+	size_t		reader;
+	size_t		writer;
 	t_intrsc	intr;
 
 	if (!containers->arr)
