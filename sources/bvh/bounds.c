@@ -13,6 +13,10 @@
 #include "../../includes/miniRT.h"
 #include <math.h>
 
+/*
+* http://raytracerchallenge.com/bonus/bounding-boxes.html
+*/
+
 void	bounds_min_max(t_bounds *to, t_bounds *new)
 {
 	to->min[0] = fmin(to->min[0], new->min[0]);

@@ -62,39 +62,44 @@ void	add_planes(t_ray ray, t_scene *scene, t_xs *xs)
 	}
 }
 
-void	swap_float_node(double *f1, double *f2, t_node **n1, t_node **n2)
+/*
+ * dist[0] must contain the shorter distance
+ */
+
+static void swap_nodes(double *dist, t_node **n1, t_node **n2)
 {
 	double	tmp;
 	t_node	*tmp_node;
 
-	tmp = *f1;
-	*f1 = *f2;
-	*f2 = tmp;
-	tmp_node = *n1;
-	*n1 = *n2;
-	*n2 = tmp_node;
+	if (dist[0] > dist[1])
+	{
+		tmp = dist[0];
+		dist[0] = dist[1];
+		dist[1] = tmp;
+		tmp_node = *n1;
+		*n1 = *n2;
+		*n2 = tmp_node;
+	}
 }
 
-t_node *intersects_node(t_ray ray, t_node *root, t_node *curr, t_stack *s)
+static t_node	*intersects_box(t_ray ray, t_node *root, t_node *curr, t_stack *s)
 {
 	t_node	*left;
 	t_node	*right;
-	double	d1;
-	double	d2;
+	double	dist[2];
 
 	left = &root[curr->left];
 	right = &root[curr->left + 1];
-	d1 = aabb_raycast(ray, left->bounds);
-	d2 = aabb_raycast(ray, right->bounds);
-	if (d1 > d2)
-		swap_float_node(&d1, &d2, &left, &right);
-	if (d1 == DBL_MAX) //Miss
+	dist[0] = aabb_raycast(ray, left->bounds);
+	dist[1] = aabb_raycast(ray, right->bounds);
+	swap_nodes(dist, &left, &right);
+	if (dist[0] == DBL_MAX) //Miss
 	{
 		if (s->ptr == 0)
 			return (NULL);
 		return (s->stack[--s->ptr]);
 	}
-	if (d2 != DBL_MAX)
+	if (dist[1] != DBL_MAX)
 		s->stack[s->ptr++] = right;
 	return (left);
 }
@@ -104,7 +109,7 @@ t_node *intersects_node(t_ray ray, t_node *root, t_node *curr, t_stack *s)
  * https://graphics.cg.uni-saarland.de/papers/perard-2017-gpce.pdf
  */
 
-void	bvh_intersect_ordered(t_ray ray, t_scene* scene, t_xs *xs)
+void	bvh_intersect(t_ray ray, t_scene* scene, t_xs *xs)
 {
 	t_node	    *node = &scene->bvh.root[0];
 	t_stack	    s;
@@ -123,7 +128,7 @@ void	bvh_intersect_ordered(t_ray ray, t_scene* scene, t_xs *xs)
 			node = s.stack[--s.ptr];
 			continue;
 		}
-		node = intersects_node(ray, scene->bvh.root, node, &s);
+		node = intersects_box(ray, scene->bvh.root, node, &s);
 	}
 	add_planes(ray, scene, xs);
 	heap_sort_xs(xs);

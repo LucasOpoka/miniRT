@@ -17,10 +17,11 @@
 char	***array_matrix(char *data);
 void	array_matrix_free(char ***arr);
 char	*file_load(char *file);
-int	identifiers_validate(char ***elements);
-int	cam_add(t_scene *scene, char **elem);
-int	light_add(t_scene *scene, char **elem, int id);
-int	obj_add(t_scene *scene, char **elem, int id);
+int		identifier(void);
+int		identifiers_validate(char ***elements);
+int		cam_add(t_scene *scene, char **elem);
+int		light_add(t_scene *scene, char **elem, int id);
+int		obj_add(t_scene *scene, char **elem, int id);
 
 int	parser_error(char *err_str)
 {
