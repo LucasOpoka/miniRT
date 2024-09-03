@@ -6,7 +6,7 @@
 #    By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/29 14:59:04 by lopoka            #+#    #+#              #
-#    Updated: 2024/09/03 10:29:57 by lopoka           ###   ########.fr        #
+#    Updated: 2024/09/03 16:43:32 by lopoka           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,7 +43,8 @@ SOURCES	=	main.c \
 			worker.c \
 			heap_sort.c \
 			obj_transforms.c \
-			prep_comps.c \
+			prep_comps1.c \
+			prep_comps2.c \
 			obj_normals.c \
 			get_test_scene.c \
 			lighting.c \
