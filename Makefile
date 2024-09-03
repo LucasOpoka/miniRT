@@ -6,7 +6,7 @@
 #    By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/29 14:59:04 by lopoka            #+#    #+#              #
-#    Updated: 2024/09/02 17:11:07 by lopoka           ###   ########.fr        #
+#    Updated: 2024/09/03 10:29:57 by lopoka           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,10 +30,11 @@ SOURCES	=	main.c \
 			intersections_arr.c \
 			vct1.c \
 			vct2.c \
-			clr_math.c \
 			mtrx1.c \
 			mtrx2.c \
 			mtrx3.c \
+			clr1.c \
+			clr2.c \
 			camera.c \
 			scene.c \
 			show_img.c \
