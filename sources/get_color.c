@@ -6,64 +6,71 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 16:47:05 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/03 16:48:38 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/03 18:02:33 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
 
-t_clr	ft_refraction(t_comps *comps, t_light *light, t_scene *scene, int recursion_depth);
-t_clr	ft_reflection(t_comps *comps, t_light *light, t_scene *scene, int recursion_depth);
-t_clr	ft_get_color2(t_ray *ray, t_scene *scene, int recursion_depth, t_xs *xs, t_light *light);
+t_clr	ft_refraction(t_comps *comps, t_light *light, t_scene *scene, int recur_lmt);
+t_clr	ft_reflection(t_comps *comps, t_light *light, t_scene *scene, int recur_lmt);
+t_clr	ft_light_color(t_ray *ray, t_scene *scene, int recur_lmt, t_xs *xs, t_light *light);
 
-t_clr	ft_get_color(t_ray *ray, t_scene *scene, int recursion_depth, t_xs *xs)
+
+t_clr	ft_final_color(t_ray *ray, t_scene *scene, int recur_lmt, t_xs *xs)
 {
-	t_comps			comps;
-	t_intrsc	*hit;
-	t_clr			ambient;
-	t_clr			surface_color;
-	t_clr			reflect_color;
-	t_clr			refract_color;
-	size_t			i;
-	t_light			*light;
-	t_clr			final_color;
+	size_t		i;
+	t_light		*light;
+	t_clr		light_color;
+	t_clr		final_color;
 
 	ft_bzero(&final_color, sizeof(t_clr));
-
-	hit = ft_hit(xs);
-	if (!hit)
-    	return (ft_create_clr(0, 0, 0));
-
-	ft_prep_comps(&comps, hit, ray, xs);
 	
-	ambient = ft_get_ambient(&scene->ambient, &comps.color);
-
 	i = 0;
 	while (i < scene->lights.i)
 	{
 		light = (t_light *) scene->lights.arr[i++];
-		surface_color = ft_lighting(&comps, scene, light, &ambient);
-		reflect_color = ft_reflection(&comps, light, scene, recursion_depth);
-		refract_color = ft_refraction(&comps, light, scene, recursion_depth);
-		if (hit->obj->reflective > 0 && hit->obj->transparency > 0)
-		{
-			reflect_color = ft_clr_sclr_mult(reflect_color, comps.schlick);
-			refract_color = ft_clr_sclr_mult(refract_color, 1 - comps.schlick);
-		}
-		final_color = ft_clr_add(final_color, surface_color);
-		final_color = ft_clr_add(final_color, reflect_color);
-		final_color = ft_clr_add(final_color, refract_color);
+		light_color = ft_light_color(ray, scene, recur_lmt, xs, light);
+		final_color = ft_clr_add(final_color, light_color);
 	}
 	return final_color;
 }
 
-t_clr	ft_reflection(t_comps *comps, t_light *light, t_scene *scene, int recursion_depth)
+t_clr	ft_light_color(t_ray *ray, t_scene *scene, int recur_lmt, t_xs *xs, t_light *light)
+{
+	t_comps			comps;
+	t_intrsc		*hit;
+	t_clr			surface_color;
+	t_clr			reflect_color;
+	t_clr			refract_color;
+	t_clr			final_color;
+
+	final_color = ft_create_clr(0, 0, 0);
+	hit = ft_hit(xs);
+	if (!hit)
+    	return (final_color);
+	ft_prep_comps(&comps, hit, ray, xs);
+	surface_color = ft_phong(&comps, scene, light);
+	reflect_color = ft_reflection(&comps, light, scene, recur_lmt - 1);
+	refract_color = ft_refraction(&comps, light, scene, recur_lmt - 1);
+	if (hit->obj->reflective > 0 && hit->obj->transparency > 0)
+	{
+		reflect_color = ft_clr_scl(reflect_color, comps.schlick);
+		refract_color = ft_clr_scl(refract_color, 1 - comps.schlick);
+	}
+	final_color = ft_clr_add(final_color, surface_color);
+	final_color = ft_clr_add(final_color, reflect_color);
+	final_color = ft_clr_add(final_color, refract_color);
+	return (final_color);
+}
+
+t_clr	ft_reflection(t_comps *comps, t_light *light, t_scene *scene, int recur_lmt)
 {
 	t_ray	reflection_ray;
 	t_clr	res;
 	
 
 	res = ft_create_clr(0, 0, 0);
-	if (comps->obj->reflective == 0 || recursion_depth == 0)
+	if (comps->obj->reflective == 0 || recur_lmt == 0)
 		return (res);
 	reflection_ray.O = comps->over_point;
 	reflection_ray.D = comps->reflect;
@@ -72,55 +79,22 @@ t_clr	ft_reflection(t_comps *comps, t_light *light, t_scene *scene, int recursio
 	ft_init_xs(&xs);
 	ft_get_intrscs(reflection_ray, scene, &xs);	
 	
-	res = ft_get_color2(&reflection_ray, scene, recursion_depth, &xs, light);
+	res = ft_light_color(&reflection_ray, scene, recur_lmt, &xs, light);
 
 	ft_free_xs(&xs);
 
-	res = ft_clr_sclr_mult(res, comps->obj->reflective);
+	res = ft_clr_scl(res, comps->obj->reflective);
 	return (res);
 }
 
-t_clr	ft_get_color2(t_ray *ray, t_scene *scene, int recursion_depth, t_xs *xs, t_light *light)
-{
-	t_comps			comps;
-	t_intrsc	*hit;
-	t_clr			ambient;
-	t_clr			surface_color;
-	t_clr			reflect_color;
-	t_clr			refract_color;
-	t_clr			final_color;
-
-	ft_bzero(&final_color, sizeof(t_clr));
-
-	hit = ft_hit(xs);
-	if (!hit)
-    	return (final_color);
-	
-	ft_prep_comps(&comps, hit, ray, xs);
-
-	ambient = ft_get_ambient(&scene->ambient, &comps.color);
-	surface_color = ft_lighting(&comps, scene, light, &ambient);
-	reflect_color = ft_reflection(&comps, light, scene, recursion_depth - 1);
-	refract_color = ft_refraction(&comps, light, scene, recursion_depth - 1);
-	if (hit->obj->reflective > 0 && hit->obj->transparency > 0)
-	{
-		reflect_color = ft_clr_sclr_mult(reflect_color, comps.schlick);
-		refract_color = ft_clr_sclr_mult(refract_color, 1 - comps.schlick);
-	}
-	final_color = ft_clr_add(final_color, surface_color);
-	final_color = ft_clr_add(final_color, reflect_color);
-	final_color = ft_clr_add(final_color, refract_color);
-	return (final_color);
-}
-
-t_clr	ft_refraction(t_comps *comps, t_light *light, t_scene *scene, int recursion_depth)
+t_clr	ft_refraction(t_comps *comps, t_light *light, t_scene *scene, int recur_lmt)
 {
 	t_ray	refraction_ray;
 	t_clr	res;
 	double	n_ratio;
 
 	res = ft_create_clr(0, 0, 0);
-	if (comps->obj->transparency == 0 || recursion_depth == 0)
+	if (comps->obj->transparency == 0 || recur_lmt == 0)
 		return (res);
 	n_ratio = comps->n1 / comps->n2;
 	
@@ -140,9 +114,9 @@ t_clr	ft_refraction(t_comps *comps, t_light *light, t_scene *scene, int recursio
 	ft_init_xs(&xs);
 	ft_get_intrscs(refraction_ray, scene, &xs);	
 	
-	res = ft_get_color2(&refraction_ray, scene, recursion_depth, &xs, light);
+	res = ft_light_color(&refraction_ray, scene, recur_lmt, &xs, light);
 	
-	res = ft_clr_sclr_mult(res, comps->obj->transparency);
+	res = ft_clr_scl(res, comps->obj->transparency);
 
 	ft_free_xs(&xs);
 

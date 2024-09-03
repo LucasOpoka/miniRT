@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:06:19 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/02 16:33:24 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/03 17:32:33 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINIRT_H
@@ -26,7 +26,7 @@
 # include "prep_comps.h"
 # include "obj_normals.h"
 # include "get_color.h"
-# include "lighting.h"
+# include "phong.h"
 # include "clr_math.h"
 # include "../libft/libft.h"
 

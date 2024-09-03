@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 14:16:04 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/03 11:15:19 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/03 18:21:12 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef STRUCTS_H
@@ -198,6 +198,16 @@ typedef struct s_comps
 	double	n2;
 	double	schlick;
 }	t_comps;
+
+typedef struct s_phong
+{
+	t_clr	result;
+	t_clr	effective;
+	t_clr	diffuse;
+	t_clr	specular;
+	t_vct	light_vct;
+	double	lght_dot_norm;
+}	t_phong;
 
 typedef struct s_worker
 {
