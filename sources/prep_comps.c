@@ -15,13 +15,13 @@ void	ft_get_schlick(t_comps *comps);
 t_vct	ft_under_point(const t_vct *point, const t_vct *normal);
 int		ft_containers_include(t_xs *containers, t_obj *obj);
 void	ft_remove_container(t_xs *containers, t_intersection *curr);
-void	ft_get_refr_ind(t_comps *comps, t_xs *xs, t_intersection *closest);
+void	ft_get_refr_ind(t_comps *comps, t_xs *xs, t_intersection *hit);
 
 // prepare computations - The Ray Tracer Challenge p.76 p.93
-void	ft_prep_comps(t_comps *comps, t_intersection *closest, const t_ray *ray, t_xs *xs)
+void	ft_prep_comps(t_comps *comps, t_intersection *hit, const t_ray *ray, t_xs *xs)
 {
-	comps->t = closest->t;
-	comps->obj = closest->obj;
+	comps->t = hit->t;
+	comps->obj = hit->obj;
 	comps->point = ft_ray_point(ray, comps->t);
 	comps->eye = ft_vct_neg(&ray->D);
 	comps->eye.w = 0;
@@ -35,7 +35,7 @@ void	ft_prep_comps(t_comps *comps, t_intersection *closest, const t_ray *ray, t_
 	comps->reflect = ft_reflect(&ray->D, &comps->normal);
 	comps->over_point = ft_over_point(&comps->point, &comps->normal);
 	comps->under_point = ft_under_point(&comps->point, &comps->normal);
-	ft_get_refr_ind(comps, xs, closest);
+	ft_get_refr_ind(comps, xs, hit);
 	ft_get_schlick(comps);
 }
 
@@ -82,7 +82,7 @@ t_vct	ft_under_point(const t_vct *point, const t_vct *normal)
 }
 
 // Test to get n1 and n2
-void	ft_get_refr_ind(t_comps *comps, t_xs *xs, t_intersection *closest)
+void	ft_get_refr_ind(t_comps *comps, t_xs *xs, t_intersection *hit)
 {
 	size_t			i;
 	t_intersection	*curr;
@@ -93,7 +93,7 @@ void	ft_get_refr_ind(t_comps *comps, t_xs *xs, t_intersection *closest)
 	while (i < xs->i && containers.arr)
 	{
 		curr = (t_intersection *) &xs->arr[i++];
-		if (curr == closest)
+		if (curr == hit)
 		{
 			if (containers.i == 0)
 				comps->n1 = 1;
@@ -104,7 +104,7 @@ void	ft_get_refr_ind(t_comps *comps, t_xs *xs, t_intersection *closest)
 			ft_remove_container(&containers, curr);
 		else
 			ft_add_intersection(&containers, curr->obj, curr->t);
-		if (curr == closest)
+		if (curr == hit)
 		{
 			if (containers.i == 0)
 				comps->n2 = 1;

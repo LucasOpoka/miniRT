@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 21:05:34 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/01 19:39:27 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/03 11:00:00 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -124,10 +124,10 @@ void	ft_get_intersections(t_ray world_ray, t_scene *scene, t_xs *xs)
 	heap_sort_xs(xs);
 }
 
-t_intersection	*ft_closest_intersection(t_xs *xs)
+t_intersection	*ft_hit(t_xs *xs)
 {
 	t_intersection	*current;
-	t_intersection	*closest;
+	t_intersection	*hit;
 	double			lowest_time;
 	size_t			i;
 
@@ -135,16 +135,16 @@ t_intersection	*ft_closest_intersection(t_xs *xs)
 		return (NULL);
 	lowest_time = DBL_MAX;
 	i = 0;
-	closest = NULL;
+	hit = NULL;
 	while (i < xs->i)
 	{
 		current = &xs->arr[i];
 		if (0 <= current->t && current->t < lowest_time)
 		{
 			lowest_time = current->t;
-			closest = current;
+			hit = current;
 		}
 		i++;
 	}
-	return (closest);
+	return (hit);
 }

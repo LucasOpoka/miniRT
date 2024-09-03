@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 16:47:05 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/01 18:57:01 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/03 10:59:43 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -18,7 +18,7 @@ t_clr	ft_get_color2(const t_ray *ray, t_scene *scene, int recursion_depth, t_xs 
 t_clr	ft_get_color(const t_ray *ray, t_scene *scene, int recursion_depth, t_xs *xs)
 {
 	t_comps			comps;
-	t_intersection	*closest;
+	t_intersection	*hit;
 	t_clr			ambient;
 	t_clr			surface_color;
 	t_clr			reflect_color;
@@ -29,11 +29,11 @@ t_clr	ft_get_color(const t_ray *ray, t_scene *scene, int recursion_depth, t_xs *
 
 	ft_bzero(&final_color, sizeof(t_clr));
 
-	closest = ft_closest_intersection(xs);
-	if (!closest)
+	hit = ft_hit(xs);
+	if (!hit)
     	return (ft_create_clr(0, 0, 0));
 
-	ft_prep_comps(&comps, closest, ray, xs);
+	ft_prep_comps(&comps, hit, ray, xs);
 	
 	ambient = ft_get_ambient(&scene->ambient, &comps.color);
 
@@ -44,7 +44,7 @@ t_clr	ft_get_color(const t_ray *ray, t_scene *scene, int recursion_depth, t_xs *
 		surface_color = ft_lighting(&comps, scene, light, &ambient);
 		reflect_color = ft_reflection(&comps, light, scene, recursion_depth);
 		refract_color = ft_refraction(&comps, light, scene, recursion_depth);
-		if (closest->obj->reflective > 0 && closest->obj->transparency > 0)
+		if (hit->obj->reflective > 0 && hit->obj->transparency > 0)
 		{
 			reflect_color = ft_clr_sclr_mult(reflect_color, comps.schlick);
 			refract_color = ft_clr_sclr_mult(refract_color, 1 - comps.schlick);
@@ -83,7 +83,7 @@ t_clr	ft_reflection(t_comps *comps, t_light *light, t_scene *scene, int recursio
 t_clr	ft_get_color2(const t_ray *ray, t_scene *scene, int recursion_depth, t_xs *xs, t_light *light)
 {
 	t_comps			comps;
-	t_intersection	*closest;
+	t_intersection	*hit;
 	t_clr			ambient;
 	t_clr			surface_color;
 	t_clr			reflect_color;
@@ -92,17 +92,17 @@ t_clr	ft_get_color2(const t_ray *ray, t_scene *scene, int recursion_depth, t_xs 
 
 	ft_bzero(&final_color, sizeof(t_clr));
 
-	closest = ft_closest_intersection(xs);
-	if (!closest)
+	hit = ft_hit(xs);
+	if (!hit)
     	return (final_color);
 	
-	ft_prep_comps(&comps, closest, ray, xs);
+	ft_prep_comps(&comps, hit, ray, xs);
 
 	ambient = ft_get_ambient(&scene->ambient, &comps.color);
 	surface_color = ft_lighting(&comps, scene, light, &ambient);
 	reflect_color = ft_reflection(&comps, light, scene, recursion_depth - 1);
 	refract_color = ft_refraction(&comps, light, scene, recursion_depth - 1);
-	if (closest->obj->reflective > 0 && closest->obj->transparency > 0)
+	if (hit->obj->reflective > 0 && hit->obj->transparency > 0)
 	{
 		reflect_color = ft_clr_sclr_mult(reflect_color, comps.schlick);
 		refract_color = ft_clr_sclr_mult(refract_color, 1 - comps.schlick);
