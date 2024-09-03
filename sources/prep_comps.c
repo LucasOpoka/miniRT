@@ -14,11 +14,11 @@
 void	ft_get_schlick(t_comps *comps);
 t_vct	ft_under_point(const t_vct *point, const t_vct *normal);
 int		ft_containers_include(t_xs *containers, t_obj *obj);
-void	ft_remove_container(t_xs *containers, t_intersection *curr);
-void	ft_get_refr_ind(t_comps *comps, t_xs *xs, t_intersection *hit);
+void	ft_remove_container(t_xs *containers, t_intrsc *curr);
+void	ft_get_refr_ind(t_comps *comps, t_xs *xs, t_intrsc *hit);
 
 // prepare computations - The Ray Tracer Challenge p.76 p.93
-void	ft_prep_comps(t_comps *comps, t_intersection *hit, const t_ray *ray, t_xs *xs)
+void	ft_prep_comps(t_comps *comps, t_intrsc *hit, const t_ray *ray, t_xs *xs)
 {
 	comps->t = hit->t;
 	comps->obj = hit->obj;
@@ -82,17 +82,17 @@ t_vct	ft_under_point(const t_vct *point, const t_vct *normal)
 }
 
 // Test to get n1 and n2
-void	ft_get_refr_ind(t_comps *comps, t_xs *xs, t_intersection *hit)
+void	ft_get_refr_ind(t_comps *comps, t_xs *xs, t_intrsc *hit)
 {
 	size_t			i;
-	t_intersection	*curr;
+	t_intrsc	*curr;
 	t_xs			containers;
 
 	ft_init_xs(&containers);
 	i = 0;
 	while (i < xs->i && containers.arr)
 	{
-		curr = (t_intersection *) &xs->arr[i++];
+		curr = (t_intrsc *) &xs->arr[i++];
 		if (curr == hit)
 		{
 			if (containers.i == 0)
@@ -130,11 +130,11 @@ int	ft_containers_include(t_xs *containers, t_obj *obj)
 	return (0);
 }
 
-void	ft_remove_container(t_xs *containers, t_intersection *curr)
+void	ft_remove_container(t_xs *containers, t_intrsc *curr)
 {
 	size_t			reader;
 	size_t			writer;
-	t_intersection	intr;
+	t_intrsc	intr;
 
 	if (!containers->arr)
 		return ;

@@ -1,7 +1,7 @@
 
 #include "../includes/miniRT.h"
 
-static int  compare_xs(t_intersection *a, t_intersection *b)
+static int  compare_xs(t_intrsc *a, t_intrsc *b)
 {
 	const double	t_a = a->t;
 	const double	t_b = b->t;
@@ -9,17 +9,17 @@ static int  compare_xs(t_intersection *a, t_intersection *b)
 	return ((t_a > t_b) - (t_a < t_b));
 }
 
-static void swap_inter(t_intersection *arr, int i, int j)
+static void swap_inter(t_intrsc *arr, int i, int j)
 {
-	unsigned char	tmp[sizeof(t_intersection)];
-	const uint32_t	size = sizeof(t_intersection);
+	unsigned char	tmp[sizeof(t_intrsc)];
+	const uint32_t	size = sizeof(t_intrsc);
 
 	ft_memcpy(tmp, arr + i, size);
 	ft_memcpy(arr + i, arr + j, size);
 	ft_memcpy(arr + j, tmp, size);
 }
 
-static void heapify(t_intersection *arr, int n, int i)
+static void heapify(t_intrsc *arr, int n, int i)
 {
 	const int   left = 2 * i + 1;
 	const int   right = 2 * i + 2;

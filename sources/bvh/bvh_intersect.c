@@ -16,7 +16,7 @@
 double aabb_raycast(t_ray ray, t_bounds bounds);
 
 void	ft_ray_to_obj_space(t_ray *obj_ray, t_ray *world_ray, t_obj *obj);
-void	ft_get_intersections(t_ray world_ray, t_scene *scene, t_xs *xs);
+void	ft_get_intrscs(t_ray world_ray, t_scene *scene, t_xs *xs);
 void	ft_sphere_intersection(t_ray obj_ray, t_obj *obj, t_xs *xs);
 void	ft_plane_intersection(t_ray ray, t_obj *obj, t_xs *xs);
 void	ft_cylinder_intersection(t_ray obj_ray, t_obj *obj, t_xs *xs);

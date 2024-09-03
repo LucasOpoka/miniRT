@@ -36,8 +36,8 @@ int	ft_in_shadow(t_scene *scene, t_light *light, t_vct *over_point)
 	//bvh_intersect_ordered(point_to_light, scene, intersect);
 	t_xs	xs;
 	ft_init_xs(&xs);
-	ft_get_intersections(point_to_light, scene, &xs);
-	t_intersection	*hit = ft_hit(&xs);
+	ft_get_intrscs(point_to_light, scene, &xs);
+	t_intrsc	*hit = ft_hit(&xs);
 	res = 0;
 	if (hit && hit->t < distance)
 		res = 1;

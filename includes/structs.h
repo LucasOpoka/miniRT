@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 14:16:04 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/03 11:10:10 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/03 11:15:19 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef STRUCTS_H
@@ -29,7 +29,7 @@ typedef struct s_mrt
 	pthread_cond_t		notify;
 	pthread_cond_t		complete;
 	int					do_render;
-	int				exit;
+	int					exit;
 }	t_mrt;
 
 typedef struct	t_bounds
@@ -55,7 +55,7 @@ typedef	struct	t_split
 
 typedef struct	t_stack
 {
-    t_node	*stack[64];
+    t_node		*stack[64];
     uint32_t	ptr;
 }   t_stack;
 
@@ -167,23 +167,23 @@ typedef	struct s_ray
 	t_vct	rd;
 }	t_ray;
 
-typedef struct s_intersection
+typedef struct s_intrsc
 {
 	t_obj	*obj;
 	double	t;
-}	t_intersection;
+}	t_intrsc;
 
 typedef struct s_xs
 {
-	t_intersection	*arr;
-	size_t			size;
-	size_t			i;
-	size_t			to_add;
+	t_intrsc	*arr;
+	size_t		size;
+	size_t		i;
+	size_t		to_add;
 }	t_xs;
 
 typedef struct s_comps
 {
-	t_obj *obj;
+	t_obj 	*obj;
 	double	t;
 	t_vct	point;
 	t_vct	eye;

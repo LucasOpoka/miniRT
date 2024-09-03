@@ -18,7 +18,7 @@ t_clr	ft_get_color2(const t_ray *ray, t_scene *scene, int recursion_depth, t_xs 
 t_clr	ft_get_color(const t_ray *ray, t_scene *scene, int recursion_depth, t_xs *xs)
 {
 	t_comps			comps;
-	t_intersection	*hit;
+	t_intrsc	*hit;
 	t_clr			ambient;
 	t_clr			surface_color;
 	t_clr			reflect_color;
@@ -70,7 +70,7 @@ t_clr	ft_reflection(t_comps *comps, t_light *light, t_scene *scene, int recursio
 	
 	t_xs xs;
 	ft_init_xs(&xs);
-	ft_get_intersections(reflection_ray, scene, &xs);	
+	ft_get_intrscs(reflection_ray, scene, &xs);	
 	
 	res = ft_get_color2(&reflection_ray, scene, recursion_depth, &xs, light);
 
@@ -83,7 +83,7 @@ t_clr	ft_reflection(t_comps *comps, t_light *light, t_scene *scene, int recursio
 t_clr	ft_get_color2(const t_ray *ray, t_scene *scene, int recursion_depth, t_xs *xs, t_light *light)
 {
 	t_comps			comps;
-	t_intersection	*hit;
+	t_intrsc	*hit;
 	t_clr			ambient;
 	t_clr			surface_color;
 	t_clr			reflect_color;
@@ -138,7 +138,7 @@ t_clr	ft_refraction(t_comps *comps, t_light *light, t_scene *scene, int recursio
 	
 	t_xs xs;
 	ft_init_xs(&xs);
-	ft_get_intersections(refraction_ray, scene, &xs);	
+	ft_get_intrscs(refraction_ray, scene, &xs);	
 	
 	res = ft_get_color2(&refraction_ray, scene, recursion_depth, &xs, light);
 	

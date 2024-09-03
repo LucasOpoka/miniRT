@@ -12,7 +12,7 @@
 #ifndef INTERSECTIONS_H
 # define INTERSECTIONS_H
 
-void			ft_get_intersections(t_ray world_ray, t_scene *scene, t_xs *xs);
-t_intersection	*ft_hit(t_xs *xs);
+void			ft_get_intrscs(t_ray world_ray, t_scene *scene, t_xs *xs);
+t_intrsc	*ft_hit(t_xs *xs);
 
 #endif

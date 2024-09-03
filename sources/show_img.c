@@ -30,7 +30,7 @@ void	ft_show_img(t_mrt *mrt, t_scene *scene)
 		{
 			ft_init_xs(&xs);
 			ft_pixel_to_ray(&world_ray, pixel_x, pixel_y, &scene->cam);
-			ft_get_intersections(world_ray, scene, &xs);
+			ft_get_intrscs(world_ray, scene, &xs);
 			color = ft_get_color(&world_ray, scene, 5, &xs);
 			mlx_put_pixel(mrt->img, pixel_x++, pixel_y, ft_clr_to_int(color));
 			ft_free_xs(&xs);

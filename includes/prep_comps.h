@@ -12,7 +12,7 @@
 #ifndef PREP_COMPS_H
 # define PREP_COMPS_H
 
-void	ft_prep_comps(t_comps *comps, t_intersection *hit, const t_ray *ray, t_xs *xs);
+void	ft_prep_comps(t_comps *comps, t_intrsc *hit, const t_ray *ray, t_xs *xs);
 t_vct	ft_ray_point(const t_ray *ray, double t);
 t_vct	ft_reflect(const t_vct *in, const t_vct *normal);
 t_vct	ft_over_point(const t_vct *point, const t_vct *normal);
