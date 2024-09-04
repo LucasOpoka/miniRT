@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 12:47:38 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/01 15:46:42 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/04 15:52:39 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -233,25 +233,34 @@ t_scene	get_test_scene(void)
 	// Lights
 	ft_init_void_arr(&scene.lights);
 
-	scene.ambient.intensity = 0.5;
+	scene.ambient.intensity = 0.25;
 	scene.ambient.color = ft_create_clr(255, 255, 255);
 
 	t_light *light2 = malloc(sizeof(t_light));
 	light2->type = t_point;
-	light2->intensity = 0.5;
+	light2->intensity = 0.25;
 	light2->pos = ft_create_vct(2, 10, -5);
 	light2->dir = ft_create_vct(1, -1, 0);
 	light2->color = ft_create_clr(255, 255, 255);
 	
 	t_light *light3 = malloc(sizeof(t_light));
 	light3->type = t_diral;
-	light3->intensity = 0.2;
+	light3->intensity = 0.25;
 	light3->pos = ft_create_vct(1, 3, 3);
 	light3->dir = ft_create_vct(-1, 1, 0);
 	light3->color = ft_create_clr(255, 255, 255);
 	
+	t_light *light4 = malloc(sizeof(t_light));
+	light4->type = t_diral;
+	light4->intensity = 0.25;
+	light4->pos = ft_create_vct(-2, -2, 2);
+	light4->dir = ft_create_vct(1, 1, -1);
+	light4->color = ft_create_clr(0, 0, 255);
+
+	
 	ft_void_arr_add(&scene.lights, light2);
-	//ft_void_arr_add(&scene.lights, light3);
+	ft_void_arr_add(&scene.lights, light3);
+	ft_void_arr_add(&scene.lights, light4);
 
 	return (scene);
 }

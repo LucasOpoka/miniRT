@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 14:16:04 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/03 18:21:12 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/04 15:58:14 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef STRUCTS_H
@@ -183,6 +183,7 @@ typedef struct s_xs
 
 typedef struct s_comps
 {
+	t_intrsc	*hit;
 	t_obj 	*obj;
 	double	t;
 	t_vct	point;
@@ -208,6 +209,28 @@ typedef struct s_phong
 	t_vct	light_vct;
 	double	lght_dot_norm;
 }	t_phong;
+
+typedef struct s_clr_recur
+{
+	t_ray 	ray;
+	t_scene	*scene;
+	t_xs	*xs;
+	t_comps	comps;
+	t_light	*light;
+	int		recur_lmt;
+}	t_clr_recur;
+
+typedef struct s_refraction
+{
+	t_clr	res;
+	double	n_ratio;
+	double	transparency;
+	double	cos_i;
+	double	sin2_t;
+	double	cos_t;
+	t_vct	tmp1;
+	t_vct	tmp2;
+}	t_refraction;
 
 typedef struct s_worker
 {

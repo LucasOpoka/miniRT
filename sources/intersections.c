@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 21:05:34 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/03 11:00:00 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/04 09:41:04 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -128,8 +128,8 @@ t_intrsc	*ft_hit(t_xs *xs)
 {
 	t_intrsc	*current;
 	t_intrsc	*hit;
-	double			lowest_time;
-	size_t			i;
+	double		lowest_time;
+	size_t		i;
 
 	if (!xs->arr)
 		return (NULL);
