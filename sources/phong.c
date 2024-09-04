@@ -16,7 +16,7 @@ t_clr	ft_phong(t_clr_recur *rec)
 	t_phong	ph;
 
 	ph.result = ft_ambient(rec);
-	ph.effective = ft_clrs_mult(rec->comps.obj->color, rec->light->color);
+	ph.effective = ft_clr_x_clr(rec->comps.obj->color, rec->light->color);
 	ph.light_vct = ft_vct_sub(&rec->light->pos, &rec->comps.over_point);
 	ft_vct_norm(&ph.light_vct);
 	rec->comps.normal.w = 0;
@@ -36,7 +36,7 @@ t_clr	ft_ambient(t_clr_recur *rec)
 	t_clr	res;
 
 	temp = ft_clr_scl(rec->comps.color, rec->scene->ambient.intensity);
-	res = ft_clrs_mult(temp, rec->scene->ambient.color);
+	res = ft_clr_x_clr(temp, rec->scene->ambient.color);
 	return (res);
 }
 

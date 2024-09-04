@@ -86,8 +86,8 @@ void	ft_combine_obj_transforms(t_obj *obj, t_mtrx4 *scl_mtrx,
 {
 	t_mtrx4	trnsl_x_rot;
 
-	ft_mtrx_mtrx_mult(&trnsl_x_rot, trnsl_mtrx, rot_mtrx);
-	ft_mtrx_mtrx_mult(&obj->obj_to_world, &trnsl_x_rot, scl_mtrx);
+	ft_mtrx_x_mtrx(&trnsl_x_rot, trnsl_mtrx, rot_mtrx);
+	ft_mtrx_x_mtrx(&obj->obj_to_world, &trnsl_x_rot, scl_mtrx);
 	ft_mtrx4_inv(&obj->world_to_obj, &obj->obj_to_world);
 	ft_mtrx4_transpose(&obj->normal_to_world, &obj->world_to_obj);
 }

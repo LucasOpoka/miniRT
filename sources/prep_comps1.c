@@ -57,7 +57,7 @@ t_vct	ft_reflect(const t_vct *in, const t_vct *normal)
 {
 	t_vct	res;
 
-	res = ft_vct_sclr_mult(normal, 2 * ft_vct_dot(in, normal));
+	res = ft_vct_x_sclr(normal, 2 * ft_vct_dot(in, normal));
 	res = ft_vct_sub(in, &res);
 	return (res);
 }
@@ -67,7 +67,7 @@ t_vct	ft_over_point(const t_vct *point, const t_vct *normal)
 {
 	t_vct	res;
 
-	res = ft_vct_sclr_mult(normal, EPSILON);
+	res = ft_vct_x_sclr(normal, EPSILON);
 	res = ft_vct_add(point, &res);
 	return (res);
 }
@@ -77,7 +77,7 @@ t_vct	ft_under_point(const t_vct *point, const t_vct *normal)
 {
 	t_vct	res;
 
-	res = ft_vct_sclr_mult(normal, EPSILON);
+	res = ft_vct_x_sclr(normal, EPSILON);
 	res = ft_vct_sub(point, &res);
 	return (res);
 }

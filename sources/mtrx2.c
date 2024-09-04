@@ -61,7 +61,7 @@ void	ft_mtrx4_inv(t_mtrx4 *res, const t_mtrx4 *mtrx4)
 	}
 }
 
-void	ft_vct_mtrx_mult(t_vct *res, const t_mtrx4 *m, const t_vct *v)
+void	ft_vct_x_mtrx(t_vct *res, const t_mtrx4 *m, const t_vct *v)
 {
 	res->x = v->x * m[0][0][0] + v->y * m[0][0][1]
 		+ v->z * m[0][0][2] + v->w * m[0][0][3];
@@ -74,7 +74,7 @@ void	ft_vct_mtrx_mult(t_vct *res, const t_mtrx4 *m, const t_vct *v)
 }
 
 // Multiply two matrices
-void	ft_mtrx_mtrx_mult(t_mtrx4 *res, const t_mtrx4 *a, const t_mtrx4 *b)
+void	ft_mtrx_x_mtrx(t_mtrx4 *res, const t_mtrx4 *a, const t_mtrx4 *b)
 {
 	int	row;
 	int	col;

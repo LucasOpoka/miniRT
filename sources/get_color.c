@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 16:47:05 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/04 16:02:39 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/04 16:27:22 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -26,6 +26,8 @@ t_clr	ft_final_color(t_ray *ray, t_scene *scene, int recur_lmt, t_xs *xs)
 	rec.scene = scene;
 	rec.xs = xs;
 	rec.recur_lmt = recur_lmt;
+	rec.xs->i = 0;
+	bvh_intersect(rec.ray, rec.scene, rec.xs);
 	rec.comps = ft_prep_comps(&rec.ray, rec.xs);
 	final_color = ft_create_clr(0, 0, 0);
 	i = 0;
@@ -96,9 +98,9 @@ t_clr	ft_refraction(t_clr_recur rec)
 	if (rf.sin2_t > 1)
 		return (rf.res);
 	rf.cos_t = sqrt(1 - rf.sin2_t);
-	rf.tmp1 = ft_vct_sclr_mult(&rec.comps.normal, rf.n_ratio * rf.cos_i - rf.cos_t);
-	rf.tmp2 = ft_vct_sclr_mult(&rec.comps.eye, rf.n_ratio);
-	rec.ray.D = ft_vct_sub(&rf.tmp1, &rf.tmp2);
+	rf.v1 = ft_vct_x_sclr(&rec.comps.normal, rf.n_ratio * rf.cos_i - rf.cos_t);
+	rf.v2 = ft_vct_x_sclr(&rec.comps.eye, rf.n_ratio);
+	rec.ray.D = ft_vct_sub(&rf.v1, &rf.v2);
 	rec.ray.O = rec.comps.under_point;
 	rec.xs->i = 0;
 	ft_get_intrscs(rec.ray, rec.scene, rec.xs);

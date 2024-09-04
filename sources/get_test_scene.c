@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 12:47:38 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/04 15:52:39 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/04 16:22:36 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -42,7 +42,7 @@ t_scene	get_test_scene(void)
 	obj1->shininess = 300;
 	obj1->reflective = 0.9;
 	obj1->refractive = 1.5;
-	obj1->transparency = 0.9;
+	obj1->transparency = 0.0;
 	obj1->scale = ft_create_vct(1, 1, 1);
 	obj1->orientation = ft_create_vct(0, 0, 0);
 
@@ -57,20 +57,6 @@ t_scene	get_test_scene(void)
 	objx->reflective = 0.3;
 	objx->scale = ft_create_vct(1, 1, 1);
 	objx->orientation = ft_create_vct(0, 0, 1);
-
-	/*
-	t_obj *objx1 = malloc(sizeof(t_obj));
-	objx1->type = t_sphere;
-	objx1->pos = ft_create_vct(-1, 4, 4); //ON THE RIGHT
-	objx1->radius = 1;
-	objx1->color = ft_create_clr(0, 0, 255); //BLUE
-	objx1->specular = 0.9;
-	objx1->diffuse = 0.5;
-	objx1->shininess = 500;
-	objx1->reflective = 0.3;
-	objx1->scale = ft_create_vct(1, 1, 1);
-	objx1->orientation = ft_create_vct(0, 0, 1);
-	*/
 
 	t_obj *obj2 = malloc(sizeof(t_obj));
 	obj2->type = t_sphere;
@@ -223,12 +209,12 @@ t_scene	get_test_scene(void)
 	//ft_void_arr_add(&scene.objs, obj4);
 	//ft_void_arr_add(&scene.objs, obj10);
 	//ft_void_arr_add(&scene.objs, obj6);
-	//ft_void_arr_add(&scene.objs, obj7);
+	ft_void_arr_add(&scene.objs, obj7);
 	ft_void_arr_add(&scene.objs, back);
-	//ft_void_arr_add(&scene.objs, r);
-	//ft_void_arr_add(&scene.objs, l);
-	//ft_void_arr_add(&scene.objs, up);
-	//ft_void_arr_add(&scene.objs, front);
+	ft_void_arr_add(&scene.objs, r);
+	ft_void_arr_add(&scene.objs, l);
+	ft_void_arr_add(&scene.objs, up);
+	ft_void_arr_add(&scene.objs, front);
 
 	// Lights
 	ft_init_void_arr(&scene.lights);

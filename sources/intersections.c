@@ -99,8 +99,8 @@ void	ft_cylinder_intersection(t_ray ray, t_obj *obj, t_xs *xs)
 
 void	ft_ray_to_obj_space(t_ray *obj_ray, t_ray *world_ray, t_obj *obj)
 {
-	ft_vct_mtrx_mult(&obj_ray->O, &obj->world_to_obj, &world_ray->O);
-	ft_vct_mtrx_mult(&obj_ray->D, &obj->world_to_obj, &world_ray->D);
+	ft_vct_x_mtrx(&obj_ray->O, &obj->world_to_obj, &world_ray->O);
+	ft_vct_x_mtrx(&obj_ray->D, &obj->world_to_obj, &world_ray->D);
 }
 
 void	ft_get_intrscs(t_ray world_ray, t_scene *scene, t_xs *xs)

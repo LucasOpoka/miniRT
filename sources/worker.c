@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:29:51 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/04 11:05:17 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/04 16:29:37 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -81,9 +81,7 @@ void	worker_render_section(t_worker *worker, t_scene *scene, int i)
 		int x = 0;
 		while (x < CANV_WDTH)
 		{
-			xs->i = 0;
 			ft_pixel_to_ray(&ray, x, y, &scene->cam);
-			bvh_intersect(ray, scene, xs);
 			color = ft_final_color(&ray, scene, 5, xs);
 			mlx_put_pixel(worker->mrt->img, x, y, ft_clr_to_int(color));
 			x++;

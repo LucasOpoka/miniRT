@@ -19,8 +19,8 @@ void	ft_sphere_normal_and_color(t_comps *comps)
 
 	obj = comps->obj;
 	world_point = &comps->point;
-	ft_vct_mtrx_mult(&obj_point, &obj->world_to_obj, world_point);
-	ft_vct_mtrx_mult(&comps->normal, &obj->normal_to_world, &obj_point);
+	ft_vct_x_mtrx(&obj_point, &obj->world_to_obj, world_point);
+	ft_vct_x_mtrx(&comps->normal, &obj->normal_to_world, &obj_point);
 	comps->normal.w = 0;
 	ft_vct_norm(&comps->normal);
 	comps->color = obj->color;
@@ -35,10 +35,10 @@ void	ft_plane_normal_and_color(t_comps *comps)
 	obj = comps->obj;
 	ft_bzero(&obj_normal, sizeof(t_vct));
 	obj_normal.y = 1;
-	ft_vct_mtrx_mult(&comps->normal, &obj->normal_to_world, &obj_normal);
+	ft_vct_x_mtrx(&comps->normal, &obj->normal_to_world, &obj_normal);
 	comps->normal.w = 0;
 	ft_vct_norm(&comps->normal);
-	ft_vct_mtrx_mult(&obj_point, &obj->world_to_obj, &comps->point);
+	ft_vct_x_mtrx(&obj_point, &obj->world_to_obj, &comps->point);
 	if ((int)(floor(obj_point.x) + floor(obj_point.z)) % 2 == 0)
 		comps->color = ft_create_clr(255, 255, 255);
 	else
@@ -53,7 +53,7 @@ void	ft_cylinder_normal_and_color(t_comps *comps)
 	double	dist;
 
 	obj = comps->obj;
-	ft_vct_mtrx_mult(&obj_point, &obj->world_to_obj, &comps->point);
+	ft_vct_x_mtrx(&obj_point, &obj->world_to_obj, &comps->point);
 	obj_point.w = 0;
 	dist = obj_point.x * obj_point.x + obj_point.z * obj_point.z;
 	ft_bzero(&obj_normal, sizeof(t_vct));
@@ -67,7 +67,7 @@ void	ft_cylinder_normal_and_color(t_comps *comps)
 		obj_normal.z = obj_point.z;
 		ft_vct_norm(&obj_normal);
 	}
-	ft_vct_mtrx_mult(&comps->normal, &obj->normal_to_world, &obj_normal);
+	ft_vct_x_mtrx(&comps->normal, &obj->normal_to_world, &obj_normal);
 	comps->normal.w = 0;
 	ft_vct_norm(&comps->normal);
 	comps->color = obj->color;

@@ -15,7 +15,7 @@
 t_vct	ft_create_vct(double x, double y, double z);
 double	ft_vct_dot(const t_vct *a, const t_vct *b);
 double	ft_vct_dot2(const t_vct *a, const t_vct *b);
-t_vct	ft_vct_sclr_mult(const t_vct *a, double b);
+t_vct	ft_vct_x_sclr(const t_vct *a, double b);
 t_vct	ft_vct_sclr_div(const t_vct *a, double b);
 t_vct	ft_vct_neg(const t_vct *a);
 t_vct	ft_vct_sub(const t_vct *a, const t_vct *b);

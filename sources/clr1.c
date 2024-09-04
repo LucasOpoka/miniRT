@@ -41,7 +41,7 @@ t_clr	ft_clr_scl(t_clr clr, double x)
 	return (res);
 }
 
-t_clr	ft_clrs_mult(t_clr a, t_clr b)
+t_clr	ft_clr_x_clr(t_clr a, t_clr b)
 {
 	t_clr	res;
 

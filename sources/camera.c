@@ -67,7 +67,7 @@ void	ft_world_to_cam(t_mtrx4 *world_to_cam, t_vct *cam_pos, t_vct *cam_up,
 	rot_matrix[2][2] = -cam_dir->z;
 	rot_matrix[3][3] = 1;
 	ft_set_trnsl_mtrx(&trnsl_matrix, -cam_pos->x, -cam_pos->y, -cam_pos->z);
-	ft_mtrx_mtrx_mult(world_to_cam, &rot_matrix, &trnsl_matrix);
+	ft_mtrx_x_mtrx(world_to_cam, &rot_matrix, &trnsl_matrix);
 }
 
 void	ft_pixel_to_ray(t_ray *world_ray, double x, double y, t_cam *cam)
@@ -81,8 +81,8 @@ void	ft_pixel_to_ray(t_ray *world_ray, double x, double y, t_cam *cam)
 	cam_ray.D.w = 1;
 	ft_bzero(&cam_ray.O, sizeof(t_vct));
 	cam_ray.O.w = 1;
-	ft_vct_mtrx_mult(&world_ray->O, &cam->cam_to_world, &cam_ray.O);
-	ft_vct_mtrx_mult(&pixel_world, &cam->cam_to_world, &cam_ray.D);
+	ft_vct_x_mtrx(&world_ray->O, &cam->cam_to_world, &cam_ray.O);
+	ft_vct_x_mtrx(&pixel_world, &cam->cam_to_world, &cam_ray.D);
 	world_ray->D = ft_vct_sub(&pixel_world, &world_ray->O);
 	world_ray->D.w = 0;
 	ft_vct_norm(&world_ray->D);

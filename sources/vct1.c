@@ -27,7 +27,7 @@ double	ft_vct_dot(const t_vct *a, const t_vct *b)
 	return (a->x * b->x + a->y * b->y + a->z * b->z + a->w * b->w);
 }
 
-t_vct	ft_vct_sclr_mult(const t_vct *a, double b)
+t_vct	ft_vct_x_sclr(const t_vct *a, double b)
 {
 	t_vct	res;
 

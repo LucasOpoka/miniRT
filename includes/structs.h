@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 14:16:04 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/04 15:58:14 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/04 16:18:26 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef STRUCTS_H
@@ -228,8 +228,8 @@ typedef struct s_refraction
 	double	cos_i;
 	double	sin2_t;
 	double	cos_t;
-	t_vct	tmp1;
-	t_vct	tmp2;
+	t_vct	v1;
+	t_vct	v2;
 }	t_refraction;
 
 typedef struct s_worker
