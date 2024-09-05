@@ -27,6 +27,8 @@ static int	obj_add_bonus_fields(t_obj *obj, char **elem)
 {
 	const size_t	size = array_size(elem);
 
+	if (!validate_vector(elem[size - 1]))
+		return (0);
 	fill_vector(&obj->scale, elem[size - 1]);
 	obj->transparency = ft_atof(elem[size - 2]);	
 	obj->refractive = ft_atof(elem[size - 3]);	
@@ -97,7 +99,8 @@ int	obj_add(t_scene *scene, char **elem, int id)
 	else if (id == ID_CYLINDER)
 		ret = cylinder_add(obj, elem);
 #ifdef BONUS
-	obj_add_bonus_fields(obj, elem);
+	if (ret)
+		ret = obj_add_bonus_fields(obj, elem);
 #endif
 	if (!ret)
 	{

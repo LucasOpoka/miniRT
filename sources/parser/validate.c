@@ -25,14 +25,17 @@ int	validate_orientation(t_vct v)
 
 int	validate_ratio(char	*s, double min, double max)
 {
-	size_t	len;
-	double	ratio;
+	const char	*dot = ft_strchr(s, '.');
+	const size_t	len = ft_strlen(s);
+	double		ratio;
 
-	len = ft_strlen(s);
-	if (len != 3)
-		return (0);
-	if (!ft_isdigit(s[0]) || s[1] != '.' || !ft_isdigit(s[2]))
-		return (0);
+	if (dot)
+	{
+		if (str_charcount(s, '.') != 1)
+			return (0);
+		if (len < 3 || dot != (s + 1))
+			return (0);
+	}
 	ratio = ft_atof(s);
 	if (ratio < min || ratio > max)
 		return (0);
