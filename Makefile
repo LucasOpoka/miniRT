@@ -6,7 +6,7 @@
 #    By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/29 14:59:04 by lopoka            #+#    #+#              #
-#    Updated: 2024/09/05 11:04:30 by lopoka           ###   ########.fr        #
+#    Updated: 2024/09/05 11:37:54 by lopoka           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,14 +27,16 @@ SOURCES	=	main.c \
 			init.c \
 			close.c \
 			void_arr.c \
-			intersections_arr.c \
-			vct1.c \
-			vct2.c \
-			mtrx1.c \
-			mtrx2.c \
-			mtrx3.c \
-			clr1.c \
-			clr2.c \
+			operations/vct1.c \
+			operations/vct2.c \
+			operations/mtrx1.c \
+			operations/mtrx2.c \
+			operations/mtrx3.c \
+			operations/clr1.c \
+			operations/clr2.c \
+			intersections/intersections.c \
+			intersections/cylinder.c \
+			intersections/intersections_arr.c \
 			camera.c \
 			scene.c \
 			show_img.c \
@@ -49,8 +51,6 @@ SOURCES	=	main.c \
 			get_test_scene.c \
 			phong.c \
 			get_color.c \
-			intersections.c \
-			cylinder.c \
 
 PARSER_DIR = sources/parser
 PARSER_SRC = parser.c parser_utils.c validate.c file.c array.c \
