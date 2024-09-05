@@ -6,12 +6,12 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:29:57 by atorma            #+#    #+#             */
-/*   Updated: 2024/08/31 17:43:30 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/05 17:56:23 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft/libft.h"
-#include "../includes/miniRT.h"
+#include "../../libft/libft.h"
+#include "../../includes/miniRT.h"
 #include <pthread.h>
 
 t_worker	*worker_init(t_mrt *mrt, t_scene *scene, int i);

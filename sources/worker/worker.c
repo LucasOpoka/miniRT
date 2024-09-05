@@ -6,11 +6,11 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:29:51 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/04 16:29:37 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/05 17:56:14 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../includes/miniRT.h"
-#include "../includes/bvh.h"
+#include "../../includes/miniRT.h"
+#include "../../includes/bvh.h"
 #include <pthread.h>
 
 long long	time_ms(void);

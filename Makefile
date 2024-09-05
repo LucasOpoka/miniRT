@@ -6,7 +6,7 @@
 #    By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/29 14:59:04 by lopoka            #+#    #+#              #
-#    Updated: 2024/09/05 17:50:30 by atorma           ###   ########.fr        #
+#    Updated: 2024/09/05 17:55:54 by atorma           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,8 +41,6 @@ SOURCES	=	main.c \
 			camera.c \
 			scene.c \
 			render.c \
-			thread.c \
-			worker.c \
 			heap_sort.c \
 			obj_transforms.c \
 			prep_comps1.c \
@@ -61,8 +59,12 @@ BVH_DIR = sources/bvh
 BVH_SRC = bvh.c bvh_intersect.c bvh_utils.c bounds.c node.c aabb.c split.c 
 BVH_OBJ = $(addprefix $(BVH_DIR)/,$(BVH_SRC:.c=.o))
 
+WORKER_DIR = sources/worker
+WORKER_SRC = thread.c worker.c
+WORKER_OBJ = $(addprefix $(WORKER_DIR)/,$(WORKER_SRC:.c=.o))
+
 OFILES = $(addprefix $(SOURCE_DIR)/,$(SOURCES:.c=.o))
-OFILES += $(PARSER_OBJ) $(BVH_OBJ)
+OFILES += $(PARSER_OBJ) $(BVH_OBJ) $(WORKER_OBJ)
 
 target debug: CFLAGS = -Wall -Wextra -Werror -fsanitize=address,undefined -O1 -g
 target debug: CDEBUG = -DDEBUG=1
