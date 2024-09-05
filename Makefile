@@ -6,7 +6,7 @@
 #    By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/29 14:59:04 by lopoka            #+#    #+#              #
-#    Updated: 2024/09/05 14:39:07 by lopoka           ###   ########.fr        #
+#    Updated: 2024/09/05 15:48:35 by lopoka           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ SOURCES	=	main.c \
 			init.c \
 			close.c \
 			void_arr.c \
+			operations/point.c \
 			operations/vct1.c \
 			operations/vct2.c \
 			operations/mtrx1.c \

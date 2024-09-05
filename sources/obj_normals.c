@@ -6,7 +6,7 @@
 /*   By: lucas <lopoka@student.hive.fi>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 16:17:04 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/05 14:27:58 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/05 16:07:25 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -33,8 +33,7 @@ void	ft_plane_normal_and_color(t_comps *comps)
 	t_vct	obj_point;	
 
 	obj = comps->obj;
-	ft_bzero(&obj_normal, sizeof(t_vct));
-	obj_normal.y = 1;
+	obj_normal = ft_create_vct(0, 1, 0);
 	ft_vct_x_mtrx(&comps->normal, &obj->normal_to_world, &obj_normal);
 	comps->normal.w = 0;
 	ft_vct_norm(&comps->normal);
@@ -56,7 +55,7 @@ void	ft_cylinder_normal_and_color(t_comps *comps)
 	ft_vct_x_mtrx(&obj_point, &obj->world_to_obj, &comps->point);
 	obj_point.w = 1;
 	dist = pow(obj_point.x, 2) + pow(obj_point.z, 2);
-	ft_bzero(&obj_normal, sizeof(t_vct));
+	obj_normal = ft_create_vct(0, 0, 0);
 	if (dist < 1 && (obj_point.y >= obj->height / 2 - EPSILON))
 		obj_normal.y = 1;
 	else if (dist < 1 && (obj_point.y <= -obj->height / 2 + EPSILON))

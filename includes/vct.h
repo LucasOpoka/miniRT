@@ -6,13 +6,14 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 13:02:34 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/01 11:17:25 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/05 15:48:13 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef VCT_H
 # define VCT_H
 
 t_vct	ft_create_vct(double x, double y, double z);
+t_vct	ft_create_point(double x, double y, double z);
 double	ft_vct_dot(const t_vct *a, const t_vct *b);
 double	ft_vct_dot2(const t_vct *a, const t_vct *b);
 t_vct	ft_vct_x_sclr(const t_vct *a, double b);
