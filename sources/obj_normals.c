@@ -6,7 +6,7 @@
 /*   By: lucas <lopoka@student.hive.fi>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 16:17:04 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/04 18:56:55 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/05 14:27:58 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -73,6 +73,15 @@ void	ft_cylinder_normal_and_color(t_comps *comps)
 	comps->color = obj->color;
 }
 
+void	ft_triangle_normal_and_color(t_comps *comps)
+{
+	t_obj	*obj;
+
+	obj = comps->obj;
+	comps->normal = obj->normal;
+	comps->color = obj->color;
+}
+
 void	ft_get_obj_normal_and_color(t_comps *comps)
 {
 	if (comps->obj->type == t_sphere)
@@ -81,4 +90,6 @@ void	ft_get_obj_normal_and_color(t_comps *comps)
 		return (ft_plane_normal_and_color(comps));
 	if (comps->obj->type == t_cylinder)
 		return (ft_cylinder_normal_and_color(comps));
+	if (comps->obj->type == t_triangle)
+		return (ft_triangle_normal_and_color(comps));
 }

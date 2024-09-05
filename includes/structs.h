@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 14:16:04 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/05 11:08:54 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/05 14:30:54 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef STRUCTS_H
@@ -93,6 +93,12 @@ typedef struct s_obj
 	t_mtrx4	obj_to_world;
 	t_mtrx4	world_to_obj;
 	t_mtrx4	normal_to_world;
+	t_vct	normal;	//for triangle
+	t_vct	e1;
+	t_vct	e2;
+	t_vct	p1;
+	t_vct	p2;
+	t_vct	p3;
 }	t_obj;
 
 typedef struct s_light
@@ -114,7 +120,8 @@ typedef enum e_obj_type
 {
 	t_sphere,
 	t_plane,
-	t_cylinder
+	t_cylinder,
+	t_triangle
 }	t_obj_type;
 
 typedef struct s_void_arr
@@ -192,6 +199,18 @@ typedef struct s_cl_xs
 	double	y[2];
 	double	half_h;
 }	t_cl_xs;
+
+typedef struct s_tri_xs
+{	
+	t_vct	dir_cros_e2;
+	double	det;
+	double	f;
+	t_vct	p1_to_origin;
+	double	u;
+	t_vct	origin_cross_e1;
+	double	v;
+	double	t;
+}	t_tri_xs;
 
 typedef struct s_comps
 {
