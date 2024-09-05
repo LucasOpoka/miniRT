@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:29:51 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/05 18:30:48 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/05 18:33:55 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../includes/miniRT.h"
@@ -104,7 +104,5 @@ void	*worker_routine(void *ptr)
 		}
 		worker_signal_finish(worker);	
 	}
-	//ft_free_xs(&worker->xs);
-	//free(ptr);
 	return (NULL);
 }
