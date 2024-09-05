@@ -28,6 +28,10 @@ static int	obj_validate_bonus(t_obj *obj)
 {
 	if (obj->transparency < 0 || obj->transparency > 1.0)
 		return (0);
+	if (obj->reflective < 0 || obj->reflective > 1.0)
+		return (0);
+	if (obj->diffuse < 0 || obj->diffuse > 1.0)
+		return (0);
 	return (1);
 }
 
