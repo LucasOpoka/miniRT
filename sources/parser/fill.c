@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 18:07:30 by atorma            #+#    #+#             */
-/*   Updated: 2024/08/24 18:07:31 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/05 20:39:15 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,11 @@ int	fill_color(t_clr *vector, char	*s)
 		colon = ft_strchr(s, ',');
 		val = ft_atof(s);
 		if (i == 0)
-			vector->r = val;
+			vector->r = val / 255;
 		if (i == 1)
-			vector->g = val;
+			vector->g = val / 255;
 		if (i == 2)
-			vector->b = val;
+			vector->b = val / 255;
 		if (colon)
 			s = colon + 1;
 		i++;
