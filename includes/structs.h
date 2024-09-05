@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 14:16:04 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/04 16:18:26 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/05 11:08:54 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef STRUCTS_H
@@ -180,6 +180,18 @@ typedef struct s_xs
 	size_t		i;
 	size_t		to_add;
 }	t_xs;
+
+typedef struct s_cl_xs
+{
+	double	a;
+	double	b;
+	double	c;
+	double	disc;
+	double	t[2];
+	double	tmp;
+	double	y[2];
+	double	half_h;
+}	t_cl_xs;
 
 typedef struct s_comps
 {
