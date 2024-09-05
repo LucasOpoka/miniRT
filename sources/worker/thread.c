@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:29:57 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/05 17:56:23 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/05 18:31:28 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,27 @@
 #include "../../includes/miniRT.h"
 #include <pthread.h>
 
-t_worker	*worker_init(t_mrt *mrt, t_scene *scene, int i);
+int	worker_init(t_mrt *mrt, t_scene *scene, t_worker *worker, int i);
 void	*worker_routine(void *ptr);
+
 
 int	threads_create(t_mrt *mrt, t_scene *scene)
 {
-	size_t	i;
+	size_t	    i;
+	t_worker    *worker;
 
 	i = 0;
+	mrt->thread_count = 0;
+	mrt->workers = ft_calloc(1, sizeof(t_worker) * MAX_THREADS);
+	if (!mrt->workers)
+		return (0);
 	while (i < MAX_THREADS)
 	{
-		t_worker *worker = worker_init(mrt, scene, i);
-		if (pthread_create(&mrt->threads[i], NULL, worker_routine, worker) != 0)
-		{
-			free(worker);
+		worker = (t_worker *)&mrt->workers[i];
+		if (!worker_init(mrt, scene, worker, i))
 			return (0);
-		}
+		if (pthread_create(&mrt->threads[i], NULL, worker_routine, worker) != 0)
+			return (0);
 		i++;
 		mrt->thread_count = i;
 	}
@@ -72,6 +77,8 @@ void	threads_join(t_mrt *mrt)
 	while (i < mrt->thread_count)
 	{
 		pthread_join(mrt->threads[i], NULL);
+		ft_free_xs(&mrt->workers[i].xs);
 		i++;
 	}
+	free(mrt->workers);
 }

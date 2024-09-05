@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:29:51 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/05 17:56:14 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/05 18:30:48 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../includes/miniRT.h"
@@ -15,18 +15,13 @@
 
 long long	time_ms(void);
 
-t_worker	*worker_init(t_mrt *mrt, t_scene *scene, int i)
+int worker_init(t_mrt *mrt, t_scene *scene, t_worker *worker, int i)
 {
-	t_worker	*worker;
-
-	worker = ft_calloc(1, (sizeof(t_worker)));
-	if (!worker)
-		return (0);
 	worker->mrt = mrt;
 	worker->scene = scene;
 	worker->index = i;
 	ft_init_xs(&worker->xs);
-	return (worker);
+	return (1);
 }
 
 int	worker_wait(t_worker *worker)
@@ -109,7 +104,7 @@ void	*worker_routine(void *ptr)
 		}
 		worker_signal_finish(worker);	
 	}
-	ft_free_xs(&worker->xs);
-	free(ptr);
+	//ft_free_xs(&worker->xs);
+	//free(ptr);
 	return (NULL);
 }
