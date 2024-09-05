@@ -32,6 +32,10 @@ static int	obj_validate_bonus(t_obj *obj)
 		return (0);
 	if (obj->diffuse < 0 || obj->diffuse > 1.0)
 		return (0);
+	if (obj->specular < 0 || obj->specular > 1.0)
+		return (0);
+	if (obj->shininess < 0 || obj->refractive < 0)
+		return (0);
 	return (1);
 }
 
