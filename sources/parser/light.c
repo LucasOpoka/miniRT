@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 18:07:41 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/05 20:38:52 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/05 20:59:02 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,9 @@ int	light_add_point(t_light *light, char **elem)
 	light->intensity = ft_atof(elem[2]);
 	if (!fill_color(&light->color, elem[3]))
 		return (0);
-	light->dir = ft_create_vct(1, -1, 0);
+#ifdef BONUS
+	fill_vector(&light->dir, elem[4]);
+#endif
 	return (1);
 }
 
@@ -51,6 +53,8 @@ int	light_add(t_scene *scene, char **elem, int id)
 	if (!light)
 		return (0);
 	if (id == ID_LIGHT)
+		ret = light_add_point(light, elem);
+	if (id == ID_LIGHT_POINT)
 		ret = light_add_point(light, elem);
 	if (!ret)
 	{

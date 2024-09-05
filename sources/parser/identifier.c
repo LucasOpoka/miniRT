@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 18:07:36 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/05 19:17:49 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/05 20:57:36 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 int	identifier_type(char *id)
 {
-	const char	*identifiers[] = {"A", "C", "L", "sp", "pl", "cy", 0 };
+	const char	*identifiers[] = {"A", "C", "L", "l", "sp", "pl", "cy", 0 };
 	size_t		i;
 
 	i = 0;
@@ -31,15 +31,19 @@ int	identifier_type(char *id)
 
 static int	validate_object_count(char **line, int id)
 {
-	const size_t	expected[] = { 3, 4, 4, 4, 4, 6, 0};
+	const size_t	expected[] = { 3, 4, 4, 4, 4, 4, 6, 0};
 	size_t	count;
 	size_t	expected_value;
 
 	count = array_size(line);
 	expected_value = expected[id];
 #ifdef BONUS
-	if (id >= 3)
-		expected_value += 7; //bonus fields
+	//Light point direction vct
+	if (id == 2 || id == 3)
+		expected_value += 1;
+	//Obj bonus fields
+	if (id >= 4)
+		expected_value += 7;
 #endif
 	if (expected_value != count)
 		return (0);

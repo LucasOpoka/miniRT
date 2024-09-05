@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 12:47:38 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/05 20:28:50 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/05 21:07:13 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -252,8 +252,8 @@ t_scene	get_test_scene(void)
 
 	
 	ft_void_arr_add(&scene.lights, light2);
-	//ft_void_arr_add(&scene.lights, light3);
-	//ft_void_arr_add(&scene.lights, light4);
+	ft_void_arr_add(&scene.lights, light3);
+	ft_void_arr_add(&scene.lights, light4);
 
 	return (scene);
 }

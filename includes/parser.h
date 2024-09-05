@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 20:43:35 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/05 20:43:36 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/05 20:56:51 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ enum
 	ID_AMBIENT,
 	ID_CAMERA,
 	ID_LIGHT,
+	ID_LIGHT_POINT,
 	ID_SPHERE,
 	ID_PLANE,
 	ID_CYLINDER,
