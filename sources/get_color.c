@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 16:47:05 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/04 16:27:22 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/05 10:37:03 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -27,7 +27,8 @@ t_clr	ft_final_color(t_ray *ray, t_scene *scene, int recur_lmt, t_xs *xs)
 	rec.xs = xs;
 	rec.recur_lmt = recur_lmt;
 	rec.xs->i = 0;
-	bvh_intersect(rec.ray, rec.scene, rec.xs);
+	//bvh_intersect(rec.ray, rec.scene, rec.xs);
+	ft_get_intrscs(rec.ray, rec.scene, rec.xs);
 	rec.comps = ft_prep_comps(&rec.ray, rec.xs);
 	final_color = ft_create_clr(0, 0, 0);
 	i = 0;

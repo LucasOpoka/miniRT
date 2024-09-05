@@ -6,7 +6,7 @@
 /*   By: lucas <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 13:41:19 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/02 16:31:03 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/04 20:20:47 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -32,11 +32,7 @@ void	ft_set_cam_matrices(t_cam *cam)
 {
 	t_vct	cam_up;
 
-	cam_up.x = 0;
-	cam_up.y = 1;
-	cam_up.z = 0;
-	cam_up.w = 0;
-	cam->dir.w = 1;
+	cam_up = ft_create_vct(0, 1, 0);
 	ft_vct_norm(&cam->dir);
 	ft_world_to_cam(&cam->world_to_cam, &cam->pos, &cam_up, &cam->dir);
 	ft_mtrx4_inv(&cam->cam_to_world, &cam->world_to_cam);
@@ -52,6 +48,8 @@ void	ft_world_to_cam(t_mtrx4 *world_to_cam, t_vct *cam_pos, t_vct *cam_up,
 
 	ft_vct_norm(cam_up);
 	ft_vct_cross_prod(&cam_left, cam_dir, cam_up);
+	if (ft_vct_len(&cam_left) < EPSILON)
+		cam_left = ft_create_vct(-1, 0, 0);
 	ft_vct_norm(&cam_left);
 	ft_vct_cross_prod(&cam_true_up, &cam_left, cam_dir);
 	ft_vct_norm(&cam_true_up);

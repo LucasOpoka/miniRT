@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 21:05:34 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/04 09:41:04 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/04 19:00:31 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -41,7 +41,7 @@ int	ft_check_caps(t_ray ray, double t)
 
 	x = ray.O.x + ray.D.x * t;
 	z = ray.O.z + ray.D.z * t;
-	return (x * x + z * z <= 1);
+	return (pow(x, 2) + pow(z, 2) <= 1);
 }
 
 void	ft_intersect_caps(t_ray ray, t_obj *obj, t_xs *xs)
@@ -70,12 +70,12 @@ void	ft_cylinder_intersection(t_ray ray, t_obj *obj, t_xs *xs)
 	double	y[2];
 	double	half_h;
 
-	a = ray.D.x * ray.D.x + ray.D.z * ray.D.z;
+	a = pow(ray.D.x, 2) + pow(ray.D.z, 2);
 	b = 2 * ray.O.x * ray.D.x + 2 * ray.O.z * ray.D.z;
-	c = ray.O.x * ray.O.x + ray.O.z * ray.O.z - 1;
-	disc = b * b - 4 * a * c;
+	c = pow(ray.O.x, 2) + pow(ray.O.z, 2) - 1;
+	disc = pow(b, 2) - 4 * a * c;
 
-	if (disc >= 0)
+	if (disc >= 0 && a > EPSILON)
 	{
 		disc = sqrt(disc);
 		t[0] = (-b - disc) / (2 * a);
