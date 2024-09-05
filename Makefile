@@ -6,7 +6,7 @@
 #    By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/29 14:59:04 by lopoka            #+#    #+#              #
-#    Updated: 2024/09/05 15:48:35 by lopoka           ###   ########.fr        #
+#    Updated: 2024/09/05 17:50:30 by atorma           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,6 @@ SOURCE_DIR = sources
 SOURCES	=	main.c \
 			hooks.c \
 			init.c \
-			close.c \
 			void_arr.c \
 			operations/point.c \
 			operations/vct1.c \
@@ -41,7 +40,6 @@ SOURCES	=	main.c \
 			intersections/intersections_arr.c \
 			camera.c \
 			scene.c \
-			show_img.c \
 			render.c \
 			thread.c \
 			worker.c \
