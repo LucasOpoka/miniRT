@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 18:07:41 by atorma            #+#    #+#             */
-/*   Updated: 2024/08/24 18:07:42 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/05 19:48:42 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,12 @@ int	light_add(t_scene *scene, char **elem, int id)
 	int		ret;
 
 	ret = 0;
+	if (id == ID_AMBIENT)
+		return (light_add_ambient(&scene->ambient, elem));
 	light = malloc(sizeof(t_light));
 	if (!light)
 		return (0);
-	if (id == ID_AMBIENT)
-		ret = light_add_ambient(&scene->ambient, elem);
-	else if (id == ID_LIGHT)
+	if (id == ID_LIGHT)
 		ret = light_add_point(light, elem);
 	if (!ret)
 	{

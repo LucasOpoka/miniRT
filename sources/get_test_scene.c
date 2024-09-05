@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 12:47:38 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/05 17:34:04 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/05 19:56:26 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -217,7 +217,7 @@ t_scene	get_test_scene(void)
 	//ft_void_arr_add(&scene.objs, obj4);
 	//ft_void_arr_add(&scene.objs, obj10);
 	ft_void_arr_add(&scene.objs, cylinder);
-	ft_void_arr_add(&scene.objs, obj7);
+	//ft_void_arr_add(&scene.objs, obj7);
 	ft_void_arr_add(&scene.objs, back);
 	//ft_void_arr_add(&scene.objs, r);
 	//ft_void_arr_add(&scene.objs, l);

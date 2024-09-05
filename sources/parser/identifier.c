@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 18:07:36 by atorma            #+#    #+#             */
-/*   Updated: 2024/08/24 18:07:37 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/05 19:17:49 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,15 @@ static int	validate_object_count(char **line, int id)
 {
 	const size_t	expected[] = { 3, 4, 4, 4, 4, 6, 0};
 	size_t	count;
+	size_t	expected_value;
 
 	count = array_size(line);
-	if (expected[id] != count)
+	expected_value = expected[id];
+#ifdef BONUS
+	if (id >= 3)
+		expected_value += 7; //bonus fields
+#endif
+	if (expected_value != count)
 		return (0);
 	return (1);
 }
@@ -76,6 +82,7 @@ int	identifiers_validate(char ***elements)
 		if (!validate_object_count(elements[i], identifier_type(elements[i][0])))
 		{
 			parser_error("invalid element count on an object");
+			printf("obj: %s\n", elements[i][0]);
 			return (0);
 		}
 		i++;

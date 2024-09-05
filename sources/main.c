@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 17:47:44 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/05 18:26:46 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/05 20:17:12 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -16,6 +16,30 @@ void	scene_free(t_scene *scene);
 void	render(t_mrt *mrt, t_scene *scene);
 int		threads_init(t_mrt *mrt, t_scene *scene);
 void	close_hook(void *ptr);
+
+void	print_objects(t_scene *scene)
+{
+	size_t	i = 0;
+	char	*type = "unknown";
+	while (i < scene->objs.i)
+	{
+		t_obj *obj = (t_obj *) scene->objs.arr[i++];
+		if (obj->type == t_sphere)
+			type = "sphere";
+		if (obj->type == t_cylinder)
+			type = "cylinder";
+		if (obj->type == t_plane)
+			type = "plane";
+		printf("---- OBJ %s ----\n", type);
+		printf("radius: %f\n", obj->radius);
+		printf("specular: %f\n", obj->specular);
+		printf("diffuse: %f\n", obj->diffuse);
+		printf("shininess: %d\n", obj->shininess);
+		printf("reflective: %f\n", obj->reflective);
+		printf("refractive: %f\n", obj->refractive);
+		printf("transparency: %f\n", obj->transparency);
+	}
+}
 
 int	main(int ac, char **av)
 {
@@ -36,6 +60,7 @@ int	main(int ac, char **av)
 		return (EXIT_FAILURE);
 	}
 	printf("using scene: %s\n", av[1]);
+	print_objects(&scene);
 
 	scene.bvh.root = bvh_build(&scene);
 
