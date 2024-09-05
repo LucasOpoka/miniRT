@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 16:52:11 by atorma            #+#    #+#             */
-/*   Updated: 2024/08/28 16:52:13 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/05 17:48:33 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,14 @@ void	cylinder_bounds(t_bounds *bounds, t_obj *cylinder)
 	const t_vct	scale = cylinder->scale;
 	const t_vct	pos = cylinder->pos;
 	const double	radius = 1;
+	const double	height = cylinder->height;
 
 	bounds->min[0] = scale.x * -radius + pos.x;
 	bounds->max[0] = scale.x * radius + pos.x;
 	bounds->min[1] = scale.y * -radius + pos.y;
 	bounds->max[1] = scale.y * radius + pos.y;
-	bounds->min[2] = scale.z * -(cylinder->height / 2.0) + pos.z;
-	bounds->max[2] = scale.z * (cylinder->height / 2.0) + pos.z;
+	bounds->min[2] = scale.z * -height + pos.z;
+	bounds->max[2] = scale.z * height + pos.z;
 }
 
 void	bounds_update(t_bounds *bounds, t_obj *obj)

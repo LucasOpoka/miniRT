@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 12:47:38 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/05 16:34:06 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/05 17:34:04 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -54,7 +54,7 @@ t_scene	get_test_scene(void)
 
 	t_obj *obj3 = malloc(sizeof(t_obj));
 	obj3->type = t_sphere;
-	obj3->pos = ft_create_point(0, 0, 0); //ON THE LEFT
+	obj3->pos = ft_create_point(-2, 0, 0); //ON THE LEFT
 	obj3->radius = 0.5;
 	obj3->color = ft_create_clr(0, 255, 0); // GREEN
 	obj3->specular = 0.9;
@@ -213,10 +213,10 @@ t_scene	get_test_scene(void)
 
 	//ft_void_arr_add(&scene.objs, obj1);
 	//ft_void_arr_add(&scene.objs, air_bubble);
-	//ft_void_arr_add(&scene.objs, obj3);
+	ft_void_arr_add(&scene.objs, obj3);
 	//ft_void_arr_add(&scene.objs, obj4);
 	//ft_void_arr_add(&scene.objs, obj10);
-	//ft_void_arr_add(&scene.objs, cylinder);
+	ft_void_arr_add(&scene.objs, cylinder);
 	ft_void_arr_add(&scene.objs, obj7);
 	ft_void_arr_add(&scene.objs, back);
 	//ft_void_arr_add(&scene.objs, r);
