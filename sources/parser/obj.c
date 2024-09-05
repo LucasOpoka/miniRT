@@ -23,6 +23,14 @@ int	validate_orientation(t_vct v);
 */
 
 #ifdef BONUS
+
+static int	obj_validate_bonus(t_obj *obj)
+{
+	if (obj->transparency < 0 || obj->transparency > 1.0)
+		return (0);
+	return (1);
+}
+
 static int	obj_add_bonus_fields(t_obj *obj, char **elem)
 {
 	const size_t	size = array_size(elem);
@@ -36,8 +44,11 @@ static int	obj_add_bonus_fields(t_obj *obj, char **elem)
 	obj->shininess = ft_atoi(elem[size - 5]);	
 	obj->diffuse = ft_atof(elem[size - 6]);	
 	obj->specular = ft_atof(elem[size - 7]);	
+	if (!obj_validate_bonus(obj))
+		return (0);
 	return (1);
 }
+
 #endif
 
 static int	sphere_add(t_obj *obj, char **elem)
