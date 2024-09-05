@@ -45,6 +45,12 @@ static int	obj_add_bonus_fields(t_obj *obj, char **elem)
 
 	if (!validate_vector(elem[size - 1]))
 		return (0);
+	if (!validate_ratio(elem[size - 2], 0.0, 1.0))
+		return (0);
+	if (!validate_ratio(elem[size - 2], 0.0, 1.0))
+		return (0);
+	if ((!str_isdigit(elem[size - 5])) || ft_strlen(elem[size - 5]) >= 4)
+		return (0);
 	fill_vector(&obj->scale, elem[size - 1]);
 	obj->transparency = ft_atof(elem[size - 2]);	
 	obj->refractive = ft_atof(elem[size - 3]);	
@@ -52,9 +58,7 @@ static int	obj_add_bonus_fields(t_obj *obj, char **elem)
 	obj->shininess = ft_atoi(elem[size - 5]);	
 	obj->diffuse = ft_atof(elem[size - 6]);	
 	obj->specular = ft_atof(elem[size - 7]);	
-	if (!obj_validate_bonus(obj))
-		return (0);
-	return (1);
+	return (obj_validate_bonus(obj));
 }
 
 #endif

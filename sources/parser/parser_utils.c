@@ -20,7 +20,7 @@ int	str_isdigit(char *s)
 		return (0);
 	while (*s)
 	{
-		if (ft_isdigit(!s))
+		if (!ft_isdigit(*s))
 			return (0);
 		s++;
 	}

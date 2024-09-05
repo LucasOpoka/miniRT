@@ -27,8 +27,11 @@ t_clr	ft_final_color(t_ray *ray, t_scene *scene, int recur_lmt, t_xs *xs)
 	rec.xs = xs;
 	rec.recur_lmt = recur_lmt;
 	rec.xs->i = 0;
+#ifdef BVH
 	bvh_intersect(rec.ray, rec.scene, rec.xs);
-	//ft_get_intrscs(rec.ray, rec.scene, rec.xs);
+#else
+	ft_get_intrscs(rec.ray, rec.scene, rec.xs);
+#endif
 	rec.comps = ft_prep_comps(&rec.ray, rec.xs);
 	final_color = ft_create_clr(0, 0, 0);
 	i = 0;
@@ -78,7 +81,11 @@ t_clr	ft_reflection(t_clr_recur rec)
 	rec.ray.O = rec.comps.over_point;
 	rec.ray.D = rec.comps.reflect;
 	rec.xs->i = 0;
+#ifdef BVH
+	bvh_intersect(rec.ray, rec.scene, rec.xs);
+#else
 	ft_get_intrscs(rec.ray, rec.scene, rec.xs);
+#endif
 	rec.comps = ft_prep_comps(&rec.ray, rec.xs);
 	res = ft_light_color(rec);
 	res = ft_clr_scl(res, reflective);
@@ -104,7 +111,11 @@ t_clr	ft_refraction(t_clr_recur rec)
 	rec.ray.D = ft_vct_sub(&rf.v1, &rf.v2);
 	rec.ray.O = rec.comps.under_point;
 	rec.xs->i = 0;
+#ifdef BVH
+	bvh_intersect(rec.ray, rec.scene, rec.xs);
+#else
 	ft_get_intrscs(rec.ray, rec.scene, rec.xs);
+#endif
 	rec.comps = ft_prep_comps(&rec.ray, rec.xs);
 	rf.res = ft_light_color(rec);
 	rf.res = ft_clr_scl(rf.res, rf.transparency);

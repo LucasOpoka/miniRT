@@ -15,6 +15,7 @@
 
 #include "miniRT.h"
 
+# define BVH
 # define BVH_MAX_NODES 10 * 1024
 # define BVH_MIN_CHILDREN 1
 

@@ -176,6 +176,7 @@ t_scene	get_test_scene(void)
 	cylinder->shininess = 100;
 	cylinder->reflective = 0.9;
 	cylinder->refractive = 1.5;
+	cylinder->radius = 1;
 	cylinder->transparency = 0;
 	cylinder->scale = ft_create_vct(1, 1, 1);
 	cylinder->orientation = ft_create_vct(0, 0, 0);

@@ -86,7 +86,6 @@ int	identifiers_validate(char ***elements)
 		if (!validate_object_count(elements[i], identifier_type(elements[i][0])))
 		{
 			parser_error("invalid element count on an object");
-			printf("obj: %s\n", elements[i][0]);
 			return (0);
 		}
 		i++;

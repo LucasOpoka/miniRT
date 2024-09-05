@@ -27,14 +27,22 @@ int	validate_ratio(char	*s, double min, double max)
 {
 	const char	*dot = ft_strchr(s, '.');
 	const size_t	len = ft_strlen(s);
+	size_t		i;
 	double		ratio;
 
+	i = 0;
 	if (dot)
 	{
 		if (str_charcount(s, '.') != 1)
 			return (0);
 		if (len < 3 || dot != (s + 1))
 			return (0);
+	}
+	while (i < len)
+	{
+		if (s[i] != '.' && !ft_isdigit(s[i]))
+			return (0);
+		i++;
 	}
 	ratio = ft_atof(s);
 	if (ratio < min || ratio > max)

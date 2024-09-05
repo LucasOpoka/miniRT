@@ -55,9 +55,7 @@ int	light_add(t_scene *scene, char **elem, int id)
 	light = ft_calloc(1, sizeof(t_light));
 	if (!light)
 		return (0);
-	if (id == ID_LIGHT)
-		ret = light_add_point(light, elem);
-	if (id == ID_LIGHT_POINT)
+	if (id == ID_LIGHT || id == ID_LIGHT_POINT)
 		ret = light_add_point(light, elem);
 	if (!ret)
 	{

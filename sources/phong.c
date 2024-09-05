@@ -82,7 +82,11 @@ int	ft_shadow(t_clr_recur *rec)
 	ft_vct_norm(&point_to_light.D);
 	point_to_light.O = rec->comps.over_point;
 	rec->xs->i = 0;
+#ifdef BVH
+	bvh_intersect(point_to_light, rec->scene, rec->xs);
+#else
 	ft_get_intrscs(point_to_light, rec->scene, rec->xs);
+#endif
 	hit = ft_hit(rec->xs);
 	res = 0;
 	if (hit && hit->t < distance)
