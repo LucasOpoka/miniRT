@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 12:47:38 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/05 16:06:45 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/05 16:34:06 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -144,7 +144,7 @@ t_scene	get_test_scene(void)
 
 	t_obj *front = malloc(sizeof(t_obj));
 	front->type = t_plane;
-	front->pos = ft_create_point(0, 0, 10); //FORNT PLANE
+	front->pos = ft_create_point(0, 0, -10); //FORNT PLANE
 	front->color = ft_create_clr(255, 255, 0);
 	front->orientation = ft_create_vct(0, 0, 1);
 	front->specular = 0.9;
@@ -216,13 +216,14 @@ t_scene	get_test_scene(void)
 	//ft_void_arr_add(&scene.objs, obj3);
 	//ft_void_arr_add(&scene.objs, obj4);
 	//ft_void_arr_add(&scene.objs, obj10);
-	ft_void_arr_add(&scene.objs, cylinder);
-	//ft_void_arr_add(&scene.objs, obj7);
+	//ft_void_arr_add(&scene.objs, cylinder);
+	ft_void_arr_add(&scene.objs, obj7);
 	ft_void_arr_add(&scene.objs, back);
 	//ft_void_arr_add(&scene.objs, r);
 	//ft_void_arr_add(&scene.objs, l);
 	//ft_void_arr_add(&scene.objs, up);
 	//ft_void_arr_add(&scene.objs, front);
+	
 	//ft_void_arr_add(&scene.objs, tri);
 
 	// Lights

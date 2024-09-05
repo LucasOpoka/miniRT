@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 14:16:04 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/05 14:30:54 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/05 16:16:54 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef STRUCTS_H
@@ -215,20 +215,20 @@ typedef struct s_tri_xs
 typedef struct s_comps
 {
 	t_intrsc	*hit;
-	t_obj 	*obj;
-	double	t;
-	t_vct	point;
-	t_vct	eye;
-	t_vct	light;
-	t_vct	normal;
-	t_clr	color;
-	t_vct	reflect;
-	t_vct	over_point;
-	t_vct	under_point;
-	int		inside;
-	double	n1;
-	double	n2;
-	double	schlick;
+	t_obj 		*obj;
+	double		t;
+	t_vct		point;
+	t_vct		eye;
+	t_vct		light;
+	t_vct		normal;
+	t_clr		color;
+	t_vct		reflect;
+	t_vct		over_point;
+	t_vct		under_point;
+	int			inside;
+	double		n1;
+	double		n2;
+	double		schlick;
 }	t_comps;
 
 typedef struct s_phong
