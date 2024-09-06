@@ -34,6 +34,7 @@ enum
 	e_file_ppm
 };
 
+char	*file_load(char *file, int type);
 int	parser_error(char *err_str);
 int	str_isdigit(char *s);
 int	str_isdouble(char *s);

@@ -1,11 +1,8 @@
 
-#include "../../libft/libft.h"
 #include "../../includes/miniRT.h"
-#include "../../includes/parser.h"
 #include "../../includes/ppm.h"
 
 char	*file_load(char *file, int type);
-
 
 static char *line_next(t_ppm *ppm)
 {
