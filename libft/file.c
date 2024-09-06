@@ -31,10 +31,10 @@ static char	*re_alloc(void *ptr, int len, int new_len)
 static char	*read_buffered(int fd, int buf_size,
 		size_t *out_size, int *error)
 {
-	int		size_read;
+	char	temp_buf[1024];
+	ssize_t	size_read;
 	size_t	total_read;
 	char	*buf;
-	char	temp_buf[1024];
 
 	buf = malloc(buf_size + 1);
 	if (!buf)
@@ -46,7 +46,7 @@ static char	*read_buffered(int fd, int buf_size,
 		*error = size_read;
 		if (size_read <= 0)
 			break ;
-		buf_size += 1024;
+		buf_size += sizeof(temp_buf);
 		buf = re_alloc(buf, total_read, buf_size + 1);
 		if (!buf)
 			return (NULL);
@@ -63,6 +63,8 @@ char	*read_file(int fd, int buf_size, size_t *out_size)
 	int		error;
 	char	*data;
 
+	*out_size = 0;
+	error = -1;
 	data = read_buffered(fd, buf_size, out_size, &error);
 	if (error == -1)
 	{

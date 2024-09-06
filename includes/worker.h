@@ -14,6 +14,6 @@
 # define WORKER_H
 
 # define MAX_THREADS 6
-# define BLOCK_SIZE 6
+# define BLOCK_SIZE 4
 
 #endif

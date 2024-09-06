@@ -80,5 +80,8 @@ void	threads_join(t_mrt *mrt)
 		ft_free_xs(&mrt->workers[i].xs);
 		i++;
 	}
+	pthread_mutex_destroy(&mrt->lock);
+	pthread_cond_destroy(&mrt->notify);
+	pthread_cond_destroy(&mrt->complete);
 	free(mrt->workers);
 }

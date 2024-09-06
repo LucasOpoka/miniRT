@@ -16,6 +16,7 @@ void	render_image(t_mrt *mrt);
 
 void	threads_wait(t_mrt *mrt);
 void	threads_join(t_mrt *mrt);
+void	uninit_mlx(t_mrt *mrt);
 
 void	close_hook(void *ptr)
 {
@@ -28,10 +29,7 @@ void	close_hook(void *ptr)
 	pthread_cond_broadcast(&mrt->notify);
 	pthread_mutex_unlock(&mrt->lock);
 	printf("closing... threads finished\n");
-	if (mrt->img)
-		mlx_delete_image(mrt->mlx, mrt->img);
-	if (mrt->mlx)
-		mlx_close_window(mrt->mlx);
+	uninit_mlx(mrt);
 	threads_join(mrt);
 	printf("threads joined\n");
 }

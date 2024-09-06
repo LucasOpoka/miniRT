@@ -28,11 +28,11 @@ static int	file_validate_name(char	*str)
 
 static	int	valid_chars(char *s)
 {
-	const char	*chars = "-,.\n ";
+	const char	*chars = "ACLplscytr -,.\n";
 
 	while (*s)
 	{
-		if (!ft_isalnum(*s) && !ft_strchr(chars, *s))
+		if (!ft_isdigit(*s) && !ft_strchr(chars, *s))
 			return (0);
 		s++;
 	}
