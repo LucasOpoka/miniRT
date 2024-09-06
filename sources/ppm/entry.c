@@ -46,13 +46,13 @@ int  parse_header_entry(t_ppm *ppm)
 	s = ppm->line;
 	if (ppm->ptr == 1)
 	{
-		ppm->width = ft_atoi(s);
+		ppm->width = atoi_safe(s, 65536);
 		s = skip_digits(s, ' ');
-		if (!s)
+		if (ppm->width <= 0 || !s)
 			return (0);
 		s++;
-		ppm->height = ft_atoi(s);
-		if (!skip_digits(s, '\n'))
+		ppm->height = atoi_safe(s, 65536);
+		if (ppm->height <= 0 || !skip_digits(s, '\n'))
 			return (0);
 	}
 	if (ppm->ptr == 2)
@@ -68,16 +68,16 @@ int  parse_pixel_entry(t_ppm *ppm, int y)
 {
 	int	x;
 	int	i;
-	char	*s;
+	char	*line;
 
 	x = 0;
 	i = 0;
-	s = ppm->line;
-	while (s && *s && *s != '\n')
+	line = ppm->line;
+	while (line && *line && *line != '\n')
 	{
 		if (i > 2)
 			i = 0;
-		if (!fill_rgb(ppm, &ppm->colors[y][x], s, i))
+		if (!fill_rgb(ppm, &ppm->colors[y][x], line, i))
 			return (0);
 		if (i == 2)
 		{
@@ -86,7 +86,7 @@ int  parse_pixel_entry(t_ppm *ppm, int y)
 			printf("color.b: %f\n", ppm->colors[y][x].b);
 			x++;
 		}
-		s = line_next_pixel(s, ' ');
+		line = line_next_pixel(line, ' ');
 		i++;
 	}
 	return (x == ppm->width);
