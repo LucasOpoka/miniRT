@@ -70,24 +70,21 @@ static int  parse_pixels(t_ppm *ppm)
 	return (ppm->height == y);
 }
 
-static int  ppm_parse(char *s)
+static int  ppm_parse(t_ppm *ppm, char *data)
 {
-	t_ppm	ppm;
-
-	if (ft_strncmp("P3\n", s, 3) != 0)
+	if (ft_strncmp("P3\n", data, 3) != 0)
 		return (0);
-	ppm.ptr = 0;
-	ppm.data = s;
-	ppm.line = s;
-	if (!parse_header(&ppm))
+	ppm->ptr = 0;
+	ppm->data = data;
+	ppm->line = data;
+	if (!parse_header(ppm))
 		return (0);
-	printf("ppm.width: %d\n", ppm.width);
-	printf("ppm.height: %d\n", ppm.height);
-	printf("ppm.max_color: %d\n", ppm.max_color);
-	if (!ppm_matrix_alloc(&ppm))
+	printf("ppm->width: %d\n", ppm->width);
+	printf("ppm->height: %d\n", ppm->height);
+	printf("ppm->max_color: %d\n", ppm->max_color);
+	if (!ppm_matrix_alloc(ppm))
 		return (0);
-	printf("ppm->colors matrix allocated\n");
-	if (!parse_pixels(&ppm))
+	if (!parse_pixels(ppm))
 		return (0);
 	printf("pixels parsed\n");
 	return (1);
@@ -95,17 +92,20 @@ static int  ppm_parse(char *s)
 
 int	ppm_load(char	*file)
 {
+	t_ppm	ppm;
 	char	*data;
 
 	data = file_load(file, e_file_ppm);
 	if (!data)
 	{
-		printf("could not load ppm!\n");
+		printf("could not load ppm file!\n");
 		return (0);
 	}
-	if (!ppm_parse(data))
+	ft_bzero(&ppm, sizeof(t_ppm));
+	if (!ppm_parse(&ppm, data))
 	{
 		printf("ppm_parse error\n");
+		ppm_matrix_free(&ppm);
 		free(data);
 		return (0);
 	}
