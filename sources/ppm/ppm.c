@@ -58,6 +58,8 @@ static int  parse_pixels(t_ppm *ppm)
 	y = 0;
 	while (ppm->line && *ppm->line)
 	{
+		if (y >= ppm->height)
+			return (0);
 		if (*ppm->line != '#')
 		{
 			line_print(ppm);

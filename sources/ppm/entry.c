@@ -75,6 +75,8 @@ int  parse_pixel_entry(t_ppm *ppm, int y)
 	line = ppm->line;
 	while (line && *line && *line != '\n')
 	{
+		if (x >= ppm->width)
+			return (0);
 		if (i > 2)
 			i = 0;
 		if (!fill_rgb(ppm, &ppm->colors[y][x], line, i))
