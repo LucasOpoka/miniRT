@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 12:47:38 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/05 21:07:13 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/06 14:07:59 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -32,9 +32,9 @@ t_scene	get_test_scene(void)
 	obj1->specular = 0.9;
 	obj1->diffuse = 0;
 	obj1->shininess = 300;
-	obj1->reflective = 0.9;
+	obj1->reflective = 0;
 	obj1->refractive = 1.5;
-	obj1->transparency = 0.9;
+	obj1->transparency = 0;
 	obj1->scale = ft_create_vct(1, 1, 1);
 	obj1->orientation = ft_create_vct(0, 0, 0);
 
@@ -212,12 +212,12 @@ t_scene	get_test_scene(void)
 	tri->p3 = p3;
 
 
-	//ft_void_arr_add(&scene.objs, obj1);
+	ft_void_arr_add(&scene.objs, obj1);
 	//ft_void_arr_add(&scene.objs, air_bubble);
-	ft_void_arr_add(&scene.objs, obj3);
+	//ft_void_arr_add(&scene.objs, obj3);
 	//ft_void_arr_add(&scene.objs, obj4);
 	//ft_void_arr_add(&scene.objs, obj10);
-	ft_void_arr_add(&scene.objs, cylinder);
+	//ft_void_arr_add(&scene.objs, cylinder);
 	//ft_void_arr_add(&scene.objs, obj7);
 	ft_void_arr_add(&scene.objs, back);
 	//ft_void_arr_add(&scene.objs, r);

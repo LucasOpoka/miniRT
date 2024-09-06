@@ -6,7 +6,7 @@
 #    By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/29 14:59:04 by lopoka            #+#    #+#              #
-#    Updated: 2024/09/05 17:55:54 by atorma           ###   ########.fr        #
+#    Updated: 2024/09/06 13:35:38 by lopoka           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,6 +38,7 @@ SOURCES	=	main.c \
 			intersections/cylinder.c \
 			intersections/triangle.c \
 			intersections/intersections_arr.c \
+			patterns/patterns.c \
 			camera.c \
 			scene.c \
 			render.c \

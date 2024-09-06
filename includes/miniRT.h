@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:06:19 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/04 16:28:42 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/06 13:35:14 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINIRT_H
@@ -30,6 +30,7 @@
 # include "clr_math.h"
 # include "../libft/libft.h"
 # include "bvh.h"
+# include "patterns.h"
 
 # define EPSILON	0.0001f
 # define MAYA_STYLE	0

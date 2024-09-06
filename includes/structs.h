@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 14:16:04 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/05 18:28:04 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/06 13:18:01 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef STRUCTS_H
@@ -24,10 +24,10 @@ typedef struct s_mrt
 {
 	mlx_t				*mlx;
 	mlx_image_t			*img;
-	struct s_worker			*workers;
+	struct s_worker		*workers;
 	pthread_t			threads[MAX_THREADS + 1];
 	size_t				thread_count;
-	int				threads_finished;
+	int					threads_finished;
 	pthread_mutex_t		lock;
 	pthread_cond_t		notify;
 	pthread_cond_t		complete;
