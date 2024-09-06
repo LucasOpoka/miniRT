@@ -2,19 +2,10 @@
 #include "../../libft/libft.h"
 #include "../../includes/miniRT.h"
 #include "../../includes/parser.h"
+#include "../../includes/ppm.h"
 
 char	*file_load(char *file, int type);
 
-typedef	struct	s_ppm
-{
-	int	ptr;
-	char	*data;
-	char	*line;
-	int	max_color;
-	int	width;
-	int	height;
-	t_clr	**colors;
-}	t_ppm;
 
 static char *line_next(t_ppm *ppm)
 {
