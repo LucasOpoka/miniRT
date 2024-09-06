@@ -24,3 +24,15 @@ int ppm_matrix_alloc(t_ppm *ppm)
 	}
 	return (1);
 }
+
+void	ppm_matrix_free(t_ppm *ppm)
+{
+	int y;
+
+	if (!ppm->colors)
+		return ;
+	y = ppm->height;
+	while (--y >= 0)
+		free(ppm->colors[y]);
+	free(ppm->colors);
+}
