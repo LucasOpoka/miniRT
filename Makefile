@@ -53,7 +53,8 @@ SOURCES	=	main.c \
 
 PARSER_DIR = sources/parser
 PARSER_SRC = parser.c parser_utils.c validate.c file.c array.c \
-			fill.c ft_atof.c identifier.c obj.c camera.c light.c
+		fill.c ft_atof.c identifier.c obj.c camera.c light.c \
+		ppm.c
 PARSER_OBJ = $(addprefix $(PARSER_DIR)/,$(PARSER_SRC:.c=.o))
 
 BVH_DIR = sources/bvh
@@ -67,7 +68,7 @@ WORKER_OBJ = $(addprefix $(WORKER_DIR)/,$(WORKER_SRC:.c=.o))
 OFILES = $(addprefix $(SOURCE_DIR)/,$(SOURCES:.c=.o))
 OFILES += $(PARSER_OBJ) $(BVH_OBJ) $(WORKER_OBJ)
 
-target debug: CFLAGS = -Wall -Wextra -Werror -fsanitize=address,undefined -O1 -g
+target debug: CFLAGS = -Wall -Wextra -Werror -fsanitize=address,undefined -g
 target debug: CDEBUG = -DDEBUG=1
 
 target symbols: CFLAGS = -Wall -Wextra -Werror -gdwarf-4

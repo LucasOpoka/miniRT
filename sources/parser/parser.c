@@ -16,7 +16,7 @@
 
 char	***array_matrix(char *data);
 void	array_matrix_free(char ***arr);
-char	*file_load(char *file);
+char	*file_load(char *file, int type);
 int		identifier(void);
 int		identifiers_validate(char ***elements);
 int		cam_add(t_scene *scene, char **elem);
@@ -70,7 +70,7 @@ int	parse_file(char *file, t_scene *scene)
 	int		ret;
 
 	ret = 0;
-	data = file_load(file);
+	data = file_load(file, e_file_scene);
 	if (!data)
 		return (0);
 	matrix = array_matrix(data);

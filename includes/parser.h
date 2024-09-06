@@ -28,6 +28,12 @@ enum
 	ID_UNKNOWN
 };
 
+enum
+{
+	e_file_scene,
+	e_file_ppm
+};
+
 int	parser_error(char *err_str);
 int	str_isdigit(char *s);
 int	str_isdouble(char *s);
