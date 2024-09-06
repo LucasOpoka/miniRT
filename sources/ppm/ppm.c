@@ -2,7 +2,7 @@
 #include "../../includes/miniRT.h"
 #include "../../includes/ppm.h"
 
-char	*file_load(char *file, int type);
+int	ppm_matrix_alloc(t_ppm *ppm);
 
 static char *line_next(t_ppm *ppm)
 {
@@ -191,29 +191,6 @@ static int  parse_pixels(t_ppm *ppm)
 	return (ppm->height == y);
 }
 
-int matrix_alloc(t_ppm *ppm)
-{
-	int y;
-
-	ppm->colors = (t_clr **)malloc(ppm->height * sizeof(t_clr *));
-	if (!ppm->colors)
-		return (0);
-	y = 0;
-	while (y < ppm->height)
-	{
-		ppm->colors[y] = malloc(ppm->width * sizeof(t_clr));
-		if (!ppm->colors[y])
-		{
-			while (--y >= 0)
-				free(ppm->colors[y]);
-			free(ppm->colors);
-			return (0);
-		}
-		y++;
-	}
-	return (1);
-}
-
 int	ppm_parse(char	*s)
 {
 	t_ppm	ppm;
@@ -228,7 +205,7 @@ int	ppm_parse(char	*s)
 	printf("ppm.width: %d\n", ppm.width);
 	printf("ppm.height: %d\n", ppm.height);
 	printf("ppm.max_color: %d\n", ppm.max_color);
-	if (!matrix_alloc(&ppm))
+	if (!ppm_matrix_alloc(&ppm))
 		return (0);
 	printf("ppm->colors matrix allocated\n");
 	if (!parse_pixels(&ppm))
