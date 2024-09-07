@@ -10,36 +10,41 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../libft/libft.h"
 #include "../../includes/miniRT.h"
+#include "../../libft/libft.h"
 #include <fcntl.h>
 
-static int	file_validate_name(char	*str)
+static int	file_validate_name(char *str, int type)
 {
-	char	*dot;
+	const char	*extension = ".rt";
+	char		*dot;
 
+	if (type == e_file_ppm)
+		extension = ".ppm";
 	dot = ft_strrchr(str, '.');
 	if (!dot)
 		return (0);
-	if (dot == str || ft_strcmp(dot, ".rt") != 0)
+	if (dot == str || ft_strcmp(dot, extension) != 0)
 		return (0);
 	return (1);
 }
 
-static	int	valid_chars(char *s)
+static int	valid_chars(char *s, int type)
 {
-	const char	*chars = "ACLplscytr -,.\n";
+	const char	*chars = "0123456789ACLplscytr -,.\n";
 
 	while (*s)
 	{
-		if (!ft_isdigit(*s) && !ft_strchr(chars, *s))
+		if (type == e_file_ppm && !ft_isascii(*s))
+			return (0);
+		if (type == e_file_scene && !ft_strchr(chars, *s))
 			return (0);
 		s++;
 	}
 	return (1);
 }
 
-static char	*file_read_data(int fd)
+static char	*file_read_data(int fd, int type)
 {
 	size_t	size;
 	char	*data;
@@ -57,21 +62,21 @@ static char	*file_read_data(int fd)
 		free(data);
 		return (NULL);
 	}
-	if (size != ft_strlen(data) || !valid_chars(data))
+	if (size != ft_strlen(data) || !valid_chars(data, type))
 	{
-		parser_error("invalid characters on scene file");
+		parser_error("invalid characters on the file");
 		free(data);
 		return (NULL);
 	}
 	return (data);
 }
 
-char	*file_load(char *file)
+char	*file_load(char *file, int type)
 {
 	int		fd;
 	char	*data;
 
-	if (!file_validate_name(file))
+	if (!file_validate_name(file, type))
 	{
 		parser_error("invalid filename");
 		return (NULL);
@@ -82,7 +87,7 @@ char	*file_load(char *file)
 		parser_error("could not open file");
 		return (NULL);
 	}
-	data = file_read_data(fd);
+	data = file_read_data(fd, type);
 	close(fd);
 	return (data);
 }

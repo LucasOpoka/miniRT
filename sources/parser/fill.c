@@ -10,20 +10,22 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../libft/libft.h"
 #include "../../includes/miniRT.h"
 #include "../../includes/parser.h"
+#include "../../libft/libft.h"
 
 double	ft_atof(const char *s);
 int		validate_color(char *s);
 
-int	fill_vector(t_vct *vector, char	*s)
+int	fill_vector(t_vct *vector, char *s)
 {
-	size_t	i = 0;
-	double	val = 0.0;
+	size_t	i;
+	double	val;
 	char	*colon;
 
-	while(i < 3 && *s)
+	i = 0;
+	val = 0.0;
+	while (i < 3 && *s)
 	{
 		colon = ft_strchr(s, ',');
 		val = ft_atof(s);
@@ -40,15 +42,17 @@ int	fill_vector(t_vct *vector, char	*s)
 	return (1);
 }
 
-int	fill_color(t_clr *vector, char	*s)
+int	fill_color(t_clr *vector, char *s)
 {
-	size_t	i = 0;
-	double	val = 0.0;
+	size_t	i;
+	double	val;
 	char	*colon;
 
+	i = 0;
+	val = 0.0;
 	if (!validate_color(s))
 		return (0);
-	while(i < 3 && *s)
+	while (i < 3 && *s)
 	{
 		colon = ft_strchr(s, ',');
 		val = ft_atof(s);

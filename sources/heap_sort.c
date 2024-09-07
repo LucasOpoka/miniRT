@@ -6,13 +6,13 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 20:44:46 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/05 20:44:47 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/07 16:55:57 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/miniRT.h"
 
-static int  compare_xs(t_intrsc *a, t_intrsc *b)
+static int	compare_xs(t_intrsc *a, t_intrsc *b)
 {
 	const double	t_a = a->t;
 	const double	t_b = b->t;
@@ -20,7 +20,7 @@ static int  compare_xs(t_intrsc *a, t_intrsc *b)
 	return ((t_a > t_b) - (t_a < t_b));
 }
 
-static void swap_inter(t_intrsc *arr, int i, int j)
+static void	swap_inter(t_intrsc *arr, int i, int j)
 {
 	unsigned char	tmp[sizeof(t_intrsc)];
 	const uint32_t	size = sizeof(t_intrsc);
@@ -30,11 +30,11 @@ static void swap_inter(t_intrsc *arr, int i, int j)
 	ft_memcpy(arr + j, tmp, size);
 }
 
-static void heapify(t_intrsc *arr, int n, int i)
+static void	heapify(t_intrsc *arr, int n, int i)
 {
-	const int   left = 2 * i + 1;
-	const int   right = 2 * i + 2;
-	int	    max;
+	const int	left = 2 * i + 1;
+	const int	right = 2 * i + 2;
+	int			max;
 
 	max = i;
 	if (left < n && compare_xs(arr + left, arr + max) > 0)
@@ -49,13 +49,13 @@ static void heapify(t_intrsc *arr, int n, int i)
 }
 
 /*
-* Recursive heap sort for intersections
-*/
+ * Recursive heap sort for intersections
+ */
 
 void	heap_sort_xs(t_xs *xs)
 {
-	const int   n = xs->i;
-	int	    i;
+	const int	n = xs->i;
+	int			i;
 
 	if (xs->arr == NULL || xs->i <= 1)
 		return ;

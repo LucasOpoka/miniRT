@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../libft/libft.h"
 #include "../../includes/miniRT.h"
+#include "../../libft/libft.h"
 
 size_t	array_size(char **arr)
 {
@@ -60,7 +60,7 @@ char	***array_matrix(char *data)
 	if (!lines)
 		return (NULL);
 	ret = ft_calloc(1, sizeof(char **) * (array_size(lines) + 1));
-	while(ret && lines[i])
+	while (ret && lines[i])
 	{
 		ret[i] = ft_split(lines[i], ' ');
 		if (!ret[i])

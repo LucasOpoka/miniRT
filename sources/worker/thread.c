@@ -10,18 +10,17 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../libft/libft.h"
 #include "../../includes/miniRT.h"
+#include "../../libft/libft.h"
 #include <pthread.h>
 
-int	worker_init(t_mrt *mrt, t_scene *scene, t_worker *worker, int i);
+int		worker_init(t_mrt *mrt, t_scene *scene, t_worker *worker, int i);
 void	*worker_routine(void *ptr);
-
 
 int	threads_create(t_mrt *mrt, t_scene *scene)
 {
-	size_t	    i;
-	t_worker    *worker;
+	size_t		i;
+	t_worker	*worker;
 
 	i = 0;
 	mrt->thread_count = 0;
@@ -60,10 +59,8 @@ int	threads_init(t_mrt *mrt, t_scene *scene)
 void	threads_wait(t_mrt *mrt)
 {
 	pthread_mutex_lock(&mrt->lock);
-
 	while (mrt->threads_finished != MAX_THREADS)
 		pthread_cond_wait(&mrt->complete, &mrt->lock);
-
 	mrt->do_render = 0;
 	pthread_cond_broadcast(&mrt->notify);
 	pthread_mutex_unlock(&mrt->lock);

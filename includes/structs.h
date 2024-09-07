@@ -278,4 +278,15 @@ typedef struct s_worker
 	t_xs	xs;
 }	t_worker;
 
+typedef	struct	s_ppm
+{
+	int	ptr;
+	char	*data;
+	char	*line;
+	int	max_color;
+	int	width;
+	int	height;
+	t_clr	**colors;
+}	t_ppm;
+
 #endif

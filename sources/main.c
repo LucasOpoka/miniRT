@@ -40,6 +40,8 @@ void	print_objects(t_scene *scene)
 	}
 }
 
+int	ppm_load(char	*file);
+
 int	main(int ac, char **av)
 {
 	t_mrt	mrt;

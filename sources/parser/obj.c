@@ -10,17 +10,18 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../libft/libft.h"
 #include "../../includes/miniRT.h"
 #include "../../includes/parser.h"
+#include "../../libft/libft.h"
 
-int	validate_orientation(t_vct v);
+int			validate_orientation(t_vct v);
 
 /*
-*   object bonus fields after mandatory
-*   <specular> <diffuse> <shininess> <reflective> <refractive> <transparency> <scale vector>
-*   +7 fields
-*/
+ *   object bonus fields after mandatory
+
+	*   <specular> <diffuse> <shininess> <reflective> <refractive> <transparency> <scale vector>
+ *   +7 fields
+ */
 
 #ifdef BONUS
 
@@ -52,12 +53,12 @@ static int	obj_add_bonus_fields(t_obj *obj, char **elem)
 	if ((!str_isdigit(elem[size - 5])) || ft_strlen(elem[size - 5]) >= 4)
 		return (0);
 	fill_vector(&obj->scale, elem[size - 1]);
-	obj->transparency = ft_atof(elem[size - 2]);	
-	obj->refractive = ft_atof(elem[size - 3]);	
-	obj->reflective = ft_atof(elem[size - 4]);	
-	obj->shininess = ft_atoi(elem[size - 5]);	
-	obj->diffuse = ft_atof(elem[size - 6]);	
-	obj->specular = ft_atof(elem[size - 7]);	
+	obj->transparency = ft_atof(elem[size - 2]);
+	obj->refractive = ft_atof(elem[size - 3]);
+	obj->reflective = ft_atof(elem[size - 4]);
+	obj->shininess = ft_atoi(elem[size - 5]);
+	obj->diffuse = ft_atof(elem[size - 6]);
+	obj->specular = ft_atof(elem[size - 7]);
 	return (obj_validate_bonus(obj));
 }
 

@@ -28,7 +28,7 @@ void	bounds_init(t_bounds *bounds)
 
 void	swap_obj(uint32_t *obj_index, int i, int j)
 {
-	uint32_t    tmp;
+	uint32_t	tmp;
 
 	tmp = obj_index[i];
 	obj_index[i] = obj_index[j];
@@ -37,8 +37,8 @@ void	swap_obj(uint32_t *obj_index, int i, int j)
 
 void	init_centroids(t_node *root, t_scene *scene)
 {
-	uint32_t    i;
-	t_obj	    *obj;
+	uint32_t	i;
+	t_obj		*obj;
 
 	i = 0;
 	while (i < scene->objs.i)

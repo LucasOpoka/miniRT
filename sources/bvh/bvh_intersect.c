@@ -13,26 +13,26 @@
 #include "../../includes/miniRT.h"
 #include <math.h>
 
-double aabb_raycast(t_ray ray, t_bounds bounds);
+double			aabb_raycast(t_ray ray, t_bounds bounds);
 
-void	ft_ray_to_obj_space(t_ray *obj_ray, t_ray *world_ray, t_obj *obj);
-void	ft_get_intrscs(t_ray world_ray, t_scene *scene, t_xs *xs);
-void	ft_sphere_intersection(t_ray obj_ray, t_obj *obj, t_xs *xs);
-void	ft_plane_intersection(t_ray ray, t_obj *obj, t_xs *xs);
-void	ft_cylinder_intersection(t_ray obj_ray, t_obj *obj, t_xs *xs);
+void			ft_ray_to_obj_space(t_ray *obj_ray, t_ray *world_ray,
+					t_obj *obj);
+void			ft_get_intrscs(t_ray world_ray, t_scene *scene, t_xs *xs);
+void			ft_sphere_intersection(t_ray obj_ray, t_obj *obj, t_xs *xs);
+void			ft_plane_intersection(t_ray ray, t_obj *obj, t_xs *xs);
+void			ft_cylinder_intersection(t_ray obj_ray, t_obj *obj, t_xs *xs);
 
 void	intersects_obj(t_ray ray, t_scene *scene, t_node *node, t_xs *xs)
 {
-	t_obj	    *obj;
-	t_ray	    obj_ray;
-	uint32_t    i;
+	t_obj		*obj;
+	t_ray		obj_ray;
+	uint32_t	i;
 
 	i = 0;
 	while (i < node->count)
 	{
 		obj = scene->objs.arr[scene->bvh.i[node->first_index + i]];
 		ft_ray_to_obj_space(&obj_ray, &ray, obj);
-
 		if (obj->type == t_sphere)
 			ft_sphere_intersection(obj_ray, obj, xs);
 		if (obj->type == t_cylinder)
@@ -43,10 +43,10 @@ void	intersects_obj(t_ray ray, t_scene *scene, t_node *node, t_xs *xs)
 
 void	add_planes(t_ray ray, t_scene *scene, t_xs *xs)
 {
-	t_obj	    *obj;
-	t_void_arr  *objs;
-	t_ray	    obj_ray;
-	uint32_t    i;
+	t_obj		*obj;
+	t_void_arr	*objs;
+	t_ray		obj_ray;
+	uint32_t	i;
 
 	i = 0;
 	objs = &scene->objs;
@@ -66,7 +66,7 @@ void	add_planes(t_ray ray, t_scene *scene, t_xs *xs)
  * dist[0] must contain the shorter distance
  */
 
-static void swap_nodes(double *dist, t_node **n1, t_node **n2)
+static void	swap_nodes(double *dist, t_node **n1, t_node **n2)
 {
 	double	tmp;
 	t_node	*tmp_node;
@@ -82,7 +82,8 @@ static void swap_nodes(double *dist, t_node **n1, t_node **n2)
 	}
 }
 
-static t_node	*intersects_box(t_ray ray, t_node *root, t_node *curr, t_stack *s)
+static t_node	*intersects_box(t_ray ray, t_node *root, t_node *curr,
+		t_stack *s)
 {
 	t_node	*left;
 	t_node	*right;
@@ -93,7 +94,7 @@ static t_node	*intersects_box(t_ray ray, t_node *root, t_node *curr, t_stack *s)
 	dist[0] = aabb_raycast(ray, left->bounds);
 	dist[1] = aabb_raycast(ray, right->bounds);
 	swap_nodes(dist, &left, &right);
-	if (dist[0] == DBL_MAX) //Miss
+	if (dist[0] == DBL_MAX) // Miss
 	{
 		if (s->ptr == 0)
 			return (NULL);
@@ -109,11 +110,12 @@ static t_node	*intersects_box(t_ray ray, t_node *root, t_node *curr, t_stack *s)
  * https://graphics.cg.uni-saarland.de/papers/perard-2017-gpce.pdf
  */
 
-void	bvh_intersect(t_ray ray, t_scene* scene, t_xs *xs)
+void	bvh_intersect(t_ray ray, t_scene *scene, t_xs *xs)
 {
-	t_node	    *node = &scene->bvh.root[0];
-	t_stack	    s;
+	t_node	*node;
+	t_stack	s;
 
+	node = &scene->bvh.root[0];
 	s.ptr = 0;
 	ray.rd.x = 1.0 / ray.D.x;
 	ray.rd.y = 1.0 / ray.D.y;
@@ -124,9 +126,9 @@ void	bvh_intersect(t_ray ray, t_scene* scene, t_xs *xs)
 		{
 			intersects_obj(ray, scene, node, xs);
 			if (s.ptr == 0)
-				break;
+				break ;
 			node = s.stack[--s.ptr];
-			continue;
+			continue ;
 		}
 		node = intersects_box(ray, scene->bvh.root, node, &s);
 	}
@@ -138,8 +140,9 @@ void	bvh_intersect(t_ray ray, t_scene* scene, t_xs *xs)
  * Recursive version, this can have bad performance depending on camera position
 void	bvh_intersect(t_ray ray, t_scene *scene, uint32_t index, t_xs *xs)
 {
-	t_node	*node = &scene->bvh_root[index];
+	t_node	*node;
 
+	node = &scene->bvh_root[index];
 	if (aabb_raycast(ray, node->min, node->max) == DBL_MAX)
 		return ;
 	if (node->count > 0)
