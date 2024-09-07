@@ -1,18 +1,17 @@
-
 #include "../../includes/miniRT.h"
 #include "../../includes/ppm.h"
 
-int	ppm_matrix_alloc(t_ppm *ppm);
-char	*line_next(t_ppm *ppm);
-void	line_print(t_ppm *ppm);
-char	*line_next_pixel(char *s, int delim);
-int	parse_header_entry(t_ppm *ppm);
-int	parse_pixel_entry(t_ppm *ppm, int y);
+int			ppm_matrix_alloc(t_ppm *ppm);
+char		*line_next(t_ppm *ppm);
+void		line_print(t_ppm *ppm);
+char		*line_next_pixel(char *s, int delim);
+int			parse_header_entry(t_ppm *ppm);
+int			parse_pixel_entry(t_ppm *ppm, int y);
 
-int atoi_safe(char  *s, int max)
+int	atoi_safe(char *s, int max)
 {
-	long long   res;
-	char	    *start;
+	long long	res;
+	char		*start;
 
 	res = 0;
 	start = s;
@@ -34,11 +33,11 @@ int atoi_safe(char  *s, int max)
 	return (res);
 }
 
-static int  parse_header(t_ppm *ppm)
+static int	parse_header(t_ppm *ppm)
 {
 	while (ppm->line && *ppm->line)
 	{
-		if (ppm->ptr == 3)	
+		if (ppm->ptr == 3)
 			break ;
 		if (*ppm->line != '#' && !parse_header_entry(ppm))
 			return (0);
@@ -51,9 +50,9 @@ static int  parse_header(t_ppm *ppm)
 	return (ppm->ptr == 3);
 }
 
-static int  parse_pixels(t_ppm *ppm)
+static int	parse_pixels(t_ppm *ppm)
 {
-	int y;
+	int	y;
 
 	y = 0;
 	while (ppm->line && *ppm->line)
@@ -72,7 +71,7 @@ static int  parse_pixels(t_ppm *ppm)
 	return (ppm->height == y);
 }
 
-static int  ppm_parse(t_ppm *ppm, char *data)
+static int	ppm_parse(t_ppm *ppm, char *data)
 {
 	if (ft_strncmp("P3\n", data, 3) != 0)
 		return (0);
@@ -92,7 +91,7 @@ static int  ppm_parse(t_ppm *ppm, char *data)
 	return (1);
 }
 
-int	ppm_load(char	*file)
+int	ppm_load(char *file)
 {
 	t_ppm	ppm;
 	char	*data;

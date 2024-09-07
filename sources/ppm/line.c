@@ -1,11 +1,11 @@
-
 #include "../../includes/miniRT.h"
 #include "../../includes/ppm.h"
 
-char *line_next(t_ppm *ppm)
+char	*line_next(t_ppm *ppm)
 {
-	char  *newline = ft_strchr(ppm->line, '\n');
+	char	*newline;
 
+	newline = ft_strchr(ppm->line, '\n');
 	if (!newline)
 		return (NULL);
 	if (*ppm->line == '#')
@@ -16,17 +16,17 @@ char *line_next(t_ppm *ppm)
 
 void	line_print(t_ppm *ppm)
 {
-	
-	char  *newline = ft_strchr(ppm->line, '\n');
+	char	*newline;
 
+	newline = ft_strchr(ppm->line, '\n');
 	if (!newline)
 		return ;
 	write(1, ppm->line, (newline - ppm->line) + 1);
 }
 
-char  *line_next_pixel(char *s, int delim)
+char	*line_next_pixel(char *s, int delim)
 {
-	const char *start = s;
+	const char	*start = s;
 
 	while (*s && ft_isdigit(*s))
 		s++;

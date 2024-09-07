@@ -1,10 +1,9 @@
-
 #include "../../includes/miniRT.h"
 #include "../../includes/ppm.h"
 
-int ppm_matrix_alloc(t_ppm *ppm)
+int	ppm_matrix_alloc(t_ppm *ppm)
 {
-	int y;
+	int	y;
 
 	ppm->colors = (t_clr **)malloc(ppm->height * sizeof(t_clr *));
 	if (!ppm->colors)
@@ -27,7 +26,7 @@ int ppm_matrix_alloc(t_ppm *ppm)
 
 void	ppm_matrix_free(t_ppm *ppm)
 {
-	int y;
+	int	y;
 
 	if (!ppm->colors)
 		return ;

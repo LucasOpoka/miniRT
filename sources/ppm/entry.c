@@ -1,13 +1,12 @@
-
 #include "../../includes/miniRT.h"
 #include "../../includes/ppm.h"
 
-int	atoi_safe(char  *s, int max);
-char	*line_next_pixel(char *s, int delim);
+int			atoi_safe(char *s, int max);
+char		*line_next_pixel(char *s, int delim);
 
-static char  *skip_digits(char *s, int expected)
+static char	*skip_digits(char *s, int expected)
 {
-	const char *start = s;
+	const char	*start = s;
 
 	while (*s && ft_isdigit(*s))
 		s++;
@@ -21,8 +20,7 @@ static char  *skip_digits(char *s, int expected)
 	return (s);
 }
 
-
-static int  fill_rgb(t_ppm *ppm, t_clr *col, char *s, int i)
+static int	fill_rgb(t_ppm *ppm, t_clr *col, char *s, int i)
 {
 	double	res;
 
@@ -39,7 +37,7 @@ static int  fill_rgb(t_ppm *ppm, t_clr *col, char *s, int i)
 	return (1);
 }
 
-int  parse_header_entry(t_ppm *ppm)
+int	parse_header_entry(t_ppm *ppm)
 {
 	char	*s;
 
@@ -64,10 +62,10 @@ int  parse_header_entry(t_ppm *ppm)
 	return (1);
 }
 
-int  parse_pixel_entry(t_ppm *ppm, int y)
+int	parse_pixel_entry(t_ppm *ppm, int y)
 {
-	int	x;
-	int	i;
+	int		x;
+	int		i;
 	char	*line;
 
 	x = 0;
