@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../libft/libft.h"
 #include "../../includes/miniRT.h"
 #include "../../includes/parser.h"
+#include "../../libft/libft.h"
 
 char	***array_matrix(char *data);
 void	array_matrix_free(char ***arr);
@@ -31,8 +31,8 @@ int	parser_error(char *err_str)
 
 int	parse_object(t_scene *scene, char **line)
 {
-	int		ret;
-	int		id;
+	int	ret;
+	int	id;
 
 	ret = 0;
 	id = identifier_type(line[0]);

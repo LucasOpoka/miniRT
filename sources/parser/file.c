@@ -10,14 +10,14 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../libft/libft.h"
 #include "../../includes/miniRT.h"
+#include "../../libft/libft.h"
 #include <fcntl.h>
 
-static int	file_validate_name(char	*str, int type)
+static int	file_validate_name(char *str, int type)
 {
-	const char  *extension = ".rt";
-	char	    *dot;
+	const char	*extension = ".rt";
+	char		*dot;
 
 	if (type == e_file_ppm)
 		extension = ".ppm";
@@ -29,7 +29,7 @@ static int	file_validate_name(char	*str, int type)
 	return (1);
 }
 
-static	int	valid_chars(char *s, int type)
+static int	valid_chars(char *s, int type)
 {
 	const char	*chars = "0123456789ACLplscytr -,.\n";
 

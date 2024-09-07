@@ -10,13 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../libft/libft.h"
 #include "../../includes/miniRT.h"
 #include "../../includes/parser.h"
+#include "../../libft/libft.h"
 
 int	identifier_type(char *id)
 {
-	const char	*identifiers[] = {"A", "C", "L", "l", "sp", "pl", "cy", 0 };
+	const char	*identifiers[] = {"A", "C", "L", "l", "sp", "pl", "cy", 0};
 	size_t		i;
 
 	i = 0;
@@ -31,17 +31,17 @@ int	identifier_type(char *id)
 
 static int	validate_object_count(char **line, int id)
 {
-	const size_t	expected[] = { 3, 4, 4, 4, 4, 4, 6, 0};
-	size_t	count;
-	size_t	expected_value;
+	const size_t	expected[] = {3, 4, 4, 4, 4, 4, 6, 0};
+	size_t			count;
+	size_t			expected_value;
 
 	count = array_size(line);
 	expected_value = expected[id];
 #ifdef BONUS
-	//Light point direction vct
+	// Light point direction vct
 	if (id == 2 || id == 3)
 		expected_value += 1;
-	//Obj bonus fields
+	// Obj bonus fields
 	if (id >= 4)
 		expected_value += 7;
 #endif
@@ -83,7 +83,8 @@ int	identifiers_validate(char ***elements)
 	}
 	while (elements[i])
 	{
-		if (!validate_object_count(elements[i], identifier_type(elements[i][0])))
+		if (!validate_object_count(elements[i],
+				identifier_type(elements[i][0])))
 		{
 			parser_error("invalid element count on an object");
 			return (0);

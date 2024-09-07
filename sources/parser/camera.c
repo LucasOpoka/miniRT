@@ -10,11 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../libft/libft.h"
 #include "../../includes/miniRT.h"
 #include "../../includes/parser.h"
+#include "../../libft/libft.h"
 
-int	validate_orientation(t_vct v);
+int			validate_orientation(t_vct v);
 
 static int	valid_fov(char *fov)
 {

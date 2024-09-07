@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../libft/libft.h"
 #include "../../includes/miniRT.h"
 #include "../../includes/parser.h"
+#include "../../libft/libft.h"
 
 int	light_add_ambient(t_ambient *ambient, char **elem)
 {
@@ -36,7 +36,7 @@ int	light_add_point(t_light *light, char **elem)
 	if (!fill_color(&light->color, elem[3]))
 		return (0);
 #ifdef BONUS
-	//For bonus lights have their direction vector in last (extra) element
+	// For bonus lights have their direction vector in last (extra) element
 	if (!validate_vector(elem[4]))
 		return (0);
 	fill_vector(&light->dir, elem[4]);

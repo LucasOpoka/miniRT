@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../libft/libft.h"
 #include "../../includes/miniRT.h"
 #include "../../includes/parser.h"
+#include "../../libft/libft.h"
 
 int	validate_orientation(t_vct v)
 {
@@ -23,12 +23,12 @@ int	validate_orientation(t_vct v)
 	return (1);
 }
 
-int	validate_ratio(char	*s, double min, double max)
+int	validate_ratio(char *s, double min, double max)
 {
-	const char	*dot = ft_strchr(s, '.');
+	const char		*dot = ft_strchr(s, '.');
 	const size_t	len = ft_strlen(s);
-	size_t		i;
-	double		ratio;
+	size_t			i;
+	double			ratio;
 
 	i = 0;
 	if (dot)
@@ -67,7 +67,6 @@ int	validate_vector(char *s)
 			break ;
 		s = comma + 1;
 	}
-
 	return (1);
 }
 
