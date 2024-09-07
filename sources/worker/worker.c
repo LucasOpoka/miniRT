@@ -9,13 +9,13 @@
 /*   Updated: 2024/09/05 18:33:55 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../../includes/miniRT.h"
 #include "../../includes/bvh.h"
+#include "../../includes/miniRT.h"
 #include <pthread.h>
 
 long long	time_ms(void);
 
-int worker_init(t_mrt *mrt, t_scene *scene, t_worker *worker, int i)
+int	worker_init(t_mrt *mrt, t_scene *scene, t_worker *worker, int i)
 {
 	worker->mrt = mrt;
 	worker->scene = scene;
@@ -26,9 +26,10 @@ int worker_init(t_mrt *mrt, t_scene *scene, t_worker *worker, int i)
 
 int	worker_wait(t_worker *worker)
 {
-	int exit_status = 0;
+	int		exit_status;
 	t_mrt	*mrt;
 
+	exit_status = 0;
 	mrt = worker->mrt;
 	pthread_mutex_lock(&mrt->lock);
 	while (!mrt->exit && worker->done && mrt->do_render)
@@ -62,18 +63,21 @@ void	worker_signal_finish(t_worker *worker)
 
 void	worker_render_section(t_worker *worker, t_scene *scene, int i)
 {
-	t_ray		ray;
-	t_clr		color;
-	t_xs		*xs = &worker->xs;
+	t_ray	ray;
+	t_clr	color;
+	t_xs	*xs;
+	int		start_y;
+	int		y;
+	int		x;
 
-	int start_y = i * worker->block_size;
+	xs = &worker->xs;
+	start_y = i * worker->block_size;
 	if (i == worker->block_count - 1)
 		worker->block_size += worker->mrt->img->height % BLOCK_SIZE;
-
-	int y = start_y;
+	y = start_y;
 	while (y < (start_y + worker->block_size))
 	{
-		int x = 0;
+		x = 0;
 		while (x < CANV_WDTH)
 		{
 			ft_pixel_to_ray(&ray, x, y, &scene->cam);
@@ -88,10 +92,9 @@ void	worker_render_section(t_worker *worker, t_scene *scene, int i)
 void	*worker_routine(void *ptr)
 {
 	t_worker	*worker;
+	int			i;
 
 	worker = (t_worker *)ptr;
-	int	i;
-
 	while (1)
 	{
 		i = worker->index;
@@ -102,7 +105,7 @@ void	*worker_routine(void *ptr)
 			worker_render_section(worker, worker->scene, i);
 			i += MAX_THREADS;
 		}
-		worker_signal_finish(worker);	
+		worker_signal_finish(worker);
 	}
 	return (NULL);
 }
