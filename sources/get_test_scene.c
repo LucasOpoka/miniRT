@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 12:47:38 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/06 14:07:59 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/07 21:27:34 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -32,9 +32,9 @@ t_scene	get_test_scene(void)
 	obj1->specular = 0.9;
 	obj1->diffuse = 0;
 	obj1->shininess = 300;
-	obj1->reflective = 0;
+	obj1->reflective = 1;
 	obj1->refractive = 1.5;
-	obj1->transparency = 0;
+	obj1->transparency = 1;
 	obj1->scale = ft_create_vct(1, 1, 1);
 	obj1->orientation = ft_create_vct(0, 0, 0);
 
@@ -46,16 +46,16 @@ t_scene	get_test_scene(void)
 	air_bubble->specular = 0.9;
 	air_bubble->diffuse = 0;
 	air_bubble->shininess = 300;
-	air_bubble->reflective = 0.9;
-	air_bubble->refractive = 1.0000034;
-	air_bubble->transparency = 0.9;
+	air_bubble->reflective = 1;
+	air_bubble->refractive = 1;
+	air_bubble->transparency = 1;
 	air_bubble->scale = ft_create_vct(1, 1, 1);
 	air_bubble->orientation = ft_create_vct(0, 0, 0);
 
 	t_obj *obj3 = malloc(sizeof(t_obj));
 	obj3->type = t_sphere;
-	obj3->pos = ft_create_point(-2, 0, 0); //ON THE LEFT
-	obj3->radius = 0.5;
+	obj3->pos = ft_create_point(0, 0, 0); //ON THE LEFT
+	obj3->radius = 1;
 	obj3->color = ft_create_clr(0, 255, 0); // GREEN
 	obj3->specular = 0.9;
 	obj3->diffuse = 0.9;
@@ -169,9 +169,8 @@ t_scene	get_test_scene(void)
 
 	t_obj *cylinder = malloc(sizeof(t_obj));
 	cylinder->type = t_cylinder;
-	cylinder->pos = ft_create_point(0, 0, 2); //CYLINDER
+	cylinder->pos = ft_create_point(0, 0, 0); //CYLINDER
 	cylinder->color = ft_create_clr(0, 0, 255);
-	cylinder->orientation = ft_create_vct(0, 0, 1);
 	cylinder->specular = 0.9;
 	cylinder->shininess = 100;
 	cylinder->reflective = 0.9;
@@ -179,8 +178,22 @@ t_scene	get_test_scene(void)
 	cylinder->radius = 1;
 	cylinder->transparency = 0;
 	cylinder->scale = ft_create_vct(1, 1, 1);
-	cylinder->orientation = ft_create_vct(0, 0, 0);
-	cylinder->height = 3;
+	cylinder->orientation = ft_create_vct(0, 1, 0.3);
+	cylinder->height = 2;
+
+	t_obj *cone = malloc(sizeof(t_obj));
+	cone->type = t_cone;
+	cone->pos = ft_create_point(2, 0, 0); //CONE
+	cone->color = ft_create_clr(0, 0, 255);
+	cone->specular = 0.9;
+	cone->shininess = 100;
+	cone->reflective = 0.9;
+	cone->refractive = 1.5;
+	cone->radius = 1;
+	cone->transparency = 0;
+	cone->scale = ft_create_vct(1, 3, 1);
+	cone->orientation = ft_create_vct(-1, 0, 0);
+	cone->height = 3;
 
 	// Triangle testing
 	t_vct p1 = ft_create_point(-1, 0, 2);
@@ -212,12 +225,13 @@ t_scene	get_test_scene(void)
 	tri->p3 = p3;
 
 
-	ft_void_arr_add(&scene.objs, obj1);
+	//ft_void_arr_add(&scene.objs, obj1);
 	//ft_void_arr_add(&scene.objs, air_bubble);
 	//ft_void_arr_add(&scene.objs, obj3);
 	//ft_void_arr_add(&scene.objs, obj4);
 	//ft_void_arr_add(&scene.objs, obj10);
-	//ft_void_arr_add(&scene.objs, cylinder);
+	ft_void_arr_add(&scene.objs, cylinder);
+	//ft_void_arr_add(&scene.objs, cone);
 	//ft_void_arr_add(&scene.objs, obj7);
 	ft_void_arr_add(&scene.objs, back);
 	//ft_void_arr_add(&scene.objs, r);

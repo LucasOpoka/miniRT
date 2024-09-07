@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 21:05:34 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/05 14:37:54 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/06 21:53:52 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -63,6 +63,8 @@ void	ft_get_intrscs(t_ray world_ray, t_scene *scene, t_xs *xs)
 			ft_cylinder_intersection(obj_ray, obj, xs);
 		if (obj->type == t_triangle)
 			ft_triangle_intersection(obj_ray, obj, xs);
+		if (obj->type == t_cone)
+			ft_cone_intersection(obj_ray, obj, xs);
 	}
 	heap_sort_xs(xs);
 }

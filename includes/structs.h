@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 14:16:04 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/06 13:18:01 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/06 21:52:31 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef STRUCTS_H
@@ -124,7 +124,8 @@ typedef enum e_obj_type
 	t_sphere,
 	t_plane,
 	t_cylinder,
-	t_triangle
+	t_triangle,
+	t_cone
 }	t_obj_type;
 
 typedef struct s_void_arr
