@@ -14,8 +14,8 @@
 #include <math.h>
 
 /*
-* http://raytracerchallenge.com/bonus/bounding-boxes.html
-*/
+ * http://raytracerchallenge.com/bonus/bounding-boxes.html
+ */
 
 void	bounds_min_max(t_bounds *to, t_bounds *new)
 {
@@ -29,13 +29,12 @@ void	bounds_min_max(t_bounds *to, t_bounds *new)
 
 void	sphere_bounds(t_bounds *bounds, t_obj *sp)
 {
-	const t_vct	scale = sp->scale;
+	const t_vct		scale = sp->scale;
 	const double	radius = sp->radius;
 
 	bounds->min[0] = scale.x * -radius + sp->pos.x;
 	bounds->min[1] = scale.y * -radius + sp->pos.y;
 	bounds->min[2] = scale.z * -radius + sp->pos.z;
-
 	bounds->max[0] = scale.x * radius + sp->pos.x;
 	bounds->max[1] = scale.y * radius + sp->pos.y;
 	bounds->max[2] = scale.z * radius + sp->pos.z;
@@ -43,14 +42,13 @@ void	sphere_bounds(t_bounds *bounds, t_obj *sp)
 
 void	cylinder_bounds(t_bounds *bounds, t_obj *cy)
 {
-	const t_vct	scale = cy->scale;
+	const t_vct		scale = cy->scale;
 	const double	radius = cy->radius * 2;
 	const double	height = cy->height;
 
 	bounds->min[0] = scale.x * -radius + cy->pos.x;
 	bounds->min[1] = scale.y * -radius + cy->pos.y;
 	bounds->min[2] = scale.z * -height + cy->pos.z;
-
 	bounds->max[0] = scale.x * radius + cy->pos.x;
 	bounds->max[1] = scale.y * radius + cy->pos.y;
 	bounds->max[2] = scale.z * height + cy->pos.z;
@@ -58,7 +56,7 @@ void	cylinder_bounds(t_bounds *bounds, t_obj *cy)
 
 void	bounds_update(t_bounds *bounds, t_obj *obj)
 {
-	t_bounds    new;
+	t_bounds	new;
 
 	if (obj->type == t_sphere)
 		sphere_bounds(&new, obj);

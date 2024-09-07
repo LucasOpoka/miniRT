@@ -13,7 +13,7 @@
 #include "../../includes/miniRT.h"
 #include <math.h>
 
-void	swap_obj(uint32_t *obj_index, int i, int j);
+void		swap_obj(uint32_t *obj_index, int i, int j);
 
 double	node_cost(t_node *node)
 {
@@ -27,13 +27,15 @@ double	node_cost(t_node *node)
 	return (node->count * area);
 }
 
-uint32_t    node_partition(t_node *node, t_scene *scene, t_split split,
+uint32_t	node_partition(t_node *node, t_scene *scene, t_split split,
 		uint32_t *left_count)
 {
-	int i = node->first_index;
-	int j = node->count + i - 1;
-	t_obj	    *obj;
+	int		i;
+	int		j;
+	t_obj	*obj;
 
+	i = node->first_index;
+	j = node->count + i - 1;
 	while (i <= j)
 	{
 		obj = scene->objs.arr[scene->bvh.i[i]];
