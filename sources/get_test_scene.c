@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 12:47:38 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/09 20:33:50 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/09 22:42:40 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -170,6 +170,7 @@ t_scene	get_test_scene(void)
 	back->refractive = 1;
 	back->transparency = 0;
 	back->scale = ft_create_vct(1, 1, 1);
+	back->ppm = NULL;
 
 	t_obj *cylinder = malloc(sizeof(t_obj));
 	cylinder->type = t_cylinder;
