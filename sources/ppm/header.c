@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   header.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/09 22:10:44 by atorma            #+#    #+#             */
+/*   Updated: 2024/09/09 22:10:54 by atorma           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../../includes/miniRT.h"
 #include "../../includes/ppm.h"
@@ -58,7 +69,7 @@ static char	*line_next(t_ppm *ppm)
 	return (newline + 1);
 }
 
-static int  parse_header_entry(t_ppm *ppm)
+static int	parse_header_entry(t_ppm *ppm)
 {
 	char	*s;
 
