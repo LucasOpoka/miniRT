@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:06:19 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/09 22:56:33 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/10 00:49:35 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINIRT_H
@@ -58,9 +58,9 @@ int		ft_void_arr_add(t_void_arr *void_arr, void *pointer);
 void		ft_free_void_arr(t_void_arr *void_arr);
 
 // t_xs
-void		ft_init_xs(t_xs *xs);
+int		ft_init_xs(t_xs *xs);
 void		ft_free_xs(t_xs *xs);
-void		ft_add_intersection(t_xs *xs, t_obj *obj, double t);
+int		ft_add_intersection(t_xs *xs, t_obj *obj, double t);
 
 int				scene_init(t_scene *scene);
 void			scene_free(t_scene *scene);
