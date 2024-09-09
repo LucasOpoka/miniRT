@@ -6,7 +6,7 @@
 #    By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/29 14:59:04 by lopoka            #+#    #+#              #
-#    Updated: 2024/09/06 22:11:19 by lopoka           ###   ########.fr        #
+#    Updated: 2024/09/09 21:23:44 by atorma           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,7 +59,7 @@ PARSER_OBJ = $(addprefix $(PARSER_DIR)/,$(PARSER_SRC:.c=.o))
 
 
 PPM_DIR = sources/ppm
-PPM_SRC = ppm.c ppm_matrix.c line.c entry.c
+PPM_SRC = ppm.c ppm_matrix.c header.c
 PPM_OBJ = $(addprefix $(PPM_DIR)/,$(PPM_SRC:.c=.o))
 
 BVH_DIR = sources/bvh
