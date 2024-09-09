@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 16:47:23 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/09 20:13:32 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/09 20:24:56 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,22 +126,21 @@ static int	ppm_parse(t_ppm *ppm, char *data)
 	return (1);
 }
 
-int	ppm_load(char *file)
+int	ppm_load(char *file, t_ppm *ppm)
 {
-	t_ppm	ppm;
 	char	*data;
 
-	ft_bzero(&ppm, sizeof(t_ppm));
-	data = file_load(file, &ppm.data_size, e_file_ppm);
+	ft_bzero(ppm, sizeof(t_ppm));
+	data = file_load(file, &ppm->data_size, e_file_ppm);
 	if (!data)
 	{
 		printf("could not load ppm file!\n");
 		return (0);
 	}
-	if (!ppm_parse(&ppm, data))
+	if (!ppm_parse(ppm, data))
 	{
 		printf("ppm_parse error\n");
-		ppm_matrix_free(&ppm);
+		ppm_matrix_free(ppm);
 		free(data);
 		return (0);
 	}

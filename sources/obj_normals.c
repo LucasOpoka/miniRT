@@ -6,7 +6,7 @@
 /*   By: lucas <lopoka@student.hive.fi>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 16:17:04 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/07 22:27:31 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/09 20:42:38 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -31,6 +31,7 @@ void	ft_sphere_normal_and_color(t_comps *comps)
 	double y = uv[1] * (obj->ppm->height - 1);
 	int xx = (int) round(x);
 	int yy = (int) round(y);
+	printf("xx %d yy %d\n", xx, yy);
 	comps->color = obj->ppm->colors[yy][xx];
 	//comps->color = ft_checkers(uv, 16, 8);
 	//comps->color = obj->color;

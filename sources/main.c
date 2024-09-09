@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 17:47:44 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/09 18:04:49 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/09 20:21:29 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -40,8 +40,6 @@ void	print_objects(t_scene *scene)
 	}
 }
 
-int	ppm_load(char	*file);
-
 int	main(int ac, char **av)
 {
 	t_mrt	mrt;
@@ -52,8 +50,6 @@ int	main(int ac, char **av)
 		printf("Usage: ./miniRT <scene.rt file>\n");
 		return (EXIT_FAILURE);
 	}
-	ppm_load(av[1]);
-	return (0);
 	ft_bzero(&mrt, sizeof(t_mrt));
 	ft_bzero(&scene, sizeof(t_scene));
 	if (ft_strcmp(av[1], "test") == 0)

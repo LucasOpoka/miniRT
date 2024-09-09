@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 12:47:38 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/07 22:25:10 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/09 20:33:50 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -27,7 +27,7 @@ t_scene	get_test_scene(void)
 	t_obj *obj1 = malloc(sizeof(t_obj));
 	obj1->type = t_sphere;
 	obj1->pos = ft_create_point(0, 0, 0); // CENTER
-	obj1->radius = 1;
+	obj1->radius = 2;
 	obj1->color = ft_create_clr(0, 0, 0); // RED
 	obj1->specular = 0.9;
 	obj1->diffuse = 0;
