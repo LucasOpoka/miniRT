@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 20:43:35 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/05 20:56:51 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/09 18:15:15 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ enum
 	e_file_ppm
 };
 
-char	*file_load(char *file, int type);
+char	*file_load(char *file, size_t *out_size, int type);
 int	parser_error(char *err_str);
 int	str_isdigit(char *s);
 int	str_isdouble(char *s);

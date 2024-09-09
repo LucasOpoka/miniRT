@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 18:07:45 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/05 21:03:46 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/09 18:16:14 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 
 char	***array_matrix(char *data);
 void	array_matrix_free(char ***arr);
-char	*file_load(char *file, int type);
 int		identifier(void);
 int		identifiers_validate(char ***elements);
 int		cam_add(t_scene *scene, char **elem);
@@ -68,9 +67,10 @@ int	parse_file(char *file, t_scene *scene)
 	char	***matrix;
 	char	*data;
 	int		ret;
+	size_t	out;
 
 	ret = 0;
-	data = file_load(file, e_file_scene);
+	data = file_load(file, &out, e_file_scene);
 	if (!data)
 		return (0);
 	matrix = array_matrix(data);

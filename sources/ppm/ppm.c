@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 16:47:23 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/07 16:47:25 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/09 20:13:32 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ int	atoi_safe(char *s, int max)
 
 static int	parse_header(t_ppm *ppm)
 {
+	long	blob_size;
+
 	while (ppm->line && *ppm->line)
 	{
 		if (ppm->ptr == 3)
@@ -55,41 +57,62 @@ static int	parse_header(t_ppm *ppm)
 			return (0);
 		ppm->line = line_next(ppm);
 	}
-	if (ppm->width <= 0 || ppm->height <= 0)
+	if (ppm->width <= 0 || ppm->height <= 0 || ppm->max_color <= 0)
 		return (0);
-	if (ppm->max_color <= 0)
+	blob_size = ppm->data_size - (ppm->line - ppm->data);
+	if (blob_size != (3 * ppm->height * ppm->width))
 		return (0);
+	printf("data_size: %zu, %d\n",
+			ppm->data_size - (ppm->line - ppm->data),
+			3 * ppm->height * ppm->width);
 	return (ppm->ptr == 3);
 }
 
 static int	parse_pixels(t_ppm *ppm)
 {
-	int	y;
+	const uint32_t    start = ppm->line - ppm->data;
+	uint32_t    x;
+	uint32_t    y;
 
 	y = 0;
-	while (ppm->line && *ppm->line)
+	while (y < ppm->height)
 	{
-		if (y >= ppm->height)
-			return (0);
-		if (*ppm->line != '#')
+		x = 0;
+		while (x < (ppm->width))
 		{
-			line_print(ppm);
-			if (!parse_pixel_entry(ppm, y))
-				return (0);
-			y++;
+			if (x % 3 == 0)
+			{
+				uint32_t    offset = (y * ppm->width) + (x * 3) + start;
+				unsigned char r = ppm->data[offset];
+				unsigned char g = ppm->data[offset + 1];
+				unsigned char b = ppm->data[offset + 2];
+				ppm->colors[y][x].r = (double)r / 255;
+				ppm->colors[y][x].g = (double)g / 255;
+				ppm->colors[y][x].b = (double)b / 255;
+				/*
+				printf("[%u][%u]\n", y, x);
+				printf("%02x", r);
+				printf("%02x", g);
+				printf("%02x", b);
+				*/
+			}
+			x++;
 		}
-		ppm->line = line_next(ppm);
+		y++;
 	}
+	printf("y: %u\n", y);
+	printf("x: %u\n", x);
+	printf("x * y: %u\n", (x - start) * y);
 	return (ppm->height == y);
 }
 
 static int	ppm_parse(t_ppm *ppm, char *data)
 {
-	if (ft_strncmp("P3\n", data, 3) != 0)
-		return (0);
 	ppm->ptr = 0;
 	ppm->data = data;
 	ppm->line = data;
+	if (ft_strncmp("P6\n", data, 3) != 0)
+		return (0);
 	if (!parse_header(ppm))
 		return (0);
 	printf("ppm->width: %d\n", ppm->width);
@@ -108,13 +131,13 @@ int	ppm_load(char *file)
 	t_ppm	ppm;
 	char	*data;
 
-	data = file_load(file, e_file_ppm);
+	ft_bzero(&ppm, sizeof(t_ppm));
+	data = file_load(file, &ppm.data_size, e_file_ppm);
 	if (!data)
 	{
 		printf("could not load ppm file!\n");
 		return (0);
 	}
-	ft_bzero(&ppm, sizeof(t_ppm));
 	if (!ppm_parse(&ppm, data))
 	{
 		printf("ppm_parse error\n");

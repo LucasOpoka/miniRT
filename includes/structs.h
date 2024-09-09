@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 14:16:04 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/06 21:52:31 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/09 20:15:19 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef STRUCTS_H
@@ -282,10 +282,11 @@ typedef	struct	s_ppm
 {
 	int	ptr;
 	char	*data;
+	size_t	data_size;
 	char	*line;
-	int	max_color;
-	int	width;
-	int	height;
+	uint32_t    max_color;
+	uint32_t    width;
+	uint32_t    height;
 	t_clr	**colors;
 }	t_ppm;
 
