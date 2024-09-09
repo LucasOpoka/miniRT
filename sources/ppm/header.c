@@ -21,9 +21,9 @@ static int	atoi_safe(char *s, int max)
 		s++;
 	}
 	if (*s && *s != ' ' && *s != '\n')
-		return (-1);
+		return (0);
 	if (s == start)
-		return (-1);
+		return (0);
 	return (res);
 }
 
@@ -76,7 +76,7 @@ static int  parse_header_entry(t_ppm *ppm)
 	{
 		if (!skip_digits(s, '\n'))
 			return (0);
-		ppm->max_color = atoi_safe(s, 65536);
+		ppm->max_color = atoi_safe(s, 255);
 	}
 	return (1);
 }
