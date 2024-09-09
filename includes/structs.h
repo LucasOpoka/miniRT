@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 14:16:04 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/06 21:52:31 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/07 21:49:07 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef STRUCTS_H
@@ -19,6 +19,7 @@ typedef double	t_mtrx3[3][3];
 typedef double	t_mtrx4[4][4];
 
 typedef struct	s_worker t_worker;
+typedef	struct	s_ppm t_ppm;
 
 typedef struct s_mrt
 {
@@ -102,6 +103,7 @@ typedef struct s_obj
 	t_vct	p1;
 	t_vct	p2;
 	t_vct	p3;
+	t_ppm	*ppm;
 }	t_obj;
 
 typedef struct s_light
@@ -280,12 +282,12 @@ typedef struct s_worker
 
 typedef	struct	s_ppm
 {
-	int	ptr;
+	int		ptr;
 	char	*data;
 	char	*line;
-	int	max_color;
-	int	width;
-	int	height;
+	int		max_color;
+	int		width;
+	int		height;
 	t_clr	**colors;
 }	t_ppm;
 
