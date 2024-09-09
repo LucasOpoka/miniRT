@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 18:07:54 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/05 20:18:04 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/09 22:52:23 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,11 +116,11 @@ int	obj_add(t_scene *scene, char **elem, int id)
 	if (!obj)
 		return (0);
 	obj->pos.w = 1;
-	if (id == ID_SPHERE)
+	if (id == e_id_sphere)
 		ret = sphere_add(obj, elem);
-	else if (id == ID_PLANE)
+	else if (id == e_id_plane)
 		ret = plane_add(obj, elem);
-	else if (id == ID_CYLINDER)
+	else if (id == e_id_cylinder)
 		ret = cylinder_add(obj, elem);
 #ifdef BONUS
 	if (ret)

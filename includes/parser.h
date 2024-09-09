@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 20:43:35 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/09 18:15:15 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/09 22:50:52 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,14 @@
 
 enum
 {
-	ID_AMBIENT,
-	ID_CAMERA,
-	ID_LIGHT,
-	ID_LIGHT_POINT,
-	ID_SPHERE,
-	ID_PLANE,
-	ID_CYLINDER,
-	ID_UNKNOWN
+	e_id_ambient,
+	e_id_camera,
+	e_id_light,
+	e_id_light_point,
+	e_id_sphere,
+	e_id_plane,
+	e_id_cylinder,
+	e_id_unknown
 };
 
 enum

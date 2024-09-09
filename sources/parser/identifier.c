@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 18:07:36 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/05 20:57:36 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/09 22:51:56 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,12 @@ static int	identifiers_check(char ***elements)
 	while (elements[i])
 	{
 		id = identifier_type(elements[i][0]);
-		if (id == ID_UNKNOWN)
+		if (id == e_id_unknown)
 			return (0);
 		found[id] += 1;
 		i++;
 	}
-	if (found[ID_CAMERA] != 1 || found[ID_AMBIENT] != 1 || found[ID_LIGHT] != 1)
+	if (found[e_id_camera] != 1 || found[e_id_ambient] != 1 || found[e_id_light] != 1)
 		return (0);
 	return (1);
 }
