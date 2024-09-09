@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 16:49:11 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/07 16:49:11 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/09 18:45:58 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ int	parse_header_entry(t_ppm *ppm)
 {
 	char	*s;
 
+	(void)fill_rgb;
 	s = ppm->line;
 	if (ppm->ptr == 1)
 	{
@@ -74,6 +75,7 @@ int	parse_header_entry(t_ppm *ppm)
 	return (1);
 }
 
+/*
 int	parse_pixel_entry(t_ppm *ppm, int y)
 {
 	int		x;
@@ -103,3 +105,4 @@ int	parse_pixel_entry(t_ppm *ppm, int y)
 	}
 	return (x == ppm->width);
 }
+*/

@@ -6,14 +6,14 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 14:32:21 by atorma            #+#    #+#             */
-/*   Updated: 2024/06/19 14:32:23 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/09 20:12:31 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <fcntl.h>
 
-static char	*re_alloc(void *ptr, int len, int new_len)
+static char	*re_alloc(void *ptr, size_t len, size_t new_len)
 {
 	char	*new;
 
@@ -31,7 +31,7 @@ static char	*re_alloc(void *ptr, int len, int new_len)
 static char	*read_buffered(int fd, int buf_size,
 		size_t *out_size, int *error)
 {
-	char	temp_buf[1024];
+	char	temp_buf[2048];
 	ssize_t	size_read;
 	size_t	total_read;
 	char	*buf;
