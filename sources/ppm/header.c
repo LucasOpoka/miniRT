@@ -31,6 +31,8 @@ static char	*skip_digits(char *s, int expected)
 {
 	const char	*start = s;
 
+	if (*s == '0')
+		return (NULL);
 	while (*s && ft_isdigit(*s))
 		s++;
 	if (*s != expected || s == start)
