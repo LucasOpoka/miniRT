@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:06:19 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/07 21:50:10 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/09 22:56:33 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINIRT_H
@@ -52,9 +52,9 @@ void		ft_keyboard_hooks(mlx_key_data_t k_data, void *vd);
 
 
 // Void array
-void		ft_init_void_arr(t_void_arr *void_arr);
-void		ft_void_arr_realloc(t_void_arr *void_arr);
-void		ft_void_arr_add(t_void_arr *void_arr, void *pointer);
+int		ft_init_void_arr(t_void_arr *void_arr);
+int		ft_void_arr_realloc(t_void_arr *void_arr);
+int		ft_void_arr_add(t_void_arr *void_arr, void *pointer);
 void		ft_free_void_arr(t_void_arr *void_arr);
 
 // t_xs

@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 18:07:54 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/09 22:52:23 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/09 22:58:14 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,11 +126,10 @@ int	obj_add(t_scene *scene, char **elem, int id)
 	if (ret)
 		ret = obj_add_bonus_fields(obj, elem);
 #endif
-	if (!ret)
+	if (!ret || !ft_void_arr_add(&scene->objs, obj))
 	{
 		free(obj);
 		return (0);
 	}
-	ft_void_arr_add(&scene->objs, obj);
 	return (1);
 }
