@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 16:47:23 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/09 20:24:56 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/09 21:12:21 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,29 +73,21 @@ static int	parse_pixels(t_ppm *ppm)
 	const uint32_t    start = ppm->line - ppm->data;
 	uint32_t    x;
 	uint32_t    y;
+	uint32_t    offset;
 
 	y = 0;
 	while (y < ppm->height)
 	{
 		x = 0;
-		while (x < (ppm->width))
+		while (x < ppm->width)
 		{
-			if (x % 3 == 0)
-			{
-				uint32_t    offset = (y * ppm->width) + (x * 3) + start;
-				unsigned char r = ppm->data[offset];
-				unsigned char g = ppm->data[offset + 1];
-				unsigned char b = ppm->data[offset + 2];
-				ppm->colors[y][x].r = (double)r / 255;
-				ppm->colors[y][x].g = (double)g / 255;
-				ppm->colors[y][x].b = (double)b / 255;
-				/*
-				printf("[%u][%u]\n", y, x);
-				printf("%02x", r);
-				printf("%02x", g);
-				printf("%02x", b);
-				*/
-			}
+			offset = (y * ppm->width * 3) + (x * 3) + start;
+			unsigned char r = ppm->data[offset];
+			unsigned char g = ppm->data[offset + 1];
+			unsigned char b = ppm->data[offset + 2];
+			ppm->colors[y][x].r = (double)r / 255;
+			ppm->colors[y][x].g = (double)g / 255;
+			ppm->colors[y][x].b = (double)b / 255;
 			x++;
 		}
 		y++;
