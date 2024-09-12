@@ -6,7 +6,7 @@
 #    By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/29 14:59:04 by lopoka            #+#    #+#              #
-#    Updated: 2024/09/12 10:29:33 by lopoka           ###   ########.fr        #
+#    Updated: 2024/09/12 12:22:36 by lopoka           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,12 +55,13 @@ SOURCES	=	main.c \
 
 PARSER_DIR = sources/parser
 PARSER_SRC = parser.c parser_utils.c validate.c file.c array.c \
-	     fill.c ft_atof.c identifier.c obj.c camera.c light.c
+	     fill.c ft_atof.c identifier.c obj.c camera.c light.c \
+	     obj_bonus.c
 PARSER_OBJ = $(addprefix $(PARSER_DIR)/,$(PARSER_SRC:.c=.o))
 
 
 PPM_DIR = sources/ppm
-PPM_SRC = ppm.c ppm_matrix.c line.c entry.c
+PPM_SRC = ppm.c ppm_matrix.c header.c
 PPM_OBJ = $(addprefix $(PPM_DIR)/,$(PPM_SRC:.c=.o))
 
 BVH_DIR = sources/bvh

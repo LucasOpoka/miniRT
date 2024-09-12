@@ -1,25 +1,49 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   entry.c                                            :+:      :+:    :+:   */
+/*   header.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/07 16:49:11 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/09 18:45:58 by atorma           ###   ########.fr       */
+/*   Created: 2024/09/09 22:10:44 by atorma            #+#    #+#             */
+/*   Updated: 2024/09/09 22:10:54 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/miniRT.h"
 #include "../../includes/ppm.h"
 
-int			atoi_safe(char *s, int max);
-char		*line_next_pixel(char *s, int delim);
+static int	atoi_safe(char *s, int max)
+{
+	long long	res;
+	char		*start;
+
+	res = 0;
+	start = s;
+	if (max <= 0)
+		max = 3840 * 2160;
+	while (*s)
+	{
+		if (!ft_isdigit(*s))
+			break ;
+		res = res * 10 + (*s - '0');
+		if (res > max)
+			return (-1);
+		s++;
+	}
+	if (*s && *s != ' ' && *s != '\n')
+		return (0);
+	if (s == start)
+		return (0);
+	return (res);
+}
 
 static char	*skip_digits(char *s, int expected)
 {
 	const char	*start = s;
 
+	if (*s == '0')
+		return (NULL);
 	while (*s && ft_isdigit(*s))
 		s++;
 	if (*s != expected || s == start)
@@ -32,28 +56,23 @@ static char	*skip_digits(char *s, int expected)
 	return (s);
 }
 
-static int	fill_rgb(t_ppm *ppm, t_clr *col, char *s, int i)
+static char	*line_next(t_ppm *ppm)
 {
-	double	res;
+	char	*newline;
 
-	res = atoi_safe(s, ppm->max_color);
-	if (res < 0)
-		return (0);
-	res /= 255;
-	if (i == 0)
-		col->r = res;
-	if (i == 1)
-		col->g = res;
-	if (i == 2)
-		col->b = res;
-	return (1);
+	newline = ft_strchr(ppm->line, '\n');
+	if (!newline)
+		return (NULL);
+	if (*ppm->line == '#')
+		return (newline + 1);
+	ppm->ptr += 1;
+	return (newline + 1);
 }
 
-int	parse_header_entry(t_ppm *ppm)
+static int	parse_header_entry(t_ppm *ppm)
 {
 	char	*s;
 
-	(void)fill_rgb;
 	s = ppm->line;
 	if (ppm->ptr == 1)
 	{
@@ -70,39 +89,27 @@ int	parse_header_entry(t_ppm *ppm)
 	{
 		if (!skip_digits(s, '\n'))
 			return (0);
-		ppm->max_color = atoi_safe(s, 65536);
+		ppm->max_color = atoi_safe(s, 255);
 	}
 	return (1);
 }
 
-/*
-int	parse_pixel_entry(t_ppm *ppm, int y)
+int	parse_header(t_ppm *ppm)
 {
-	int		x;
-	int		i;
-	char	*line;
+	size_t	blob_size;
 
-	x = 0;
-	i = 0;
-	line = ppm->line;
-	while (line && *line && *line != '\n')
+	while (ppm->line && *ppm->line)
 	{
-		if (x >= ppm->width)
+		if (ppm->ptr == 3)
+			break ;
+		if (*ppm->line != '#' && !parse_header_entry(ppm))
 			return (0);
-		if (i > 2)
-			i = 0;
-		if (!fill_rgb(ppm, &ppm->colors[y][x], line, i))
-			return (0);
-		if (i == 2)
-		{
-			printf("color.r: %f\n", ppm->colors[y][x].r);
-			printf("color.g: %f\n", ppm->colors[y][x].g);
-			printf("color.b: %f\n", ppm->colors[y][x].b);
-			x++;
-		}
-		line = line_next_pixel(line, ' ');
-		i++;
+		ppm->line = line_next(ppm);
 	}
-	return (x == ppm->width);
+	if (ppm->width <= 0 || ppm->height <= 0 || ppm->max_color <= 0)
+		return (0);
+	blob_size = ppm->data_size - (ppm->line - ppm->data);
+	if (blob_size != (3 * ppm->height * ppm->width))
+		return (0);
+	return (ppm->ptr == 3);
 }
-*/

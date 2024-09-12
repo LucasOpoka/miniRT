@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:29:51 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/05 18:33:55 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/10 00:50:04 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../includes/bvh.h"
@@ -20,8 +20,7 @@ int	worker_init(t_mrt *mrt, t_scene *scene, t_worker *worker, int i)
 	worker->mrt = mrt;
 	worker->scene = scene;
 	worker->index = i;
-	ft_init_xs(&worker->xs);
-	return (1);
+	return (ft_init_xs(&worker->xs));
 }
 
 int	worker_wait(t_worker *worker)

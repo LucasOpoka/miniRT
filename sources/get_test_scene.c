@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 12:47:38 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/12 12:08:46 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/12 12:26:42 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -158,7 +158,7 @@ t_scene	get_test_scene(void)
 	front->transparency = 0;
 	front->scale = ft_create_vct(1, 1, 1);
 	
-	t_obj *back = malloc(sizeof(t_obj));
+	t_obj *back = ft_calloc(1, sizeof(t_obj));
 	back->type = t_plane;
 	back->pos = ft_create_point(0, 0, 10); // BACK PLANE
 	back->color = ft_create_clr(0, 0, 0);

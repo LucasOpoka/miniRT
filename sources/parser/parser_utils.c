@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 18:07:50 by atorma            #+#    #+#             */
-/*   Updated: 2024/08/24 18:07:51 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/09 23:57:29 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,9 @@ int	str_isdouble(char *s)
 		s++;
 	i = 0;
 	len = len_till(s, ',');
-	if (len < 1 || len > 7 || (str_charcount(s, '.') > 1))
+	if (len < 1 || len > 15 || (str_charcount(s, '.') > 1))
+		return (0);
+	if (!isfinite(ft_atof(s)))
 		return (0);
 	while (i < len)
 	{

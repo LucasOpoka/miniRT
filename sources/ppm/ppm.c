@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 16:47:23 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/09 21:12:21 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/09 21:37:16 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,66 +14,28 @@
 #include "../../includes/ppm.h"
 
 int			ppm_matrix_alloc(t_ppm *ppm);
-char		*line_next(t_ppm *ppm);
-void		line_print(t_ppm *ppm);
-char		*line_next_pixel(char *s, int delim);
-int			parse_header_entry(t_ppm *ppm);
-int			parse_pixel_entry(t_ppm *ppm, int y);
+int			parse_header(t_ppm *ppm);
 
-int	atoi_safe(char *s, int max)
+static void	pixel_set(t_ppm *ppm, uint32_t x, uint32_t y, uint32_t offset)
 {
-	long long	res;
-	char		*start;
+	unsigned char	r;
+	unsigned char	g;
+	unsigned char	b;
 
-	res = 0;
-	start = s;
-	if (max <= 0)
-		max = 3840 * 2160;
-	while (*s)
-	{
-		if (!ft_isdigit(*s))
-			break ;
-		res = res * 10 + (*s - '0');
-		if (res > max)
-			return (-1);
-		s++;
-	}
-	if (*s && *s != ' ' && *s != '\n')
-		return (-1);
-	if (s == start)
-		return (-1);
-	return (res);
+	r = ppm->data[offset];
+	g = ppm->data[offset + 1];
+	b = ppm->data[offset + 2];
+	ppm->colors[y][x].r = (double)r / 255;
+	ppm->colors[y][x].g = (double)g / 255;
+	ppm->colors[y][x].b = (double)b / 255;
 }
 
-static int	parse_header(t_ppm *ppm)
+static void	parse_pixel_data(t_ppm *ppm)
 {
-	long	blob_size;
-
-	while (ppm->line && *ppm->line)
-	{
-		if (ppm->ptr == 3)
-			break ;
-		if (*ppm->line != '#' && !parse_header_entry(ppm))
-			return (0);
-		ppm->line = line_next(ppm);
-	}
-	if (ppm->width <= 0 || ppm->height <= 0 || ppm->max_color <= 0)
-		return (0);
-	blob_size = ppm->data_size - (ppm->line - ppm->data);
-	if (blob_size != (3 * ppm->height * ppm->width))
-		return (0);
-	printf("data_size: %zu, %d\n",
-			ppm->data_size - (ppm->line - ppm->data),
-			3 * ppm->height * ppm->width);
-	return (ppm->ptr == 3);
-}
-
-static int	parse_pixels(t_ppm *ppm)
-{
-	const uint32_t    start = ppm->line - ppm->data;
-	uint32_t    x;
-	uint32_t    y;
-	uint32_t    offset;
+	const uint32_t	start = ppm->line - ppm->data;
+	uint32_t		x;
+	uint32_t		y;
+	uint32_t		offset;
 
 	y = 0;
 	while (y < ppm->height)
@@ -82,20 +44,11 @@ static int	parse_pixels(t_ppm *ppm)
 		while (x < ppm->width)
 		{
 			offset = (y * ppm->width * 3) + (x * 3) + start;
-			unsigned char r = ppm->data[offset];
-			unsigned char g = ppm->data[offset + 1];
-			unsigned char b = ppm->data[offset + 2];
-			ppm->colors[y][x].r = (double)r / 255;
-			ppm->colors[y][x].g = (double)g / 255;
-			ppm->colors[y][x].b = (double)b / 255;
+			pixel_set(ppm, x, y, offset);
 			x++;
 		}
 		y++;
 	}
-	printf("y: %u\n", y);
-	printf("x: %u\n", x);
-	printf("x * y: %u\n", (x - start) * y);
-	return (ppm->height == y);
 }
 
 static int	ppm_parse(t_ppm *ppm, char *data)
@@ -112,8 +65,7 @@ static int	ppm_parse(t_ppm *ppm, char *data)
 	printf("ppm->max_color: %d\n", ppm->max_color);
 	if (!ppm_matrix_alloc(ppm))
 		return (0);
-	if (!parse_pixels(ppm))
-		return (0);
+	parse_pixel_data(ppm);
 	printf("pixels parsed\n");
 	return (1);
 }

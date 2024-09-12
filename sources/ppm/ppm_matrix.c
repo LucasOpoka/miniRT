@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 16:49:05 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/09 18:45:19 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/09 22:23:58 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 int	ppm_matrix_alloc(t_ppm *ppm)
 {
-	uint32_t    y;
+	uint32_t	y;
 
 	ppm->colors = (t_clr **)malloc(ppm->height * sizeof(t_clr *));
 	if (!ppm->colors)
@@ -38,7 +38,7 @@ int	ppm_matrix_alloc(t_ppm *ppm)
 
 void	ppm_matrix_free(t_ppm *ppm)
 {
-	uint32_t    y;
+	uint32_t	y;
 
 	if (!ppm->colors)
 		return ;
@@ -46,4 +46,5 @@ void	ppm_matrix_free(t_ppm *ppm)
 	while (y > 0)
 		free(ppm->colors[--y]);
 	free(ppm->colors);
+	ppm->colors = NULL;
 }

@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 14:16:04 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/12 11:58:04 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/12 12:23:22 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef STRUCTS_H
@@ -36,13 +36,13 @@ typedef struct s_mrt
 	int					exit;
 }	t_mrt;
 
-typedef struct	t_bounds
+typedef struct	s_bounds
 {
 	double		min[3];
 	double		max[3];
 }	t_bounds;
 
-typedef	struct	t_node
+typedef	struct	s_node
 {
 	t_bounds	bounds;
 	uint32_t	left;
@@ -50,18 +50,25 @@ typedef	struct	t_node
 	uint32_t	count;
 }	t_node;
 
-typedef	struct	t_split
+typedef	struct	s_split
 {
 	double	    cost;
 	double	    pos;
 	uint32_t    axis;
 }	t_split;
 
-typedef struct	t_stack
+typedef struct	s_stack
 {
     t_node		*stack[64];
     uint32_t	ptr;
 }   t_stack;
+
+typedef	struct	s_bvh
+{
+	t_node	    *root;
+	uint32_t    *i;
+	uint32_t    nodes_used;
+}	t_bvh;
 
 typedef struct s_vct
 {
@@ -168,14 +175,6 @@ typedef	struct	t_ambient
 	double	intensity;
 	t_clr	color;
 }	t_ambient;
-
-
-typedef	struct	t_bvh
-{
-	t_node	    *root;
-	uint32_t    *i;
-	uint32_t    nodes_used;
-}	t_bvh;
 
 typedef	struct s_scene
 {

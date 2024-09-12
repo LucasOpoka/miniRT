@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 18:07:45 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/09 18:16:14 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/09 22:51:26 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,11 @@ int	parse_object(t_scene *scene, char **line)
 
 	ret = 0;
 	id = identifier_type(line[0]);
-	if (id == ID_CAMERA)
+	if (id == e_id_camera)
 		ret = cam_add(scene, line);
-	else if (id == ID_AMBIENT || id == ID_LIGHT || id == ID_LIGHT_POINT)
+	else if (id == e_id_ambient || id == e_id_light || id == e_id_light_point)
 		ret = light_add(scene, line, id);
-	else if (id >= ID_SPHERE)
+	else if (id >= e_id_sphere)
 		ret = obj_add(scene, line, id);
 	return (ret);
 }

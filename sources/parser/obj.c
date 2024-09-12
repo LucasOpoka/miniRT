@@ -6,63 +6,15 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 18:07:54 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/05 20:18:04 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/10 18:40:05 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/miniRT.h"
 #include "../../includes/parser.h"
-#include "../../libft/libft.h"
 
 int			validate_orientation(t_vct v);
-
-/*
- *   object bonus fields after mandatory
-
-	*   <specular> <diffuse> <shininess> <reflective> <refractive> <transparency> <scale vector>
- *   +7 fields
- */
-
-#ifdef BONUS
-
-static int	obj_validate_bonus(t_obj *obj)
-{
-	if (obj->transparency < 0 || obj->transparency > 1.0)
-		return (0);
-	if (obj->reflective < 0 || obj->reflective > 1.0)
-		return (0);
-	if (obj->diffuse < 0 || obj->diffuse > 1.0)
-		return (0);
-	if (obj->specular < 0 || obj->specular > 1.0)
-		return (0);
-	if (obj->shininess < 0 || obj->refractive < 0)
-		return (0);
-	return (1);
-}
-
-static int	obj_add_bonus_fields(t_obj *obj, char **elem)
-{
-	const size_t	size = array_size(elem);
-
-	if (!validate_vector(elem[size - 1]))
-		return (0);
-	if (!validate_ratio(elem[size - 2], 0.0, 1.0))
-		return (0);
-	if (!validate_ratio(elem[size - 2], 0.0, 1.0))
-		return (0);
-	if ((!str_isdigit(elem[size - 5])) || ft_strlen(elem[size - 5]) >= 4)
-		return (0);
-	fill_vector(&obj->scale, elem[size - 1]);
-	obj->transparency = ft_atof(elem[size - 2]);
-	obj->refractive = ft_atof(elem[size - 3]);
-	obj->reflective = ft_atof(elem[size - 4]);
-	obj->shininess = ft_atoi(elem[size - 5]);
-	obj->diffuse = ft_atof(elem[size - 6]);
-	obj->specular = ft_atof(elem[size - 7]);
-	return (obj_validate_bonus(obj));
-}
-
-#endif
+int			obj_add_bonus_fields(t_obj *obj, char **elem);
 
 static int	sphere_add(t_obj *obj, char **elem)
 {
@@ -116,21 +68,20 @@ int	obj_add(t_scene *scene, char **elem, int id)
 	if (!obj)
 		return (0);
 	obj->pos.w = 1;
-	if (id == ID_SPHERE)
+	if (id == e_id_sphere)
 		ret = sphere_add(obj, elem);
-	else if (id == ID_PLANE)
+	else if (id == e_id_plane)
 		ret = plane_add(obj, elem);
-	else if (id == ID_CYLINDER)
+	else if (id == e_id_cylinder)
 		ret = cylinder_add(obj, elem);
 #ifdef BONUS
 	if (ret)
 		ret = obj_add_bonus_fields(obj, elem);
 #endif
-	if (!ret)
+	if (!ret || !ft_void_arr_add(&scene->objs, obj))
 	{
 		free(obj);
 		return (0);
 	}
-	ft_void_arr_add(&scene->objs, obj);
 	return (1);
 }

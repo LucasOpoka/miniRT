@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 18:07:20 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/09 20:08:30 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/09 23:29:22 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,13 @@ static int	file_validate_name(char *str, int type)
 	return (1);
 }
 
-static int	valid_chars(char *s, int type)
+static int	valid_chars(char *s)
 {
-	const char	*chars = "0123456789ACLplscytr -,.\n";
+	const char	*chars = "ACLplscytr -,.\n";
 
-	if (type == e_file_ppm)
-		return (0);
 	while (*s)
 	{
-		if (type == e_file_scene && !ft_strchr(chars, *s))
+		if (!ft_isdigit(*s) && !ft_strchr(chars, *s))
 			return (0);
 		s++;
 	}
@@ -59,7 +57,7 @@ static char	*file_read_data(int fd, size_t *out_size, int type)
 	*out_size = size;
 	if (type == e_file_ppm)
 		return (data);
-	if (size != ft_strlen(data) || !valid_chars(data, type))
+	if (size != ft_strlen(data) || !valid_chars(data))
 	{
 		parser_error("invalid characters on the file");
 		free(data);

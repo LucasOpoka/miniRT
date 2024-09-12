@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 18:07:57 by atorma            #+#    #+#             */
-/*   Updated: 2024/08/24 18:07:58 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/09 23:55:55 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	validate_ratio(char *s, double min, double max)
 		i++;
 	}
 	ratio = ft_atof(s);
-	if (ratio < min || ratio > max)
+	if (!isfinite(ratio) || ratio < min || ratio > max)
 		return (0);
 	return (1);
 }
