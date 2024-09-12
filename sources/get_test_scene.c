@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 12:47:38 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/09 20:33:50 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/12 12:08:46 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -24,22 +24,22 @@ t_scene	get_test_scene(void)
 	// Shapes
 	ft_init_void_arr(&scene.objs);
 
-	t_obj *obj1 = malloc(sizeof(t_obj));
+	t_obj *obj1 = ft_calloc(1, sizeof(t_obj));
 	obj1->type = t_sphere;
 	obj1->pos = ft_create_point(0, 0, 0); // CENTER
-	obj1->radius = 2;
-	obj1->color = ft_create_clr(0, 0, 0); // RED
+	obj1->radius = 1;
+	obj1->color = ft_create_clr(255, 255, 255); // RED
 	obj1->specular = 0.9;
-	obj1->diffuse = 0;
+	obj1->diffuse = 0.9;
 	obj1->shininess = 300;
 	obj1->reflective = 0;
 	obj1->refractive = 1.5;
 	obj1->transparency = 0;
 	obj1->scale = ft_create_vct(1, 1, 1);
-	obj1->orientation = ft_create_vct(0, 0, 0);
+	obj1->orientation = ft_create_vct(0, 1, 0);
 	//PPM test
-	obj1->ppm = malloc(sizeof(t_ppm));
-	ppm_load("img.ppm", obj1->ppm);
+	ppm_load("img.ppm", &obj1->txtr);
+	ppm_load("bump.ppm", &obj1->bump);
 
 
 	t_obj *air_bubble = malloc(sizeof(t_obj));
@@ -248,19 +248,19 @@ t_scene	get_test_scene(void)
 	// Lights
 	ft_init_void_arr(&scene.lights);
 
-	scene.ambient.intensity = 0.25;
+	scene.ambient.intensity = 0.2;
 	scene.ambient.color = ft_create_clr(255, 255, 255);
 
 	t_light *light2 = malloc(sizeof(t_light));
-	light2->intensity = 0.25;
-	light2->pos = ft_create_vct(2, 10, -5);
-	light2->dir = ft_create_vct(1, -1, 0);
+	light2->intensity = 0.4;
+	light2->pos = ft_create_vct(3, 6, -6);
+	light2->dir = ft_create_vct(0, 0, 1);
 	light2->color = ft_create_clr(255, 255, 255);
 	
 	t_light *light3 = malloc(sizeof(t_light));
-	light3->intensity = 0.25;
-	light3->pos = ft_create_vct(1, 3, 3);
-	light3->dir = ft_create_vct(-1, 1, 0);
+	light3->intensity = 0.4;
+	light3->pos = ft_create_vct(-3, 6, -6);
+	light3->dir = ft_create_vct(0, 0, 1);
 	light3->color = ft_create_clr(255, 255, 255);
 	
 	t_light *light4 = malloc(sizeof(t_light));
@@ -272,7 +272,7 @@ t_scene	get_test_scene(void)
 	
 	ft_void_arr_add(&scene.lights, light2);
 	ft_void_arr_add(&scene.lights, light3);
-	ft_void_arr_add(&scene.lights, light4);
+	//ft_void_arr_add(&scene.lights, light4);
 
 	return (scene);
 }

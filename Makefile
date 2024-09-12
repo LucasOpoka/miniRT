@@ -6,7 +6,7 @@
 #    By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/29 14:59:04 by lopoka            #+#    #+#              #
-#    Updated: 2024/09/06 22:11:19 by lopoka           ###   ########.fr        #
+#    Updated: 2024/09/12 10:29:33 by lopoka           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,6 +40,7 @@ SOURCES	=	main.c \
 			intersections/cone.c \
 			intersections/intersections_arr.c \
 			patterns/patterns.c \
+			patterns/texture_and_bump.c \
 			camera.c \
 			scene.c \
 			render.c \

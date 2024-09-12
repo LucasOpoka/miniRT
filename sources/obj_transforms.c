@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:44:06 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/02 19:47:13 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/11 11:31:33 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -52,6 +52,11 @@ void	ft_set_rot_mtrx(t_mtrx4 *rot_mtrx, t_obj *obj)
 	ft_vct_cross_prod(&rot_axis, &y_axis, &obj->orientation);
 	ft_vct_norm(&rot_axis);
 	rot_angle = acos(ft_vct_dot(&obj->orientation, &y_axis));
+	if (obj->type == t_sphere)
+	{	
+		rot_axis = y_axis;
+		rot_angle = 2.7;
+	}
 	ft_rot_mtrx_sub(rot_mtrx, rot_axis, rot_angle);
 }
 
