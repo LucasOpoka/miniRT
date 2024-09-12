@@ -6,10 +6,18 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 13:07:43 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/06 14:37:59 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/12 14:44:10 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../includes/miniRT.h"
+
+void	ft_get_uv(double *uv, t_vct *p, t_obj *obj)
+{
+	if (obj->type == t_sphere)
+		ft_spherical_map(uv, p);
+	if (obj->type == t_plane)
+		ft_planar_map(uv, p);
+}
 
 void	ft_spherical_map(double *uv, t_vct *p)
 {

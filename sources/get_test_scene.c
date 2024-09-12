@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 12:47:38 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/12 12:26:42 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/12 14:52:13 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -37,6 +37,10 @@ t_scene	get_test_scene(void)
 	obj1->transparency = 0;
 	obj1->scale = ft_create_vct(1, 1, 1);
 	obj1->orientation = ft_create_vct(0, 1, 0);
+	//Ptrn test
+	obj1->ptrn.ptrn_func = ft_checkers;
+	obj1->ptrn.width = 30;
+	obj1->ptrn.height = 15;
 	//PPM test
 	ppm_load("img.ppm", &obj1->txtr);
 	ppm_load("bump.ppm", &obj1->bump);
@@ -169,6 +173,9 @@ t_scene	get_test_scene(void)
 	back->reflective = 0;
 	back->refractive = 1;
 	back->transparency = 0;
+	back->ptrn.ptrn_func = ft_checkers;
+	back->ptrn.width = 2;
+	back->ptrn.height = 2;
 	back->scale = ft_create_vct(1, 1, 1);
 
 	t_obj *cylinder = malloc(sizeof(t_obj));

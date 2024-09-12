@@ -6,7 +6,7 @@
 /*   By: lucas <lopoka@student.hive.fi>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 16:17:04 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/12 12:07:19 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/12 14:48:43 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -24,8 +24,6 @@ void	ft_sphere_normal_and_color(t_comps *comps)
 	comps->normal.w = 0;
 	ft_vct_norm(&comps->normal);
 	comps->color = obj->color;
-
-	//comps->color = ft_checkers(uv, 16, 8);
 	ft_texture_and_bump(comps, obj, obj_point);
 }
 
@@ -41,9 +39,7 @@ void	ft_plane_normal_and_color(t_comps *comps)
 	comps->normal.w = 0;
 	ft_vct_norm(&comps->normal);
 	ft_vct_x_mtrx(&obj_point, &obj->world_to_obj, &comps->point);
-	double	uv[2];
-	ft_planar_map(uv, &obj_point);
-	comps->color = ft_checkers(uv, 2, 2);
+	ft_texture_and_bump(comps, obj, obj_point);
 }
 
 void	ft_cylinder_normal_and_color(t_comps *comps)
