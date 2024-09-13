@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 12:47:38 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/12 14:52:13 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/13 11:39:19 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -34,13 +34,11 @@ t_scene	get_test_scene(void)
 	obj1->shininess = 300;
 	obj1->reflective = 0;
 	obj1->refractive = 1.5;
-	obj1->transparency = 0;
+	obj1->transparency = 0.9;
 	obj1->scale = ft_create_vct(1, 1, 1);
 	obj1->orientation = ft_create_vct(0, 1, 0);
 	//Ptrn test
-	obj1->ptrn.ptrn_func = ft_checkers;
-	obj1->ptrn.width = 30;
-	obj1->ptrn.height = 15;
+	//obj1->ptrn = ft_ptrn(ft_checkers, 30, 15);
 	//PPM test
 	ppm_load("img.ppm", &obj1->txtr);
 	ppm_load("bump.ppm", &obj1->bump);
@@ -165,17 +163,16 @@ t_scene	get_test_scene(void)
 	t_obj *back = ft_calloc(1, sizeof(t_obj));
 	back->type = t_plane;
 	back->pos = ft_create_point(0, 0, 10); // BACK PLANE
-	back->color = ft_create_clr(0, 0, 0);
+	back->color = ft_create_clr(255, 0, 0);
 	back->orientation = ft_create_vct(0, 0, -1);
-	back->specular = 0;
-	back->diffuse = 0.2;
+	back->specular = 0.3;
+	back->diffuse = 0.9;
 	back->shininess = 100;
 	back->reflective = 0;
 	back->refractive = 1;
 	back->transparency = 0;
-	back->ptrn.ptrn_func = ft_checkers;
-	back->ptrn.width = 2;
-	back->ptrn.height = 2;
+	//ptrn
+	//back->ptrn = ft_ptrn(ft_checkers, 2, 2);
 	back->scale = ft_create_vct(1, 1, 1);
 
 	t_obj *cylinder = malloc(sizeof(t_obj));
@@ -184,26 +181,30 @@ t_scene	get_test_scene(void)
 	cylinder->color = ft_create_clr(0, 0, 255);
 	cylinder->specular = 0.9;
 	cylinder->shininess = 100;
-	cylinder->reflective = 0.9;
+	cylinder->reflective = 0;
 	cylinder->refractive = 1.5;
 	cylinder->radius = 1;
 	cylinder->transparency = 0;
-	cylinder->scale = ft_create_vct(1, 1, 1);
-	cylinder->orientation = ft_create_vct(0, 1, 0.3);
-	cylinder->height = 2;
+	cylinder->scale = ft_create_vct(0.5, 2, 0.5);
+	cylinder->orientation = ft_create_vct(0, 1, -0.5);
+	//ptrn
+	cylinder->ptrn = ft_ptrn(ft_checkers, 16, 8);
+	cylinder->height = 1;
 
 	t_obj *cone = malloc(sizeof(t_obj));
 	cone->type = t_cone;
-	cone->pos = ft_create_point(2, 0, 0); //CONE
+	cone->pos = ft_create_point(0, 4, 0); //CONE
 	cone->color = ft_create_clr(0, 0, 255);
 	cone->specular = 0.9;
 	cone->shininess = 100;
-	cone->reflective = 0.9;
+	cone->reflective = 0;
 	cone->refractive = 1.5;
 	cone->radius = 1;
 	cone->transparency = 0;
 	cone->scale = ft_create_vct(1, 3, 1);
-	cone->orientation = ft_create_vct(-1, 0, 0);
+	cone->orientation = ft_create_vct(0, -1, 0);
+	//ptrn
+	cone->ptrn = ft_ptrn(ft_checkers, 10, 10);
 	cone->height = 3;
 
 	// Triangle testing
@@ -234,10 +235,11 @@ t_scene	get_test_scene(void)
 	tri->p1 = p1;
 	tri->p2 = p2;
 	tri->p3 = p3;
+	tri->ptrn = ft_ptrn(ft_checkers, 4, 4);
 
 
 	ft_void_arr_add(&scene.objs, obj1);
-	//ft_void_arr_add(&scene.objs, air_bubble);
+	ft_void_arr_add(&scene.objs, air_bubble);
 	//ft_void_arr_add(&scene.objs, obj3);
 	//ft_void_arr_add(&scene.objs, obj4);
 	//ft_void_arr_add(&scene.objs, obj10);
@@ -249,23 +251,22 @@ t_scene	get_test_scene(void)
 	//ft_void_arr_add(&scene.objs, l);
 	//ft_void_arr_add(&scene.objs, up);
 	//ft_void_arr_add(&scene.objs, front);
-	
 	//ft_void_arr_add(&scene.objs, tri);
 
 	// Lights
 	ft_init_void_arr(&scene.lights);
 
-	scene.ambient.intensity = 0.2;
+	scene.ambient.intensity = 0.25;
 	scene.ambient.color = ft_create_clr(255, 255, 255);
 
 	t_light *light2 = malloc(sizeof(t_light));
-	light2->intensity = 0.4;
+	light2->intensity = 0.25;
 	light2->pos = ft_create_vct(3, 6, -6);
 	light2->dir = ft_create_vct(0, 0, 1);
 	light2->color = ft_create_clr(255, 255, 255);
 	
 	t_light *light3 = malloc(sizeof(t_light));
-	light3->intensity = 0.4;
+	light3->intensity = 0.25;
 	light3->pos = ft_create_vct(-3, 6, -6);
 	light3->dir = ft_create_vct(0, 0, 1);
 	light3->color = ft_create_clr(255, 255, 255);
@@ -279,7 +280,7 @@ t_scene	get_test_scene(void)
 	
 	ft_void_arr_add(&scene.lights, light2);
 	ft_void_arr_add(&scene.lights, light3);
-	//ft_void_arr_add(&scene.lights, light4);
+	ft_void_arr_add(&scene.lights, light4);
 
 	return (scene);
 }

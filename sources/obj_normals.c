@@ -6,7 +6,7 @@
 /*   By: lucas <lopoka@student.hive.fi>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 16:17:04 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/12 14:48:43 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/13 11:12:02 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -68,15 +68,20 @@ void	ft_cylinder_normal_and_color(t_comps *comps)
 	comps->normal.w = 0;
 	ft_vct_norm(&comps->normal);
 	comps->color = obj->color;
+	ft_texture_and_bump(comps, obj, obj_point);
 }
 
 void	ft_triangle_normal_and_color(t_comps *comps)
 {
 	t_obj	*obj;
+	t_vct	obj_point;
 
 	obj = comps->obj;
 	comps->normal = obj->normal;
 	comps->color = obj->color;
+	ft_vct_x_mtrx(&obj_point, &obj->world_to_obj, &comps->point);
+	obj_point.w = 1;
+	ft_texture_and_bump(comps, obj, obj_point);
 }
 
 void	ft_cone_normal_and_color(t_comps *comps)
@@ -106,6 +111,7 @@ void	ft_cone_normal_and_color(t_comps *comps)
 	comps->normal.w = 0;
 	ft_vct_norm(&comps->normal);
 	comps->color = obj->color;
+	ft_texture_and_bump(comps, obj, obj_point);
 }
 
 void	ft_get_obj_normal_and_color(t_comps *comps)

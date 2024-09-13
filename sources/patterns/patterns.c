@@ -6,38 +6,19 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 13:07:43 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/12 14:44:10 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/12 21:11:26 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../includes/miniRT.h"
 
-void	ft_get_uv(double *uv, t_vct *p, t_obj *obj)
+t_ptrn	ft_ptrn(t_clr (f)(double *uv, double w, double h), double w, double h)
 {
-	if (obj->type == t_sphere)
-		ft_spherical_map(uv, p);
-	if (obj->type == t_plane)
-		ft_planar_map(uv, p);
-}
+	t_ptrn	ptrn;
 
-void	ft_spherical_map(double *uv, t_vct *p)
-{
-	double	theta;
-	double	phi;
-	double	radius;
-	double	raw_u;
-
-	theta = atan2(p->x, p->z);
-	radius = ft_vct_len(p);
-	phi = acos(p->y / radius);
-	raw_u = theta / (2 * M_PI);
-	uv[0] = 1 - (raw_u + 0.5);
-	uv[1] = 1 - phi / M_PI;
-}
-
-void	ft_planar_map(double *uv, t_vct *p)
-{
-	uv[0] = fmod(p->x, 1.0);
-	uv[1] = fmod(p->z, 1.0);
+	ptrn.ptrn_func = f;
+	ptrn.width = w;
+	ptrn.height = h;
+	return (ptrn);
 }
 
 t_clr	ft_checkers(double *uv, double width, double height)
