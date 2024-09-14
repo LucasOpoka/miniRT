@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 16:52:06 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/01 15:48:27 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/14 22:02:54 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "../../libft/libft.h"
 #include <math.h>
 
-void		init_centroids(t_node *root, t_scene *scene);
+void		centroids_set(t_node *root, t_scene *scene);
 void		bounds_update(t_node *node, t_obj *obj);
 double		node_cost(t_node *node);
 uint32_t	node_partition(t_node *node, t_scene *scene, t_split split,
@@ -105,7 +105,7 @@ t_node	*bvh_build(t_scene *scene)
 	scene->bvh.nodes_used = 1;
 	scene->bvh.root = root;
 	scene->bvh.i = bvh_index;
-	init_centroids(root, scene);
+	centroids_set(root, scene);
 	bvh_update_bounds(root, 0, scene);
 	bvh_subdivide(root, 0, scene);
 	return (root);
