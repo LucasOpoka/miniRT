@@ -17,8 +17,10 @@
 
 int	scene_init(t_scene *scene)
 {
-	ft_init_void_arr(&scene->lights);
-	ft_init_void_arr(&scene->objs);
+	if (!ft_init_void_arr(&scene->lights))
+		return (0);
+	if (!ft_init_void_arr(&scene->objs))
+		return (0);
 	return (1);
 }
 
