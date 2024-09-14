@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 16:52:11 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/05 17:48:33 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/14 20:57:33 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,19 @@ void	cylinder_bounds(t_bounds *bounds, t_obj *cy)
 	bounds->max[2] = scale.z * height + cy->pos.z;
 }
 
+void	triangle_bounds(t_bounds *bounds, t_obj *tri)
+{
+	const t_vct		scale = tri->scale;
+
+	bounds->min[0] = scale.x * + fmin(fmin(tri->p1.x, tri->p2.x), tri->p3.x);
+	bounds->min[1] = scale.y * + fmin(fmin(tri->p1.y, tri->p2.y), tri->p3.y);
+	bounds->min[2] = scale.z * + fmin(fmin(tri->p1.z, tri->p2.z), tri->p3.z);
+
+	bounds->max[0] = scale.x * + fmax(fmax(tri->p1.x, tri->p2.x), tri->p3.x);
+	bounds->max[1] = scale.y * + fmax(fmax(tri->p1.y, tri->p2.y), tri->p3.y);
+	bounds->max[2] = scale.z * + fmax(fmax(tri->p1.z, tri->p2.z), tri->p3.z);
+}
+
 void	bounds_update(t_bounds *bounds, t_obj *obj)
 {
 	t_bounds	new;
@@ -62,5 +75,9 @@ void	bounds_update(t_bounds *bounds, t_obj *obj)
 		sphere_bounds(&new, obj);
 	else if (obj->type == t_cylinder)
 		cylinder_bounds(&new, obj);
+	else if (obj->type == t_cone)
+		cylinder_bounds(&new, obj);
+	else if (obj->type == t_triangle)
+		triangle_bounds(&new, obj);
 	bounds_min_max(bounds, &new);
 }

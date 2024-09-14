@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 18:07:54 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/14 20:00:39 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/14 20:07:47 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ int valid_triangle(char **elem)
 	}
 	return (1);
 }
+
 int triangle_add(t_obj *obj,	char **elem)
 {
 	t_vct	normal;

@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 16:52:19 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/01 15:53:23 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/14 20:23:56 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,12 @@ void	intersects_obj(t_ray ray, t_scene *scene, t_node *node, t_xs *xs)
 		ft_ray_to_obj_space(&obj_ray, &ray, obj);
 		if (obj->type == t_sphere)
 			ft_sphere_intersection(obj_ray, obj, xs);
-		if (obj->type == t_cylinder)
+		else if (obj->type == t_cylinder)
 			ft_cylinder_intersection(obj_ray, obj, xs);
+		else if (obj->type == t_cone)
+			ft_cone_intersection(obj_ray, obj, xs);
+		else if (obj->type == t_triangle)
+			ft_triangle_intersection(obj_ray, obj, xs);
 		i++;
 	}
 }

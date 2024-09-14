@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 20:44:57 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/05 20:44:58 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/14 20:23:06 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,18 @@ void	init_centroids(t_node *root, t_scene *scene)
 		{
 			scene->bvh.i[root->count] = i;
 			obj = scene->objs.arr[i];
-			obj->centroid[0] = obj->pos.x;
-			obj->centroid[1] = obj->pos.y;
-			obj->centroid[2] = obj->pos.z;
+			if (obj->type == t_triangle)
+			{
+				obj->centroid[0] = (obj->p1.x + obj->p1.y + obj->p1.z) * 0.3333f;
+				obj->centroid[1] = (obj->p2.x + obj->p2.y + obj->p2.z) * 0.3333f;
+				obj->centroid[2] = (obj->p3.x + obj->p3.y + obj->p3.z) * 0.3333f;
+			}
+			else
+			{
+				obj->centroid[0] = obj->pos.x;
+				obj->centroid[1] = obj->pos.y;
+				obj->centroid[2] = obj->pos.z;
+			}
 			root->count++;
 		}
 		i++;
