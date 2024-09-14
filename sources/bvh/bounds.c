@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 16:52:11 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/14 21:47:54 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/14 22:27:29 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,20 @@ void	cylinder_bounds(t_bounds *bounds, t_obj *cy)
 	bounds->max[2] = scale.z * height + cy->pos.z;
 }
 
+void	cone_bounds(t_bounds *bounds, t_obj *cone)
+{
+	const t_vct		scale = cone->scale;
+	const double	radius = cone->radius;
+	const double	height = cone->height;
+
+	bounds->min[0] = scale.x * -radius + cone->pos.x;
+	bounds->min[1] = scale.y * -radius + cone->pos.y;
+	bounds->min[2] = scale.z * -height + cone->pos.z;
+	bounds->max[0] = scale.x * radius + cone->pos.x;
+	bounds->max[1] = scale.y * radius + cone->pos.y;
+	bounds->max[2] = scale.z * height + cone->pos.z;
+}
+
 void	triangle_bounds(t_bounds *bounds, t_obj *tri)
 {
 	const t_vct		scale = tri->scale;
@@ -76,7 +90,7 @@ void	bounds_update(t_bounds *bounds, t_obj *obj)
 	else if (obj->type == t_cylinder)
 		cylinder_bounds(&new, obj);
 	else if (obj->type == t_cone)
-		cylinder_bounds(&new, obj);
+		cone_bounds(&new, obj);
 	else if (obj->type == t_triangle)
 		triangle_bounds(&new, obj);
 	bounds_min_max(bounds, &new);
