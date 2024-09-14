@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 18:07:36 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/14 16:42:29 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/14 17:34:00 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static int	validate_object_count(char **line, int id)
 		expected_value += 1;
 	// Obj bonus fields + texture & bmp
 	if (id >= e_id_sphere)
-		expected_value += 9;
+		expected_value += 10;
 #endif
 	if (expected_value != count)
 		return (0);

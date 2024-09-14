@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 16:49:05 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/09 22:23:58 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/14 17:38:18 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	ppm_matrix_free(t_ppm *ppm)
 {
 	uint32_t	y;
 
-	if (!ppm->colors)
+	if (!ppm || !ppm->colors)
 		return ;
 	y = ppm->height;
 	while (y > 0)

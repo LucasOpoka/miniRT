@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 18:07:54 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/10 18:40:05 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/14 17:42:44 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	obj_add(t_scene *scene, char **elem, int id)
 	if (!validate_vector(elem[1]))
 		return (0);
 	obj = ft_calloc(1, sizeof(t_obj));
-	if (!obj)
+	if (!obj || !ft_void_arr_add(&scene->objs, obj))
 		return (0);
 	obj->pos.w = 1;
 	if (id == e_id_sphere)
@@ -78,10 +78,5 @@ int	obj_add(t_scene *scene, char **elem, int id)
 	if (ret)
 		ret = obj_add_bonus_fields(obj, elem);
 #endif
-	if (!ret || !ft_void_arr_add(&scene->objs, obj))
-	{
-		free(obj);
-		return (0);
-	}
-	return (1);
+	return (ret);
 }

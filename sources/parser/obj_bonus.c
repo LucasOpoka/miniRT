@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 18:37:32 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/14 17:24:08 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/14 17:45:00 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,10 @@ int	str_isalpha_lower(const char *s);
 /*
  *   object bonus fields after mandatory
 
-	*   <specular> <diffuse> <shininess> <reflective> <refractive> <transparency> <scale vector>
- *   +7 fields
+	*   <specular> <diffuse> <shininess>
+	*   <reflective> <refractive> <transparency> <scale vector>
+	*   <texture ppm> <bump ppm> <bump modifier>
+ *   +10 fields
  */
 
 static int	obj_validate_bonus(t_obj *obj)
@@ -57,19 +59,29 @@ int	obj_load_ppm(t_ppm  *obj_ppm, const char    *file)
 int	obj_add_bonus_ppm(t_obj *obj, char **elem)
 {
 	const size_t	size = array_size(elem);
-	const char	*texture = elem[size - 2];
-	const char	*bump_map = elem[size - 1];
+	const char	*texture = elem[size - 3];
+	const char	*bump_map = elem[size - 2];
+	char	*modifier = elem[size - 1];
 
 	if (!obj_load_ppm(&obj->txtr, texture))
 		return (0);
 	if (!obj_load_ppm(&obj->bump, bump_map))
 		return (0);
-	printf("texture: %s, bump: %s\n", elem[size - 1], elem[size - 2]);
+	if (obj->bump_modifier)
+	{
+		if (!str_isdouble(modifier))
+			return (0);
+		obj->bump_modifier = ft_atof(modifier);
+		if (obj->bump_modifier < 0)
+			return (0);
+	}
+	printf("texture: %s, bump: %s, bump_modifier: %f\n",
+			texture, bump_map, obj->bump_modifier);
 	return (1);
 }
 int	obj_add_bonus_fields(t_obj *obj, char **elem)
 {
-	const size_t	size = array_size(elem) - 2;
+	const size_t	size = array_size(elem) - 3;
 
 	if (!obj_add_bonus_ppm(obj, elem))
 		return (0);

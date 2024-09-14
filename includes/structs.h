@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 14:16:04 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/12 14:37:46 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/14 17:30:07 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef STRUCTS_H
@@ -132,6 +132,7 @@ typedef struct s_obj
 	t_vct	p3;
 	t_ppm	txtr;
 	t_ppm	bump;
+	double	bump_modifier;
 	t_ptrn	ptrn;
 }	t_obj;
 
