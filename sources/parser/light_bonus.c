@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   light.c                                            :+:      :+:    :+:   */
+/*   light_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 18:07:41 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/14 19:14:23 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/14 19:14:33 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,10 @@ int	light_add_ambient(t_ambient *ambient, char **elem)
 	return (1);
 }
 
+/*
+ * Bonus light direction vector last element"
+ */
+
 int	light_add_point(t_light *light, char **elem)
 {
 	if (!validate_vector(elem[1]))
@@ -35,6 +39,9 @@ int	light_add_point(t_light *light, char **elem)
 	light->intensity = ft_atof(elem[2]);
 	if (!fill_color(&light->color, elem[3]))
 		return (0);
+	if (!validate_vector(elem[4]))
+		return (0);
+	fill_vector(&light->dir, elem[4]);
 	return (1);
 }
 
