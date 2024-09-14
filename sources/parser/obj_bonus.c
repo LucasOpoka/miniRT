@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 18:37:32 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/14 17:45:00 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/14 17:54:44 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static int	obj_validate_bonus(t_obj *obj)
 	return (1);
 }
 
-int	obj_load_ppm(t_ppm  *obj_ppm, const char    *file)
+static int  obj_load_ppm(t_ppm  *obj_ppm, const char    *file)
 {
 	char		path[128];
 
@@ -56,6 +56,7 @@ int	obj_load_ppm(t_ppm  *obj_ppm, const char    *file)
 	}
 	return (1);
 }
+
 int	obj_add_bonus_ppm(t_obj *obj, char **elem)
 {
 	const size_t	size = array_size(elem);
@@ -72,13 +73,14 @@ int	obj_add_bonus_ppm(t_obj *obj, char **elem)
 		if (!str_isdouble(modifier))
 			return (0);
 		obj->bump_modifier = ft_atof(modifier);
-		if (obj->bump_modifier < 0)
+		if (obj->bump_modifier < 0 || obj->bump_modifier > 100)
 			return (0);
 	}
 	printf("texture: %s, bump: %s, bump_modifier: %f\n",
 			texture, bump_map, obj->bump_modifier);
 	return (1);
 }
+
 int	obj_add_bonus_fields(t_obj *obj, char **elem)
 {
 	const size_t	size = array_size(elem) - 3;
