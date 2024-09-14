@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 18:07:20 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/09 23:29:22 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/14 16:34:21 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,12 @@ static int	file_validate_name(char *str, int type)
 
 static int	valid_chars(char *s)
 {
-	const char	*chars = "ACLplscytr -,.\n";
+	//const char	*chars = "ACLplscytr -,.\n";
+	const char	*chars = " -,.\n";
 
 	while (*s)
 	{
-		if (!ft_isdigit(*s) && !ft_strchr(chars, *s))
+		if (!ft_isalnum(*s) && !ft_strchr(chars, *s))
 			return (0);
 		s++;
 	}

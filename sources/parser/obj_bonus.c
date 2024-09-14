@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 18:37:32 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/10 18:40:28 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/14 16:58:41 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,42 @@ static int	obj_validate_bonus(t_obj *obj)
 	return (1);
 }
 
-int	obj_add_bonus_fields(t_obj *obj, char **elem)
+int	obj_add_bonus_ppm(t_obj *obj, char **elem)
 {
 	const size_t	size = array_size(elem);
+	const char	*texture = elem[size - 2];
+	const char	*bump_map = elem[size - 1];
+	char		ppm_path[256];
 
+	if (ft_strcmp(texture, "none") != 0)
+	{
+		ft_strlcpy(ppm_path, "./ppms/", sizeof(ppm_path));
+		ft_strlcat(ppm_path, texture, sizeof(ppm_path));
+		if (!ppm_load(ppm_path, &obj->txtr))
+		{
+			printf("ppm_path: %s\n", ppm_path);
+			return (0);
+		}
+	}
+	if (ft_strcmp(bump_map, "none") != 0)
+	{
+		ft_strlcpy(ppm_path, "./ppms/", sizeof(ppm_path));
+		ft_strlcat(ppm_path, bump_map, sizeof(ppm_path));
+		if (!ppm_load(ppm_path, &obj->bump))
+		{
+			printf("ppm_path: %s\n", ppm_path);
+			return (0);
+		}
+	}
+	printf("texture: %s, bump: %s\n", elem[size - 1], elem[size - 2]);
+	return (1);
+}
+int	obj_add_bonus_fields(t_obj *obj, char **elem)
+{
+	const size_t	size = array_size(elem) - 2;
+
+	if (!obj_add_bonus_ppm(obj, elem))
+		return (0);
 	if (!validate_vector(elem[size - 1]))
 		return (0);
 	if (!validate_ratio(elem[size - 2], 0.0, 1.0))
