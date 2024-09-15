@@ -32,7 +32,9 @@ static int	identifiers_check(char ***elements)
 		found[id] += 1;
 		i++;
 	}
-	if (found[e_id_camera] != 1 || found[e_id_ambient] != 1 || found[e_id_light] != 1)
+	if (found[e_id_camera] != 1)
+		return (0);
+	if (found[e_id_ambient] != 1 || found[e_id_light] != 1)
 		return (0);
 	return (1);
 }

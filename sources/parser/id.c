@@ -31,7 +31,9 @@ int	identifier_type(char *id)
 int	valid_obj_count(char **line, int id)
 {
 	const size_t	expected[] = {3, 4, 4, 4, 4, 4, 6, 0};
-	size_t		count = array_size(line);
+	size_t			count;
+
+	count = array_size(line);
 	if (expected[id] != count)
 		return (0);
 	return (1);

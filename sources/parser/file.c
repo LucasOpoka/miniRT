@@ -31,7 +31,6 @@ static int	file_validate_name(char *str, int type)
 
 static int	valid_chars(char *s)
 {
-	//const char	*chars = "ACLplscytr -,.\n";
 	const char	*chars = " -,.\n";
 
 	while (*s)

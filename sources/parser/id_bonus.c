@@ -32,13 +32,11 @@ int	valid_obj_count(char **line, int id)
 {
 	const size_t	expected[] = {3, 4, 4, 4, 4, 4, 6, 6, 6, 0};
 	const size_t	count = array_size(line);
-	size_t		value;
+	size_t			value;
 
 	value = expected[id];
-	// Light point direction vct
 	if (id == 2 || id == 3)
 		value += 1;
-	// Obj bonus fields + texture & bmp
 	if (id >= e_id_sphere)
 		value += 10;
 	if (value != count)

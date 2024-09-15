@@ -13,8 +13,8 @@
 #include "../../includes/miniRT.h"
 #include "../../includes/parser.h"
 
-int			validate_orientation(t_vct v);
-int			obj_add_bonus_fields(t_obj *obj, char **elem);
+int	validate_orientation(t_vct v);
+int	obj_add_bonus_fields(t_obj *obj, char **elem);
 
 int	cone_add(t_obj *obj, char **elem)
 {
@@ -37,7 +37,7 @@ int	cone_add(t_obj *obj, char **elem)
  * <p1> <p2> <p3> <scale vector> <color> <bonus fields>
  */
 
-int valid_triangle(char **elem)
+int	valid_triangle(char **elem)
 {
 	size_t	i;
 
@@ -50,7 +50,7 @@ int valid_triangle(char **elem)
 	return (1);
 }
 
-int triangle_add(t_obj *obj,	char **elem)
+int	triangle_add(t_obj *obj, char **elem)
 {
 	t_vct	normal;
 
@@ -66,7 +66,7 @@ int triangle_add(t_obj *obj,	char **elem)
 	obj->p1.w = 1;
 	obj->p2.w = 1;
 	obj->p3.w = 1;
-	obj->e1 = ft_vct_sub(&obj->p2, &obj->p1);	
+	obj->e1 = ft_vct_sub(&obj->p2, &obj->p1);
 	obj->e2 = ft_vct_sub(&obj->p3, &obj->p1);
 	ft_vct_cross_prod(&normal, &obj->e2, &obj->e1);
 	normal.w = 0;

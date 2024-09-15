@@ -13,7 +13,7 @@
 #include "../../includes/miniRT.h"
 #include "../../includes/parser.h"
 
-int	str_isalpha_lower(const char *s);
+int			str_isalpha_lower(const char *s);
 /*
  *   object bonus fields after mandatory
 
@@ -38,9 +38,9 @@ static int	obj_validate_bonus(t_obj *obj)
 	return (1);
 }
 
-static int  obj_load_ppm(t_ppm  *obj_ppm, const char    *file)
+static int	obj_load_ppm(t_ppm *obj_ppm, const char *file)
 {
-	char		path[128];
+	char	path[128];
 
 	if (ft_strcmp(file, "none") == 0)
 		return (1);
@@ -60,10 +60,11 @@ static int  obj_load_ppm(t_ppm  *obj_ppm, const char    *file)
 int	obj_add_bonus_ppm(t_obj *obj, char **elem)
 {
 	const size_t	size = array_size(elem);
-	const char	*texture = elem[size - 3];
-	const char	*bump_map = elem[size - 2];
-	char	*modifier = elem[size - 1];
+	const char		*texture = elem[size - 3];
+	const char		*bump_map = elem[size - 2];
+	char			*modifier;
 
+	modifier = elem[size - 1];
 	if (!obj_load_ppm(&obj->txtr, texture))
 		return (0);
 	if (!obj_load_ppm(&obj->bump, bump_map))
@@ -76,8 +77,8 @@ int	obj_add_bonus_ppm(t_obj *obj, char **elem)
 		if (obj->bump_modifier < 0 || obj->bump_modifier > 100)
 			return (0);
 	}
-	printf("texture: %s, bump: %s, bump_modifier: %f\n",
-			texture, bump_map, obj->bump_modifier);
+	printf("texture: %s, bump: %s, bump_modifier: %f\n", texture, bump_map,
+		obj->bump_modifier);
 	return (1);
 }
 
