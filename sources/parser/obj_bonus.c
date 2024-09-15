@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 18:37:32 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/14 17:54:44 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/15 21:41:47 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,7 @@ static int	obj_load_ppm(t_ppm *obj_ppm, const char *file)
 	ft_strlcat(path, file, sizeof(path));
 	ft_strlcat(path, ".ppm", sizeof(path));
 	if (!ppm_load(path, obj_ppm))
-	{
-		printf("ppm_path: %s\n", path);
 		return (0);
-	}
 	return (1);
 }
 
@@ -77,8 +74,6 @@ int	obj_add_bonus_ppm(t_obj *obj, char **elem)
 		if (obj->bump_modifier < 0 || obj->bump_modifier > 100)
 			return (0);
 	}
-	printf("texture: %s, bump: %s, bump_modifier: %f\n", texture, bump_map,
-		obj->bump_modifier);
 	return (1);
 }
 

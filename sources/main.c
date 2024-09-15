@@ -6,15 +6,15 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 17:47:44 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/09 20:21:29 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/15 21:33:04 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../includes/miniRT.h"
 #include "../includes/bvh.h"
+#include "../includes/miniRT.h"
 
 void	scene_free(t_scene *scene);
 void	render(t_mrt *mrt, t_scene *scene);
-int	init_minirt(t_mrt *mrt, t_scene *scene);
+int		init_minirt(t_mrt *mrt, t_scene *scene);
 
 int	main(int ac, char **av)
 {

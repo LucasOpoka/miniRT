@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:29:51 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/10 00:50:04 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/15 21:38:09 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../includes/bvh.h"
@@ -64,12 +64,10 @@ void	worker_render_section(t_worker *worker, t_scene *scene, int i)
 {
 	t_ray	ray;
 	t_clr	color;
-	t_xs	*xs;
 	int		start_y;
 	int		y;
 	int		x;
 
-	xs = &worker->xs;
 	start_y = i * worker->block_size;
 	if (i == worker->block_count - 1)
 		worker->block_size += worker->mrt->img->height % BLOCK_SIZE;
@@ -80,7 +78,7 @@ void	worker_render_section(t_worker *worker, t_scene *scene, int i)
 		while (x < CANV_WDTH)
 		{
 			ft_pixel_to_ray(&ray, x, y, &scene->cam);
-			color = ft_final_color(&ray, scene, 5, xs);
+			color = ft_final_color(&ray, scene, 5, &worker->xs);
 			mlx_put_pixel(worker->mrt->img, x, y, ft_clr_to_int(color));
 			x++;
 		}
