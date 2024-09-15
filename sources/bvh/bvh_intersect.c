@@ -98,7 +98,7 @@ static t_node	*intersects_box(t_ray ray, t_node *root, t_node *curr,
 	dist[0] = aabb_raycast(ray, left->bounds);
 	dist[1] = aabb_raycast(ray, right->bounds);
 	swap_nodes(dist, &left, &right);
-	if (dist[0] == DBL_MAX) // Miss
+	if (dist[0] == DBL_MAX)
 	{
 		if (s->ptr == 0)
 			return (NULL);

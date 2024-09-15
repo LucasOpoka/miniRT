@@ -20,9 +20,9 @@ if tmin > tmax, ray doesn't intersect AABB
 
 double	aabb_raycast(t_ray ray, t_bounds bounds)
 {
-	t_aabb_time t;
-	double	tmin;
-	double	tmax;
+	t_aabb_time	t;
+	double		tmin;
+	double		tmax;
 
 	t.t1 = (bounds.min[0] - ray.O.x) * ray.rd.x;
 	t.t2 = (bounds.max[0] - ray.O.x) * ray.rd.x;

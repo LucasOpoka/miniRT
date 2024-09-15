@@ -43,6 +43,10 @@ void	bvh_update_bounds(t_node *root, uint32_t index, t_scene *scene)
 	}
 }
 
+/*
+ * node->right is always left_index + 1
+ * after split, node->count must be set to 0
+ */
 int	bvh_split(t_node *root, t_node *node, t_split split, t_scene *scene)
 {
 	int			left_index;
@@ -56,11 +60,9 @@ int	bvh_split(t_node *root, t_node *node, t_split split, t_scene *scene)
 	left_index = scene->bvh.nodes_used;
 	root[left_index].first_index = node->first_index;
 	root[left_index].count = left_count;
-	// node->right always is left_index + 1
 	root[left_index + 1].first_index = i;
 	root[left_index + 1].count = node->count - left_count;
 	node->left = left_index;
-	// Split node must have obj count set to 0 !
 	node->count = 0;
 	scene->bvh.nodes_used += 2;
 	return (left_index);

@@ -6,7 +6,7 @@
 #    By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/29 14:59:04 by lopoka            #+#    #+#              #
-#    Updated: 2024/09/14 21:53:44 by atorma           ###   ########.fr        #
+#    Updated: 2024/09/15 21:31:02 by atorma           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,7 +70,7 @@ PPM_SRC = ppm.c ppm_matrix.c header.c
 PPM_OBJ = $(addprefix $(PPM_DIR)/,$(PPM_SRC:.c=.o))
 
 BVH_DIR = sources/bvh
-BVH_SRC = bvh.c bvh_intersect.c bvh_utils.c bounds.c node.c aabb.c split.c 
+BVH_SRC = bvh.c bvh_intersect.c bvh_utils.c bounds.c bounds_obj.c node.c aabb.c split.c
 BVH_OBJ = $(addprefix $(BVH_DIR)/,$(BVH_SRC:.c=.o))
 
 WORKER_DIR = sources/worker

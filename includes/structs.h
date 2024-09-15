@@ -65,7 +65,7 @@ typedef struct s_split
 {
 	double				cost;
 	double				pos;
-	uint32_t			axis;
+	int				axis;
 }						t_split;
 
 typedef struct s_stack
