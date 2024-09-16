@@ -82,32 +82,26 @@ static void	update_cost(t_split *best, t_split *current)
 
 t_split	find_best_split(t_node *node, t_scene *scene)
 {
-	t_split		best;
-	t_split		current;
-	uint32_t	i;
-	double		scale;
+	t_split	best;
+	t_split	current;
+	int		i;
+	double	scale;
 
 	best.cost = DBL_MAX;
-	current.axis = 0;
-	while (current.axis < 3)
+	current.axis = -1;
+	while (++current.axis < 3)
 	{
-		// bounds_min & bounds_max
 		if (node->bounds.min[current.axis] == node->bounds.max[current.axis])
-		{
-			current.axis++;
 			continue ;
-		}
 		scale = (node->bounds.max[current.axis]
 				- node->bounds.min[current.axis]) / 50;
-		i = 1;
-		while (i < 50)
+		i = -1;
+		while (++i < 50)
 		{
 			current.pos = node->bounds.min[current.axis] + i * scale;
 			current.cost = evaluate_cost(node, current, scene);
 			update_cost(&best, &current);
-			i++;
 		}
-		current.axis++;
 	}
 	return (best);
 }

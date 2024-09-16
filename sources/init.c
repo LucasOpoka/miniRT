@@ -6,13 +6,13 @@
 /*   By: lucas <lopoka@student.hive.fi>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 16:40:23 by lucas             #+#    #+#             */
-/*   Updated: 2024/09/05 17:51:43 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/15 21:33:07 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
 
-int	threads_init(t_mrt *mrt, t_scene *scene);
-void	close_hook(void *ptr);
+int			threads_init(t_mrt *mrt, t_scene *scene);
+void		close_hook(void *ptr);
 
 void	uninit_mlx(t_mrt *mrt)
 {
@@ -22,7 +22,7 @@ void	uninit_mlx(t_mrt *mrt)
 		mlx_close_window(mrt->mlx);
 }
 
-static int  init_mlx(t_mrt *mrt)
+static int	init_mlx(t_mrt *mrt)
 {
 	mrt->mlx = NULL;
 	mrt->img = NULL;
@@ -40,7 +40,7 @@ static int  init_mlx(t_mrt *mrt)
 	return (1);
 }
 
-int init_minirt(t_mrt *mrt, t_scene *scene)
+int	init_minirt(t_mrt *mrt, t_scene *scene)
 {
 	if (!init_mlx(mrt))
 	{

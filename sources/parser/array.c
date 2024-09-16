@@ -39,6 +39,7 @@ void	array_free(char **arr)
 	}
 	free(arr);
 }
+
 void	array_matrix_free(char ***arr)
 {
 	size_t	i;

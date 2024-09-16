@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 16:47:23 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/09 21:37:16 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/15 21:40:23 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,13 +60,9 @@ static int	ppm_parse(t_ppm *ppm, char *data)
 		return (0);
 	if (!parse_header(ppm))
 		return (0);
-	printf("ppm->width: %d\n", ppm->width);
-	printf("ppm->height: %d\n", ppm->height);
-	printf("ppm->max_color: %d\n", ppm->max_color);
 	if (!ppm_matrix_alloc(ppm))
 		return (0);
 	parse_pixel_data(ppm);
-	printf("pixels parsed\n");
 	return (1);
 }
 
@@ -83,7 +79,7 @@ int	ppm_load(char *file, t_ppm *ppm)
 	}
 	if (!ppm_parse(ppm, data))
 	{
-		printf("ppm_parse error\n");
+		printf("invalid ppm!\n");
 		ppm_matrix_free(ppm);
 		free(data);
 		return (0);

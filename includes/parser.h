@@ -6,15 +6,13 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 20:43:35 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/09 22:50:52 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/14 19:01:47 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #ifndef PARSER_H
 # define PARSER_H
-
-#define BONUS
 
 enum
 {
@@ -25,6 +23,8 @@ enum
 	e_id_sphere,
 	e_id_plane,
 	e_id_cylinder,
+	e_id_cone,
+	e_id_triangle,
 	e_id_unknown
 };
 
@@ -51,5 +51,8 @@ int	validate_ratio(char	*s, double min, double max);
 int	validate_vector(char *s);
 int	light_add_ambient(t_ambient *ambient, char **elem);
 int	light_add_point(t_light *light, char **elem);
+int	sphere_add(t_obj *obj, char **elem);
+int	plane_add(t_obj *obj, char **elem);
+int	cylinder_add(t_obj *obj, char **elem);
 
 #endif

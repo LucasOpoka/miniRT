@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/05 20:45:30 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/12 12:26:14 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/14 17:41:02 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,10 @@
 
 int	scene_init(t_scene *scene)
 {
-	ft_init_void_arr(&scene->lights);
-	ft_init_void_arr(&scene->objs);
+	if (!ft_init_void_arr(&scene->lights))
+		return (0);
+	if (!ft_init_void_arr(&scene->objs))
+		return (0);
 	return (1);
 }
 
@@ -31,17 +33,8 @@ static void	obj_free(t_scene *scene)
 	while (i < scene->objs.i)
 	{
 		obj = scene->objs.arr[i];
-		if (obj->txtr.colors)
-		{
-			ppm_matrix_free(&obj->txtr);
-			//free(obj->ppm);
-		}
-		if (obj->bump.colors)
-		{
-			ppm_matrix_free(&obj->bump);
-			//free(obj->ppm);
-		}
-
+		ppm_matrix_free(&obj->txtr);
+		ppm_matrix_free(&obj->bump);
 		i++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 18:07:50 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/09 23:57:29 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/14 17:24:13 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,19 @@ int	str_isdigit(char *s)
 	while (*s)
 	{
 		if (!ft_isdigit(*s))
+			return (0);
+		s++;
+	}
+	return (1);
+}
+
+int	str_isalpha_lower(const char *s)
+{
+	if (*s == '\0')
+		return (0);
+	while (*s)
+	{
+		if (*s < 'a' || *s > 'z')
 			return (0);
 		s++;
 	}

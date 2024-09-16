@@ -6,7 +6,11 @@
 #    By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/29 14:59:04 by lopoka            #+#    #+#              #
+<<<<<<< HEAD
 #    Updated: 2024/09/16 12:44:20 by lopoka           ###   ########.fr        #
+=======
+#    Updated: 2024/09/15 21:31:02 by atorma           ###   ########.fr        #
+>>>>>>> d21d25a5d1b83e8b7c9caad56807bda593ec49da
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +19,7 @@ NAME = miniRT
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS := -Wall -Wextra -Werror
 MLX42 = ./MLX42
 
 LIBFTDIR = ./libft
@@ -57,17 +61,21 @@ SOURCES	=	main.c \
 
 PARSER_DIR = sources/parser
 PARSER_SRC = parser.c parser_utils.c validate.c file.c array.c \
-	     fill.c ft_atof.c identifier.c obj.c camera.c light.c \
-	     obj_bonus.c
+	     fill.c ft_atof.c identifier.c obj.c camera.c \
+	     light.c id.c obj_add.c
 PARSER_OBJ = $(addprefix $(PARSER_DIR)/,$(PARSER_SRC:.c=.o))
 
+PARSER_SRC_BONUS = parser.c parser_utils.c validate.c file.c array.c \
+	     fill.c ft_atof.c identifier.c obj.c camera.c \
+	     light_bonus.c id_bonus.c obj_add_bonus.c obj_bonus.c
+PARSER_OBJ_BONUS= $(addprefix $(PARSER_DIR)/,$(PARSER_SRC_BONUS:.c=.o))
 
 PPM_DIR = sources/ppm
 PPM_SRC = ppm.c ppm_matrix.c header.c
 PPM_OBJ = $(addprefix $(PPM_DIR)/,$(PPM_SRC:.c=.o))
 
 BVH_DIR = sources/bvh
-BVH_SRC = bvh.c bvh_intersect.c bvh_utils.c bounds.c node.c aabb.c split.c 
+BVH_SRC = bvh.c bvh_intersect.c bvh_utils.c bounds.c bounds_obj.c node.c aabb.c split.c
 BVH_OBJ = $(addprefix $(BVH_DIR)/,$(BVH_SRC:.c=.o))
 
 WORKER_DIR = sources/worker
@@ -77,8 +85,16 @@ WORKER_OBJ = $(addprefix $(WORKER_DIR)/,$(WORKER_SRC:.c=.o))
 OFILES = $(addprefix $(SOURCE_DIR)/,$(SOURCES:.c=.o))
 OFILES += $(PARSER_OBJ) $(PPM_OBJ) $(BVH_OBJ) $(WORKER_OBJ)
 
-target debug: CFLAGS = -Wall -Wextra -Werror -fsanitize=address,undefined -g
+B_OFILES = $(addprefix $(SOURCE_DIR)/,$(SOURCES:.c=.o))
+B_OFILES += $(PARSER_OBJ_BONUS) $(PPM_OBJ) $(BVH_OBJ) $(WORKER_OBJ)
+
+target debug: CFLAGS += -fsanitize=address,undefined -g
 target debug: CDEBUG = -DDEBUG=1
+
+target debug_bonus: CFLAGS += -fsanitize=address,undefined -g
+target debug_bonus: CDEBUG = -DDEBUG=1
+
+target fast_bonus: CFLAGS += -O2 -ffast-math
 
 target symbols: CFLAGS = -Wall -Wextra -Werror -gdwarf-4
 target symbols: CDEBUG = -DDEBUG=1
@@ -131,5 +147,9 @@ symbols: re
 fast: re
 fastmath: re
 profile: re
+debug_bonus: fclean bonus
+fast_bonus: fclean bonus
 
-.PHONY: debug, debug_clean, symbols, fast, fastmath, profile, all, clean, fclean, re, mlx42
+.PHONY: debug, debug_clean, symbols, fast fastmath, profile \
+	debug_bonus, fast_bonus \
+	bonus, all, clean, fclean, re, mlx42
