@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 16:47:05 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/05 17:34:50 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/16 19:32:34 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -27,11 +27,10 @@ t_clr	ft_final_color(t_ray *ray, t_scene *scene, int recur_lmt, t_xs *xs)
 	rec.xs = xs;
 	rec.recur_lmt = recur_lmt;
 	rec.xs->i = 0;
-#ifdef BVH
-	bvh_intersect(rec.ray, rec.scene, rec.xs);
-#else
-	ft_get_intrscs(rec.ray, rec.scene, rec.xs);
-#endif
+	if (BVH)
+		bvh_intersect(rec.ray, rec.scene, rec.xs);
+	else
+		ft_get_intrscs(rec.ray, rec.scene, rec.xs);
 	rec.comps = ft_prep_comps(&rec.ray, rec.xs);
 	final_color = ft_create_clr(0, 0, 0);
 	i = 0;
@@ -81,11 +80,10 @@ t_clr	ft_reflection(t_clr_recur rec)
 	rec.ray.O = rec.comps.over_point;
 	rec.ray.D = rec.comps.reflect;
 	rec.xs->i = 0;
-#ifdef BVH
-	bvh_intersect(rec.ray, rec.scene, rec.xs);
-#else
-	ft_get_intrscs(rec.ray, rec.scene, rec.xs);
-#endif
+	if (BVH)
+		bvh_intersect(rec.ray, rec.scene, rec.xs);
+	else
+		ft_get_intrscs(rec.ray, rec.scene, rec.xs);
 	rec.comps = ft_prep_comps(&rec.ray, rec.xs);
 	res = ft_light_color(rec);
 	res = ft_clr_scl(res, reflective);
@@ -111,11 +109,10 @@ t_clr	ft_refraction(t_clr_recur rec)
 	rec.ray.D = ft_vct_sub(&rf.v1, &rf.v2);
 	rec.ray.O = rec.comps.under_point;
 	rec.xs->i = 0;
-#ifdef BVH
-	bvh_intersect(rec.ray, rec.scene, rec.xs);
-#else
-	ft_get_intrscs(rec.ray, rec.scene, rec.xs);
-#endif
+	if (BVH)
+		bvh_intersect(rec.ray, rec.scene, rec.xs);
+	else
+		ft_get_intrscs(rec.ray, rec.scene, rec.xs);
 	rec.comps = ft_prep_comps(&rec.ray, rec.xs);
 	rf.res = ft_light_color(rec);
 	rf.res = ft_clr_scl(rf.res, rf.transparency);

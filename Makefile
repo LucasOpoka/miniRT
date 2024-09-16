@@ -6,11 +6,7 @@
 #    By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/29 14:59:04 by lopoka            #+#    #+#              #
-<<<<<<< HEAD
-#    Updated: 2024/09/16 12:44:20 by lopoka           ###   ########.fr        #
-=======
-#    Updated: 2024/09/15 21:31:02 by atorma           ###   ########.fr        #
->>>>>>> d21d25a5d1b83e8b7c9caad56807bda593ec49da
+#    Updated: 2024/09/16 19:20:19 by lopoka           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,7 +50,8 @@ SOURCES	=	main.c \
 			obj_transforms.c \
 			prep_comps1.c \
 			prep_comps2.c \
-			obj_normals.c \
+			obj_normals1.c \
+			obj_normals2.c \
 			get_test_scene.c \
 			phong.c \
 			get_color.c \

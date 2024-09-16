@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 16:52:41 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/14 22:16:33 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/16 19:29:36 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 #include "miniRT.h"
 
-# define BVH
+# define BVH 1
 # define BVH_MAX_NODES 10 * 1024
 # define BVH_MIN_CHILDREN 1
 

@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 12:47:38 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/16 18:43:29 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/16 20:18:01 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -17,7 +17,7 @@ t_scene	get_test_scene(void)
 	t_scene scene;
 
 	//Camera
-	scene.cam.fov = FOV;
+	scene.cam.fov = 53;
 	scene.cam.pos = ft_create_point(0, 0, -5);
 	scene.cam.dir = ft_create_vct(0, 0, 1);
 
@@ -183,29 +183,27 @@ t_scene	get_test_scene(void)
 	cylinder->shininess = 100;
 	cylinder->reflective = 0;
 	cylinder->refractive = 1.5;
-	cylinder->radius = 1;
 	cylinder->transparency = 0;
 	cylinder->scale = ft_create_vct(0.5, 2, 0.5);
-	cylinder->orientation = ft_create_vct(1, 0, 0);
+	cylinder->orientation = ft_create_vct(0, 0, 0);
 	//ptrn
-	cylinder->ptrn = ft_ptrn(ft_checkers, 16, 8);
-	cylinder->height = 1;
+	cylinder->ptrn = ft_ptrn(ft_rings, 20, 20);
 
 	t_obj *cone = malloc(sizeof(t_obj));
 	cone->type = t_cone;
 	cone->pos = ft_create_point(0, 2, 0); //CONE
 	cone->color = ft_create_clr(0, 0, 255);
 	cone->specular = 0.9;
+	cone->diffuse = 0.9;
 	cone->shininess = 100;
 	cone->reflective = 0;
 	cone->refractive = 1.5;
 	cone->radius = 1;
 	cone->transparency = 0;
 	cone->scale = ft_create_vct(1, 3, 1);
-	cone->orientation = ft_create_vct(0, -1, 0);
+	cone->orientation = ft_create_vct(0, -1, -0.5);
 	//ptrn
-	cone->ptrn = ft_ptrn(ft_checkers, 10, 10);
-	cone->height = 3;
+	cone->ptrn = ft_ptrn(ft_rings, 20, 20);
 
 	// Triangle testing
 	t_vct p1 = ft_create_point(-1, 0, 2);
@@ -238,13 +236,13 @@ t_scene	get_test_scene(void)
 	tri->ptrn = ft_ptrn(ft_checkers, 4, 4);
 
 
-	ft_void_arr_add(&scene.objs, obj1);
-	ft_void_arr_add(&scene.objs, air_bubble);
+	//ft_void_arr_add(&scene.objs, obj1);
+	//ft_void_arr_add(&scene.objs, air_bubble);
 	//ft_void_arr_add(&scene.objs, obj3);
 	//ft_void_arr_add(&scene.objs, obj4);
 	//ft_void_arr_add(&scene.objs, obj10);
 	//ft_void_arr_add(&scene.objs, cylinder);
-	//ft_void_arr_add(&scene.objs, cone);
+	ft_void_arr_add(&scene.objs, cone);
 	//ft_void_arr_add(&scene.objs, obj7);
 	ft_void_arr_add(&scene.objs, back);
 	//ft_void_arr_add(&scene.objs, r);

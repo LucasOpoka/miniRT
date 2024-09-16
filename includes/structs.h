@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 14:16:04 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/16 18:43:04 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/16 19:00:00 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef STRUCTS_H
@@ -98,17 +98,10 @@ typedef struct s_clr
 
 typedef struct s_ptrn
 {
-<<<<<<< HEAD
-	t_clr	(*ptrn_func)(double *uv, double width, double height);
-	double	wdth;
-	double	hght;
-} t_ptrn;
-=======
 	t_clr				(*ptrn_func)(double *uv, double width, double height);
-	double				width;
-	double				height;
-}						t_ptrn;
->>>>>>> d21d25a5d1b83e8b7c9caad56807bda593ec49da
+	double				wdth;
+	double				hght;
+} t_ptrn;
 
 typedef struct s_ppm
 {
