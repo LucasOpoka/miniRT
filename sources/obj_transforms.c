@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 10:44:06 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/11 11:31:33 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/16 11:53:38 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -41,9 +41,11 @@ void	ft_set_rot_mtrx(t_mtrx4 *rot_mtrx, t_obj *obj)
 {
 	t_vct	y_axis;
 	t_vct	rot_axis;
-	double	rot_angle;
+	double	rot_angle;	
+	double	len;
 
-	if (ft_vct_len(&obj->orientation) < EPSILON)
+	len = ft_vct_len(&obj->orientation);
+	if (len < EPSILON)
 		return (ft_set_identity_mtrx(rot_mtrx));
 	ft_bzero(&y_axis, sizeof(t_vct));
 	y_axis.y = 1;
@@ -53,9 +55,12 @@ void	ft_set_rot_mtrx(t_mtrx4 *rot_mtrx, t_obj *obj)
 	ft_vct_norm(&rot_axis);
 	rot_angle = acos(ft_vct_dot(&obj->orientation, &y_axis));
 	if (obj->type == t_sphere)
-	{	
-		rot_axis = y_axis;
-		rot_angle = 2.7;
+	{
+		if (len <= 1)
+			rot_angle = 0;
+		else
+			rot_angle = fmod(len - 1, 4) * 1.57079633;
+		rot_axis = obj->orientation;
 	}
 	ft_rot_mtrx_sub(rot_mtrx, rot_axis, rot_angle);
 }

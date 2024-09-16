@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 10:08:11 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/12 14:45:40 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/16 11:57:26 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../includes/miniRT.h"
@@ -19,9 +19,8 @@ void	ft_texture_and_bump(t_comps *comps, t_obj *obj, t_vct obj_point)
 	double	uv[2];
 
 	ft_get_uv(uv, &obj_point, obj);
-	//ft_spherical_map(uv, &obj_point);
 	if (obj->ptrn.ptrn_func)
-		comps->color = obj->ptrn.ptrn_func(uv, obj->ptrn.width, obj->ptrn.height);
+		comps->color = obj->ptrn.ptrn_func(uv, obj->ptrn.wdth, obj->ptrn.hght);
 	else if (obj->type == t_sphere)
 	{
 		uv[1] = 1 - uv[1];
