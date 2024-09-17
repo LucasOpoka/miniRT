@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 14:16:04 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/17 18:51:38 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/17 21:25:58 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef STRUCTS_H
@@ -120,8 +120,6 @@ typedef struct s_obj
 	float				centroid[3];
 	int					type;
 	t_vct				pos;
-	double				radius;
-	double				height;
 	t_clr				color;
 	double				specular;
 	double				diffuse;
