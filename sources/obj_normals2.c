@@ -6,7 +6,7 @@
 /*   By: lucas <lopoka@student.hive.fi>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 16:17:04 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/16 20:14:16 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/17 18:44:58 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -54,9 +54,9 @@ void	ft_cylinder_normal_and_color(t_comps *comps)
 	obj_point.w = 1;
 	dist = sqrt(pow(obj_point.x, 2) + pow(obj_point.z, 2));
 	obj_normal = ft_create_vct(0, 0, 0);
-	if (dist < obj->radius && (obj_point.y >= 0.5 - EPSILON))
+	if (dist < 1 && (obj_point.y >= 0.5 - EPSILON))
 		obj_normal.y = 1;
-	else if (dist < obj->radius && (obj_point.y <= -0.5 + EPSILON))
+	else if (dist < 1 && (obj_point.y <= -0.5 + EPSILON))
 		obj_normal.y = -1;
 	else
 	{

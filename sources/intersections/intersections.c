@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 21:05:34 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/06 21:53:52 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/17 18:36:37 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -23,7 +23,7 @@ void	ft_sphere_intersection(t_ray ray, t_obj *obj, t_xs *xs)
 	s_to_r.w = 0;
 	a = ft_vct_dot(&ray.D, &ray.D);
 	b = 2 * ft_vct_dot(&s_to_r, &ray.D);
-	c = ft_vct_dot(&s_to_r, &s_to_r) - (obj->radius * obj->radius);
+	c = ft_vct_dot(&s_to_r, &s_to_r) - 1;
 	discr = pow(b, 2) - 4 * a * c;
 	if (discr < 0)
 		return ;

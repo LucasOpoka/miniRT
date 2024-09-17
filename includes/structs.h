@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 14:16:04 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/16 19:00:00 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/17 18:51:38 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef STRUCTS_H
@@ -235,7 +235,6 @@ typedef struct s_cl_xs
 	double				t[2];
 	double				tmp;
 	double				y[2];
-	double				half_h;
 }						t_cl_xs;
 
 typedef struct s_tri_xs

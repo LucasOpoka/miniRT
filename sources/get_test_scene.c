@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 12:47:38 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/16 20:18:01 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/17 18:52:41 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -27,41 +27,41 @@ t_scene	get_test_scene(void)
 	t_obj *obj1 = ft_calloc(1, sizeof(t_obj));
 	obj1->type = t_sphere;
 	obj1->pos = ft_create_point(0, 0, 0); // EARTH
-	obj1->radius = 1;
-	obj1->color = ft_create_clr(255, 255, 255); // RED
-	obj1->specular = 0.9;
-	obj1->diffuse = 0.9;
+	//obj1->radius = 1;
+	obj1->color = ft_create_clr(0, 0, 0);
+	obj1->specular = 0;
+	obj1->diffuse = 0;
 	obj1->shininess = 300;
-	obj1->reflective = 0;
+	obj1->reflective = 0.9;
 	obj1->refractive = 1.5;
 	obj1->transparency = 0.9;
 	obj1->scale = ft_create_vct(1, 1, 1);
 	obj1->orientation = ft_create_vct(0, 2.7, 0);
 	//Ptrn test
-	obj1->ptrn = ft_ptrn(ft_checkers, 30, 15);
+	//obj1->ptrn = ft_ptrn(ft_arches, 30, 15);
 	//PPM test
-	ppm_load("img.ppm", &obj1->txtr);
-	ppm_load("bump.ppm", &obj1->bump);
+	//ppm_load("img.ppm", &obj1->txtr);
+	//ppm_load("bump.ppm", &obj1->bump);
 
 
 	t_obj *air_bubble = malloc(sizeof(t_obj));
 	air_bubble->type = t_sphere;
 	air_bubble->pos = ft_create_point(0, 0, 0); // AIR BUBBLE
-	air_bubble->radius = 0.5;
+	//air_bubble->radius = 0.5;
 	air_bubble->color = ft_create_clr(0, 0, 0); //BLUE
 	air_bubble->specular = 0.9;
 	air_bubble->diffuse = 0;
 	air_bubble->shininess = 300;
 	air_bubble->reflective = 1;
 	air_bubble->refractive = 1;
-	air_bubble->transparency = 1;
-	air_bubble->scale = ft_create_vct(1, 1, 1);
+	air_bubble->transparency = 0.9;
+	air_bubble->scale = ft_create_vct(0.5, 0.5, 0.5);
 	air_bubble->orientation = ft_create_vct(0, 0, 0);
 
 	t_obj *obj3 = malloc(sizeof(t_obj));
 	obj3->type = t_sphere;
 	obj3->pos = ft_create_point(0, 0, 0); //ON THE LEFT
-	obj3->radius = 1;
+	//obj3->radius = 1;
 	obj3->color = ft_create_clr(0, 255, 0); // GREEN
 	obj3->specular = 0.9;
 	obj3->diffuse = 0.9;
@@ -75,7 +75,7 @@ t_scene	get_test_scene(void)
 	t_obj *obj4 = malloc(sizeof(t_obj));
 	obj4->type = t_sphere;
 	obj4->pos = ft_create_point(0, -5001, 0); //BIG AT BOTTOM
-	obj4->radius = 1;
+	//obj4->radius = 1;
 	obj4->color = ft_create_clr(255, 255, 0); // YELLOW
 	obj4->specular = 0.9;
 	obj4->diffuse = 0.9;
@@ -89,7 +89,7 @@ t_scene	get_test_scene(void)
 	t_obj *obj10 = malloc(sizeof(t_obj));
 	obj10->type = t_sphere;
 	obj10->pos = ft_create_point(0, 0, 5005); //BIG AT BOTTOM
-	obj10->radius = 1;
+	//obj10->radius = 1;
 	obj10->color = ft_create_clr(255, 255, 0); // YELLOW
 	obj10->specular = 0.9;
 	obj10->diffuse = 0.9;
@@ -163,7 +163,7 @@ t_scene	get_test_scene(void)
 	t_obj *back = ft_calloc(1, sizeof(t_obj));
 	back->type = t_plane;
 	back->pos = ft_create_point(0, 0, 10); // BACK PLANE
-	back->color = ft_create_clr(255, 0, 0);
+	back->color = ft_create_clr(0, 0, 0);
 	back->orientation = ft_create_vct(0, 0, 1);
 	back->specular = 0.3;
 	back->diffuse = 0.9;
@@ -172,7 +172,7 @@ t_scene	get_test_scene(void)
 	back->refractive = 1;
 	back->transparency = 0;
 	//ptrn
-	back->ptrn = ft_ptrn(ft_rings, 10, 10);
+	back->ptrn = ft_ptrn(ft_checkers, 2, 2);
 	back->scale = ft_create_vct(1, 1, 1);
 
 	t_obj *cylinder = malloc(sizeof(t_obj));
@@ -198,7 +198,7 @@ t_scene	get_test_scene(void)
 	cone->shininess = 100;
 	cone->reflective = 0;
 	cone->refractive = 1.5;
-	cone->radius = 1;
+	//cone->radius = 1;
 	cone->transparency = 0;
 	cone->scale = ft_create_vct(1, 3, 1);
 	cone->orientation = ft_create_vct(0, -1, -0.5);
@@ -273,7 +273,7 @@ t_scene	get_test_scene(void)
 	light4->intensity = 0.25;
 	light4->pos = ft_create_vct(-2, -2, 2);
 	light4->dir = ft_create_vct(1, 1, -1);
-	light4->color = ft_create_clr(0, 0, 255);
+	light4->color = ft_create_clr(255, 255, 255);
 
 	
 	ft_void_arr_add(&scene.lights, light2);

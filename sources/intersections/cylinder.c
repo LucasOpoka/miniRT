@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 21:05:34 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/16 20:11:58 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/17 18:49:13 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -27,12 +27,11 @@ void	ft_cylinder_intersection(t_ray ray, t_obj *obj, t_xs *xs)
 		cl.t[1] = (-cl.b + cl.disc) / (2 * cl.a);
 		if (cl.t[0] > cl.t[1])
 			ft_swap_doubles(&cl.t[0], &cl.t[1]);
-		cl.half_h = 0.5;
 		cl.y[0] = ray.O.y + cl.t[0] * ray.D.y;
-		if ((-cl.half_h < cl.y[0]) && (cl.y[0] < cl.half_h))
+		if ((-0.5 < cl.y[0]) && (cl.y[0] < 0.5))
 			ft_add_intersection(xs, obj, cl.t[0]);
 		cl.y[1] = ray.O.y + cl.t[1] * ray.D.y;
-		if ((-cl.half_h < cl.y[1]) && (cl.y[1] < cl.half_h))
+		if ((-0.5 < cl.y[1]) && (cl.y[1] < 0.5))
 			ft_add_intersection(xs, obj, cl.t[1]);
 	}
 	ft_intersect_caps(ray, obj, xs);
@@ -44,10 +43,10 @@ void	ft_intersect_caps(t_ray ray, t_obj *obj, t_xs *xs)
 
 	if (fabs(ray.D.y) < EPSILON)
 		return ;
-	t = ((-obj->height / 2) - ray.O.y) / ray.D.y;
+	t = (-0.5 - ray.O.y) / ray.D.y;
 	if (ft_check_caps(ray, t, 1))
 		ft_add_intersection(xs, obj, t);
-	t = ((obj->height / 2) - ray.O.y) / ray.D.y;
+	t = (0.5 - ray.O.y) / ray.D.y;
 	if (ft_check_caps(ray, t, 1))
 		ft_add_intersection(xs, obj, t);
 }
