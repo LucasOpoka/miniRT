@@ -6,7 +6,7 @@
 /*   By: atorma <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 18:58:32 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/14 19:02:10 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/17 19:35:30 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int	obj_add(t_scene *scene, char **elem, int id)
 	obj = ft_calloc(1, sizeof(t_obj));
 	if (!obj || !ft_void_arr_add(&scene->objs, obj))
 		return (0);
+	obj->scale = ft_create_vct(1, 1, 1);
 	obj->pos.w = 1;
 	if (id == e_id_sphere)
 		ret = sphere_add(obj, elem);

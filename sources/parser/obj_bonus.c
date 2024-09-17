@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 18:37:32 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/15 21:41:47 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/17 20:51:37 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,6 @@
 #include "../../includes/parser.h"
 
 int			str_isalpha_lower(const char *s);
-/*
- *   object bonus fields after mandatory
-
-	*   <specular> <diffuse> <shininess>
-	*   <reflective> <refractive> <transparency> <scale vector>
-	*   <texture ppm> <bump ppm> <bump modifier>
- *   +10 fields
- */
 
 static int	obj_validate_bonus(t_obj *obj)
 {
@@ -77,26 +69,31 @@ int	obj_add_bonus_ppm(t_obj *obj, char **elem)
 	return (1);
 }
 
+/*
+ *   object bonus fields
+	*   <specular> <diffuse> <shininess>
+	*   <reflective> <refractive> <transparency>
+	*   <texture ppm> <bump ppm> <bump modifier>
+ *   +9 fields to mandatory
+ */
+
 int	obj_add_bonus_fields(t_obj *obj, char **elem)
 {
 	const size_t	size = array_size(elem) - 3;
 
 	if (!obj_add_bonus_ppm(obj, elem))
 		return (0);
-	if (!validate_vector(elem[size - 1]))
+	if (!validate_ratio(elem[size - 1], 0.0, 1.0))
 		return (0);
-	if (!validate_ratio(elem[size - 2], 0.0, 1.0))
+	if (!validate_ratio(elem[size - 2], 0.0, 100.0))
 		return (0);
-	if (!validate_ratio(elem[size - 2], 0.0, 1.0))
+	if ((!str_isdigit(elem[size - 4])) || ft_strlen(elem[size - 4]) >= 4)
 		return (0);
-	if ((!str_isdigit(elem[size - 5])) || ft_strlen(elem[size - 5]) >= 4)
-		return (0);
-	fill_vector(&obj->scale, elem[size - 1]);
-	obj->transparency = ft_atof(elem[size - 2]);
-	obj->refractive = ft_atof(elem[size - 3]);
-	obj->reflective = ft_atof(elem[size - 4]);
-	obj->shininess = ft_atoi(elem[size - 5]);
-	obj->diffuse = ft_atof(elem[size - 6]);
-	obj->specular = ft_atof(elem[size - 7]);
+	obj->transparency = ft_atof(elem[size - 1]);
+	obj->refractive = ft_atof(elem[size - 2]);
+	obj->reflective = ft_atof(elem[size - 3]);
+	obj->shininess = ft_atoi(elem[size - 4]);
+	obj->diffuse = ft_atof(elem[size - 5]);
+	obj->specular = ft_atof(elem[size - 6]);
 	return (obj_validate_bonus(obj));
 }

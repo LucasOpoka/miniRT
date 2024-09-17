@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 21:29:22 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/15 21:29:57 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/17 20:49:01 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,53 +15,50 @@
 
 void	sphere_bounds(t_bounds *bounds, t_obj *sp)
 {
-	const t_vct		scale = sp->scale;
-	const double	radius = sp->radius;
+	const double	radius = sp->scale.x;
 
-	bounds->min[0] = scale.x * -radius + sp->pos.x;
-	bounds->min[1] = scale.y * -radius + sp->pos.y;
-	bounds->min[2] = scale.z * -radius + sp->pos.z;
-	bounds->max[0] = scale.x * radius + sp->pos.x;
-	bounds->max[1] = scale.y * radius + sp->pos.y;
-	bounds->max[2] = scale.z * radius + sp->pos.z;
+	bounds->min[0] = -radius + sp->pos.x;
+	bounds->min[1] = -radius + sp->pos.y;
+	bounds->min[2] = -radius + sp->pos.z;
+	bounds->max[0] = radius + sp->pos.x;
+	bounds->max[1] = radius + sp->pos.y;
+	bounds->max[2] = radius + sp->pos.z;
 }
 
 void	cylinder_bounds(t_bounds *bounds, t_obj *cy)
 {
-	const t_vct		scale = cy->scale;
-	const double	radius = cy->radius * 2;
-	const double	height = cy->height;
+	const double	radius = cy->scale.x;
+	const double	height = cy->scale.y;
 
-	bounds->min[0] = scale.x * -radius + cy->pos.x;
-	bounds->min[1] = scale.y * -radius + cy->pos.y;
-	bounds->min[2] = scale.z * -height + cy->pos.z;
-	bounds->max[0] = scale.x * radius + cy->pos.x;
-	bounds->max[1] = scale.y * radius + cy->pos.y;
-	bounds->max[2] = scale.z * height + cy->pos.z;
+	bounds->min[0] = -radius + cy->pos.x;
+	bounds->min[1] = -height + cy->pos.y;
+	bounds->min[2] = -radius + cy->pos.z;
+	bounds->max[0] = radius + cy->pos.x;
+	bounds->max[1] = height + cy->pos.y;
+	bounds->max[2] = radius + cy->pos.z;
 }
 
 void	cone_bounds(t_bounds *bounds, t_obj *cone)
 {
-	const t_vct		scale = cone->scale;
-	const double	radius = cone->radius;
-	const double	height = cone->height;
+	const double	radius = cone->scale.x;
+	const double	height = cone->scale.y;
 
-	bounds->min[0] = scale.x * -radius + cone->pos.x;
-	bounds->min[1] = scale.y * -radius + cone->pos.y;
-	bounds->min[2] = scale.z * -height + cone->pos.z;
-	bounds->max[0] = scale.x * radius + cone->pos.x;
-	bounds->max[1] = scale.y * radius + cone->pos.y;
-	bounds->max[2] = scale.z * height + cone->pos.z;
+	bounds->min[0] = -radius + cone->pos.x;
+	bounds->min[1] = -radius + cone->pos.y;
+	bounds->min[2] = -height + cone->pos.z;
+	bounds->max[0] = radius + cone->pos.x;
+	bounds->max[1] = radius + cone->pos.y;
+	bounds->max[2] = height + cone->pos.z;
 }
 
 void	triangle_bounds(t_bounds *bounds, t_obj *tri)
 {
 	const t_vct	scale = tri->scale;
 
-	bounds->min[0] = scale.x * +fmin(fmin(tri->p1.x, tri->p2.x), tri->p3.x);
-	bounds->min[1] = scale.y * +fmin(fmin(tri->p1.y, tri->p2.y), tri->p3.y);
-	bounds->min[2] = scale.z * +fmin(fmin(tri->p1.z, tri->p2.z), tri->p3.z);
-	bounds->max[0] = scale.x * +fmax(fmax(tri->p1.x, tri->p2.x), tri->p3.x);
-	bounds->max[1] = scale.y * +fmax(fmax(tri->p1.y, tri->p2.y), tri->p3.y);
-	bounds->max[2] = scale.z * +fmax(fmax(tri->p1.z, tri->p2.z), tri->p3.z);
+	bounds->min[0] = scale.x * fmin(fmin(tri->p1.x, tri->p2.x), tri->p3.x);
+	bounds->min[1] = scale.y * fmin(fmin(tri->p1.y, tri->p2.y), tri->p3.y);
+	bounds->min[2] = scale.z * fmin(fmin(tri->p1.z, tri->p2.z), tri->p3.z);
+	bounds->max[0] = scale.x * fmax(fmax(tri->p1.x, tri->p2.x), tri->p3.x);
+	bounds->max[1] = scale.y * fmax(fmax(tri->p1.y, tri->p2.y), tri->p3.y);
+	bounds->max[2] = scale.z * fmax(fmax(tri->p1.z, tri->p2.z), tri->p3.z);
 }

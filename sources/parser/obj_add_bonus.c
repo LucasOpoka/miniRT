@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 18:07:54 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/14 20:07:47 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/17 20:35:45 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,6 @@
 
 int	validate_orientation(t_vct v);
 int	obj_add_bonus_fields(t_obj *obj, char **elem);
-
-int	cone_add(t_obj *obj, char **elem)
-{
-	obj->type = t_cone;
-	fill_vector(&obj->pos, elem[1]);
-	fill_vector(&obj->orientation, elem[2]);
-	obj->radius = ft_atof(elem[3]);
-	obj->height = ft_atof(elem[4]);
-	if (obj->radius <= 0.0 || obj->height <= 0.0)
-		return (0);
-	if (!fill_color(&obj->color, elem[5]))
-		return (0);
-	if (!validate_orientation(obj->orientation))
-		return (0);
-	return (1);
-}
 
 /*
  * triangle
@@ -60,8 +44,7 @@ int	triangle_add(t_obj *obj, char **elem)
 	fill_vector(&obj->p1, elem[1]);
 	fill_vector(&obj->p2, elem[2]);
 	fill_vector(&obj->p3, elem[3]);
-	fill_vector(&obj->scale, elem[4]);
-	if (!fill_color(&obj->color, elem[5]))
+	if (!fill_color(&obj->color, elem[4]))
 		return (0);
 	obj->p1.w = 1;
 	obj->p2.w = 1;
@@ -72,6 +55,26 @@ int	triangle_add(t_obj *obj, char **elem)
 	normal.w = 0;
 	ft_vct_norm(&normal);
 	obj->orientation = ft_create_vct(0, 0, 0);
+	return (1);
+}
+
+int	cone_add(t_obj *obj, char **elem)
+{
+	double	radius;
+	double	height;
+
+	obj->type = t_cone;
+	fill_vector(&obj->pos, elem[1]);
+	fill_vector(&obj->orientation, elem[2]);
+	radius = ft_atof(elem[3]);
+	height = ft_atof(elem[4]);
+	obj->scale = ft_create_vct(radius, height, radius);
+	if (radius <= 0.0 || height <= 0.0)
+		return (0);
+	if (!fill_color(&obj->color, elem[5]))
+		return (0);
+	if (!validate_orientation(obj->orientation))
+		return (0);
 	return (1);
 }
 
@@ -86,6 +89,7 @@ int	obj_add(t_scene *scene, char **elem, int id)
 	obj = ft_calloc(1, sizeof(t_obj));
 	if (!obj || !ft_void_arr_add(&scene->objs, obj))
 		return (0);
+	obj->scale = ft_create_vct(1, 1, 1);
 	obj->pos.w = 1;
 	if (id == e_id_sphere)
 		ret = sphere_add(obj, elem);
@@ -99,5 +103,7 @@ int	obj_add(t_scene *scene, char **elem, int id)
 		ret = triangle_add(obj, elem);
 	if (ret)
 		ret = obj_add_bonus_fields(obj, elem);
+	if (!ret)
+		printf("obj_add bonus err: %d\n", obj->type);
 	return (ret);
 }
