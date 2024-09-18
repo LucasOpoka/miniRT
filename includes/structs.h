@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 14:16:04 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/18 16:39:06 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/18 17:25:15 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef STRUCTS_H
@@ -302,9 +302,9 @@ typedef struct s_worker
 {
 	t_mrt				*mrt;
 	t_scene				*scene;
-	int					index;
-	int					block_count;
-	int					block_size;
+	uint32_t					index;
+	uint32_t					block_count;
+	uint32_t					block_size;
 	int					done;
 	t_xs				xs;
 }						t_worker;

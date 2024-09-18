@@ -6,10 +6,10 @@
 /*   By: lucas <lopoka@student.hive.fi>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 16:40:23 by lucas             #+#    #+#             */
-/*   Updated: 2024/09/15 21:33:07 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/18 17:41:37 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../includes/miniRT.h"
+#include "../../includes/miniRT.h"
 
 int			threads_init(t_mrt *mrt, t_scene *scene);
 void		close_hook(void *ptr);

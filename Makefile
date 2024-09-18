@@ -6,7 +6,7 @@
 #    By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/29 14:59:04 by lopoka            #+#    #+#              #
-#    Updated: 2024/09/18 16:55:28 by atorma           ###   ########.fr        #
+#    Updated: 2024/09/18 17:40:25 by atorma           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,8 +23,6 @@ LIBS = $(LIBFTDIR)/libft.a ${MLX42}/build/libmlx42.a -ldl -lglfw -pthread -lm
 
 SOURCE_DIR = sources
 SOURCES	=	main.c \
-			hooks.c \
-			init.c \
 			void_arr.c \
 			operations/point.c \
 			operations/vct1.c \
@@ -45,7 +43,6 @@ SOURCES	=	main.c \
 			patterns/texture_and_bump.c \
 			camera.c \
 			scene.c \
-			render.c \
 			heap_sort.c \
 			obj_transforms.c \
 			prep_comps1.c \
@@ -68,6 +65,14 @@ PARSER_SRC_BONUS = parser.c parser_utils.c validate.c file.c array.c \
 	     bonus/obj_add_bonus.c bonus/obj_bonus.c
 PARSER_OBJ_BONUS= $(addprefix $(PARSER_DIR)/,$(PARSER_SRC_BONUS:.c=.o))
 
+RENDER_DIR = sources/render
+RENDER_SRC = init.c render.c hooks.c
+RENDER_OBJ = $(addprefix $(RENDER_DIR)/,$(RENDER_SRC:.c=.o))
+
+RENDER_BONUS_DIR = sources/render_bonus
+RENDER_BONUS_SRC = init.c render.c hooks.c thread.c worker.c
+RENDER_BONUS_OBJ = $(addprefix $(RENDER_BONUS_DIR)/,$(RENDER_BONUS_SRC:.c=.o))
+
 PPM_DIR = sources/ppm
 PPM_SRC = ppm.c ppm_matrix.c header.c
 PPM_OBJ = $(addprefix $(PPM_DIR)/,$(PPM_SRC:.c=.o))
@@ -76,15 +81,12 @@ BVH_DIR = sources/bvh
 BVH_SRC = bvh.c bvh_intersect.c bvh_utils.c bounds.c bounds_obj.c node.c aabb.c split.c
 BVH_OBJ = $(addprefix $(BVH_DIR)/,$(BVH_SRC:.c=.o))
 
-WORKER_DIR = sources/worker
-WORKER_SRC = thread.c worker.c
-WORKER_OBJ = $(addprefix $(WORKER_DIR)/,$(WORKER_SRC:.c=.o))
 
 OFILES = $(addprefix $(SOURCE_DIR)/,$(SOURCES:.c=.o))
-OFILES += $(PARSER_OBJ) $(PPM_OBJ) $(BVH_OBJ) $(WORKER_OBJ)
+OFILES += $(PARSER_OBJ) $(PPM_OBJ) $(BVH_OBJ) $(RENDER_OBJ)
 
 B_OFILES = $(addprefix $(SOURCE_DIR)/,$(SOURCES:.c=.o))
-B_OFILES += $(PARSER_OBJ_BONUS) $(PPM_OBJ) $(BVH_OBJ) $(WORKER_OBJ)
+B_OFILES += $(PARSER_OBJ_BONUS) $(PPM_OBJ) $(BVH_OBJ) $(RENDER_BONUS_OBJ)
 
 target debug: CFLAGS += -fsanitize=address,undefined -g
 target debug: CDEBUG = -DDEBUG=1

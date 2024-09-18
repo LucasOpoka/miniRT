@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:29:51 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/18 16:45:56 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/18 17:18:30 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../includes/bvh.h"
@@ -60,7 +60,7 @@ void	worker_signal_finish(t_worker *worker)
 	worker->done = 1;
 }
 
-void	worker_render_section(t_worker *worker, t_scene *scene, int i)
+void	worker_render_section(t_worker *worker, t_scene *scene, uint32_t i)
 {
 	t_ray	ray;
 	t_clr	color;
@@ -89,7 +89,7 @@ void	worker_render_section(t_worker *worker, t_scene *scene, int i)
 void	*worker_routine(void *ptr)
 {
 	t_worker	*worker;
-	int			i;
+	uint32_t		    i;
 
 	worker = (t_worker *)ptr;
 	while (worker_wait(worker))
