@@ -6,7 +6,7 @@
 #    By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/29 14:59:04 by lopoka            #+#    #+#              #
-#    Updated: 2024/09/18 17:54:22 by atorma           ###   ########.fr        #
+#    Updated: 2024/09/18 18:14:45 by atorma           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,8 @@ NAME = miniRT
 CC = cc
 
 CFLAGS := -Wall -Wextra -Werror
-MLX42 = ./MLX42
+LDFLAGS := -Iinclude
+MLX42 := ./MLX42
 
 LIBFTDIR = ./libft
 LIBS = $(LIBFTDIR)/libft.a ${MLX42}/build/libmlx42.a -ldl -lglfw -pthread -lm
@@ -84,9 +85,11 @@ BVH_OBJ = $(addprefix $(BVH_DIR)/,$(BVH_SRC:.c=.o))
 
 OFILES = $(addprefix $(SOURCE_DIR)/,$(SOURCES:.c=.o))
 OFILES += $(PARSER_OBJ) $(PPM_OBJ) $(BVH_OBJ) $(RENDER_OBJ)
+MANDATORY_SRC = $(OFILES:.o=.c)
 
 B_OFILES = $(addprefix $(SOURCE_DIR)/,$(SOURCES:.c=.o))
 B_OFILES += $(PARSER_OBJ_BONUS) $(PPM_OBJ) $(BVH_OBJ) $(RENDER_BONUS_OBJ)
+BONUS_SRC = $(B_OFILES:.o=.c)
 
 target debug: CFLAGS += -fsanitize=address,undefined -g
 target debug: CDEBUG = -DDEBUG=1
@@ -110,23 +113,23 @@ all : mandatory
 mandatory : .mandatory
 bonus : .bonus
 
-$OFILES: %.c
-	${CC} ${CFLAGS} -I./includes -c -o $@ $<
+$OFILES: $(MANDATORY_SRC)
+	${CC} ${CFLAGS} -c -o $@ $<
 
-$B_OFILES: %.c
-	${CC} ${CFLAGS} -I./includes -c -o $@ $<
+$B_OFILES: $(BONUS_SRC)
+	${CC} ${CFLAGS} -c -o $@ $<
 
 .mandatory : ${OFILES}
 	cmake ${MLX42} -B ${MLX42}/build $(CDEBUG) && make -C ${MLX42}/build -j4
 	$(MAKE) -C $(LIBFTDIR)
-	${CC} -o ${NAME} ${CFLAGS} ${OFILES} ${LIBS}
+	${CC} -o ${NAME} ${CFLAGS} $(LDFLAGS) ${OFILES} ${LIBS}
 	@rm -f .bonus
 	@touch .mandatory
 
 .bonus : ${B_OFILES}
 	cmake ${MLX42} -B ${MLX42}/build $(CDEBUG) && make -C ${MLX42}/build -j4
 	$(MAKE) -C $(LIBFTDIR)
-	${CC} -o ${NAME} ${CFLAGS} ${B_OFILES} ${LIBS}
+	${CC} -o ${NAME} ${CFLAGS} $(LDFLAGS) ${B_OFILES} ${LIBS}
 	@touch .bonus
 	@rm -f .mandatory
 
