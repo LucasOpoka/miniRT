@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   camera.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lucas <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/17 13:41:19 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/04 20:20:47 by lopoka           ###   ########.fr       */
+/*   Created: 2024/09/18 19:22:57 by atorma            #+#    #+#             */
+/*   Updated: 2024/09/18 19:22:58 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "../includes/miniRT.h"
 
 void	ft_init_cam(t_cam *cam)
