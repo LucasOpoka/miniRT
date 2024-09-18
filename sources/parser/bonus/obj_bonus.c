@@ -6,12 +6,12 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 18:37:32 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/17 20:51:37 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/18 16:56:17 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/miniRT.h"
-#include "../../includes/parser.h"
+#include "../../../includes/miniRT.h"
+#include "../../../includes/parser.h"
 
 int			str_isalpha_lower(const char *s);
 

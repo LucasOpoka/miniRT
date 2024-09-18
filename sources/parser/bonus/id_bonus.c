@@ -6,12 +6,12 @@
 /*   By: atorma <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 18:15:26 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/17 20:21:56 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/18 16:55:50 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/miniRT.h"
-#include "../../includes/parser.h"
+#include "../../../includes/miniRT.h"
+#include "../../../includes/parser.h"
 
 int	identifier_type(char *id)
 {

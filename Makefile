@@ -6,7 +6,7 @@
 #    By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/29 14:59:04 by lopoka            #+#    #+#              #
-#    Updated: 2024/09/16 19:20:19 by lopoka           ###   ########.fr        #
+#    Updated: 2024/09/18 16:55:28 by atorma           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -64,7 +64,8 @@ PARSER_OBJ = $(addprefix $(PARSER_DIR)/,$(PARSER_SRC:.c=.o))
 
 PARSER_SRC_BONUS = parser.c parser_utils.c validate.c file.c array.c \
 	     fill.c ft_atof.c identifier.c obj.c camera.c \
-	     light_bonus.c id_bonus.c obj_add_bonus.c obj_bonus.c
+	     bonus/light_bonus.c bonus/id_bonus.c \
+	     bonus/obj_add_bonus.c bonus/obj_bonus.c
 PARSER_OBJ_BONUS= $(addprefix $(PARSER_DIR)/,$(PARSER_SRC_BONUS:.c=.o))
 
 PPM_DIR = sources/ppm

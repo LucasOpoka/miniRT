@@ -6,13 +6,12 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 18:07:41 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/14 19:14:33 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/18 16:56:00 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/miniRT.h"
-#include "../../includes/parser.h"
-#include "../../libft/libft.h"
+#include "../../../includes/miniRT.h"
+#include "../../../includes/parser.h"
 
 int	light_add_ambient(t_ambient *ambient, char **elem)
 {

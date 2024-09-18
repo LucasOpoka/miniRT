@@ -6,12 +6,12 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 18:07:54 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/17 20:35:45 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/18 16:56:09 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/miniRT.h"
-#include "../../includes/parser.h"
+#include "../../../includes/miniRT.h"
+#include "../../../includes/parser.h"
 
 int	validate_orientation(t_vct v);
 int	obj_add_bonus_fields(t_obj *obj, char **elem);
