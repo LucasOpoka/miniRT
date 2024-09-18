@@ -77,10 +77,10 @@ int	ft_shadow(t_clr_recur *rec)
 	int			res;
 	t_intrsc	*hit;
 
-	point_to_light.D = ft_vct_sub(&rec->light->pos, &rec->comps.over_point);
-	distance = ft_vct_len(&point_to_light.D);
-	ft_vct_norm(&point_to_light.D);
-	point_to_light.O = rec->comps.over_point;
+	point_to_light.d = ft_vct_sub(&rec->light->pos, &rec->comps.over_point);
+	distance = ft_vct_len(&point_to_light.d);
+	ft_vct_norm(&point_to_light.d);
+	point_to_light.o = rec->comps.over_point;
 	rec->xs->i = 0;
 	if (BVH)
 		bvh_intersect(point_to_light, rec->scene, rec->xs);

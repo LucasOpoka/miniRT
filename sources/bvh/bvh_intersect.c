@@ -121,9 +121,9 @@ void	bvh_intersect(t_ray ray, t_scene *scene, t_xs *xs)
 
 	node = &scene->bvh.root[0];
 	s.ptr = 0;
-	ray.rd.x = 1.0 / ray.D.x;
-	ray.rd.y = 1.0 / ray.D.y;
-	ray.rd.z = 1.0 / ray.D.z;
+	ray.rd.x = 1.0 / ray.d.x;
+	ray.rd.y = 1.0 / ray.d.y;
+	ray.rd.z = 1.0 / ray.d.z;
 	while (node)
 	{
 		if (node->count > 0)

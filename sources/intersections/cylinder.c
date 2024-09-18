@@ -16,9 +16,9 @@ void	ft_cylinder_intersection(t_ray ray, t_obj *obj, t_xs *xs)
 {
 	t_cl_xs	cl;
 
-	cl.a = pow(ray.D.x, 2) + pow(ray.D.z, 2);
-	cl.b = 2 * ray.O.x * ray.D.x + 2 * ray.O.z * ray.D.z;
-	cl.c = pow(ray.O.x, 2) + pow(ray.O.z, 2) - 1;
+	cl.a = pow(ray.d.x, 2) + pow(ray.d.z, 2);
+	cl.b = 2 * ray.o.x * ray.d.x + 2 * ray.o.z * ray.d.z;
+	cl.c = pow(ray.o.x, 2) + pow(ray.o.z, 2) - 1;
 	cl.disc = pow(cl.b, 2) - 4 * cl.a * cl.c;
 	if (cl.disc >= 0 && cl.a > EPSILON)
 	{
@@ -27,10 +27,10 @@ void	ft_cylinder_intersection(t_ray ray, t_obj *obj, t_xs *xs)
 		cl.t[1] = (-cl.b + cl.disc) / (2 * cl.a);
 		if (cl.t[0] > cl.t[1])
 			ft_swap_doubles(&cl.t[0], &cl.t[1]);
-		cl.y[0] = ray.O.y + cl.t[0] * ray.D.y;
+		cl.y[0] = ray.o.y + cl.t[0] * ray.d.y;
 		if ((-0.5 < cl.y[0]) && (cl.y[0] < 0.5))
 			ft_add_intersection(xs, obj, cl.t[0]);
-		cl.y[1] = ray.O.y + cl.t[1] * ray.D.y;
+		cl.y[1] = ray.o.y + cl.t[1] * ray.d.y;
 		if ((-0.5 < cl.y[1]) && (cl.y[1] < 0.5))
 			ft_add_intersection(xs, obj, cl.t[1]);
 	}
@@ -41,12 +41,12 @@ void	ft_intersect_caps(t_ray ray, t_obj *obj, t_xs *xs)
 {
 	double	t;
 
-	if (fabs(ray.D.y) < EPSILON)
+	if (fabs(ray.d.y) < EPSILON)
 		return ;
-	t = (-0.5 - ray.O.y) / ray.D.y;
+	t = (-0.5 - ray.o.y) / ray.d.y;
 	if (ft_check_caps(ray, t, 1))
 		ft_add_intersection(xs, obj, t);
-	t = (0.5 - ray.O.y) / ray.D.y;
+	t = (0.5 - ray.o.y) / ray.d.y;
 	if (ft_check_caps(ray, t, 1))
 		ft_add_intersection(xs, obj, t);
 }
@@ -56,8 +56,8 @@ int	ft_check_caps(t_ray ray, double t, double radius)
 	double	x;
 	double	z;
 
-	x = ray.O.x + ray.D.x * t;
-	z = ray.O.z + ray.D.z * t;
+	x = ray.o.x + ray.d.x * t;
+	z = ray.o.z + ray.d.z * t;
 	return (pow(x, 2) + pow(z, 2) <= pow(radius, 2));
 }
 

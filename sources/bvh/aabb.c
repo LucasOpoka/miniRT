@@ -24,12 +24,12 @@ double	aabb_raycast(t_ray ray, t_bounds bounds)
 	double		tmin;
 	double		tmax;
 
-	t.t1 = (bounds.min[0] - ray.O.x) * ray.rd.x;
-	t.t2 = (bounds.max[0] - ray.O.x) * ray.rd.x;
-	t.t3 = (bounds.min[1] - ray.O.y) * ray.rd.y;
-	t.t4 = (bounds.max[1] - ray.O.y) * ray.rd.y;
-	t.t5 = (bounds.min[2] - ray.O.z) * ray.rd.z;
-	t.t6 = (bounds.max[2] - ray.O.z) * ray.rd.z;
+	t.t1 = (bounds.min[0] - ray.o.x) * ray.rd.x;
+	t.t2 = (bounds.max[0] - ray.o.x) * ray.rd.x;
+	t.t3 = (bounds.min[1] - ray.o.y) * ray.rd.y;
+	t.t4 = (bounds.max[1] - ray.o.y) * ray.rd.y;
+	t.t5 = (bounds.min[2] - ray.o.z) * ray.rd.z;
+	t.t6 = (bounds.max[2] - ray.o.z) * ray.rd.z;
 	tmin = fmax(fmax(fmin(t.t1, t.t2), fmin(t.t3, t.t4)), fmin(t.t5, t.t6));
 	tmax = fmin(fmin(fmax(t.t1, t.t2), fmax(t.t3, t.t4)), fmax(t.t5, t.t6));
 	if (tmax < 0 || tmin > tmax)

@@ -77,8 +77,8 @@ t_clr	ft_reflection(t_clr_recur rec)
 	if (rec.comps.obj->reflective == 0 || rec.recur_lmt < 0)
 		return (res);
 	reflective = rec.comps.obj->reflective;
-	rec.ray.O = rec.comps.over_point;
-	rec.ray.D = rec.comps.reflect;
+	rec.ray.o = rec.comps.over_point;
+	rec.ray.d = rec.comps.reflect;
 	rec.xs->i = 0;
 	if (BVH)
 		bvh_intersect(rec.ray, rec.scene, rec.xs);
@@ -106,8 +106,8 @@ t_clr	ft_refraction(t_clr_recur rec)
 	rf.cos_t = sqrt(1 - rf.sin2_t);
 	rf.v1 = ft_vct_x_sclr(&rec.comps.normal, rf.n_ratio * rf.cos_i - rf.cos_t);
 	rf.v2 = ft_vct_x_sclr(&rec.comps.eye, rf.n_ratio);
-	rec.ray.D = ft_vct_sub(&rf.v1, &rf.v2);
-	rec.ray.O = rec.comps.under_point;
+	rec.ray.d = ft_vct_sub(&rf.v1, &rf.v2);
+	rec.ray.o = rec.comps.under_point;
 	rec.xs->i = 0;
 	if (BVH)
 		bvh_intersect(rec.ray, rec.scene, rec.xs);

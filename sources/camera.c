@@ -74,15 +74,15 @@ void	ft_pixel_to_ray(t_ray *world_ray, double x, double y, t_cam *cam)
 	t_ray	cam_ray;
 	t_vct	pixel_world;
 
-	cam_ray.D.x = cam->half_wdth - (x + 0.5) * cam->pixel_size;
-	cam_ray.D.y = cam->half_hght - (y + 0.5) * cam->pixel_size;
-	cam_ray.D.z = -1;
-	cam_ray.D.w = 1;
-	ft_bzero(&cam_ray.O, sizeof(t_vct));
-	cam_ray.O.w = 1;
-	ft_vct_x_mtrx(&world_ray->O, &cam->cam_to_world, &cam_ray.O);
-	ft_vct_x_mtrx(&pixel_world, &cam->cam_to_world, &cam_ray.D);
-	world_ray->D = ft_vct_sub(&pixel_world, &world_ray->O);
-	world_ray->D.w = 0;
-	ft_vct_norm(&world_ray->D);
+	cam_ray.d.x = cam->half_wdth - (x + 0.5) * cam->pixel_size;
+	cam_ray.d.y = cam->half_hght - (y + 0.5) * cam->pixel_size;
+	cam_ray.d.z = -1;
+	cam_ray.d.w = 1;
+	ft_bzero(&cam_ray.o, sizeof(t_vct));
+	cam_ray.o.w = 1;
+	ft_vct_x_mtrx(&world_ray->o, &cam->cam_to_world, &cam_ray.o);
+	ft_vct_x_mtrx(&pixel_world, &cam->cam_to_world, &cam_ray.d);
+	world_ray->d = ft_vct_sub(&pixel_world, &world_ray->o);
+	world_ray->d.w = 0;
+	ft_vct_norm(&world_ray->d);
 }

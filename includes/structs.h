@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 14:16:04 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/18 18:27:31 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/18 21:31:34 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef STRUCTS_H
@@ -207,8 +207,8 @@ typedef struct s_scene
 
 typedef struct s_ray
 {
-	t_vct				O;
-	t_vct				D;
+	t_vct				o;
+	t_vct				d;
 	t_vct				rd;
 }						t_ray;
 

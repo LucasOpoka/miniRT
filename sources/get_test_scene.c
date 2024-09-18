@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 12:47:38 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/17 18:52:41 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/18 21:34:07 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -236,13 +236,13 @@ t_scene	get_test_scene(void)
 	tri->ptrn = ft_ptrn(ft_checkers, 4, 4);
 
 
-	//ft_void_arr_add(&scene.objs, obj1);
-	//ft_void_arr_add(&scene.objs, air_bubble);
+	ft_void_arr_add(&scene.objs, obj1);
+	ft_void_arr_add(&scene.objs, air_bubble);
 	//ft_void_arr_add(&scene.objs, obj3);
 	//ft_void_arr_add(&scene.objs, obj4);
 	//ft_void_arr_add(&scene.objs, obj10);
 	//ft_void_arr_add(&scene.objs, cylinder);
-	ft_void_arr_add(&scene.objs, cone);
+	//ft_void_arr_add(&scene.objs, cone);
 	//ft_void_arr_add(&scene.objs, obj7);
 	ft_void_arr_add(&scene.objs, back);
 	//ft_void_arr_add(&scene.objs, r);

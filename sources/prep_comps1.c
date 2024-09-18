@@ -23,7 +23,7 @@ t_comps	ft_prep_comps(t_ray *ray, t_xs *xs)
 	comps.t = comps.hit->t;
 	comps.obj = comps.hit->obj;
 	comps.point = ft_ray_point(ray, comps.t);
-	comps.eye = ft_vct_neg(&ray->D);
+	comps.eye = ft_vct_neg(&ray->d);
 	comps.eye.w = 0;
 	ft_get_obj_normal_and_color(&comps);
 	comps.inside = 0;
@@ -32,7 +32,7 @@ t_comps	ft_prep_comps(t_ray *ray, t_xs *xs)
 		comps.inside = 1;
 		comps.normal = ft_vct_neg(&comps.normal);
 	}
-	comps.reflect = ft_reflect(&ray->D, &comps.normal);
+	comps.reflect = ft_reflect(&ray->d, &comps.normal);
 	comps.over_point = ft_over_point(&comps.point, &comps.normal);
 	comps.under_point = ft_under_point(&comps.point, &comps.normal);
 	ft_get_refr_ind(&comps, xs, comps.hit);
@@ -45,9 +45,9 @@ t_vct	ft_ray_point(const t_ray *ray, double t)
 {
 	t_vct	point;
 
-	point.x = ray->O.x + ray->D.x * t;
-	point.y = ray->O.y + ray->D.y * t;
-	point.z = ray->O.z + ray->D.z * t;
+	point.x = ray->o.x + ray->d.x * t;
+	point.y = ray->o.y + ray->d.y * t;
+	point.z = ray->o.z + ray->d.z * t;
 	point.w = 1;
 	return (point);
 }

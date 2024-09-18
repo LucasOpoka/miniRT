@@ -19,10 +19,10 @@ void	ft_sphere_intersection(t_ray ray, t_obj *obj, t_xs *xs)
 	double	c;
 	double	discr;
 
-	s_to_r = ray.O;
+	s_to_r = ray.o;
 	s_to_r.w = 0;
-	a = ft_vct_dot(&ray.D, &ray.D);
-	b = 2 * ft_vct_dot(&s_to_r, &ray.D);
+	a = ft_vct_dot(&ray.d, &ray.d);
+	b = 2 * ft_vct_dot(&s_to_r, &ray.d);
 	c = ft_vct_dot(&s_to_r, &s_to_r) - 1;
 	discr = pow(b, 2) - 4 * a * c;
 	if (discr < 0)
@@ -33,15 +33,15 @@ void	ft_sphere_intersection(t_ray ray, t_obj *obj, t_xs *xs)
 
 void	ft_plane_intersection(t_ray ray, t_obj *obj, t_xs *xs)
 {
-	if (fabs(ray.D.y) < EPSILON)
+	if (fabs(ray.d.y) < EPSILON)
 		return ;
-	ft_add_intersection(xs, obj, -ray.O.y / ray.D.y);
+	ft_add_intersection(xs, obj, -ray.o.y / ray.d.y);
 }
 
 void	ft_ray_to_obj_space(t_ray *obj_ray, t_ray *world_ray, t_obj *obj)
 {
-	ft_vct_x_mtrx(&obj_ray->O, &obj->world_to_obj, &world_ray->O);
-	ft_vct_x_mtrx(&obj_ray->D, &obj->world_to_obj, &world_ray->D);
+	ft_vct_x_mtrx(&obj_ray->o, &obj->world_to_obj, &world_ray->o);
+	ft_vct_x_mtrx(&obj_ray->d, &obj->world_to_obj, &world_ray->d);
 }
 
 void	ft_get_intrscs(t_ray world_ray, t_scene *scene, t_xs *xs)
