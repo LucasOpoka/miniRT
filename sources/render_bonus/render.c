@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 18:06:54 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/18 18:29:42 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/18 19:41:47 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,9 @@ long long	time_ms(void)
 
 void	render_image(t_mrt *mrt)
 {
-	mlx_image_t	*img;
 	long long	ms_start;
 	long long	ms_end;
 
-	img = mrt->img;
-	ft_bzero(img->pixels, img->width * img->height * sizeof(int));
 	pthread_mutex_lock(&mrt->lock);
 	mrt->threads_finished = 0;
 	mrt->do_render = 1;
@@ -49,10 +46,12 @@ void	render_image(t_mrt *mrt)
 
 void	render(t_mrt *mrt, t_scene *scene)
 {
+	const mlx_image_t	*img = mrt->img;
+
+	ft_bzero(img->pixels, img->width * img->height * sizeof(int));
 	mrt->scene = scene;
 	ft_init_cam(&scene->cam);
 	ft_set_cam_matrices(&scene->cam);
 	ft_set_all_objs_matrices(scene);
-	mlx_image_to_window(mrt->mlx, mrt->img, 0, 0);
 	render_image(mrt);
 }
