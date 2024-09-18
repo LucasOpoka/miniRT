@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 14:14:55 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/18 17:41:03 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/18 18:22:07 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../includes/miniRT.h"
@@ -30,6 +30,4 @@ void	ft_keyboard_hooks(mlx_key_data_t k_data, void *vd)
 	mrt = (t_mrt *)vd;
 	if (k_data.key == MLX_KEY_ESCAPE && k_data.action == MLX_PRESS)
 		close_hook(mrt);
-	if (k_data.key == MLX_KEY_C && k_data.action == MLX_PRESS)
-		render_image(mrt);
 }
