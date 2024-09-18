@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:29:51 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/15 21:38:09 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/18 16:45:56 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../includes/bvh.h"
@@ -64,9 +64,9 @@ void	worker_render_section(t_worker *worker, t_scene *scene, int i)
 {
 	t_ray	ray;
 	t_clr	color;
-	int		start_y;
-	int		y;
-	int		x;
+	uint32_t	start_y;
+	uint32_t	y;
+	uint32_t	x;
 
 	start_y = i * worker->block_size;
 	if (i == worker->block_count - 1)
@@ -75,7 +75,7 @@ void	worker_render_section(t_worker *worker, t_scene *scene, int i)
 	while (y < (start_y + worker->block_size))
 	{
 		x = 0;
-		while (x < CANV_WDTH)
+		while (x < worker->mrt->img->width)
 		{
 			ft_pixel_to_ray(&ray, x, y, &scene->cam);
 			color = ft_final_color(&ray, scene, 5, &worker->xs);
@@ -92,15 +92,13 @@ void	*worker_routine(void *ptr)
 	int			i;
 
 	worker = (t_worker *)ptr;
-	while (1)
+	while (worker_wait(worker))
 	{
 		i = worker->index;
-		if (!worker_wait(worker))
-			break ;
 		while (i < worker->block_count)
 		{
 			worker_render_section(worker, worker->scene, i);
-			i += MAX_THREADS;
+			i += THREAD_COUNT;
 		}
 		worker_signal_finish(worker);
 	}

@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 18:06:54 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/07 16:57:34 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/18 16:39:34 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	render_image(t_mrt *mrt)
 	threads_wait(mrt);
 	ms_end = time_ms();
 	printf("render took: %lldms, threads: %d, block_size: %d\n", ms_end
-		- ms_start, MAX_THREADS, BLOCK_SIZE);
+		- ms_start, THREAD_COUNT, BLOCK_SIZE);
 }
 
 void	render(t_mrt *mrt, t_scene *scene)

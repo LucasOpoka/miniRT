@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:29:57 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/05 18:31:28 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/18 16:40:12 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ int	threads_create(t_mrt *mrt, t_scene *scene)
 
 	i = 0;
 	mrt->thread_count = 0;
-	mrt->workers = ft_calloc(1, sizeof(t_worker) * MAX_THREADS);
+	mrt->workers = ft_calloc(1, sizeof(t_worker) * THREAD_COUNT);
 	if (!mrt->workers)
 		return (0);
-	while (i < MAX_THREADS)
+	while (i < THREAD_COUNT)
 	{
 		worker = (t_worker *)&mrt->workers[i];
 		if (!worker_init(mrt, scene, worker, i))
@@ -59,7 +59,7 @@ int	threads_init(t_mrt *mrt, t_scene *scene)
 void	threads_wait(t_mrt *mrt)
 {
 	pthread_mutex_lock(&mrt->lock);
-	while (mrt->threads_finished != MAX_THREADS)
+	while (mrt->threads_finished != THREAD_COUNT)
 		pthread_cond_wait(&mrt->complete, &mrt->lock);
 	mrt->do_render = 0;
 	pthread_cond_broadcast(&mrt->notify);
