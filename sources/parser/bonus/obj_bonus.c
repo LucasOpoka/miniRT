@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 18:37:32 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/18 16:56:17 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/18 20:17:46 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,17 @@ static int	obj_load_ppm(t_ppm *obj_ppm, const char *file)
 	return (1);
 }
 
+static int  obj_patterns(t_obj *obj, const char *texture)
+{
+	if (ft_strcmp("checkers", texture) == 0)
+		obj->ptrn = ft_ptrn(ft_checkers, 20, 20);
+	else if (ft_strcmp("rings", texture) == 0)
+		obj->ptrn = ft_ptrn(ft_rings, 25, 25);
+	else if (ft_strcmp("arches", texture) == 0)
+		obj->ptrn = ft_ptrn(ft_arches, 25, 25);
+	return (obj->ptrn.ptrn_func != NULL);
+}
+
 int	obj_add_bonus_ppm(t_obj *obj, char **elem)
 {
 	const size_t	size = array_size(elem);
@@ -53,12 +64,14 @@ int	obj_add_bonus_ppm(t_obj *obj, char **elem)
 	const char		*bump_map = elem[size - 2];
 	char			*modifier;
 
+	if (obj_patterns(obj, texture))
+		return (1);
 	modifier = elem[size - 1];
 	if (!obj_load_ppm(&obj->txtr, texture))
 		return (0);
 	if (!obj_load_ppm(&obj->bump, bump_map))
 		return (0);
-	if (obj->bump_modifier)
+	if (obj->bump.colors)
 	{
 		if (!str_isdouble(modifier))
 			return (0);
@@ -73,7 +86,7 @@ int	obj_add_bonus_ppm(t_obj *obj, char **elem)
  *   object bonus fields
 	*   <specular> <diffuse> <shininess>
 	*   <reflective> <refractive> <transparency>
-	*   <texture ppm> <bump ppm> <bump modifier>
+	*   <texture ppm / pattern> <bump ppm> <bump modifier>
  *   +9 fields to mandatory
  */
 
