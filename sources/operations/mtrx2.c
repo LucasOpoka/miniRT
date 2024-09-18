@@ -6,10 +6,10 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 12:32:43 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/02 19:52:42 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/18 17:51:44 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../includes/miniRT.h"
+#include "../../includes/miniRT.h"
 
 // Get cofactor of 3x3 matrix at row and col
 double	ft_mtrx3_cfc(const t_mtrx3 *mtrx3, int row, int col)

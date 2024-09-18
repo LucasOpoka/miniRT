@@ -6,10 +6,10 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 17:03:01 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/02 17:03:21 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/18 17:51:51 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../includes/miniRT.h"
+#include "../../includes/miniRT.h"
 
 void	ft_mtrx4_transpose(t_mtrx4 *out, const t_mtrx4 *in)
 {

@@ -6,7 +6,7 @@
 #    By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/29 14:59:04 by lopoka            #+#    #+#              #
-#    Updated: 2024/09/18 17:40:25 by atorma           ###   ########.fr        #
+#    Updated: 2024/09/18 17:54:22 by atorma           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -108,18 +108,20 @@ export CFLAGS
 all : mandatory
 
 mandatory : .mandatory
-
 bonus : .bonus
 
-%.o: %.c
+$OFILES: %.c
+	${CC} ${CFLAGS} -I./includes -c -o $@ $<
+
+$B_OFILES: %.c
 	${CC} ${CFLAGS} -I./includes -c -o $@ $<
 
 .mandatory : ${OFILES}
 	cmake ${MLX42} -B ${MLX42}/build $(CDEBUG) && make -C ${MLX42}/build -j4
 	$(MAKE) -C $(LIBFTDIR)
 	${CC} -o ${NAME} ${CFLAGS} ${OFILES} ${LIBS}
-	@touch .mandatory
 	@rm -f .bonus
+	@touch .mandatory
 
 .bonus : ${B_OFILES}
 	cmake ${MLX42} -B ${MLX42}/build $(CDEBUG) && make -C ${MLX42}/build -j4

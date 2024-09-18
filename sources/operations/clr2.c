@@ -6,10 +6,10 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 15:57:59 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/03 10:29:24 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/18 17:51:35 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../includes/miniRT.h"
+#include "../../includes/miniRT.h"
 
 double	ft_clip_color(double clr)
 {

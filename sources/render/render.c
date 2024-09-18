@@ -6,11 +6,11 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 18:06:54 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/18 17:30:12 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/18 17:53:45 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/miniRT.h"
+#include "../../includes/miniRT.h"
 #include <pthread.h>
 #include <sys/time.h>
 #include <time.h>

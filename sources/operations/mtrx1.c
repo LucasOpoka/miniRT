@@ -6,10 +6,10 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 09:57:29 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/02 17:04:56 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/18 17:51:40 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../includes/miniRT.h"
+#include "../../includes/miniRT.h"
 
 // Create a 2x2 matrix by removing row and column from the passed 3x3 matrix
 void	ft_mtrx3_sub(t_mtrx2 *mtrx2, const t_mtrx3 *mtrx3, int row, int col)

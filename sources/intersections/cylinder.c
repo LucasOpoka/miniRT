@@ -6,10 +6,10 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 21:05:34 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/17 18:49:13 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/18 17:53:00 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../includes/miniRT.h"
+#include "../../includes/miniRT.h"
 
 // The Raytracer Challenge p.177
 void	ft_cylinder_intersection(t_ray ray, t_obj *obj, t_xs *xs)

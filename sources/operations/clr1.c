@@ -6,10 +6,10 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 15:57:59 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/03 17:59:47 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/18 17:51:31 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../includes/miniRT.h"
+#include "../../includes/miniRT.h"
 
 t_clr	ft_create_clr(double r, double g, double b)
 {

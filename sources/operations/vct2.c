@@ -6,10 +6,10 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 17:09:16 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/02 19:49:38 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/18 17:52:07 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../includes/miniRT.h"
+#include "../../includes/miniRT.h"
 
 t_vct	ft_vct_add(const t_vct *a, const t_vct *b)
 {
