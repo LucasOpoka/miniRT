@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 14:16:04 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/18 17:25:15 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/18 18:27:31 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef STRUCTS_H
@@ -18,6 +18,7 @@ typedef double			t_mtrx2[2][2];
 typedef double			t_mtrx3[3][3];
 typedef double			t_mtrx4[4][4];
 
+typedef struct s_scene	t_scene;
 typedef struct s_worker	t_worker;
 typedef struct s_ptrn	t_ptrn;
 // typedef	struct	s_ppm t_ppm;
@@ -26,6 +27,7 @@ typedef struct s_mrt
 {
 	mlx_t				*mlx;
 	mlx_image_t			*img;
+	struct s_scene		*scene;
 	struct s_worker		*workers;
 	pthread_t			threads[THREAD_COUNT + 1];
 	size_t				thread_count;

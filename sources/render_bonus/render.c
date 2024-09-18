@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 18:06:54 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/18 17:54:43 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/18 18:29:42 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ void	render_image(t_mrt *mrt)
 
 void	render(t_mrt *mrt, t_scene *scene)
 {
+	mrt->scene = scene;
 	ft_init_cam(&scene->cam);
 	ft_set_cam_matrices(&scene->cam);
 	ft_set_all_objs_matrices(scene);
