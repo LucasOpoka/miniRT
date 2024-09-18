@@ -6,7 +6,8 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 14:16:04 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/18 21:31:34 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/19 01:40:14 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/19 01:38:22 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef STRUCTS_H
@@ -30,8 +31,8 @@ typedef struct s_mrt
 	struct s_scene		*scene;
 	struct s_worker		*workers;
 	pthread_t			threads[THREAD_COUNT + 1];
-	size_t				thread_count;
-	int					threads_finished;
+	uint32_t				thread_count;
+	uint32_t				threads_finished;
 	pthread_mutex_t		lock;
 	pthread_cond_t		notify;
 	pthread_cond_t		complete;

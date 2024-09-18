@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 14:14:55 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/18 19:23:49 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/19 01:37:31 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../includes/miniRT.h"
@@ -34,23 +34,29 @@ void	close_hook(void *ptr)
 	printf("threads joined\n");
 }
 
+static int  move_cam_key(mlx_key_data_t k, t_cam *cam)
+{
+	if (k.key == MLX_KEY_A)
+		cam->pos.x -= 0.1f;
+	else if (k.key == MLX_KEY_D)
+		cam->pos.x += 0.1f;
+	else if (k.key == MLX_KEY_W)
+		cam->pos.y += 0.1f;
+	else if (k.key == MLX_KEY_S)
+		cam->pos.y -= 0.1f;
+	else if (k.key == MLX_KEY_F)
+		cam->pos.z += 0.1f;
+	else if (k.key == MLX_KEY_B)
+		cam->pos.z -= 0.1f;
+	else
+		return (0);
+	return (1);
+}
 static void	move_camera(mlx_key_data_t k, t_mrt *mrt, t_scene *scene)
 {
 	if (k.action != MLX_PRESS)
 		return ;
-	if (k.key == MLX_KEY_A)
-		scene->cam.pos.x -= 0.1f;
-	else if (k.key == MLX_KEY_D)
-		scene->cam.pos.x += 0.1f;
-	else if (k.key == MLX_KEY_W)
-		scene->cam.pos.y += 0.1f;
-	else if (k.key == MLX_KEY_S)
-		scene->cam.pos.y -= 0.1f;
-	else if (k.key == MLX_KEY_F)
-		scene->cam.pos.z += 0.1f;
-	else if (k.key == MLX_KEY_B)
-		scene->cam.pos.z -= 0.1f;
-	else
+	if (!move_cam_key(k, &scene->cam))
 		return ;
 	ft_init_cam(&scene->cam);
 	ft_set_cam_matrices(&scene->cam);

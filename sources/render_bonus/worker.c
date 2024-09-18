@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:29:51 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/18 17:18:30 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/19 01:28:50 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../includes/bvh.h"
@@ -31,33 +31,28 @@ int	worker_wait(t_worker *worker)
 	exit_status = 0;
 	mrt = worker->mrt;
 	pthread_mutex_lock(&mrt->lock);
-	while (!mrt->exit && worker->done && mrt->do_render)
+	while (!mrt->exit && worker->done && mrt->threads_finished > 0)
 		pthread_cond_wait(&mrt->notify, &mrt->lock);
-	while (!mrt->exit && !mrt->do_render)
+	while (!mrt->do_render && !mrt->exit)
 		pthread_cond_wait(&mrt->notify, &mrt->lock);
 	exit_status = mrt->exit;
 	pthread_mutex_unlock(&mrt->lock);
-	if (exit_status)
-	{
-		printf("worker %d, exiting...\n", worker->index);
-		return (0);
-	}
 	worker->done = 0;
 	worker->block_count = mrt->img->height / BLOCK_SIZE;
 	worker->block_size = BLOCK_SIZE;
-	return (1);
+	return (exit_status == 0);
 }
 
 void	worker_signal_finish(t_worker *worker)
 {
 	t_mrt	*mrt;
 
+	worker->done = 1;
 	mrt = worker->mrt;
 	pthread_mutex_lock(&mrt->lock);
 	mrt->threads_finished++;
 	pthread_cond_signal(&mrt->complete);
 	pthread_mutex_unlock(&mrt->lock);
-	worker->done = 1;
 }
 
 void	worker_render_section(t_worker *worker, t_scene *scene, uint32_t i)

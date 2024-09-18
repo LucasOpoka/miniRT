@@ -6,7 +6,7 @@
 #    By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/29 14:59:04 by lopoka            #+#    #+#              #
-#    Updated: 2024/09/18 18:14:45 by atorma           ###   ########.fr        #
+#    Updated: 2024/09/19 01:38:58 by atorma           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -97,7 +97,7 @@ target debug: CDEBUG = -DDEBUG=1
 target debug_bonus: CFLAGS += -fsanitize=address,undefined -g
 target debug_bonus: CDEBUG = -DDEBUG=1
 
-target fast_bonus: CFLAGS += -O2 -ffast-math
+target fast_bonus: CFLAGS += -O2
 
 target symbols: CFLAGS = -Wall -Wextra -Werror -gdwarf-4
 target symbols: CDEBUG = -DDEBUG=1
