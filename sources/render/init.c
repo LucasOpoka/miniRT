@@ -6,12 +6,13 @@
 /*   By: lucas <lopoka@student.hive.fi>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 16:40:23 by lucas             #+#    #+#             */
-/*   Updated: 2024/09/18 17:40:51 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/19 20:04:47 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../includes/miniRT.h"
 
 void		close_hook(void *ptr);
+void		key_hook(mlx_key_data_t k, void *vd);
 
 void	uninit_mlx(t_mrt *mrt)
 {
@@ -35,7 +36,7 @@ static int	init_mlx(t_mrt *mrt)
 		return (0);
 	}
 	mlx_close_hook(mrt->mlx, &close_hook, mrt);
-	mlx_key_hook(mrt->mlx, &ft_keyboard_hooks, mrt);
+	mlx_key_hook(mrt->mlx, &key_hook, mrt);
 	return (1);
 }
 

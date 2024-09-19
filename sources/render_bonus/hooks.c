@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 14:14:55 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/19 17:56:04 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/19 20:17:20 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../includes/miniRT.h"
@@ -23,14 +23,15 @@ void	close_hook(void *ptr)
 	t_mrt	*mrt;
 
 	mrt = ptr;
+	if (!mrt->thread_count)
+		return ;
 	threads_wait(mrt);
 	pthread_mutex_lock(&mrt->lock);
 	mrt->exit = 1;
 	pthread_cond_broadcast(&mrt->notify);
-	printf("threads notified...\n");
 	pthread_mutex_unlock(&mrt->lock);
-	uninit_mlx(mrt);
 	threads_join(mrt);
+	uninit_mlx(mrt);
 	printf("threads joined\n");
 }
 
@@ -52,6 +53,7 @@ static int  move_cam_key(mlx_key_data_t k, t_cam *cam)
 		return (0);
 	return (1);
 }
+
 static void	move_camera(mlx_key_data_t k, t_mrt *mrt, t_scene *scene)
 {
 	if (k.action != MLX_PRESS)
@@ -63,7 +65,7 @@ static void	move_camera(mlx_key_data_t k, t_mrt *mrt, t_scene *scene)
 	render_image(mrt);
 }
 
-void	ft_keyboard_hooks(mlx_key_data_t k, void *vd)
+void	key_hook(mlx_key_data_t k, void *vd)
 {
 	t_mrt	*mrt;
 	t_scene	*scene;

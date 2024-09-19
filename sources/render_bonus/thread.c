@@ -6,34 +6,35 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:29:57 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/19 01:38:28 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/19 20:51:19 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/miniRT.h"
-#include "../../libft/libft.h"
 #include <pthread.h>
 
-int		worker_init(t_mrt *mrt, t_scene *scene, t_worker *worker, int i);
+int	locks_init(t_mrt *mrt);
+void	locks_destroy(t_mrt *mrt);
+void	workers_free(t_mrt *mrt, size_t	count);
+int	workers_init(t_mrt *mrt, t_scene *scene);
 void	*worker_routine(void *ptr);
+void	threads_join(t_mrt *mrt);
 
-int	threads_create(t_mrt *mrt, t_scene *scene)
+int	threads_create(t_mrt *mrt)
 {
 	size_t		i;
 	t_worker	*worker;
 
 	i = 0;
 	mrt->thread_count = 0;
-	mrt->workers = ft_calloc(1, sizeof(t_worker) * THREAD_COUNT);
-	if (!mrt->workers)
-		return (0);
 	while (i < THREAD_COUNT)
 	{
 		worker = (t_worker *)&mrt->workers[i];
-		if (!worker_init(mrt, scene, worker, i))
-			return (0);
 		if (pthread_create(&mrt->threads[i], NULL, worker_routine, worker) != 0)
+		{
+			threads_join(mrt);
 			return (0);
+		}
 		i++;
 		mrt->thread_count = i;
 	}
@@ -42,17 +43,13 @@ int	threads_create(t_mrt *mrt, t_scene *scene)
 
 int	threads_init(t_mrt *mrt, t_scene *scene)
 {
-	mrt->do_render = 0;
-	mrt->threads_finished = 0;
-	mrt->exit = 0;
-	if (pthread_mutex_init(&mrt->lock, NULL) != 0)
+	if (!locks_init(mrt))
 		return (0);
-	if (pthread_cond_init(&mrt->notify, NULL) != 0)
+	if (!workers_init(mrt, scene) || !threads_create(mrt))
+	{
+		locks_destroy(mrt);
 		return (0);
-	if (pthread_cond_init(&mrt->complete, NULL) != 0)
-		return (0);
-	if (!threads_create(mrt, scene))
-		return (0);
+	}
 	return (1);
 }
 
@@ -71,14 +68,14 @@ void	threads_join(t_mrt *mrt)
 	size_t	i;
 
 	i = 0;
+	if (!mrt->thread_count)
+		return ;
 	while (i < mrt->thread_count)
 	{
 		pthread_join(mrt->threads[i], NULL);
-		ft_free_xs(&mrt->workers[i].xs);
 		i++;
 	}
-	pthread_mutex_destroy(&mrt->lock);
-	pthread_cond_destroy(&mrt->notify);
-	pthread_cond_destroy(&mrt->complete);
-	free(mrt->workers);
+	locks_destroy(mrt);
+	workers_free(mrt, mrt->thread_count);
+	mrt->thread_count = 0;
 }

@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:06:19 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/19 17:57:54 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/19 20:04:18 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINIRT_H
@@ -41,11 +41,6 @@
 
 void		ft_show_img(t_mrt *mrt, t_scene *scene);
 t_clr		ft_create_clr(double r, double g, double b);
-
-void		ft_loop_hook(void *vd);
-void		ft_close_hook(void *vd);
-void		ft_keyboard_hooks(mlx_key_data_t k_data, void *vd);
-
 
 // Void array
 int			ft_init_void_arr(t_void_arr *void_arr);

@@ -6,22 +6,13 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:29:51 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/19 18:52:10 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/19 20:49:28 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../includes/bvh.h"
 #include "../../includes/miniRT.h"
 #include <pthread.h>
 
-long long	time_ms(void);
-
-int	worker_init(t_mrt *mrt, t_scene *scene, t_worker *worker, int i)
-{
-	worker->mrt = mrt;
-	worker->scene = scene;
-	worker->index = i;
-	return (ft_init_xs(&worker->xs));
-}
 
 int	worker_wait(t_worker *worker)
 {

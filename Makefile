@@ -6,7 +6,7 @@
 #    By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/29 14:59:04 by lopoka            #+#    #+#              #
-#    Updated: 2024/09/19 01:38:58 by atorma           ###   ########.fr        #
+#    Updated: 2024/09/19 20:50:50 by atorma           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -71,7 +71,7 @@ RENDER_SRC = init.c render.c hooks.c
 RENDER_OBJ = $(addprefix $(RENDER_DIR)/,$(RENDER_SRC:.c=.o))
 
 RENDER_BONUS_DIR = sources/render_bonus
-RENDER_BONUS_SRC = init.c render.c hooks.c thread.c worker.c
+RENDER_BONUS_SRC = init.c render.c hooks.c thread.c worker.c worker_init.c locks.c
 RENDER_BONUS_OBJ = $(addprefix $(RENDER_BONUS_DIR)/,$(RENDER_BONUS_SRC:.c=.o))
 
 PPM_DIR = sources/ppm
