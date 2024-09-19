@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 18:07:54 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/18 16:56:09 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/19 21:25:15 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,5 @@ int	obj_add(t_scene *scene, char **elem, int id)
 		ret = triangle_add(obj, elem);
 	if (ret)
 		ret = obj_add_bonus_fields(obj, elem);
-	if (!ret)
-		printf("obj_add bonus err: %d\n", obj->type);
 	return (ret);
 }

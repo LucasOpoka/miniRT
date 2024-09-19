@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 16:52:19 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/19 04:16:20 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/19 21:24:18 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	intersects_obj(t_ray ray, t_scene *scene, t_node *node, t_xs *xs)
 	t_obj		*obj;
 	t_ray		obj_ray;
 	uint32_t	i;
-	void (*func[5])(t_ray , t_obj *, t_xs *);
+	void		(*func[5])(t_ray, t_obj *, t_xs *);
 
 	i = 0;
 	func[t_sphere] = ft_sphere_intersection;

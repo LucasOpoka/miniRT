@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 18:37:32 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/18 20:17:46 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/19 21:24:47 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static int	obj_load_ppm(t_ppm *obj_ppm, const char *file)
 	return (1);
 }
 
-static int  obj_patterns(t_obj *obj, const char *texture)
+static int	obj_patterns(t_obj *obj, const char *texture)
 {
 	if (ft_strcmp("checkers", texture) == 0)
 		obj->ptrn = ft_ptrn(ft_checkers, 20, 20);
@@ -84,9 +84,9 @@ int	obj_add_bonus_ppm(t_obj *obj, char **elem)
 
 /*
  *   object bonus fields
-	*   <specular> <diffuse> <shininess>
-	*   <reflective> <refractive> <transparency>
-	*   <texture ppm / pattern> <bump ppm> <bump modifier>
+ *   <specular> <diffuse> <shininess>
+ *   <reflective> <refractive> <transparency>
+ *   <texture ppm / pattern> <bump ppm> <bump modifier>
  *   +9 fields to mandatory
  */
 

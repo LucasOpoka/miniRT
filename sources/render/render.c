@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 18:06:54 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/18 19:42:54 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/19 21:22:17 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 #include <sys/time.h>
 #include <time.h>
 
-int			threads_init(t_mrt *mrt, t_scene *scene);
-void		threads_wait(t_mrt *mrt);
-void		threads_join(t_mrt *mrt);
+int		threads_init(t_mrt *mrt, t_scene *scene);
+void	threads_wait(t_mrt *mrt);
+void	threads_join(t_mrt *mrt);
 
 void	render_mandatory(t_mrt *mrt, t_scene *scene, t_xs *xs)
 {
-	t_ray	ray;
-	t_clr	color;
+	t_ray		ray;
+	t_clr		color;
 	uint32_t	y;
 	uint32_t	x;
 
