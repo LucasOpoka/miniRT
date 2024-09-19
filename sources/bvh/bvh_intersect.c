@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 16:52:19 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/19 21:24:18 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/19 23:56:01 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,6 @@ static t_node	*intersects_box(t_ray ray, t_node *root, t_node *curr,
  * Efficient BVH traversal using temporary stack
  * https://graphics.cg.uni-saarland.de/papers/perard-2017-gpce.pdf
  */
-
 void	bvh_intersect(t_ray ray, t_scene *scene, t_xs *xs)
 {
 	t_node	*node;
@@ -123,6 +122,12 @@ void	bvh_intersect(t_ray ray, t_scene *scene, t_xs *xs)
 	ray.rd.x = 1.0 / ray.d.x;
 	ray.rd.y = 1.0 / ray.d.y;
 	ray.rd.z = 1.0 / ray.d.z;
+
+	if (scene->bvh.nodes_used < 3)
+	{
+		ft_get_intrscs(ray, scene, xs);
+		return ;
+	}
 	while (node)
 	{
 		if (node->count > 0)
