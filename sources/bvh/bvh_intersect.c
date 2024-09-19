@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 16:52:19 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/14 21:46:16 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/19 04:16:20 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,20 +27,19 @@ void	intersects_obj(t_ray ray, t_scene *scene, t_node *node, t_xs *xs)
 	t_obj		*obj;
 	t_ray		obj_ray;
 	uint32_t	i;
+	void (*func[5])(t_ray , t_obj *, t_xs *);
 
 	i = 0;
+	func[t_sphere] = ft_sphere_intersection;
+	func[t_plane] = ft_plane_intersection;
+	func[t_cylinder] = ft_cylinder_intersection;
+	func[t_triangle] = ft_triangle_intersection;
+	func[t_cone] = ft_cone_intersection;
 	while (i < node->count)
 	{
 		obj = scene->objs.arr[scene->bvh.i[node->first_index + i]];
 		ft_ray_to_obj_space(&obj_ray, &ray, obj);
-		if (obj->type == t_sphere)
-			ft_sphere_intersection(obj_ray, obj, xs);
-		else if (obj->type == t_cylinder)
-			ft_cylinder_intersection(obj_ray, obj, xs);
-		else if (obj->type == t_cone)
-			ft_cone_intersection(obj_ray, obj, xs);
-		else if (obj->type == t_triangle)
-			ft_triangle_intersection(obj_ray, obj, xs);
+		func[obj->type](obj_ray, obj, xs);
 		i++;
 	}
 }

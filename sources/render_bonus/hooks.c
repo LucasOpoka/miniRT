@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 14:14:55 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/19 01:37:31 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/19 17:56:04 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../includes/miniRT.h"
@@ -37,17 +37,17 @@ void	close_hook(void *ptr)
 static int  move_cam_key(mlx_key_data_t k, t_cam *cam)
 {
 	if (k.key == MLX_KEY_A)
-		cam->pos.x -= 0.1f;
+		cam->pos.x -= MOVE_SIZE;
 	else if (k.key == MLX_KEY_D)
-		cam->pos.x += 0.1f;
+		cam->pos.x += MOVE_SIZE;
 	else if (k.key == MLX_KEY_W)
-		cam->pos.y += 0.1f;
+		cam->pos.y += MOVE_SIZE;
 	else if (k.key == MLX_KEY_S)
-		cam->pos.y -= 0.1f;
+		cam->pos.y -= MOVE_SIZE;
 	else if (k.key == MLX_KEY_F)
-		cam->pos.z += 0.1f;
+		cam->pos.z += MOVE_SIZE;
 	else if (k.key == MLX_KEY_B)
-		cam->pos.z -= 0.1f;
+		cam->pos.z -= MOVE_SIZE;
 	else
 		return (0);
 	return (1);
