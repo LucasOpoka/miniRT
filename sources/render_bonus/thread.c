@@ -6,17 +6,17 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:29:57 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/19 20:51:19 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/19 20:53:08 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/miniRT.h"
 #include <pthread.h>
 
-int	locks_init(t_mrt *mrt);
+int		locks_init(t_mrt *mrt);
 void	locks_destroy(t_mrt *mrt);
-void	workers_free(t_mrt *mrt, size_t	count);
-int	workers_init(t_mrt *mrt, t_scene *scene);
+void	workers_free(t_mrt *mrt, size_t count);
+int		workers_init(t_mrt *mrt, t_scene *scene);
 void	*worker_routine(void *ptr);
 void	threads_join(t_mrt *mrt);
 

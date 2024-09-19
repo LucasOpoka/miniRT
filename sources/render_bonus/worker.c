@@ -6,13 +6,12 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:29:51 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/19 20:49:28 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/19 20:53:01 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../includes/bvh.h"
 #include "../../includes/miniRT.h"
 #include <pthread.h>
-
 
 int	worker_wait(t_worker *worker)
 {
@@ -46,8 +45,8 @@ void	worker_signal_finish(t_worker *worker)
 
 void	worker_render(t_scene *scene, t_worker *worker, t_block *block)
 {
-	t_ray	ray;
-	t_clr	color;
+	t_ray		ray;
+	t_clr		color;
 	uint32_t	y;
 	uint32_t	x;
 
@@ -67,11 +66,12 @@ void	worker_render(t_scene *scene, t_worker *worker, t_block *block)
 
 void	*worker_routine(void *ptr)
 {
-	t_worker	*worker = (t_worker *)ptr;
+	t_worker	*worker;
 	mlx_image_t	*img;
 	t_block		block;
 	uint32_t	i;
 
+	worker = (t_worker *)ptr;
 	worker = (t_worker *)ptr;
 	img = worker->mrt->img;
 	while (worker_wait(worker))
