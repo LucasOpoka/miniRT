@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 14:16:04 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/19 01:40:14 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/19 18:46:15 by atorma           ###   ########.fr       */
 /*   Updated: 2024/09/19 01:38:22 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -301,13 +301,20 @@ typedef struct s_refraction
 	t_vct				v2;
 }						t_refraction;
 
+typedef struct s_block
+{
+	uint32_t    count;
+	uint32_t    offset;
+	uint32_t    height;
+	uint32_t    width;
+
+}   t_block;
+
 typedef struct s_worker
 {
 	t_mrt				*mrt;
 	t_scene				*scene;
 	uint32_t					index;
-	uint32_t					block_count;
-	uint32_t					block_size;
 	int					done;
 	t_xs				xs;
 }						t_worker;
