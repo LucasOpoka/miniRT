@@ -6,13 +6,14 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 10:08:11 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/16 11:57:26 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/19 17:59:27 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../includes/miniRT.h"
 
 void	ft_get_txtr(t_comps *comps, t_obj *obj, double *uv);
 void	ft_get_bump(t_comps *comps, t_obj *obj, t_vct p, double *uv);
+void	ft_perturb_normal(t_comps *comps, t_obj *obj, t_txtr_bump s);
 
 void	ft_texture_and_bump(t_comps *comps, t_obj *obj, t_vct obj_point)
 {
@@ -52,17 +53,7 @@ void	ft_get_bump(t_comps *comps, t_obj *obj, t_vct p, double *uv)
 			-s.radius * M_PI * sin(s.phi), M_PI * p.y * sin(s.theta));
 	ft_vct_norm(&s.tan);
 	ft_vct_norm(&s.bitan);
-	s.h1 = ft_grscl(obj->bump.colors[(s.y + 1) % obj->bump.height][s.x]) * 30;
-	s.h_uv = ft_grscl(obj->bump.colors[s.y][s.x]) * 30;
-	s.h2 = ft_grscl(obj->bump.colors[s.y][(s.x + 1) % obj->bump.width]) * 30;
-	s.q_u = ft_vct_x_sclr(&s.obj_norm, s.h1 - s.h_uv);
-	s.q_v = ft_vct_x_sclr(&s.obj_norm, s.h2 - s.h_uv);
-	s.q_u = ft_vct_add(&s.tan, &s.q_u);
-	s.q_v = ft_vct_add(&s.bitan, &s.q_v);
-	ft_vct_cross_prod(&s.obj_norm, &s.q_v, &s.q_u);
-	ft_vct_x_mtrx(&comps->normal, &obj->normal_to_world, &s.obj_norm);
-	comps->normal.w = 0;
-	ft_vct_norm(&comps->normal);
+	ft_perturb_normal(comps, obj, s);
 }
 
 void	ft_get_txtr(t_comps *comps, t_obj *obj, double *uv)
@@ -72,4 +63,22 @@ void	ft_get_txtr(t_comps *comps, t_obj *obj, double *uv)
 	s.x = round(uv[0] * (obj->txtr.width - 1));
 	s.y = round(uv[1] * (obj->txtr.height - 1));
 	comps->color = obj->txtr.colors[s.y][s.x];
+}
+
+void	ft_perturb_normal(t_comps *comps, t_obj *obj, t_txtr_bump s)
+{
+	double	mod;
+
+	mod = obj->bump_modifier;
+	s.h1 = ft_grscl(obj->bump.colors[(s.y + 1) % obj->bump.height][s.x]) * mod;
+	s.h_uv = ft_grscl(obj->bump.colors[s.y][s.x]) * mod;
+	s.h2 = ft_grscl(obj->bump.colors[s.y][(s.x + 1) % obj->bump.width]) * mod;
+	s.q_u = ft_vct_x_sclr(&s.obj_norm, s.h1 - s.h_uv);
+	s.q_v = ft_vct_x_sclr(&s.obj_norm, s.h2 - s.h_uv);
+	s.q_u = ft_vct_add(&s.tan, &s.q_u);
+	s.q_v = ft_vct_add(&s.bitan, &s.q_v);
+	ft_vct_cross_prod(&s.obj_norm, &s.q_v, &s.q_u);
+	ft_vct_x_mtrx(&comps->normal, &obj->normal_to_world, &s.obj_norm);
+	comps->normal.w = 0;
+	ft_vct_norm(&comps->normal);
 }

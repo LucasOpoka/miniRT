@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 12:47:38 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/18 21:34:07 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/19 18:39:55 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -27,12 +27,12 @@ t_scene	get_test_scene(void)
 	t_obj *obj1 = ft_calloc(1, sizeof(t_obj));
 	obj1->type = t_sphere;
 	obj1->pos = ft_create_point(0, 0, 0); // EARTH
-	//obj1->radius = 1;
 	obj1->color = ft_create_clr(0, 0, 0);
-	obj1->specular = 0;
-	obj1->diffuse = 0;
+	//obj1->color = ft_create_clr(255, 255, 255);
+	//obj1->specular = 0.5;
+	obj1->diffuse = 0.9;
 	obj1->shininess = 300;
-	obj1->reflective = 0.9;
+	//obj1->reflective = 0.9;
 	obj1->refractive = 1.5;
 	obj1->transparency = 0.9;
 	obj1->scale = ft_create_vct(1, 1, 1);
@@ -40,8 +40,9 @@ t_scene	get_test_scene(void)
 	//Ptrn test
 	//obj1->ptrn = ft_ptrn(ft_arches, 30, 15);
 	//PPM test
-	//ppm_load("img.ppm", &obj1->txtr);
-	//ppm_load("bump.ppm", &obj1->bump);
+	ppm_load("img.ppm", &obj1->txtr);
+	ppm_load("bump.ppm", &obj1->bump);
+	obj1->bump_modifier = 30;
 
 
 	t_obj *air_bubble = malloc(sizeof(t_obj));
@@ -163,7 +164,7 @@ t_scene	get_test_scene(void)
 	t_obj *back = ft_calloc(1, sizeof(t_obj));
 	back->type = t_plane;
 	back->pos = ft_create_point(0, 0, 10); // BACK PLANE
-	back->color = ft_create_clr(0, 0, 0);
+	back->color = ft_create_clr(220, 0, 0);
 	back->orientation = ft_create_vct(0, 0, 1);
 	back->specular = 0.3;
 	back->diffuse = 0.9;
@@ -172,7 +173,7 @@ t_scene	get_test_scene(void)
 	back->refractive = 1;
 	back->transparency = 0;
 	//ptrn
-	back->ptrn = ft_ptrn(ft_checkers, 2, 2);
+	//back->ptrn = ft_ptrn(ft_checkers, 2, 2);
 	back->scale = ft_create_vct(1, 1, 1);
 
 	t_obj *cylinder = malloc(sizeof(t_obj));
