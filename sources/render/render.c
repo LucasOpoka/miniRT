@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 18:06:54 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/19 21:22:17 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/20 17:53:01 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,17 @@ void	render_mandatory(t_mrt *mrt, t_scene *scene, t_xs *xs)
 
 void	render_image(t_mrt *mrt, t_scene *scene)
 {
-	t_xs	xs;
+	t_xs	xs[2];
 
-	if (!ft_init_xs(&xs))
+	if (!ft_init_xs(&xs[0]) || !ft_init_xs(&xs[1]))
+	{
+		ft_free_xs(xs);
+		ft_free_xs(&xs[1]);
 		return ;
-	render_mandatory(mrt, scene, &xs);
-	ft_free_xs(&xs);
+	}
+	render_mandatory(mrt, scene, xs);
+	ft_free_xs(&xs[0]);
+	ft_free_xs(&xs[1]);
 }
 
 void	render(t_mrt *mrt, t_scene *scene)
