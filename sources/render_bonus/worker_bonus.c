@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 17:29:51 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/20 15:49:04 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/20 16:13:59 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../includes/bvh.h"
@@ -57,7 +57,7 @@ void	worker_render(t_scene *scene, t_worker *worker, t_block *block)
 		while (x < block->width)
 		{
 			ft_pixel_to_ray(&ray, x, y, &scene->cam);
-			color = ft_final_color(&ray, scene, 5, &worker->xs);
+			color = ft_final_color(&ray, scene, 5, worker->xs);
 			mlx_put_pixel(worker->mrt->img, x++, y, ft_clr_to_int(color));
 		}
 		y++;

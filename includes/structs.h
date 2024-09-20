@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 14:16:04 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/19 18:46:15 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/20 16:09:47 by atorma           ###   ########.fr       */
 /*   Updated: 2024/09/19 01:38:22 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -316,7 +316,7 @@ typedef struct s_worker
 	t_scene				*scene;
 	uint32_t					index;
 	int					done;
-	t_xs				xs;
+	t_xs				xs[2];
 }						t_worker;
 
 typedef struct s_txtr_bump

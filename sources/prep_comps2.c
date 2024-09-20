@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 16:28:57 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/03 16:39:20 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/20 16:18:50 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -30,23 +30,21 @@ void	ft_get_refr_ind(t_comps *comps, t_xs *xs, t_intrsc *hit)
 {
 	size_t		i;
 	t_intrsc	*curr;
-	t_xs		containers;
 
-	ft_init_xs(&containers);
 	i = 0;
-	while (i < xs->i && containers.arr)
+	xs[1].i = 0;
+	while (i < xs->i && xs[1].arr)
 	{
 		curr = (t_intrsc *) &xs->arr[i++];
 		if (curr == hit)
-			ft_set_refr_ind(&comps->n1, &containers);
-		if (ft_containers_include(&containers, curr->obj))
-			ft_remove_container(&containers, curr);
+			ft_set_refr_ind(&comps->n1, &xs[1]);
+		if (ft_containers_include(&xs[1], curr->obj))
+			ft_remove_container(&xs[1], curr);
 		else
-			ft_add_intersection(&containers, curr->obj, curr->t);
+			ft_add_intersection(&xs[1], curr->obj, curr->t);
 		if (curr == hit)
-			ft_set_refr_ind(&comps->n2, &containers);
+			ft_set_refr_ind(&comps->n2, &xs[1]);
 	}
-	ft_free_xs(&containers);
 }
 
 int	ft_containers_include(t_xs *containers, t_obj *obj)

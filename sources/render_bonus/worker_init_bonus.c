@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 20:35:09 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/20 15:49:08 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/20 16:15:20 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,9 @@ static int	worker_init(t_mrt *mrt, t_scene *scene, t_worker *worker, int i)
 	worker->mrt = mrt;
 	worker->scene = scene;
 	worker->index = i;
-	return (ft_init_xs(&worker->xs));
+	if (!ft_init_xs(worker->xs) || !ft_init_xs(&worker->xs[1]))
+		return (0);
+	return (1);
 }
 
 void	workers_free(t_mrt *mrt, size_t	count)
@@ -29,7 +31,8 @@ void	workers_free(t_mrt *mrt, size_t	count)
 	i = 0;
 	while (i < count)
 	{
-		ft_free_xs(&mrt->workers[i].xs);
+		ft_free_xs(mrt->workers[i].xs);
+		ft_free_xs(&mrt->workers[i].xs[1]);
 		i++;
 	}
 	free(mrt->workers);
