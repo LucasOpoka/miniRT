@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 12:47:38 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/20 15:48:06 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/20 16:39:34 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -29,7 +29,7 @@ t_scene	get_test_scene(void)
 	obj1->pos = ft_create_point(0, 0, 0); // EARTH
 	obj1->color = ft_create_clr(0, 0, 0);
 	//obj1->color = ft_create_clr(255, 255, 255);
-	obj1->specular = 0.5;
+	obj1->specular = 0.9;
 	obj1->diffuse = 0.9;
 	obj1->shininess = 300;
 	//obj1->reflective = 0.9;
@@ -40,8 +40,8 @@ t_scene	get_test_scene(void)
 	//Ptrn test
 	//obj1->ptrn = ft_ptrn(ft_checkers, 30, 15);
 	//PPM test
-	ppm_load("img.ppm", &obj1->txtr);
-	ppm_load("bump.ppm", &obj1->bump);
+	ppm_load("ppms/img.ppm", &obj1->txtr);
+	ppm_load("ppms/bump.ppm", &obj1->bump);
 	obj1->bump_modifier = 30;
 
 
