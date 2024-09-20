@@ -6,7 +6,7 @@
 #    By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/29 14:59:04 by lopoka            #+#    #+#              #
-#    Updated: 2024/09/19 20:50:50 by atorma           ###   ########.fr        #
+#    Updated: 2024/09/20 15:58:00 by lopoka           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,11 +48,11 @@ SOURCES	=	main.c \
 			obj_transforms.c \
 			prep_comps1.c \
 			prep_comps2.c \
-			obj_normals1.c \
-			obj_normals2.c \
+			obj_normal_and_color1.c \
+			obj_normal_and_color2.c \
 			get_test_scene.c \
 			phong.c \
-			get_color.c \
+			final_color.c \
 
 PARSER_DIR = sources/parser
 PARSER_SRC = parser.c parser_utils.c validate.c file.c array.c \

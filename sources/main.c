@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 17:47:44 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/19 20:17:56 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/20 15:40:47 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/bvh.h"
@@ -29,7 +29,9 @@ int	main(int ac, char **av)
 		printf("Usage: ./miniRT <scene.rt file>\n");
 		return (EXIT_FAILURE);
 	}
-	if (!parse_file(av[1], &scene))
+	if (ft_strcmp(av[1], "test") == 0)
+		scene = get_test_scene();
+	else if (!parse_file(av[1], &scene))
 		return (EXIT_FAILURE);
 	if (!init_minirt(&mrt, &scene))
 	{

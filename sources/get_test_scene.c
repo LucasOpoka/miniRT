@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 12:47:38 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/19 18:44:28 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/20 15:48:06 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -38,11 +38,11 @@ t_scene	get_test_scene(void)
 	obj1->scale = ft_create_vct(1, 1, 1);
 	obj1->orientation = ft_create_vct(0, 2.7, 0);
 	//Ptrn test
-	obj1->ptrn = ft_ptrn(ft_checkers, 30, 15);
+	//obj1->ptrn = ft_ptrn(ft_checkers, 30, 15);
 	//PPM test
-	//ppm_load("img.ppm", &obj1->txtr);
-	//ppm_load("bump.ppm", &obj1->bump);
-	//obj1->bump_modifier = 30;
+	ppm_load("img.ppm", &obj1->txtr);
+	ppm_load("bump.ppm", &obj1->bump);
+	obj1->bump_modifier = 30;
 
 
 	t_obj *air_bubble = malloc(sizeof(t_obj));
@@ -173,7 +173,7 @@ t_scene	get_test_scene(void)
 	back->refractive = 1;
 	back->transparency = 0;
 	//ptrn
-	back->ptrn = ft_ptrn(ft_checkers, 2, 2);
+	//back->ptrn = ft_ptrn(ft_checkers, 2, 2);
 	back->scale = ft_create_vct(1, 1, 1);
 
 	t_obj *cylinder = malloc(sizeof(t_obj));

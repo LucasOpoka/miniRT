@@ -6,14 +6,10 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 16:47:05 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/16 19:32:34 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/20 15:50:57 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
-
-t_clr	ft_refraction(t_clr_recur rec);
-t_clr	ft_reflection(t_clr_recur rec);
-t_clr	ft_light_color(t_clr_recur rec);
 
 t_clr	ft_final_color(t_ray *ray, t_scene *scene, int recur_lmt, t_xs *xs)
 {
