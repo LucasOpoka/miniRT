@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 16:47:05 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/16 19:32:34 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/20 15:40:22 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -27,10 +27,10 @@ t_clr	ft_final_color(t_ray *ray, t_scene *scene, int recur_lmt, t_xs *xs)
 	rec.xs = xs;
 	rec.recur_lmt = recur_lmt;
 	rec.xs->i = 0;
-	if (BVH)
-		bvh_intersect(rec.ray, rec.scene, rec.xs);
-	else
+	if (scene->bvh.nodes_used < 3)
 		ft_get_intrscs(rec.ray, rec.scene, rec.xs);
+	else
+		bvh_intersect(rec.ray, rec.scene, rec.xs);
 	rec.comps = ft_prep_comps(&rec.ray, rec.xs);
 	final_color = ft_create_clr(0, 0, 0);
 	i = 0;
@@ -80,10 +80,10 @@ t_clr	ft_reflection(t_clr_recur rec)
 	rec.ray.o = rec.comps.over_point;
 	rec.ray.d = rec.comps.reflect;
 	rec.xs->i = 0;
-	if (BVH)
-		bvh_intersect(rec.ray, rec.scene, rec.xs);
-	else
+	if (rec.scene->bvh.nodes_used < 3)
 		ft_get_intrscs(rec.ray, rec.scene, rec.xs);
+	else
+		bvh_intersect(rec.ray, rec.scene, rec.xs);
 	rec.comps = ft_prep_comps(&rec.ray, rec.xs);
 	res = ft_light_color(rec);
 	res = ft_clr_scl(res, reflective);
@@ -109,10 +109,10 @@ t_clr	ft_refraction(t_clr_recur rec)
 	rec.ray.d = ft_vct_sub(&rf.v1, &rf.v2);
 	rec.ray.o = rec.comps.under_point;
 	rec.xs->i = 0;
-	if (BVH)
-		bvh_intersect(rec.ray, rec.scene, rec.xs);
-	else
+	if (rec.scene->bvh.nodes_used < 3)
 		ft_get_intrscs(rec.ray, rec.scene, rec.xs);
+	else
+		bvh_intersect(rec.ray, rec.scene, rec.xs);
 	rec.comps = ft_prep_comps(&rec.ray, rec.xs);
 	rf.res = ft_light_color(rec);
 	rf.res = ft_clr_scl(rf.res, rf.transparency);
