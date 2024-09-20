@@ -6,7 +6,7 @@
 #    By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/29 14:59:04 by lopoka            #+#    #+#              #
-#    Updated: 2024/09/20 16:51:49 by lopoka           ###   ########.fr        #
+#    Updated: 2024/09/20 21:35:08 by atorma           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -140,7 +140,8 @@ clean:
 	@rm -f .bonus .mandatory
 
 fclean: clean
-	rm -rf ${NAME} ${OFILES} ${B_OFILES} ${MLX42}/build
+	rm -f $(LIBFTDIR)/libft.a
+	rm -f $(NAME)
 	@rm -f .bonus .mandatory
 
 debug_clean:
