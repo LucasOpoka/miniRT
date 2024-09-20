@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 17:09:25 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/20 16:46:10 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/20 17:08:27 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../includes/miniRT.h"
@@ -82,10 +82,10 @@ int	ft_shadow(t_clr_recur *rec)
 	ft_vct_norm(&point_to_light.d);
 	point_to_light.o = rec->comps.over_point;
 	rec->xs->i = 0;
-	if (BVH)
-		bvh_intersect(point_to_light, rec->scene, rec->xs);
-	else
+	if (rec->scene->bvh.nodes_used < 3)
 		ft_get_intrscs(point_to_light, rec->scene, rec->xs);
+	else
+		bvh_intersect(point_to_light, rec->scene, rec->xs);
 	hit = ft_hit(rec->xs);
 	res = 0;
 	if (hit && hit->t < distance)
