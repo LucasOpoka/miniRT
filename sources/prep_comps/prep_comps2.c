@@ -6,10 +6,10 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 16:28:57 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/20 16:31:46 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/20 16:52:41 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../includes/miniRT.h"
+#include "../../includes/miniRT.h"
 
 void	ft_set_refr_ind(double *n, t_xs *containers);
 void	ft_get_refr_ind(t_comps *comps, t_xs *xs, t_intrsc *hit);

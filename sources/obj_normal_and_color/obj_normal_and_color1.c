@@ -6,10 +6,10 @@
 /*   By: lucas <lopoka@student.hive.fi>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 16:17:04 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/16 19:19:28 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/20 17:04:38 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../includes/miniRT.h"
+#include "../../includes/miniRT.h"
 
 void	ft_get_obj_normal_and_color(t_comps *comps)
 {

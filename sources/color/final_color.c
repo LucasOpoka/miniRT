@@ -6,10 +6,10 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 16:47:05 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/20 16:23:01 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/20 16:46:27 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../includes/miniRT.h"
+#include "../../includes/miniRT.h"
 
 t_clr	ft_final_color(t_ray *ray, t_scene *scene, int recur_lmt, t_xs *xs)
 {

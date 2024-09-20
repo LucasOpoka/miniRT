@@ -6,10 +6,10 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 17:09:25 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/16 19:33:33 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/20 16:46:10 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../includes/miniRT.h"
+#include "../../includes/miniRT.h"
 
 t_clr	ft_phong(t_clr_recur *rec)
 {

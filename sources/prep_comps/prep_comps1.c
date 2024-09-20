@@ -6,10 +6,10 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 16:28:57 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/04 12:51:59 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/20 16:52:28 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../includes/miniRT.h"
+#include "../../includes/miniRT.h"
 
 // prepare computations - The Ray Tracer Challenge p.76 p.93
 t_comps	ft_prep_comps(t_ray *ray, t_xs *xs)

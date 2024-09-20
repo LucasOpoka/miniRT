@@ -6,7 +6,7 @@
 #    By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/29 14:59:04 by lopoka            #+#    #+#              #
-#    Updated: 2024/09/20 16:12:58 by lopoka           ###   ########.fr        #
+#    Updated: 2024/09/20 16:51:49 by lopoka           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,13 +46,13 @@ SOURCES	=	main.c \
 			scene.c \
 			heap_sort.c \
 			obj_transforms.c \
-			prep_comps1.c \
-			prep_comps2.c \
-			obj_normal_and_color1.c \
-			obj_normal_and_color2.c \
+			prep_comps/prep_comps1.c \
+			prep_comps/prep_comps2.c \
+			obj_normal_and_color/obj_normal_and_color1.c \
+			obj_normal_and_color/obj_normal_and_color2.c \
 			get_test_scene.c \
-			phong.c \
-			final_color.c \
+			color/phong.c \
+			color/final_color.c \
 
 PARSER_DIR = sources/parser
 PARSER_SRC = parser.c parser_utils.c validate.c file.c array.c \
