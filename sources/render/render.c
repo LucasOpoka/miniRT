@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 18:06:54 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/20 17:53:01 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/20 18:22:42 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,9 @@
 int		threads_init(t_mrt *mrt, t_scene *scene);
 void	threads_wait(t_mrt *mrt);
 void	threads_join(t_mrt *mrt);
+void	close_hook(void *ptr);
 
-void	render_mandatory(t_mrt *mrt, t_scene *scene, t_xs *xs)
+static void	render_mandatory(t_mrt *mrt, t_scene *scene, t_xs *xs)
 {
 	t_ray		ray;
 	t_clr		color;
@@ -41,14 +42,16 @@ void	render_mandatory(t_mrt *mrt, t_scene *scene, t_xs *xs)
 	}
 }
 
-void	render_image(t_mrt *mrt, t_scene *scene)
+static void	render_image(t_mrt *mrt, t_scene *scene)
 {
 	t_xs	xs[2];
 
 	if (!ft_init_xs(&xs[0]) || !ft_init_xs(&xs[1]))
 	{
+		printf("Error\nintersection array allocation failed\n");
 		ft_free_xs(xs);
 		ft_free_xs(&xs[1]);
+		close_hook(mrt);
 		return ;
 	}
 	render_mandatory(mrt, scene, xs);
