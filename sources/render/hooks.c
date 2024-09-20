@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 14:14:55 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/18 18:25:32 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/20 17:40:22 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../includes/miniRT.h"
@@ -21,7 +21,7 @@ void	close_hook(void *ptr)
 	uninit_mlx(mrt);
 }
 
-void	ft_keyboard_hooks(mlx_key_data_t k_data, void *vd)
+void	key_hook(mlx_key_data_t k_data, void *vd)
 {
 	t_mrt	*mrt;
 
