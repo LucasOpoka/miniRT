@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 18:37:32 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/19 21:24:47 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/20 19:08:44 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static int	obj_load_ppm(t_ppm *obj_ppm, const char *file)
 static int	obj_patterns(t_obj *obj, const char *texture)
 {
 	if (ft_strcmp("checkers", texture) == 0)
-		obj->ptrn = ft_ptrn(ft_checkers, 20, 20);
+		obj->ptrn = ft_ptrn(ft_checkers, 2, 2);
 	else if (ft_strcmp("rings", texture) == 0)
 		obj->ptrn = ft_ptrn(ft_rings, 25, 25);
 	else if (ft_strcmp("arches", texture) == 0)
