@@ -6,10 +6,9 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 19:22:57 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/18 19:22:58 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/21 19:18:15 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "../includes/miniRT.h"
 
 void	ft_init_cam(t_cam *cam)

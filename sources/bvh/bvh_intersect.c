@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 16:52:19 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/20 15:38:39 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/21 19:21:52 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,6 @@ void	bvh_intersect(t_ray ray, t_scene *scene, t_xs *xs)
 	ray.rd.x = 1.0 / ray.d.x;
 	ray.rd.y = 1.0 / ray.d.y;
 	ray.rd.z = 1.0 / ray.d.z;
-
 	while (node)
 	{
 		if (node->count > 0)

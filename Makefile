@@ -6,7 +6,7 @@
 #    By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/29 14:59:04 by lopoka            #+#    #+#              #
-#    Updated: 2024/09/20 21:35:08 by atorma           ###   ########.fr        #
+#    Updated: 2024/09/21 19:25:59 by lopoka           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,10 +38,10 @@ SOURCES	=	main.c \
 			intersections/triangle.c \
 			intersections/cone.c \
 			intersections/intersections_arr.c \
-			patterns/uv1.c \
-			patterns/uv2.c \
-			patterns/patterns.c \
-			patterns/texture_and_bump.c \
+			patterns_and_textures/uv1.c \
+			patterns_and_textures/uv2.c \
+			patterns_and_textures/patterns.c \
+			patterns_and_textures/texture_and_bump.c \
 			camera.c \
 			scene.c \
 			heap_sort.c \
