@@ -6,11 +6,11 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/26 16:18:28 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/16 19:24:04 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/21 19:29:57 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#ifndef SHAPES_NORMALS_H
-# define SHAPES_NORMALS_H
+#ifndef OBJ_NORMALS_H
+# define OBJ_NORMALS_H
 
 void	ft_get_obj_normal_and_color(t_comps *comps);
 void	ft_sphere_normal_and_color(t_comps *comps);

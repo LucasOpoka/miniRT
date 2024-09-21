@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 14:16:04 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/20 16:09:47 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/21 19:33:48 by lopoka           ###   ########.fr       */
 /*   Updated: 2024/09/19 01:38:22 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -22,7 +22,6 @@ typedef double			t_mtrx4[4][4];
 typedef struct s_scene	t_scene;
 typedef struct s_worker	t_worker;
 typedef struct s_ptrn	t_ptrn;
-// typedef	struct	s_ppm t_ppm;
 
 typedef struct s_mrt
 {
@@ -31,8 +30,8 @@ typedef struct s_mrt
 	struct s_scene		*scene;
 	struct s_worker		*workers;
 	pthread_t			threads[THREAD_COUNT + 1];
-	uint32_t				thread_count;
-	uint32_t				threads_finished;
+	uint32_t			thread_count;
+	uint32_t			threads_finished;
 	pthread_mutex_t		lock;
 	pthread_cond_t		notify;
 	pthread_cond_t		complete;
@@ -68,7 +67,7 @@ typedef struct s_split
 {
 	double				cost;
 	double				pos;
-	int				axis;
+	int					axis;
 }						t_split;
 
 typedef struct s_stack
@@ -104,7 +103,7 @@ typedef struct s_ptrn
 	t_clr				(*ptrn_func)(double *uv, double width, double height);
 	double				wdth;
 	double				hght;
-} t_ptrn;
+}	t_ptrn;
 
 typedef struct s_ppm
 {
@@ -303,18 +302,17 @@ typedef struct s_refraction
 
 typedef struct s_block
 {
-	uint32_t    count;
-	uint32_t    offset;
-	uint32_t    height;
-	uint32_t    width;
-
-}   t_block;
+	uint32_t			count;
+	uint32_t			offset;
+	uint32_t			height;
+	uint32_t			width;
+}	t_block;
 
 typedef struct s_worker
 {
 	t_mrt				*mrt;
 	t_scene				*scene;
-	uint32_t					index;
+	uint32_t			index;
 	int					done;
 	t_xs				xs[2];
 }						t_worker;

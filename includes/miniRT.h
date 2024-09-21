@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:06:19 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/19 20:04:18 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/21 19:47:54 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINIRT_H
@@ -37,7 +37,7 @@
 # define CANV_WDTH	1100
 # define CANV_HGHT	1100
 
-#define	MOVE_SIZE 0.2f
+# define MOVE_SIZE 0.2f
 
 void		ft_show_img(t_mrt *mrt, t_scene *scene);
 t_clr		ft_create_clr(double r, double g, double b);
