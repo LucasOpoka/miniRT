@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 14:14:55 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/20 17:23:07 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/23 13:36:56 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../includes/miniRT.h"
@@ -56,8 +56,6 @@ static int	move_cam_key(mlx_key_data_t k, t_cam *cam)
 
 static void	move_camera(mlx_key_data_t k, t_mrt *mrt, t_scene *scene)
 {
-	if (k.action != MLX_PRESS)
-		return ;
 	if (!move_cam_key(k, &scene->cam))
 		return ;
 	ft_init_cam(&scene->cam);
@@ -70,9 +68,12 @@ void	key_hook(mlx_key_data_t k, void *vd)
 	t_mrt	*mrt;
 	t_scene	*scene;
 
+	if (k.action != MLX_PRESS)
+		return ;
 	mrt = (t_mrt *)vd;
 	scene = mrt->scene;
-	if (k.key == MLX_KEY_ESCAPE && k.action == MLX_PRESS)
+	if (k.key == MLX_KEY_ESCAPE)
 		close_hook(mrt);
-	move_camera(k, mrt, scene);
+	else
+		move_camera(k, mrt, scene);
 }
