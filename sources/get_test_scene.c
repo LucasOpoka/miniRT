@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 12:47:38 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/23 16:00:53 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/23 16:09:41 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../includes/miniRT.h"
@@ -29,8 +29,8 @@ t_scene	get_test_scene(void)
 	obj1->pos = ft_create_point(0, 0, 0); // EARTH
 	obj1->color = ft_create_clr(0, 0, 0);
 	//obj1->color = ft_create_clr(255, 255, 255);
-	obj1->specular = 0.9;
-	obj1->diffuse = 0.9;
+	obj1->specular = 0.5;
+	obj1->diffuse = 0.5;
 	obj1->shininess = 300;
 	//obj1->reflective = 0.9;
 	obj1->refractive = 1.5;
@@ -42,7 +42,7 @@ t_scene	get_test_scene(void)
 	//PPM test
 	ppm_load("ppms/img.ppm", &obj1->txtr);
 	ppm_load("ppms/bump.ppm", &obj1->bump);
-	obj1->bump_modifier = 30;
+	obj1->bump_modifier = 100;
 
 
 	t_obj *air_bubble = malloc(sizeof(t_obj));
@@ -237,12 +237,12 @@ t_scene	get_test_scene(void)
 	tri->ptrn = ft_ptrn(ft_checkers, 4, 4);
 
 
-	//ft_void_arr_add(&scene.objs, obj1);
-	//ft_void_arr_add(&scene.objs, air_bubble);
+	ft_void_arr_add(&scene.objs, obj1);
+	ft_void_arr_add(&scene.objs, air_bubble);
 	//ft_void_arr_add(&scene.objs, obj3);
 	//ft_void_arr_add(&scene.objs, obj4);
 	//ft_void_arr_add(&scene.objs, obj10);
-	ft_void_arr_add(&scene.objs, cylinder);
+	//ft_void_arr_add(&scene.objs, cylinder);
 	//ft_void_arr_add(&scene.objs, cone);
 	//ft_void_arr_add(&scene.objs, obj7);
 	ft_void_arr_add(&scene.objs, back);
