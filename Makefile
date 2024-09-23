@@ -6,7 +6,7 @@
 #    By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/29 14:59:04 by lopoka            #+#    #+#              #
-#    Updated: 2024/09/23 16:43:10 by atorma           ###   ########.fr        #
+#    Updated: 2024/09/23 17:53:58 by atorma           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -91,10 +91,10 @@ B_OFILES = $(addprefix $(SOURCE_DIR)/,$(SOURCES:.c=.o))
 B_OFILES += $(PARSER_OBJ_BONUS) $(PPM_OBJ) $(BVH_OBJ) $(RENDER_BONUS_OBJ)
 BONUS_SRC = $(B_OFILES:.o=.c)
 
-target debug: CFLAGS += -fsanitize=address,undefined -g
+target debug: CFLAGS += -fsanitize=address,undefined -g -O1
 target debug: CDEBUG = -DDEBUG=1
 
-target debug_bonus: CFLAGS += -fsanitize=address,undefined -g
+target debug_bonus: CFLAGS += -fsanitize=address,undefined -g -O1
 target debug_bonus: CDEBUG = -DDEBUG=1
 
 target fast_bonus: CFLAGS += -O2
