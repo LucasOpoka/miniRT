@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 10:08:11 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/19 17:59:27 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/23 15:54:44 by lopoka           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../includes/miniRT.h"
@@ -18,10 +18,14 @@ void	ft_perturb_normal(t_comps *comps, t_obj *obj, t_txtr_bump s);
 void	ft_texture_and_bump(t_comps *comps, t_obj *obj, t_vct obj_point)
 {
 	double	uv[2];
+	void	(*ptrn_func)(double *, double, double, t_comps *);
 
 	ft_get_uv(uv, &obj_point, obj);
 	if (obj->ptrn.ptrn_func)
-		comps->color = obj->ptrn.ptrn_func(uv, obj->ptrn.wdth, obj->ptrn.hght);
+	{
+		ptrn_func = obj->ptrn.ptrn_func;
+		ptrn_func(uv, obj->ptrn.wdth, obj->ptrn.hght, comps);
+	}
 	else if (obj->type == t_sphere)
 	{
 		uv[1] = 1 - uv[1];
