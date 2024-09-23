@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 21:29:22 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/17 20:49:01 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/23 14:47:14 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,13 @@ void	sphere_bounds(t_bounds *bounds, t_obj *sp)
 
 void	cylinder_bounds(t_bounds *bounds, t_obj *cy)
 {
-	const double	radius = cy->scale.x;
-	const double	height = cy->scale.y;
+	const double	radius = fmax(cy->scale.x, cy->scale.y);
 
 	bounds->min[0] = -radius + cy->pos.x;
-	bounds->min[1] = -height + cy->pos.y;
+	bounds->min[1] = -radius + cy->pos.y;
 	bounds->min[2] = -radius + cy->pos.z;
 	bounds->max[0] = radius + cy->pos.x;
-	bounds->max[1] = height + cy->pos.y;
+	bounds->max[1] = radius + cy->pos.y;
 	bounds->max[2] = radius + cy->pos.z;
 }
 

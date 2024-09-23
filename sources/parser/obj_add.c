@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 19:25:08 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/18 19:25:10 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/23 14:37:02 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,9 @@ int	obj_add(t_scene *scene, char **elem, int id)
 		return (0);
 	obj->scale = ft_create_vct(1, 1, 1);
 	obj->pos.w = 1;
+	obj->specular = 0.9f;
+	obj->diffuse = 0.9f;
+	obj->shininess = 300;
 	if (id == e_id_sphere)
 		ret = sphere_add(obj, elem);
 	else if (id == e_id_plane)
