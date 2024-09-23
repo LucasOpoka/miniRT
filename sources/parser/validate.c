@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 18:07:57 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/09 23:55:55 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/23 19:56:46 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ int	validate_vector(char *s)
 	int		i;
 
 	if (str_charcount(s, ',') != 2)
+		return (0);
+	if (str_charcount(s, '.') > 3)
 		return (0);
 	i = 3;
 	while (i-- > 0)
