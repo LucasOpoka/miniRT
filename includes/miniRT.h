@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 15:06:19 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/21 19:47:54 by lopoka           ###   ########.fr       */
+/*   Updated: 2024/09/23 16:43:43 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef MINIRT_H
@@ -58,8 +58,6 @@ void		scene_free(t_scene *scene);
 
 void		heap_sort_xs(t_xs *xs);
 
-// REMOVE IN THE FUTURE - test functions
-t_scene		get_test_scene(void);
 int			ppm_load(char *file, t_ppm *ppm);
 
 #endif

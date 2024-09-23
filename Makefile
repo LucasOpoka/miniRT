@@ -6,7 +6,7 @@
 #    By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/29 14:59:04 by lopoka            #+#    #+#              #
-#    Updated: 2024/09/21 19:25:59 by lopoka           ###   ########.fr        #
+#    Updated: 2024/09/23 16:43:10 by atorma           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,7 +50,6 @@ SOURCES	=	main.c \
 			prep_comps/prep_comps2.c \
 			obj_normal_and_color/obj_normal_and_color1.c \
 			obj_normal_and_color/obj_normal_and_color2.c \
-			get_test_scene.c \
 			color/phong.c \
 			color/final_color.c \
 
