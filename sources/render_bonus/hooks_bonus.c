@@ -6,7 +6,7 @@
 /*   By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 14:14:55 by lopoka            #+#    #+#             */
-/*   Updated: 2024/09/23 13:36:56 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/23 14:04:50 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../includes/miniRT.h"
@@ -32,7 +32,6 @@ void	close_hook(void *ptr)
 	pthread_mutex_unlock(&mrt->lock);
 	threads_join(mrt);
 	uninit_mlx(mrt);
-	printf("threads joined\n");
 }
 
 static int	move_cam_key(mlx_key_data_t k, t_cam *cam)
