@@ -6,7 +6,7 @@
 /*   By: lucas <lopoka@student.hive.fi>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 16:40:23 by lucas             #+#    #+#             */
-/*   Updated: 2024/09/19 20:04:47 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/23 17:24:07 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../includes/miniRT.h"
@@ -44,13 +44,13 @@ int	init_minirt(t_mrt *mrt, t_scene *scene)
 {
 	if (!init_mlx(mrt))
 	{
-		printf("Error: MLX42 initialization failed\n");
+		printf("Error\nMLX42 initialization failed\n");
 		return (0);
 	}
 	scene->bvh.root = bvh_build(scene);
 	if (!scene->bvh.root)
 	{
-		printf("Error: occured during BVH building\n");
+		printf("Error\noccured during BVH building\n");
 		return (0);
 	}
 	return (1);

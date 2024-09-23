@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 21:29:22 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/23 14:47:14 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/23 17:09:03 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,15 +39,14 @@ void	cylinder_bounds(t_bounds *bounds, t_obj *cy)
 
 void	cone_bounds(t_bounds *bounds, t_obj *cone)
 {
-	const double	radius = cone->scale.x;
-	const double	height = cone->scale.y;
+	const double	radius = fmax(cone->scale.x, cone->scale.y);
 
 	bounds->min[0] = -radius + cone->pos.x;
 	bounds->min[1] = -radius + cone->pos.y;
-	bounds->min[2] = -height + cone->pos.z;
+	bounds->min[2] = -radius + cone->pos.z;
 	bounds->max[0] = radius + cone->pos.x;
 	bounds->max[1] = radius + cone->pos.y;
-	bounds->max[2] = height + cone->pos.z;
+	bounds->max[2] = radius + cone->pos.z;
 }
 
 void	triangle_bounds(t_bounds *bounds, t_obj *tri)

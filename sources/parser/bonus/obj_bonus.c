@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 18:37:32 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/20 19:08:44 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/23 17:18:00 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ static int	obj_validate_bonus(t_obj *obj)
 	if (obj->specular < 0 || obj->specular > 1.0)
 		return (0);
 	if (obj->shininess < 0 || obj->refractive < 0)
+		return (0);
+	if (obj->shininess > 5000 || obj->refractive > 2.7)
 		return (0);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: lucas <lopoka@student.hive.fi>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 16:40:23 by lucas             #+#    #+#             */
-/*   Updated: 2024/09/20 15:48:55 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/23 17:24:37 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "../../includes/miniRT.h"
@@ -44,17 +44,17 @@ int	init_minirt(t_mrt *mrt, t_scene *scene)
 	scene->bvh.root = bvh_build(scene);
 	if (!scene->bvh.root)
 	{
-		printf("Error: occured during BVH building\n");
+		printf("Error\noccured during BVH building\n");
 		return (0);
 	}
 	if (!init_mlx(mrt))
 	{
-		printf("Error: MLX42 initialization failed\n");
+		printf("Error\nMLX42 initialization failed\n");
 		return (0);
 	}
 	if (!threads_init(mrt, scene))
 	{
-		printf("Error: failed to create threads\n");
+		printf("Error\nfailed to create threads\n");
 		return (0);
 	}
 	return (1);

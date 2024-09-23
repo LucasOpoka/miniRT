@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 18:07:54 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/17 21:26:16 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/23 17:01:40 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int	sphere_add(t_obj *obj, char **elem)
 	obj->type = t_sphere;
 	fill_vector(&obj->pos, elem[1]);
 	radius = ft_atof(elem[2]);
+	obj->orientation = ft_create_vct(0, 2.7, 0);
 	obj->scale = ft_create_vct(radius, radius, radius);
 	if ((radius <= 0.0) || !fill_color(&obj->color, elem[3]))
 		return (0);
