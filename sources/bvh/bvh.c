@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 16:52:06 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/23 14:45:48 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/23 15:51:48 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ t_node	*bvh_build(t_scene *scene)
 	uint32_t	*bvh_index;
 
 	root = ft_calloc(1, (scene->objs.i * 2 * sizeof(t_node)));
-	bvh_index = ft_calloc(1, (scene->objs.i * sizeof(uint32_t)));
+	bvh_index = ft_calloc(1, (scene->objs.i * (sizeof(uint32_t) + 1)));
 	if (!root || !bvh_index)
 	{
 		free(root);
@@ -107,6 +107,8 @@ t_node	*bvh_build(t_scene *scene)
 	scene->bvh.nodes_used = 1;
 	scene->bvh.root = root;
 	scene->bvh.i = bvh_index;
+	if (scene->objs.i == 0)
+		return (root);
 	centroids_set(root, scene);
 	bvh_update_bounds(root, 0, scene);
 	bvh_subdivide(root, 0, scene);
