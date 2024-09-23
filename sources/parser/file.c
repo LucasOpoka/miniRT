@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 18:07:20 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/14 16:34:21 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/23 13:40:56 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static char	*file_read_data(int fd, size_t *out_size, int type)
 	data = read_file(fd, 2048, &size);
 	if (!data || !size)
 	{
-		parser_error("unexpected error encounter while reading file");
+		parser_error("file empty or read failed");
 		free(data);
 		return (NULL);
 	}
