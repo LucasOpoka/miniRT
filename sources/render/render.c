@@ -6,14 +6,12 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 18:06:54 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/20 18:22:42 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/23 14:03:12 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/miniRT.h"
 #include <pthread.h>
-#include <sys/time.h>
-#include <time.h>
 
 int		threads_init(t_mrt *mrt, t_scene *scene);
 void	threads_wait(t_mrt *mrt);
