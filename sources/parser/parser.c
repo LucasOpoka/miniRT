@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 18:07:45 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/24 16:55:47 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/24 17:56:09 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	parser_error(char *err_str)
 	if (messaged)
 		return (0);
 	messaged = 1;
-	printf("Error\n%s\n", err_str);
+	ft_printf_fd(STDERR_FILENO, "Error\n%s\n", err_str);
 	return (0);
 }
 
