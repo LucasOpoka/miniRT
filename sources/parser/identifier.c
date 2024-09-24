@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 18:07:36 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/14 18:22:18 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/24 17:30:42 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,12 @@ static int	identifiers_check(char ***elements)
 	{
 		id = identifier_type(elements[i][0]);
 		if (id == e_id_unknown)
-			return (0);
+			return (parser_error("unknown element found"));
 		found[id] += 1;
 		i++;
 	}
+	if (!found[e_id_camera] || !found[e_id_ambient] || !found[e_id_light])
+		return (parser_error("missing camera/ambient/light elements"));
 	if (found[e_id_camera] != 1)
 		return (0);
 	if (found[e_id_ambient] != 1 || found[e_id_light] != 1)
@@ -46,7 +48,7 @@ int	identifiers_validate(char ***elements)
 	i = 0;
 	if (!identifiers_check(elements))
 	{
-		parser_error("invalid or duplicate identifiers");
+		parser_error("duplicate identifiers");
 		return (0);
 	}
 	while (elements[i])

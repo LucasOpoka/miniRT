@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 19:25:18 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/18 19:25:19 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/24 17:25:52 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	identifier_type(char *id)
 			return (i);
 		i++;
 	}
-	return (i);
+	return (e_id_unknown);
 }
 
 int	valid_obj_count(char **line, int id)

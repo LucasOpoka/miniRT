@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cam.c                                           :+:      :+:    :+:   */
+/*   camera.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 18:07:18 by atorma            #+#    #+#             */
-/*   Updated: 2024/08/24 18:07:19 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/24 16:55:27 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,15 @@ static int	valid_fov(char *fov)
 int	cam_add(t_scene *scene, char **elem)
 {
 	if (!validate_vector(elem[1]) || !validate_vector(elem[2]))
-		return (0);
+		return (parser_error("invalid camera position or orientation"));
 	if (!valid_fov(elem[3]))
-		return (0);
+		return (parser_error("invalid camera fov"));
 	fill_vector(&scene->cam.pos, elem[1]);
 	fill_vector(&scene->cam.dir, elem[2]);
 	scene->cam.pos.w = 1;
 	scene->cam.dir.w = 0;
 	scene->cam.fov = ft_atof(elem[3]);
 	if (!validate_orientation(scene->cam.dir))
-		return (0);
+		return (parser_error("invalid camera orientation"));
 	return (1);
 }

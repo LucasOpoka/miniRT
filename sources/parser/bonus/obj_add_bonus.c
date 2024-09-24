@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 18:07:54 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/19 21:25:15 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/24 17:13:35 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	obj_add_bonus_fields(t_obj *obj, char **elem);
 
 /*
  * triangle
- * <p1> <p2> <p3> <scale vector> <color> <bonus fields>
+ * <p1> <p2> <p3> <color> <bonus fields>
  */
 
 int	valid_triangle(char **elem)
@@ -85,10 +85,10 @@ int	obj_add(t_scene *scene, char **elem, int id)
 
 	ret = 0;
 	if (!validate_vector(elem[1]))
-		return (0);
+		return (parser_error("invalid object position"));
 	obj = ft_calloc(1, sizeof(t_obj));
 	if (!obj || !ft_void_arr_add(&scene->objs, obj))
-		return (0);
+		return (parser_error("malloc failed"));
 	obj->scale = ft_create_vct(1, 1, 1);
 	obj->pos.w = 1;
 	if (id == e_id_sphere)

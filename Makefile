@@ -6,7 +6,7 @@
 #    By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/29 14:59:04 by lopoka            #+#    #+#              #
-#    Updated: 2024/09/23 17:53:58 by atorma           ###   ########.fr        #
+#    Updated: 2024/09/24 16:39:35 by atorma           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -102,6 +102,9 @@ target fast_bonus: CFLAGS += -O2
 target symbols: CFLAGS = -Wall -Wextra -Werror -gdwarf-4
 target symbols: CDEBUG = -DDEBUG=1
 
+target symbols_bonus: CFLAGS = -Wall -Wextra -Werror -gdwarf-4
+target symbols_bonus: CDEBUG = -DDEBUG=1
+
 target fast: CFLAGS += -O2
 target fastmath: CFLAGS += -O2 -ffast-math
 target profile:	CFLAGS += -O2 -fno-math-errno -fno-trapping-math -gdwarf-4
@@ -150,12 +153,13 @@ debug_clean:
 re: fclean all
 debug: debug_clean all
 symbols: re
+symbols_bonus: fclean bonus
 fast: re
 fastmath: re
 profile: re
 debug_bonus: fclean bonus
 fast_bonus: fclean bonus
 
-.PHONY: debug, debug_clean, symbols, fast fastmath, profile \
+.PHONY: debug, debug_clean, symbols, symbols_bonus, fast fastmath, profile \
 	debug_bonus, fast_bonus \
 	bonus, all, clean, fclean, re, mlx42

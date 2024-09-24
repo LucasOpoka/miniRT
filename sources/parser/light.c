@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 18:07:41 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/14 19:14:23 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/24 17:07:33 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@
 int	light_add_ambient(t_ambient *ambient, char **elem)
 {
 	if (!validate_ratio(elem[1], 0.0, 1.0))
-		return (0);
+		return (parser_error("invalid ambient light ratio"));
 	if (!fill_color(&ambient->color, elem[2]))
-		return (0);
+		return (parser_error("invalid ambient light color"));
 	ambient->intensity = ft_atof(elem[1]);
 	return (1);
 }
@@ -27,14 +27,14 @@ int	light_add_ambient(t_ambient *ambient, char **elem)
 int	light_add_point(t_light *light, char **elem)
 {
 	if (!validate_vector(elem[1]))
-		return (0);
+		return (parser_error("invalid light position"));
 	if (!validate_ratio(elem[2], 0.0, 1.0))
-		return (0);
+		return (parser_error("invalid light ratio"));
 	light->type = t_point;
 	fill_vector(&light->pos, elem[1]);
 	light->intensity = ft_atof(elem[2]);
 	if (!fill_color(&light->color, elem[3]))
-		return (0);
+		return (parser_error("invalid light color"));
 	return (1);
 }
 
