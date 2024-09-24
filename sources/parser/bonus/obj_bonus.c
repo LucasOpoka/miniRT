@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 18:37:32 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/23 17:58:10 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/24 18:00:05 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,9 @@ int	obj_add_bonus_ppm(t_obj *obj, char **elem)
 		return (1);
 	modifier = elem[size - 1];
 	if (!obj_load_ppm(&obj->txtr, texture))
-		return (0);
+		return (parser_error("could not load ppm texture"));
 	if (!obj_load_ppm(&obj->bump, bump_map))
-		return (0);
+		return (parser_error("could not load ppm bump"));
 	if (obj->bump.colors)
 	{
 		if (!str_isdouble(modifier))
@@ -99,11 +99,11 @@ int	obj_add_bonus_fields(t_obj *obj, char **elem)
 	if (!obj_add_bonus_ppm(obj, elem))
 		return (0);
 	if (!validate_ratio(elem[size - 1], 0.0, 1.0))
-		return (0);
+		return (parser_error("invalid transparency ratio"));
 	if (!validate_ratio(elem[size - 2], 0.0, 100.0))
-		return (0);
+		return (parser_error("invalid refractive ratio"));
 	if ((!str_isdigit(elem[size - 4])) || ft_strlen(elem[size - 4]) >= 4)
-		return (0);
+		return (parser_error("invalid shininess value"));
 	obj->transparency = ft_atof(elem[size - 1]);
 	obj->refractive = ft_atof(elem[size - 2]);
 	obj->reflective = ft_atof(elem[size - 3]);
