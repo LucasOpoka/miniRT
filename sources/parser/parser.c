@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 18:07:45 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/24 17:56:09 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/26 18:24:50 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int		obj_add(t_scene *scene, char **elem, int id);
 
 int	parser_error(char *err_str)
 {
-	static int  messaged;
+	static int	messaged;
 
 	if (messaged)
 		return (0);
