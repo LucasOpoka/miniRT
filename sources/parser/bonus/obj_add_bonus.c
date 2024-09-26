@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 18:07:54 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/24 17:13:35 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/26 21:07:00 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ int	triangle_add(t_obj *obj, char **elem)
 	normal.w = 0;
 	ft_vct_norm(&normal);
 	obj->orientation = ft_create_vct(0, 0, 0);
+	obj->normal = normal;
 	return (1);
 }
 
