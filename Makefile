@@ -6,7 +6,7 @@
 #    By: lopoka <lopoka@student.hive.fi>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/29 14:59:04 by lopoka            #+#    #+#              #
-#    Updated: 2024/09/24 16:39:35 by atorma           ###   ########.fr        #
+#    Updated: 2024/09/26 22:43:28 by atorma           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ LDFLAGS := -Iinclude
 MLX42 := ./MLX42
 
 LIBFTDIR = ./libft
-LIBS = $(LIBFTDIR)/libft.a ${MLX42}/build/libmlx42.a -ldl -lglfw -pthread -lm
+LIBS = $(LIBFTDIR)/libft.a ${MLX42}/build/libmlx42.a -ldl -lglfw -lm
 
 SOURCE_DIR = sources
 SOURCES	=	main.c \
@@ -71,7 +71,8 @@ RENDER_OBJ = $(addprefix $(RENDER_DIR)/,$(RENDER_SRC:.c=.o))
 
 RENDER_BONUS_DIR = sources/render_bonus
 RENDER_BONUS_SRC = init_bonus.c render_bonus.c hooks_bonus.c \
-		   thread_bonus.c worker_bonus.c worker_init_bonus.c locks_bonus.c
+		   thread_bonus.c worker_bonus.c worker_init_bonus.c \
+		   locks_bonus.c move_bonus.c
 RENDER_BONUS_OBJ = $(addprefix $(RENDER_BONUS_DIR)/,$(RENDER_BONUS_SRC:.c=.o))
 
 PPM_DIR = sources/ppm
@@ -132,7 +133,7 @@ $B_OFILES: $(BONUS_SRC)
 .bonus : ${B_OFILES}
 	cmake ${MLX42} -B ${MLX42}/build $(CDEBUG) && make -C ${MLX42}/build -j4
 	$(MAKE) -C $(LIBFTDIR)
-	${CC} -o ${NAME} ${CFLAGS} $(LDFLAGS) ${B_OFILES} ${LIBS}
+	${CC} -o ${NAME} ${CFLAGS} $(LDFLAGS) ${B_OFILES} ${LIBS} -pthread
 	@touch .bonus
 	@rm -f .mandatory
 
