@@ -6,7 +6,7 @@
 /*   By: atorma <atorma@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 18:07:20 by atorma            #+#    #+#             */
-/*   Updated: 2024/09/23 13:40:56 by atorma           ###   ########.fr       */
+/*   Updated: 2024/09/27 16:33:07 by atorma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	file_validate_name(char *str, int type)
 	dot = ft_strrchr(str, '.');
 	if (!dot)
 		return (0);
-	if (dot == str || ft_strcmp(dot, extension) != 0)
+	if (ft_strcmp(dot, extension) != 0)
 		return (0);
 	return (1);
 }
