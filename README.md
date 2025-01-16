@@ -6,7 +6,7 @@
     <th><img src="https://github.com/LucasOpoka/miniRT/blob/main/assets/advanced/bonus_bump_refr.png" width="100" height="100"></th>
     <th><img src="https://github.com/LucasOpoka/miniRT/blob/main/assets/advanced/texture_bump_refraction.png" width="100" height="100"></th>
   </tr>
-  <tr><th colspan="6"><a href="https://github.com/LucasOpoka/miniRT/edit/main/README.md#gallery">Full Gallery</a></th></tr>
+  <tr><th colspan="6"><a href="https://github.com/LucasOpoka/miniRT?tab=readme-ov-file#gallery">Full Gallery</a></th></tr>
 </table>
 
 # Quickstart guide for Linux (Debian Like)
