@@ -1,4 +1,54 @@
 <table align="center">
+  <tr>
+    <th><img src="https://github.com/LucasOpoka/miniRT/blob/main/assets/advanced/bonus_texture.png" width="100" height="100"></th>
+    <th><img src="https://github.com/LucasOpoka/miniRT/blob/main/assets/advanced/bonus_bump_white.png" width="100" height="100"></th>
+    <th><img src="https://github.com/LucasOpoka/miniRT/blob/main/assets/advanced/refraction.png" width="100" height="100"></th>
+    <th><img src="https://github.com/LucasOpoka/miniRT/blob/main/assets/advanced/bonus_bump_refr.png" width="100" height="100"></th>
+    <th><img src="https://github.com/LucasOpoka/miniRT/blob/main/assets/advanced/texture_bump_refraction.png" width="100" height="100"></th>
+  </tr>
+  <tr><th colspan="6"><a href="https://github.com/LucasOpoka/miniRT/edit/main/README.md#gallery">Full Gallery</a></th></tr>
+</table>
+
+# Quickstart guide for Linux (Debian Like)
+
+## Install dependencies
+```bash
+sudo apt update
+sudo apt install git cmake make build-essential libx11-dev libglfw3-dev libglfw3 xorg-dev
+```
+
+## Clone MLX42 repository
+```bash
+git clone https://github.com/codam-coding-college/MLX42.git
+```
+
+## Build MLX42
+```bash
+cd MLX42
+cmake -B build
+cmake --build build -j4
+cd ..
+```
+
+## Clone miniRT repository
+```bash
+git clone https://github.com/LucasOpoka/miniRT.git
+```
+
+## Build miniRT
+```bash
+cd miniRT
+make
+```
+
+## Test run
+```bash
+./miniRT scenes_mandatory/8_shadows.rt
+```
+
+# Gallery
+
+<table align="center">
   <tr><th colspan="6">Textures - Bump Textures - Refraction</th></tr>
   <tr>
     <th><img src="https://github.com/LucasOpoka/miniRT/blob/main/assets/advanced/bonus_texture.png" width="100" height="100"></th>
