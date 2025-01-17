@@ -36,9 +36,15 @@ git clone https://github.com/LucasOpoka/miniRT.git
 ```
 
 ## Build miniRT
+#### Mandatory version - for scenes_mandatory
 ```bash
 cd miniRT
 make
+```
+#### Bonus version - for secenes_bonus
+```bash
+cd miniRT
+make bonus
 ```
 
 ## Test run
