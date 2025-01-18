@@ -1,10 +1,10 @@
 <table align="center">
   <tr>
-    <th><img src="https://github.com/LucasOpoka/miniRT/blob/main/assets/advanced/bonus_texture.png" width="100" height="100"></th>
-    <th><img src="https://github.com/LucasOpoka/miniRT/blob/main/assets/advanced/bonus_bump_white.png" width="100" height="100"></th>
-    <th><img src="https://github.com/LucasOpoka/miniRT/blob/main/assets/advanced/refraction.png" width="100" height="100"></th>
-    <th><img src="https://github.com/LucasOpoka/miniRT/blob/main/assets/advanced/bonus_bump_refr.png" width="100" height="100"></th>
-    <th><img src="https://github.com/LucasOpoka/miniRT/blob/main/assets/advanced/texture_bump_refraction.png" width="100" height="100"></th>
+    <th><img src="https://github.com/LucasOpoka/miniRT/blob/main/assets/patterns/patterns3.png" width="175" height="175"></th>
+    <th><img src="https://github.com/LucasOpoka/miniRT/blob/main/assets/advanced/mccree.png" width="175" height="175"></th>
+    <th><img src="https://github.com/LucasOpoka/miniRT/blob/main/assets/advanced/bonus_bump_refr.png" width="175" height="175"></th>
+    <th><img src="https://github.com/LucasOpoka/miniRT/blob/main/assets/advanced/bonus_objects2.png" width="175" height="175"></th>
+    <th><img src="https://github.com/LucasOpoka/miniRT/blob/main/assets/advanced/texture_bump_refraction.png" width="175" height="175"></th>
   </tr>
   <tr><th colspan="6"><a href="https://github.com/LucasOpoka/miniRT?tab=readme-ov-file#gallery">Full Gallery</a></th></tr>
 </table>
