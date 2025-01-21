@@ -11,18 +11,18 @@
 
 # Quickstart guide for Linux (Debian Like)
 
-## Install dependencies
+Install dependencies
 ```bash
 sudo apt update
 sudo apt install git cmake make build-essential libx11-dev libglfw3-dev libglfw3 xorg-dev
 ```
 
-## Clone MLX42 repository
+Clone MLX42 repository
 ```bash
 git clone https://github.com/codam-coding-college/MLX42.git
 ```
 
-## Build MLX42
+Build MLX42
 ```bash
 cd MLX42
 cmake -B build
@@ -30,24 +30,23 @@ cmake --build build -j4
 cd ..
 ```
 
-## Clone miniRT repository
+Clone miniRT repository
 ```bash
 git clone https://github.com/LucasOpoka/miniRT.git
 ```
 
-## Build miniRT
-#### Mandatory version - for scenes_mandatory
+Build miniRT Mandatory version - for scenes_mandatory
 ```bash
 cd miniRT
 make
 ```
-#### Bonus version - for secenes_bonus
+Build miniRT Bonus version - for secenes_bonus
 ```bash
 cd miniRT
 make bonus
 ```
 
-## Test run
+Test run
 ```bash
 ./miniRT scenes_mandatory/8_shadows.rt
 ```
