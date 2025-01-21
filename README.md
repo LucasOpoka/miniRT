@@ -55,14 +55,16 @@ Test run
 
 Build Docker
 ```
+docker build -t mlx - << EOF
 FROM ubuntu
+ENV DISPLAY :0
 RUN apt update && apt install -qqy x11-apps git cmake make build-essential libx11-dev libglfw3-dev libglfw3 xorg-dev
 RUN git clone https://github.com/codam-coding-college/MLX42.git
 RUN cd MLX42 && cmake -B build && cmake --build build -j4 && cd ..
 RUN git clone https://github.com/LucasOpoka/miniRT.git
-RUN cd miniRT && make
-ENV DISPLAY :0
-CMD ["./miniRT/miniRT", "./miniRT/scenes_mandatory/8_shadows.rt"]
+WORKDIR /miniRT
+RUN make bonus
+CMD ["./miniRT", "scenes_bonus/texture_bump_refraction.rt"]
 EOF
 ```
 
