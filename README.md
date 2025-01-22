@@ -55,9 +55,9 @@ Test run
 
 Build Docker
 ```
-docker build -t mlx - << EOF
+docker build -t minirt - << EOF
 FROM ubuntu
-ENV DISPLAY :0
+ENV DISPLAY=:0
 RUN apt update && apt install -qqy x11-apps git cmake make build-essential libx11-dev libglfw3-dev libglfw3 xorg-dev
 RUN git clone https://github.com/codam-coding-college/MLX42.git
 RUN cd MLX42 && cmake -B build && cmake --build build -j4 && cd ..
@@ -73,7 +73,7 @@ Run Docker
 XSOCK=/tmp/.X11-unix
 XAUTH=/tmp/.docker.xauth
 xauth nlist :0 | sed -e 's/^..../ffff/' | xauth -f $XAUTH nmerge -
-docker run -ti -v $XSOCK:$XSOCK -v $XAUTH:$XAUTH -e XAUTHORITY=$XAUTH mlx
+docker run -ti -v $XSOCK:$XSOCK -v $XAUTH:$XAUTH -e XAUTHORITY=$XAUTH minirt
 ```
 
 # Gallery
